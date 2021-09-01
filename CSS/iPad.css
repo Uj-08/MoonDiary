@@ -1,0 +1,10 @@
+/* Header */
+.nav::before{
+    height: 140px;
+}
+
+/* Para */
+
+.text{
+    padding: 0px 3rem;
+}

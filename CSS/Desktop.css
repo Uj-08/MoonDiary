@@ -1,0 +1,153 @@
+/* Loading */
+.js-loading *,
+.js-loading *:before,
+.js-loading *:after {
+  animation-play-state: paused !important;
+}
+/* Nav */
+.nav::before{
+    content: "";
+    background-color: rgb(103 54 136);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 92px;
+    z-index: -1;
+    opacity: 0.8;
+}
+
+header{
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+.main{
+    font-size: 2rem;
+    font-family: 'Cedarville Cursive', cursive;
+    color: white;
+}
+/* Modal */
+.modal{
+    background: rgba(0,0,0,0.6);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 11;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.25s ease-out;
+}
+
+.modal.open{
+    opacity: 1;
+    pointer-events: all;
+}
+
+.full-img{
+    position: absolute;
+    height: 80vh;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%) scale(0.5);
+    transition: all 0.25s ease-out;
+}
+
+.previews{
+    cursor: pointer;
+}
+
+.full-img.open{
+    transform: translate(-50%,-50%) scale(1);
+}
+
+/* Main */
+#home img{
+    transition: all ease-in-out 0.3s;
+}
+
+#home img:hover{
+    transform: scale(1.1);
+}
+
+.heading{
+    font-size: 3.2rem;
+    padding-bottom: 16px;
+    padding: 0px;
+    margin-bottom: 2rem;
+    font-family: 'Cedarville Cursive', cursive;
+}
+
+.text{
+    display: flex;
+    padding: 5rem 12rem;
+    padding-top: 0;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.2rem;
+}
+
+.align{
+    text-align: left;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.2rem;
+}
+.bold{
+    font-weight:bolder
+}
+
+/* About */
+#about img{
+    transition: all ease-in-out 0.3s;
+}
+
+#about img:hover{
+    transform: scale(1.05);
+}
+#about p{
+    font-family: 'Roboto', sans-serif;
+}
+
+.abt{
+    text-align: center;
+    width: 13rem;
+}
+
+/* Footer */
+
+
+/* Extra */
+.navlink{
+    font-size: 1.13rem;
+    text-decoration: none;
+    color: white;
+    padding: 10px 20px;
+    transition: border-bottom 0.5s ease-in;
+    font-family: 'Kirang Haerang', cursive;
+    border-bottom: 3px solid rgba(128, 0, 128, 0);
+}
+
+.navlink:hover{
+    /* background-color: #ed8806; */
+    border-bottom: 3px solid #ed8806;
+    color: white;
+}
+
+#logo{
+    height: 40px;
+    transition: transform 0.5s ease-in-out;
+}
+
+#logo:hover{
+    cursor: pointer;
+    transform: rotate(360deg);
+}
