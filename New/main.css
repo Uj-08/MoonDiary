@@ -153,8 +153,8 @@ body {
   }
 
   .content {
-    padding: 2rem;
-    text-align: left;
+    padding: 1rem;
+    text-align: justify;
   }
 
   .right {
