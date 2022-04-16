@@ -56,6 +56,7 @@ body {
   padding-bottom: 5rem;
   font-family: "Montserrat", sans-serif;
   font-size: 1.1rem;
+  line-height: 2rem;
 }
 
 .content p::first-letter {
@@ -144,7 +145,7 @@ body {
   }
 
   .title {
-    font-size: 1.5rem;
+    font-size: 2.5rem;
     padding: 2rem 1rem;
   }
 
@@ -154,18 +155,12 @@ body {
   }
 
   .content {
-    padding: 1rem;
-    text-align: justify;
-    font-size: 0.5rem;
-  }
-
-  .content p::first-letter {
-    font-size: 1rem;
+    padding: 2rem;
   }
 
   .right {
     width: 90vw;
-    padding: 1rem;
+    padding: 2rem;
     position: static;
   }
 
@@ -175,5 +170,27 @@ body {
 
   .about-me {
     padding: 1rem 0;
+  }
+
+  .info {
+    text-align: center;
+  }
+}
+
+@media (max-width: 700px) {
+  .title {
+    font-size: 1.5rem;
+    padding: 2rem 0;
+  }
+
+  .left,
+  .right {
+    width: 100vw;
+  }
+
+  .content {
+    text-align: left;
+    font-size: 15px;
+    padding: 1rem;
   }
 }
