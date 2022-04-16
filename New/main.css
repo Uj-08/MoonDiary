@@ -150,11 +150,17 @@ body {
 
   .left {
     width: 90vw;
+    padding-bottom: 2rem;
   }
 
   .content {
     padding: 1rem;
     text-align: justify;
+    font-size: 0.5rem;
+  }
+
+  .content p::first-letter {
+    font-size: 1rem;
   }
 
   .right {
