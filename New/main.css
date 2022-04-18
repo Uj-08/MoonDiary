@@ -53,16 +53,20 @@ body {
 .content {
   text-align: justify;
   padding: 0 2rem;
-  padding-bottom: 5rem;
+  padding-bottom: 3rem;
   font-family: "Montserrat", sans-serif;
   font-size: 1.1rem;
   line-height: 2rem;
 }
 
-.content p::first-letter {
+.content p.first::first-letter {
   font-weight: bold;
   font-size: 2rem;
   color: blueviolet;
+}
+
+.content p {
+  margin-bottom: 1rem;
 }
 
 /* Right Side */
@@ -81,6 +85,7 @@ body {
 
 .about {
   padding: 0.5rem 2rem;
+  padding-bottom: 3rem;
 }
 
 .about-me {
