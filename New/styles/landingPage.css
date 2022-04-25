@@ -1,0 +1,151 @@
+@import url("https://fonts.googleapis.com/css2?family=Babylonica&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Arimo:wght@500&display=swap");
+
+.cover {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 61vh;
+  position: relative;
+  z-index: 100;
+}
+
+.cover::before {
+  content: "";
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: url(../img/cover.jpeg) no-repeat center center fixed;
+  background-size: cover;
+  z-index: -100;
+  filter: blur(3px);
+}
+
+.cover::after {
+  content: "";
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background-color: black;
+  opacity: 30%;
+  z-index: -50;
+}
+
+.title {
+  font-family: "Babylonica", cursive;
+  font-size: 3rem;
+  color: white;
+  letter-spacing: 0.1rem;
+  width: 100%;
+  text-align: center;
+}
+
+.blogs {
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  grid-auto-rows: 30rem;
+  gap: 2rem;
+}
+
+.cards {
+  /* border: 0.9px solid black; */
+
+  border-radius: 0.4rem;
+  overflow: hidden;
+
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px,
+    rgba(0, 0, 0, 0.1) 0px 2px 4px 0px,
+    rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
+}
+
+.cards a {
+  text-decoration: none;
+}
+
+.cards a:hover .img-container img {
+  transform: scale(1.02);
+}
+
+.img-container {
+  width: 100%;
+  height: 15rem;
+  overflow: hidden;
+}
+
+.img-container img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  transition: transform 0.3s ease-in-out;
+}
+
+.new-tag {
+  width: fit-content;
+  background-color: rgb(195, 0, 0);
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  color: white;
+  font-size: 0.7rem;
+  position: relative;
+  top: 1rem;
+  left: 1rem;
+  animation: 1s infinite scaling;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+@keyframes scaling {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.card-content h2 {
+  padding-top: 2rem;
+  padding-left: 1rem;
+  font-family: "Arimo", sans-serif;
+  text-align: left;
+  color: black;
+}
+
+.card-content p {
+  color: black;
+  padding: 0.5rem 1.3rem;
+  /* text-align: justify; */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.add-new {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background-color: rgb(46, 46, 46);
+  transform: scale(2);
+  filter: invert(1);
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .cover {
+    height: 59vh;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .blogs {
+    padding: 1rem;
+  }
+}
