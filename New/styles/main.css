@@ -141,6 +141,39 @@ body {
   font-weight: bold;
 }
 
+footer {
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px,
+    rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+  height: 8rem;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.footer-socials {
+  display: flex;
+  list-style: none;
+  gap: 4rem;
+}
+
+.footer-socials li a {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.footer-content {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 0.8rem;
+  color: rgba(0, 0, 0, 0.541);
+}
+
 @media (max-width: 1260px) {
   .main {
     flex-direction: column;
