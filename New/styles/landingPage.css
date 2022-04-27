@@ -1,4 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Babylonica&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Babylonica&display=swap"); */
+/* @import url("https://fonts.googleapis.com/css2?family=Square+Peg&display=swap"); */
+@import url("https://fonts.googleapis.com/css2?family=Ms+Madi&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Updock&display=swap"); */
+/* @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap"); */
+
 @import url("https://fonts.googleapis.com/css2?family=Arimo:wght@500&display=swap");
 
 body {
@@ -43,10 +48,15 @@ body {
 }
 
 .title {
-  font-family: "Babylonica", cursive;
+  /* font-family: "Babylonica", cursive; */
+  /* font-family: "Square Peg", cursive; */
+  font-family: "Ms Madi", cursive;
+  /* font-family: "Updock", cursive; */
+  /* font-family: "Dancing Script", cursive; */
+
   font-size: 3rem;
   color: white;
-  letter-spacing: 0.1rem;
+  letter-spacing: 0rem;
   width: 100%;
   text-align: center;
 }
