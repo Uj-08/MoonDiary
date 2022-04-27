@@ -65,7 +65,7 @@ body {
   padding: 2rem;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
-  /* grid-auto-rows: 34rem; */
+  grid-auto-rows: min-content;
   gap: 2rem;
 
   margin-bottom: 5rem;
@@ -158,6 +158,7 @@ body {
   transform: scale(2);
   filter: invert(1);
   cursor: pointer;
+  padding: 2rem 0rem;
 }
 
 footer {
