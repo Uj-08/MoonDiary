@@ -31,6 +31,8 @@ body {
   background-color: rgb(255, 255, 255);
   width: 70vw;
   box-shadow: 10px 10px 8px rgb(62, 62, 62);
+  border-radius: 0.5rem;
+  overflow: hidden;
 }
 
 .Hero-Image {
@@ -80,7 +82,8 @@ body {
   flex-direction: column;
   /* border-radius: 1rem; */
   position: sticky;
-  top: 5rem;
+  top: 1rem;
+  border-radius: 0.5rem;
 }
 
 .about {

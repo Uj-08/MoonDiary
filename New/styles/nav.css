@@ -15,12 +15,17 @@ nav {
   /* border-bottom: 1px solid black; */
   box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px,
     rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
-  border-bottom-left-radius: 0.5rem;
-  border-bottom-right-radius: 0.5rem;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
   position: sticky;
   top: 0;
   z-index: 999;
   background-color: rgb(255, 255, 255);
+  transition: transform 0.4s ease-in-out;
+}
+
+nav.hidden {
+  transform: translateY(-100%);
 }
 
 nav ul {
@@ -29,7 +34,7 @@ nav ul {
 
 .logo {
   height: 5.5vh;
-  transition: all 0.5s ease-in-out;
+  transition: transform 0.5s ease-in-out;
 }
 
 .logo:hover {
@@ -46,7 +51,7 @@ nav ul {
   font-family: "Anton", sans-serif;
   letter-spacing: 0.1rem;
   font-size: 1.1rem;
-  transition: all 0.3s ease-in;
+  transition: color 0.3s ease-in;
 }
 
 .nav__links a:hover {
@@ -69,7 +74,7 @@ nav ul {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.4s ease-in-out;
+  transition: background-color 0.4s ease-in-out;
 }
 
 .nav__social li a:hover {
@@ -160,6 +165,6 @@ nav ul {
     height: 100%;
     opacity: 1;
     transform: translateY(0%);
-    transition: all 0.5s ease-in-out;
+    transition: transform 0.5s ease-in-out;
   }
 }
