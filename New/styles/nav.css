@@ -159,12 +159,18 @@ nav ul {
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
   }
+
+  .nav__links,
+  .nav__social {
+    transition: 0.5s ease-in-out;
+    transition-property: transform, opacity, height;
+  }
+
   .nav__links.active,
   .nav__social.active {
     display: flex;
     height: 100%;
     opacity: 1;
     transform: translateY(0%);
-    transition: transform 0.5s ease-in-out;
   }
 }

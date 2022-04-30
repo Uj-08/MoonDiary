@@ -11,14 +11,24 @@ toggleButton.addEventListener("click", () => {
   });
 });
 
+// toggleButton.addEventListener("click", () => {
+//   navbarLinks.forEach((element) => {
+//     if (element.classList.contains("active")) {
+//       element.classList.remove("active");
+//     } else {
+//       element.classList.add("active");
+//     }
+//   });
+// });
+
 const navbar = document.getElementById("navbar");
 let lastScroll = window.scrollY;
 window.addEventListener("scroll", () => {
   if (lastScroll < window.scrollY) {
-    console.log("We are going down");
+    // console.log("We are going down");
     navbar.classList.add("hidden");
   } else {
-    console.log("We are going up");
+    // console.log("We are going up");
     navbar.classList.remove("hidden");
   }
   lastScroll = window.scrollY;
