@@ -163,8 +163,8 @@ nav ul {
   .nav__links,
   .nav__social {
     pointer-events: none;
-    transition: 0.5s ease-in-out;
-    transition-property: transform, opacity, height;
+    transition: all 0.5s ease-in-out;
+    /* transition-property: transform, opacity, height; */
   }
 
   .nav__links.active,
