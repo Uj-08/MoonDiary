@@ -162,12 +162,14 @@ nav ul {
 
   .nav__links,
   .nav__social {
+    pointer-events: none;
     transition: 0.5s ease-in-out;
     transition-property: transform, opacity, height;
   }
 
   .nav__links.active,
   .nav__social.active {
+    pointer-events: all;
     display: flex;
     height: 100%;
     opacity: 1;
