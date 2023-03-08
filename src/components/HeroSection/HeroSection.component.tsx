@@ -10,7 +10,10 @@ export default function HeroSection() {
 
     useEffect(() => {
         if(hasCookie("clientMD")) {
-            setClient(jwtDecode(getCookie("clientMD")))
+            const cookie = getCookie("clientMD");
+            if(typeof(cookie) === "string"){
+                setClient(jwtDecode(cookie))
+            }
         }
     }, [])
 
