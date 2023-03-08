@@ -1,17 +1,16 @@
 import { Container } from "./HeroSection.styles";
 import { useState, useEffect } from "react";
-import { getCookie } from "cookies-next";
+import { getCookie, hasCookie } from "cookies-next";
 import jwtDecode from "jwt-decode";
 
 
 export default function HeroSection() {
 
-    const [client, setClient] = useState(undefined);
+    const [client, setClient] = useState<{given_name: string}>();
 
     useEffect(() => {
-        const token = getCookie("clientMD");
-        if(token) {
-            setClient(jwtDecode(token));
+        if(hasCookie("clientMD")) {
+            setClient(jwtDecode(getCookie("clientMD")))
         }
     }, [])
 
@@ -20,7 +19,7 @@ export default function HeroSection() {
     return (
         <Container>
             <h1>
-                Welcome {client?.given_name ? (client?.given_name + ",") : ""} to MoonDiary !
+                Welcome to MoonDiary{client?.given_name ? ("," + client?.given_name) : ""}!
             </h1>
         </Container>
     );
