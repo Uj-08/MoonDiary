@@ -2,7 +2,7 @@ import { LogoContainer, Wrapper, NavLinks, SocialLinks } from "./Navbar.styles"
 import NavbarTypes from "./Navbar.types";
 import Image from "next/image";
 
-export default function Navbar({ signInHandler }: NavbarTypes) {
+export default function Navbar({ signInHandler, signedIn }: NavbarTypes) {
     return (
         <Wrapper>
             <LogoContainer>
@@ -12,7 +12,7 @@ export default function Navbar({ signInHandler }: NavbarTypes) {
                 <li>Home</li>
                 <li>Features</li>
                 <li>About Me</li>
-                <li onClick={signInHandler}>Sign In</li>
+                <li onClick={signInHandler}>{signedIn ? "Sign Out" : "Sign In"}</li>
             </NavLinks>
             <SocialLinks>
                 <li><Image src="/facebook.png" alt={""} height="25" width="25" /></li>

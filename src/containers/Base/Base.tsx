@@ -5,10 +5,13 @@ import { GoogleLogin } from "@react-oauth/google";
 import Modal from "../Modal/Modal";
 import BaseTypes from "./Base.types";
 import styled from "styled-components";
+import { getCookie, hasCookie, setCookie, deleteCookie } from "cookies-next";
 
 export default function Base({children}: BaseTypes) {
 
     const [showModal, setShowModal] = useState(false);
+    const [signedIn, setSignedIn] = useState(false);
+
     useEffect(() => {
         if(showModal) {
             document.body.style.overflow = "hidden";
@@ -18,13 +21,26 @@ export default function Base({children}: BaseTypes) {
     }
     ,[showModal]);
 
+    useEffect(() => {
+        if(hasCookie("clientMD")) {
+            setSignedIn(true);
+        } else {
+            setSignedIn(false);
+        }
+    }, [signedIn])
+
 
     const Container = styled.div<{ showModal?: boolean }>`
         filter: ${props => props.showModal ? "blur(5px)" : ""};
     `;
 
     function signInHandler() {
-        setShowModal(true);
+        if(signedIn) {
+            deleteCookie("clientMD");
+            setSignedIn(false);
+        } else {
+            setShowModal(true);
+        }
     } 
 
     function hideModal() {
@@ -32,13 +48,18 @@ export default function Base({children}: BaseTypes) {
     }
 
     function successHandler(credentialResponse: any) {
-        console.log(credentialResponse);
+        setCookie("clientMD", credentialResponse?.credential);
         setShowModal(false);
+        if(hasCookie("clientMD")) {
+            setSignedIn(true);
+        } else {
+            setSignedIn(false);
+        }
     }
 
     return (
         <Container showModal={showModal}>
-            <Navbar signInHandler={signInHandler} />
+            <Navbar signInHandler={signInHandler} signedIn={signedIn} />
                 {children}
             <FooterComponent />
             {showModal &&
