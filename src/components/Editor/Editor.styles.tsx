@@ -59,7 +59,7 @@ export const PreviewContainer = styled.div`
 export const PreviewImageContainer = styled.div`
     position: relative;
     width: 100%;
-    height: 472px;
+    height: 485px;
     img {
         object-fit: cover;
         aspect-ratio: 16/9;
