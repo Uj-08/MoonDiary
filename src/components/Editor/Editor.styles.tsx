@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-    margin: 80px 20px;
+    margin: 80px 0px;
+    padding: 0px 128px;
     display: flex;
     justify-content: space-between;
     gap: 20px;
@@ -16,7 +17,7 @@ export const Button = styled.button`
     margin: 5px 0;
     text-align: center;
     width: 100%;    
-    padding: 10px;
+    padding: 12px 10px;
     background-color: #fff;
     cursor: pointer;
     border: 1px solid #eee;
@@ -26,6 +27,7 @@ export const Button = styled.button`
     font-family: 'Montserrat', sans-serif;
     letter-spacing: 1px;
     font-weight: 900;
+    font-size: 16px;
     &:hover {
         box-shadow: 0 2px 2px -2px rgba(34,47,62,.3), 0 8px 8px -4px rgba(34,47,62,.09);
     }
@@ -59,7 +61,7 @@ export const PreviewContainer = styled.div`
 export const PreviewImageContainer = styled.div`
     position: relative;
     width: 100%;
-    height: 485px;
+    height: 424px;
     img {
         object-fit: cover;
         aspect-ratio: 16/9;
@@ -99,6 +101,7 @@ export const RemoveImage = styled.div`
     cursor: pointer;
     :hover {
         box-shadow: 0 2px 2px -2px rgba(34,47,62,.1), 0 8px 8px -4px rgba(34,47,62,.07);
+        background-color: white;
     }
 `;
 

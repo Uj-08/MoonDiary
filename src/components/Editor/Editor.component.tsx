@@ -7,7 +7,7 @@ import parse from "html-react-parser";
 
 function EditorComponent() {
     const editorRef = useRef<any>(null);
-    const [preview, setPreview] = useState<string | ReactNode>("");
+    const [preview, setPreview] = useState<string | ReactNode>("Write Something...");
     const [file, setFile] = useState<string>("");
 
     let debounce: NodeJS.Timeout | undefined;
@@ -16,7 +16,7 @@ function EditorComponent() {
         clearTimeout(debounce);
         debounce = setTimeout(() => {
             previewHandler();
-        }, 300)
+        }, 200)
     }
 
     function previewHandler() {
@@ -56,7 +56,7 @@ function EditorComponent() {
                     }}
                     onKeyUp={keyUpHandler}
                     init={{
-                        height: 500,
+                        height: 700,
                         content_style: "@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap'); * { font-family: \"Montserrat\", sans-serif;}",
                     }}
                 />
