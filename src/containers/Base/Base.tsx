@@ -6,6 +6,7 @@ import Modal from "../Modal/Modal";
 import BaseTypes from "./Base.types";
 import styled from "styled-components";
 import { getCookie, hasCookie, setCookie, deleteCookie } from "cookies-next";
+import { COOKIE_NAME } from "@/constants";
 
 export default function Base({children}: BaseTypes) {
 
@@ -22,7 +23,7 @@ export default function Base({children}: BaseTypes) {
     ,[showModal]);
 
     useEffect(() => {
-        if(hasCookie("clientMD")) {
+        if(hasCookie(COOKIE_NAME)) {
             setSignedIn(true);
         } else {
             setSignedIn(false);
@@ -36,7 +37,7 @@ export default function Base({children}: BaseTypes) {
 
     function signInHandler() {
         if(signedIn) {
-            deleteCookie("clientMD");
+            deleteCookie(COOKIE_NAME);
             setSignedIn(false);
         } else {
             setShowModal(true);
@@ -48,9 +49,9 @@ export default function Base({children}: BaseTypes) {
     }
 
     function successHandler(credentialResponse: any) {
-        setCookie("clientMD", credentialResponse?.credential);
+        setCookie(COOKIE_NAME, credentialResponse?.credential);
         setShowModal(false);
-        if(hasCookie("clientMD")) {
+        if(hasCookie(COOKIE_NAME)) {
             setSignedIn(true);
         } else {
             setSignedIn(false);
