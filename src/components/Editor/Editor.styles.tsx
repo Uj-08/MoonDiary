@@ -40,10 +40,14 @@ export const Preview = styled.div`
     overflow: hidden;
 `;
 
+export const Span = styled.span`
+    
+`;
+
 export const PreviewContainer = styled.div`
     flex-basis: 100%;
     font-family: 'Montserrat', sans-serif;
-    span {
+    ${Span} {
         display: block;
         font-size: 20px;
         margin-bottom: 5px;
@@ -99,5 +103,5 @@ export const RemoveImage = styled.div`
 `;
 
 export const PreviewData = styled.div`
-    padding: 10px 20px;
+    padding: 10px 10px;
 `;

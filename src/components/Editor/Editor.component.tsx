@@ -1,6 +1,6 @@
 import { useState, useRef, ReactNode } from "react"
 import { Editor } from "@tinymce/tinymce-react"
-import { Button, Container, EditorContainer, Input, InputFileLabel, Preview, PreviewContainer, PreviewData, PreviewImageContainer, RemoveImage } from "./Editor.styles";
+import { Button, Container, EditorContainer, Input, InputFileLabel, Preview, PreviewContainer, PreviewData, PreviewImageContainer, RemoveImage, Span } from "./Editor.styles";
 import Image from "next/image";
 import parse from "html-react-parser";
 
@@ -35,7 +35,7 @@ function EditorComponent() {
     return (
         <Container>
             <PreviewContainer>
-                <span>Preview:</span>
+                <Span>Preview:</Span>
                 <Preview>
                     <PreviewImageContainer>
                         <Image src={file || "/169.png"} alt={"16/9-ratio-image"} fill={true} />
