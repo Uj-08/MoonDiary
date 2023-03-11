@@ -1,4 +1,4 @@
-import { useState, useRef } from "react"
+import { useState, useRef, ReactNode } from "react"
 import { Editor } from "@tinymce/tinymce-react"
 import { Button, Container, EditorContainer, Preview, PreviewContainer, PreviewData, PreviewImageContainer } from "./Editor.styles";
 import Image from "next/image";
@@ -6,11 +6,11 @@ import parse from "html-react-parser";
 
 
 function EditorComponent() {
-    const editorRef = useRef(null);
-    const [preview, setPreview] = useState("");
-    const [file, setFile] = useState();
+    const editorRef = useRef<any>(null);
+    const [preview, setPreview] = useState<string | ReactNode>("");
+    const [file, setFile] = useState<string>();
 
-    let debounce;
+    let debounce: NodeJS.Timeout | undefined;
 
     function keyUpHandler() {
         clearTimeout(debounce);
@@ -20,12 +20,12 @@ function EditorComponent() {
     }
 
     function previewHandler() {
-        let html = editorRef.current.getContent();
-        setPreview(parse(html));
+        const html = editorRef?.current?.getContent();
+        if(html) setPreview(parse(html));
     }
 
     function submitHandler() {
-        console.log(editorRef.current.getContent())
+        console.log(editorRef.current?.getContent())
     }
 
     function handleChange(e: any) {
@@ -38,7 +38,7 @@ function EditorComponent() {
                 <span>Preview:</span>
                 <Preview>
                     <PreviewImageContainer>
-                        <Image src={file || "/169.png"} alt={"16/9"} fill={true} />
+                        <Image src={file || "/169.png"} alt={"16/9-ratio-image"} fill={true} />
                         {!file && <input type="file" onChange={handleChange} />}
                     </PreviewImageContainer>
                     <PreviewData>
