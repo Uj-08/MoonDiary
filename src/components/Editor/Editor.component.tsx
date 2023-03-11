@@ -1,6 +1,6 @@
 import { useState, useRef, ReactNode } from "react"
 import { Editor } from "@tinymce/tinymce-react"
-import { Button, Container, EditorContainer, Preview, PreviewContainer, PreviewData, PreviewImageContainer } from "./Editor.styles";
+import { Button, Container, EditorContainer, Input, InputFileLabel, Preview, PreviewContainer, PreviewData, PreviewImageContainer, RemoveImage } from "./Editor.styles";
 import Image from "next/image";
 import parse from "html-react-parser";
 
@@ -8,7 +8,7 @@ import parse from "html-react-parser";
 function EditorComponent() {
     const editorRef = useRef<any>(null);
     const [preview, setPreview] = useState<string | ReactNode>("");
-    const [file, setFile] = useState<string>();
+    const [file, setFile] = useState<string>("");
 
     let debounce: NodeJS.Timeout | undefined;
 
@@ -39,7 +39,9 @@ function EditorComponent() {
                 <Preview>
                     <PreviewImageContainer>
                         <Image src={file || "/169.png"} alt={"16/9-ratio-image"} fill={true} />
-                        {!file && <input type="file" onChange={handleChange} />}
+                        {!file && <input id="image-upload" type="file" onChange={handleChange} accept="image/png, image/jpeg" style={{ display: "none" }} />}
+                        {!file && <InputFileLabel htmlFor="image-upload">&#8593; Upload Image</InputFileLabel>}
+                        {file && <RemoveImage onClick={() => setFile("")} >X Remove Image</RemoveImage>}
                     </PreviewImageContainer>
                     <PreviewData>
                         {preview}

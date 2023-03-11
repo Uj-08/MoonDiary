@@ -68,6 +68,36 @@ export const PreviewImageContainer = styled.div`
     }
 `;
 
+export const InputFileLabel = styled.label`
+    position: absolute;
+    color: white;
+    bottom: 20%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: rgba(0,0,0,0.4);
+    padding: 5px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    :hover {
+        box-shadow: 0 2px 2px -2px rgba(34,47,62,.1), 0 8px 8px -4px rgba(34,47,62,.07);
+    }
+`;
+
+export const RemoveImage = styled.div`
+    position: absolute;
+    color: black;
+    bottom: 20%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: #ffffff6b;
+    padding: 5px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    :hover {
+        box-shadow: 0 2px 2px -2px rgba(34,47,62,.1), 0 8px 8px -4px rgba(34,47,62,.07);
+    }
+`;
+
 export const PreviewData = styled.div`
     padding: 10px 20px;
 `;
