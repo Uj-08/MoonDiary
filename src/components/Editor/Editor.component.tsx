@@ -1,6 +1,6 @@
 import { useState, useRef, ReactNode } from "react"
 import { Editor } from "@tinymce/tinymce-react"
-import { Button, Container, EditorContainer, Input, InputFileLabel, Preview, PreviewContainer, PreviewData, PreviewImageContainer, RemoveImage, Span } from "./Editor.styles";
+import { Button, Container, EditorContainer, InputFileLabel, Preview, PreviewContainer, PreviewData, PreviewImageContainer, RemoveImage, Span } from "./Editor.styles";
 import Image from "next/image";
 import parse from "html-react-parser";
 
