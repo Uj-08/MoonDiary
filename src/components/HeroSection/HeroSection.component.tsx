@@ -17,8 +17,6 @@ export default function HeroSection() {
         }
     }, [])
 
-    console.log(client)
-
     return (
         <Container>
             <h1>

@@ -47,11 +47,6 @@ export default function App({ Component, pageProps }: AppProps) {
     <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_CLIENT_ID || ""}>
         <NextHead>
           <title>MoonDiary</title>
-          {/* <link rel="icon" href="" /> */}
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" />
-          <link href="https://fonts.googleapis.com/css2?family=Anton&family=Dancing+Script:wght@600&display=swap" rel="stylesheet" /> 
-          <link href="https://fonts.googleapis.com/css2?family=Babylonica&family=Montserrat:wght@500&display=swap" rel="stylesheet" />
           <link rel="shortcut icon" href="/favicon.png" type="image/x-icon" />
         </NextHead>
         <GlobalStyle />

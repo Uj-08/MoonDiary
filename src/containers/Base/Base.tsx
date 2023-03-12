@@ -8,7 +8,7 @@ import styled from "styled-components";
 import { getCookie, hasCookie, setCookie, deleteCookie } from "cookies-next";
 import { COOKIE_NAME } from "@/constants";
 
-export default function Base({children, sessionId}: BaseTypes) {
+export default function Base({children}: BaseTypes) {
 
     const [showModal, setShowModal] = useState(false);
     const [signedIn, setSignedIn] = useState(false);

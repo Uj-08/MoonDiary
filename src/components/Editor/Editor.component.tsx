@@ -3,9 +3,10 @@ import { Editor } from "@tinymce/tinymce-react"
 import { BlogTitle, BlogTitleContainer, Button, Container, EditorContainer, InputFileLabel, Preview, PreviewContainer, PreviewData, PreviewImageContainer, RemoveImage, Span, TitleText } from "./Editor.styles";
 import Image from "next/image";
 import parse from "html-react-parser";
+import jwtDecode from "jwt-decode";
 
 
-function EditorComponent() {
+function EditorComponent({ sessionId }: {sessionId: string}) {
     const editorRef = useRef<any>(null);
     const [preview, setPreview] = useState<string | ReactNode>("Write Something...");
     const [title, setTitle] = useState("");
@@ -26,7 +27,33 @@ function EditorComponent() {
     }
 
     function submitHandler() {
-        console.log(editorRef.current?.getContent())
+        if(sessionId !== ""){
+            const authorObj: {name?: string, picture?:string, email?:string} = jwtDecode(sessionId);
+            if(authorObj?.email === "ujjwalpandey24@gmail.com" || authorObj?.email === "sinhashairee6@gmail.com") {
+                const html = editorRef.current?.getContent();
+                const reqBody = {
+                    blogTitle: title,
+                    blogData: html,
+                    authorName: authorObj.name,
+                    authorPicture: authorObj.picture,
+                    authorEmail: authorObj.email,
+                    date: Date.now(),
+                }
+                fetch("/api/blogs", {
+                    method: "POST",
+                    body: JSON.stringify(reqBody),
+                    headers: {
+                        "Content-Type": "application/json",
+                    }
+                })
+                    .then(res => res.json())
+                    .then(data => console.log(data));
+            } else {
+                console.log("Unauthorized User");
+            }
+        } else {
+            console.log("Not logged in")
+        }
     }
 
     function handleChange(e: any) {
