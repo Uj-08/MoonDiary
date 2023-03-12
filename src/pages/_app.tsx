@@ -17,6 +17,7 @@ const GlobalStyle = createGlobalStyle`
     overflow: overlay;
     scrollbar-gutter: stable;
     min-width: 1200px;
+    background-color: #ededed;
   }
 
   ::-webkit-scrollbar {

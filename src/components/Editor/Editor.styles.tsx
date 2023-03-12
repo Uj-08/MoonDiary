@@ -43,7 +43,7 @@ export const TitleText = styled.input`
 `;
 
 export const Button = styled.button`
-    margin: 5px 0;
+    margin-top: 5px;
     text-align: center;
     width: 100%;    
     padding: 12px 10px;
@@ -67,6 +67,7 @@ export const Span = styled.span``;
 export const PreviewContainer = styled.div`
     flex-basis: 100%;
     font-family: 'Montserrat', sans-serif;
+    background-color: #fff;
     ${Span} {
         display: block;
         font-size: 20px;
@@ -74,16 +75,16 @@ export const PreviewContainer = styled.div`
         text-transform: uppercase;
         font-weight: 700;
     }
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    min-height: 800px;
 `;
 
 export const Preview = styled.div`
     width: 100%;
-    border-radius: 8px;
     height: 100%;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     /* border: 2px solid #eee; */
-    min-height: 1000px;
-    overflow: hidden;
 `;
 
 export const PreviewImageContainer = styled.div`
@@ -135,4 +136,5 @@ export const RemoveImage = styled.div`
 
 export const PreviewData = styled.div`
     padding: 10px 20px;
+    padding-bottom: 40px;
 `;
