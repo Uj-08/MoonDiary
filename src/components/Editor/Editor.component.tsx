@@ -1,6 +1,6 @@
 import { useState, useRef, ReactNode } from "react"
 import { Editor } from "@tinymce/tinymce-react"
-import { Button, Container, EditorContainer, InputFileLabel, Preview, PreviewContainer, PreviewData, PreviewImageContainer, RemoveImage, Span } from "./Editor.styles";
+import { BlogTitle, BlogTitleContainer, Button, Container, EditorContainer, InputFileLabel, Preview, PreviewContainer, PreviewData, PreviewImageContainer, RemoveImage, Span, TitleText } from "./Editor.styles";
 import Image from "next/image";
 import parse from "html-react-parser";
 
@@ -8,6 +8,7 @@ import parse from "html-react-parser";
 function EditorComponent() {
     const editorRef = useRef<any>(null);
     const [preview, setPreview] = useState<string | ReactNode>("Write Something...");
+    const [title, setTitle] = useState("");
     const [file, setFile] = useState<string>("");
 
     let debounce: NodeJS.Timeout | undefined;
@@ -33,9 +34,13 @@ function EditorComponent() {
     }
 
     return (
+        <>
+        <BlogTitleContainer>
+            <BlogTitle>{title || "Blog Title..."}</BlogTitle>
+        </BlogTitleContainer>
         <Container>
             <PreviewContainer>
-                <Span>Preview:</Span>
+                {/* <Span>Preview:</Span> */}
                 <Preview>
                     <PreviewImageContainer>
                         <Image src={file || "/169.png"} alt={"16/9-ratio-image"} fill={true} />
@@ -49,6 +54,7 @@ function EditorComponent() {
                 </Preview>
             </PreviewContainer>
             <EditorContainer>
+                <TitleText type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Blog Title..." />
                 <Editor
                     apiKey={process.env.NEXT_PUBLIC_MCE_API}
                     onInit={(evt, editor) => {
@@ -65,6 +71,7 @@ function EditorComponent() {
                 </Button>
             </EditorContainer>
         </Container>
+        </>
     )
 }
 

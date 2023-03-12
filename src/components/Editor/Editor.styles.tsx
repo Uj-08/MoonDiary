@@ -1,7 +1,22 @@
 import styled from "styled-components";
 
+export const BlogTitleContainer = styled.div`
+    margin-top: 60px;
+    padding: 0 128px;
+`;
+
+export const BlogTitle = styled.div`
+    font-family: "Babylonica", cursive;
+    font-size: 96px;
+    text-align: center;
+    margin-bottom: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+`;
+
 export const Container = styled.div`
-    margin: 80px 0px;
     padding: 0px 128px;
     display: flex;
     justify-content: space-between;
@@ -11,6 +26,20 @@ export const Container = styled.div`
 
 export const EditorContainer = styled.div`
     flex-basis: 100%;
+`;
+
+export const TitleText = styled.input`
+    border-radius: 8px;
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 20px;
+    margin-bottom: 10px;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 2px -2px rgba(34,47,62,.1), 0 8px 8px -4px rgba(34,47,62,.07);
+    &:focus {
+        border: 1px solid #c4c4c4;
+        outline: none;
+    }
 `;
 
 export const Button = styled.button`
@@ -33,18 +62,7 @@ export const Button = styled.button`
     }
 `;
 
-export const Preview = styled.div`
-    border-radius: 8px;
-    height: 100%;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    /* border: 2px solid #eee; */
-    min-height: 1000px;
-    overflow: hidden;
-`;
-
-export const Span = styled.span`
-    
-`;
+export const Span = styled.span``;
 
 export const PreviewContainer = styled.div`
     flex-basis: 100%;
@@ -56,6 +74,16 @@ export const PreviewContainer = styled.div`
         text-transform: uppercase;
         font-weight: 700;
     }
+`;
+
+export const Preview = styled.div`
+    width: 100%;
+    border-radius: 8px;
+    height: 100%;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    /* border: 2px solid #eee; */
+    min-height: 1000px;
+    overflow: hidden;
 `;
 
 export const PreviewImageContainer = styled.div`
@@ -106,5 +134,5 @@ export const RemoveImage = styled.div`
 `;
 
 export const PreviewData = styled.div`
-    padding: 10px 10px;
+    padding: 10px 20px;
 `;

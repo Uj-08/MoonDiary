@@ -19,7 +19,9 @@ export const Wrapper = styled.div`
 `;
 
 export const LogoContainer = styled.div`
-    
+    img {
+        cursor: pointer;
+    }
 `;
 
 export const NavLinks = styled.ul`
