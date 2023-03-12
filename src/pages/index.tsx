@@ -7,7 +7,7 @@ import { COOKIE_NAME } from "@/constants"
 
 export default function Home( sessionId: string ) {
   return (
-      <Base sessionId={sessionId}>
+      <Base>
         <HeroSection />
         <ArticleGrid />
       </Base>
