@@ -7,6 +7,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if(req.method === "POST") {
         const body = req.body;
         const blogTitle = body.blogTitle;
+        const blogImg = body.blogImg
         const blogData = body.blogData;
         const authorName = body.authorName;
         const authorPicture = body.authorPicture;
@@ -15,6 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         const newBlog = {
             blogTitle: blogTitle,
+            blogImg: blogImg,
             blogData: blogData,
             authorName: authorName,
             authorPicture: authorPicture,

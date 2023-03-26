@@ -10,7 +10,8 @@ function EditorComponent({ sessionId }: {sessionId: string}) {
     const editorRef = useRef<any>(null);
     const [preview, setPreview] = useState<string | ReactNode>("Write Something...");
     const [title, setTitle] = useState("");
-    const [file, setFile] = useState<string>("");
+    const [imageLinkText, setImageLinkText] = useState("");
+    const [imageLink, setImageLink] = useState("");
 
     let debounce: NodeJS.Timeout | undefined;
 
@@ -33,6 +34,7 @@ function EditorComponent({ sessionId }: {sessionId: string}) {
                 const html = editorRef.current?.getContent();
                 const reqBody = {
                     blogTitle: title,
+                    blogImg: imageLink,
                     blogData: html,
                     authorName: authorObj.name,
                     authorPicture: authorObj.picture,
@@ -56,10 +58,6 @@ function EditorComponent({ sessionId }: {sessionId: string}) {
         }
     }
 
-    function handleChange(e: any) {
-        setFile(URL.createObjectURL(e.target.files[0]));
-    }
-
     return (
         <>
         <BlogTitleContainer>
@@ -70,10 +68,7 @@ function EditorComponent({ sessionId }: {sessionId: string}) {
                 {/* <Span>Preview:</Span> */}
                 <Preview>
                     <PreviewImageContainer>
-                        <Image src={file || "/169.png"} alt={"16/9-ratio-image"} fill={true} />
-                        {!file && <input id="image-upload" type="file" onChange={handleChange} accept="image/png, image/jpeg" style={{ display: "none" }} />}
-                        {!file && <InputFileLabel htmlFor="image-upload">&#8593; Upload Image</InputFileLabel>}
-                        {file && <RemoveImage onClick={() => setFile("")} >X Remove Image</RemoveImage>}
+                        <Image src={imageLink || "/4-3.png"} alt={"4/3-ratio-image"} fill={true} />
                     </PreviewImageContainer>
                     <PreviewData>
                         {preview}
@@ -82,6 +77,7 @@ function EditorComponent({ sessionId }: {sessionId: string}) {
             </PreviewContainer>
             <EditorContainer>
                 <TitleText type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Blog Title..." />
+                <TitleText type="text" value={imageLinkText} onChange={(e) => setImageLinkText(e.target.value)} onBlur={() => setImageLink(imageLinkText)} placeholder="Image Link" />
                 <Editor
                     apiKey={process.env.NEXT_PUBLIC_MCE_API}
                     onInit={(evt, editor) => {

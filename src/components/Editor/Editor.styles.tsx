@@ -90,10 +90,10 @@ export const Preview = styled.div`
 export const PreviewImageContainer = styled.div`
     position: relative;
     width: 100%;
-    height: 424px;
+    height: 30dvw;
     img {
         object-fit: cover;
-        aspect-ratio: 16/9;
+        aspect-ratio: 4/3;
     }
     input {
         position: absolute;
