@@ -11,7 +11,7 @@ import { Key } from "react";
             </Title>
             <Grid>
                 <Card/>
-                {blogs.map((blog: { _id: string; authorEmail: string; authorName: string; authorPicture: string; blogData: string; blogTitle: string; date: string; }, idx: Key | null | undefined) => {
+                {blogs.map((blog: any, idx: number) => {
                     return (
                         <DynamicCard key={idx} blog={blog}/>
                     )
