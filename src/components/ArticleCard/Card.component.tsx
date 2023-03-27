@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 export default function Card () {
     const router = useRouter();
     function routeHandler() {
-        router.push("/blogs");
+        router.push("/blogs/32r3fef");
     }
     return (
         <Container onClick={routeHandler}>

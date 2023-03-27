@@ -4,12 +4,27 @@ import ArticleGrid from "@/components/ArticleGrid/ArticleGrid.component"
 import { GetServerSideProps } from "next"
 import { hasCookie } from "cookies-next"
 import { COOKIE_NAME } from "@/constants"
+import { useEffect, useState } from "react"
 
 export default function Home( sessionId: string ) {
+
+  const [blogs, setBlogs] = useState([]);
+
+  useEffect(() => {
+    fetch("/api/blogs", {
+      method: "GET",
+      headers: {
+          "Content-Type": "application/json",
+      }
+      })
+      .then(res => res.json())
+      .then(blogList => setBlogs(blogList?.blogs));
+  }, []);
+
   return (
       <Base>
         <HeroSection />
-        <ArticleGrid />
+        <ArticleGrid blogs={blogs} />
       </Base>
   )
 };

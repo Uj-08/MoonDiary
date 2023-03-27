@@ -1,47 +1,36 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import fs from "fs";
-import path from "path";
-import { MongoClient } from 'mongodb';
+import connectDB from '@/middleware/mongoose';
+import BlogsModel from '@/models/Blogs.model';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+async function handler(req: NextApiRequest, res: NextApiResponse) {
     if(req.method === "POST") {
         const body = req.body;
-        const blogTitle = body.blogTitle;
-        const blogImg = body.blogImg
-        const blogData = body.blogData;
-        const authorName = body.authorName;
-        const authorPicture = body.authorPicture;
-        const authorEmail = body.authorEmail;
-        const date = body.date;
-
-        const newBlog = {
-            blogTitle: blogTitle,
-            blogImg: blogImg,
-            blogData: blogData,
-            authorName: authorName,
-            authorPicture: authorPicture,
-            authorEmail: authorEmail,
-            date: date,
-        };
-
-        // const filePath = path.join(process.cwd(), "data", "blogdata.json");
-        // const fileData = fs.readFileSync(filePath);
-        // const data = JSON.parse(fileData);
-        // data.push(newBlog);
-        // fs.writeFileSync(filePath, JSON.stringify(data));
+        let newBlog = new BlogsModel({
+            blogTitle: body.blogTitle,
+            blogImg: body.blogImg,
+            blogData: body.blogData,
+            authorName: body.authorName,
+            authorPicture: body.authorPicture,
+            authorEmail: body.authorEmail, 
+        });
         try {
-            const client = MongoClient.connect(process.env.DB as string);
-            const db = (await client).db();
-            await db.collection("blogs").insertOne(newBlog);
-            (await client).close();
+            await newBlog.save();
         } catch (err) {
             console.log(err);
             res.status(500).json({message: "Could not connect to database."})
         }
-        res.status(201).json({message: "Success", newBlog: newBlog})
+        res.status(201).json({message: "Success", newBlog })
     }
 
     if(req.method === "GET") {
-        res.status(200).json({ response: "data" })
+        try {
+            let blogs = await BlogsModel.find();
+            res.status(200).json({ blogs })
+        } catch(err) {
+            console.log("error: ", err);
+            res.status(500).json({error: err})
+        }
     }
 } 
+
+export default connectDB(handler);

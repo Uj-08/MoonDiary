@@ -39,7 +39,6 @@ function EditorComponent({ sessionId }: {sessionId: string}) {
                     authorName: authorObj.name,
                     authorPicture: authorObj.picture,
                     authorEmail: authorObj.email,
-                    date: Date.now(),
                 }
                 fetch("/api/blogs", {
                     method: "POST",

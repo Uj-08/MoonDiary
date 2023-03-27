@@ -49,6 +49,7 @@ export const BlogData = styled.p`
     -webkit-line-clamp: 5;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    min-height: 100px;
     /* height: 100%; */
 `;
 
@@ -76,6 +77,7 @@ export const AuthorDetail = styled.div`
     display: flex;
     flex-direction: column;
     font-family: "Arimo", sans-serif;
+    gap: 1px;
     div {
         &:first-child {
             font-weight: 700;
