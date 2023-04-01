@@ -21,9 +21,9 @@ import jwtDecode from "jwt-decode";
     
     return (
         <Container>
-            <Title>
+            {/* <Title>
                 Recent:
-            </Title>
+            </Title> */}
             <Grid>
                 {/* <Card/> */}
                 {blogs.map((blog: any, idx: number) => {
