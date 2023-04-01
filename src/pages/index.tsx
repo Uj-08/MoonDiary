@@ -51,7 +51,8 @@ export default function Home( sessionId: string ) {
       })
       .then(res => res.json())
       .then(blogList => setBlogs(blogList?.blogs))
-      .then(() => setLoading(false));
+
+      if(document.readyState === "complete") setLoading(false)
   }, []);
 
   return (
@@ -60,17 +61,14 @@ export default function Home( sessionId: string ) {
         loading &&
           <Loading>
             <div>
-              <Image src="/logo.png" alt="loading" fill={true} />
+              <Image src="/logo.png" alt="loading" fill={true}/>
             </div>
           </Loading>
       }
-      {
-        !loading &&
-        <Base>
-          <HeroSection />
-          <ArticleGrid blogs={blogs} />
-        </Base>
-      }
+      <Base>
+        <HeroSection/>
+        <ArticleGrid blogs={blogs}/>
+      </Base>
     </>
   )
 };
