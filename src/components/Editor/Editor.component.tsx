@@ -4,7 +4,7 @@ import { BlogTitle, BlogTitleContainer, Button, Container, EditorContainer, Inpu
 import Image from "next/image";
 import parse from "html-react-parser";
 import jwtDecode from "jwt-decode";
-
+import { useRouter } from "next/router";
 
 function EditorComponent({ sessionId }: {sessionId: string}) {
     const editorRef = useRef<any>(null);
@@ -12,6 +12,7 @@ function EditorComponent({ sessionId }: {sessionId: string}) {
     const [title, setTitle] = useState("");
     const [imageLinkText, setImageLinkText] = useState("");
     const [imageLink, setImageLink] = useState("");
+    const router = useRouter();
 
     let debounce: NodeJS.Timeout | undefined;
 
@@ -48,7 +49,8 @@ function EditorComponent({ sessionId }: {sessionId: string}) {
                     }
                 })
                     .then(res => res.json())
-                    .then(data => console.log(data));
+                    .then(data => console.log(data))
+                    .then(() => router.push("/"))
             } else {
                 console.log("Unauthorized User");
             }
