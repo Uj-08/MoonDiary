@@ -16,6 +16,10 @@ export const Loading = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
    div {
       position: relative;
       height: 70px;
@@ -51,13 +55,7 @@ export default function Home( sessionId: string ) {
   }, []);
 
   return (
-    <>
-      {!loading &&
-        <Base>
-          <HeroSection />
-          <ArticleGrid blogs={blogs} />
-        </Base>
-      }
+    <div style={{ overflow: `${loading ? "hidden" : ""}`, height: "100dvh"}}>
       {
         loading && (
           <Loading>
@@ -67,7 +65,11 @@ export default function Home( sessionId: string ) {
           </Loading>
         )
       }
-    </>
+      <Base>
+        <HeroSection />
+        <ArticleGrid blogs={blogs} />
+      </Base>
+    </div>
   )
 };
 
