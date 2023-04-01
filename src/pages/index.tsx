@@ -51,8 +51,7 @@ export default function Home( sessionId: string ) {
       })
       .then(res => res.json())
       .then(blogList => setBlogs(blogList?.blogs))
-
-      if(document.readyState === "complete") setLoading(false)
+      .then(() => setTimeout(() => setLoading(false), 500));
   }, []);
 
   return (
