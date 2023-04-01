@@ -55,21 +55,23 @@ export default function Home( sessionId: string ) {
   }, []);
 
   return (
-    <div style={{ overflow: `${loading ? "hidden" : ""}`, height: "100dvh"}}>
+    <>
       {
-        loading && (
+        loading &&
           <Loading>
             <div>
               <Image src="/logo.png" alt="loading" fill={true} />
             </div>
           </Loading>
-        )
       }
-      <Base>
-        <HeroSection />
-        <ArticleGrid blogs={blogs} />
-      </Base>
-    </div>
+      {
+        !loading &&
+        <Base>
+          <HeroSection />
+          <ArticleGrid blogs={blogs} />
+        </Base>
+      }
+    </>
   )
 };
 
