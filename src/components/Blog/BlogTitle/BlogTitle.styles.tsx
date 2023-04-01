@@ -8,8 +8,10 @@ export const BlogTitleContainer = styled.div`
 
 export const BlogTitle = styled.div`
     font-family: "Babylonica", cursive;
-    font-size: 96px;
+    font-size: 76px;
     text-align: center;
     margin-bottom: 10px;
+    padding: 20px 0;
     width: 100%;
+    font-weight: 600;
 `;

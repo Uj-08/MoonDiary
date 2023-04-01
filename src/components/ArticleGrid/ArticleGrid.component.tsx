@@ -1,5 +1,5 @@
  import { Container, Title, Grid } from "./ArticleGrid.styles";
- import Card from "../ArticleCard/Card.component";
+ import PostCard from "../ArticleCard/PostCard.component";
  import DynamicCard from "../ArticleCard/DynamicCard.component";
 import { Key } from "react";
  
@@ -10,12 +10,13 @@ import { Key } from "react";
                 Recent:
             </Title>
             <Grid>
-                <Card/>
+                {/* <Card/> */}
                 {blogs.map((blog: any, idx: number) => {
                     return (
                         <DynamicCard key={idx} blog={blog}/>
                     )
                 })}
+                <PostCard />
             </Grid>
         </Container>
     );

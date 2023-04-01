@@ -5,10 +5,38 @@ import { GetServerSideProps } from "next"
 import { hasCookie } from "cookies-next"
 import { COOKIE_NAME } from "@/constants"
 import { useEffect, useState } from "react"
+import styled from "styled-components"
+import Image from "next/image";
+
+export const Loading = styled.div`
+   background-color: white;
+   display: flex;
+   height: 100dvh;
+   width: 100dvw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   div {
+      position: relative;
+      height: 70px;
+      width: 70px;
+      animation: loadingAnimation 0.7s ease-in-out 0s infinite normal forwards;
+   }
+
+   @keyframes loadingAnimation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+   }
+`;
 
 export default function Home( sessionId: string ) {
 
   const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     fetch("/api/blogs", {
@@ -18,14 +46,28 @@ export default function Home( sessionId: string ) {
       }
       })
       .then(res => res.json())
-      .then(blogList => setBlogs(blogList?.blogs));
+      .then(blogList => setBlogs(blogList?.blogs))
+      .then(() => setLoading(false));
   }, []);
 
   return (
-      <Base>
-        <HeroSection />
-        <ArticleGrid blogs={blogs} />
-      </Base>
+    <>
+      {!loading &&
+        <Base>
+          <HeroSection />
+          <ArticleGrid blogs={blogs} />
+        </Base>
+      }
+      {
+        loading && (
+          <Loading>
+            <div>
+              <Image src="/logo.png" alt="loading" fill={true} />
+            </div>
+          </Loading>
+        )
+      }
+    </>
   )
 };
 
