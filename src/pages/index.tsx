@@ -24,34 +24,30 @@ export const Loading = styled.div`
       position: relative;
       height: 70px;
       width: 70px;
-      animation: loadingAnimation 0.7s ease-in-out 0s infinite normal forwards;
+      animation: loadingAnimation 1.5s ease-in-out 0s infinite alternate forwards;
    }
 
    @keyframes loadingAnimation {
-    from {
+    0% {
       transform: rotate(0deg);
     }
-    to {
+    50% {
       transform: rotate(360deg);
+    }
+    100% {
+      transform: rotate(720deg);
     }
    }
 `;
 
-export default function Home( sessionId: string ) {
+export default function Home({blogsData}: {blogsData: any}) {
 
-  const [blogs, setBlogs] = useState([]);
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    fetch("/api/blogs", {
-      method: "GET",
-      headers: {
-          "Content-Type": "application/json",
-      }
-      })
-      .then(res => res.json())
-      .then(blogList => setBlogs(blogList?.blogs))
-      .then(() => setTimeout(() => setLoading(false), 500));
+    setTimeout(() => {
+      setLoading(false);
+    }, 1500);
   }, []);
 
   return (
@@ -66,7 +62,7 @@ export default function Home( sessionId: string ) {
       }
       <Base>
         <HeroSection/>
-        <ArticleGrid blogs={blogs}/>
+        <ArticleGrid blogs={blogsData.blogs}/>
       </Base>
     </>
   )
@@ -80,10 +76,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     
   }
 
+  const resData = await fetch("https://next-moondiary.netlify.app/api/blogs");
+  const blogsData = await resData.json();
+      
 
   return {
     props: {
-      sessionId: "kejcbkwejcnewkjnc"
+      blogsData: blogsData
     }
   }
 }
