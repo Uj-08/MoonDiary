@@ -42,7 +42,7 @@ export const Loading = styled.div`
 
 export default function Home({blogsData}: {blogsData: any}) {
 
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     setTimeout(() => {
