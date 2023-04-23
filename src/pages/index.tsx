@@ -45,10 +45,9 @@ export default function Home({blogsData}: {blogsData: any}) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-  }, []);
+    if(blogsData) setLoading(false);
+    else setLoading(true);
+  }, [blogsData]);
 
   return (
     <>
