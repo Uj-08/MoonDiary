@@ -1,7 +1,8 @@
+import React, { useState, useEffect } from "react";
 import { AuthorDetail, AuthorProfile, BlogAuthor, BlogData, BlogHeader, BlogTitle, CardDetails, Container, ImageContainer } from "./Card.styles"
 import Image from "next/image";
 import { useRouter } from "next/router";
-import parse from "html-react-parser";
+// import parse from "html-react-parser";
 
 export interface DynamicCardTypes {
     blog: {
@@ -17,12 +18,31 @@ export interface DynamicCardTypes {
 }
 
 export default function DynamicCard ({ blog }: DynamicCardTypes) {
-    console.log(blog)
     const { _id, authorEmail, authorName, authorPicture, blogData, blogTitle, blogImg, updatedAt } = blog;
+    const [blogDataText, setBlogDataText] = useState(removeTags(blogData));
+    
+    useEffect(() => {
+        setBlogDataText(removeTags(blogData));
+    }, [blogData])
+    
+    console.log(blog)
+    
     const router = useRouter();
 
     function routeHandler() {
         router.push(`/blogs/${_id}`);
+    }
+
+    function removeTags(blogData: string) {
+        if ((blogData===null) || (blogData===''))
+            return false;
+        else
+        blogData = blogData.toString();
+              
+        // Regular expression to identify HTML tags in
+        // the input string. Replacing the identified
+        // HTML tag with a null string.
+        return blogData.replace( /(<([^>]+)>)/ig, '');
     }
 
     const formatter = new Intl.RelativeTimeFormat("en");
@@ -47,7 +67,7 @@ export default function DynamicCard ({ blog }: DynamicCardTypes) {
 
                 </BlogHeader>
                 <BlogTitle>{blogTitle}</BlogTitle>
-                <BlogData>{parse(blogData)}</BlogData>
+                <BlogData>{blogDataText}</BlogData>
                 <BlogAuthor>
                     <AuthorProfile>
                         <Image src={authorPicture} fill={true} alt="profile"/>
