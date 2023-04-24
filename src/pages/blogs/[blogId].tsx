@@ -29,12 +29,14 @@ export default function Blog() {
                     </div>
                 </Loading>
             }
-            <Base>
-                <BlogTitleComponent>
-                    {blogData?.blogTitle}
-                </BlogTitleComponent>
-                <BlogComponent blogImg={blogData?.blogImg} blogData={blogData?.blogData}/>
-            </Base>
+            {!loading &&
+                <Base>
+                    <BlogTitleComponent>
+                        {blogData?.blogTitle}
+                    </BlogTitleComponent>
+                    <BlogComponent blogImg={blogData?.blogImg} blogData={blogData?.blogData}/>
+                </Base>
+            }
         </>
     );
 }

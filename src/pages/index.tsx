@@ -59,10 +59,12 @@ export default function Home({blogsData}: {blogsData: any}) {
             </div>
           </Loading>
       }
-      <Base>
-        <HeroSection/>
-        <ArticleGrid blogs={blogsData.blogs}/>
-      </Base>
+      {!loading &&
+        <Base>
+          <HeroSection/>
+          <ArticleGrid blogs={blogsData.blogs}/>
+        </Base>
+      }
     </>
   )
 };
