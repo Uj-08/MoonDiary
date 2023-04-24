@@ -51,7 +51,7 @@ export default function DynamicCard ({ blog }: DynamicCardTypes) {
         const diff = new Date().getTime() - new Date(updatedAt).getTime();
         let diffTime = diff /(1000 * 60 * 60 * 24);
         if(diffTime > 1) {
-            relTime = formatter?.format(-(diffTime.toPrecision(2)), "days");
+            relTime = formatter?.format(-(Math.floor(diffTime)), "days");
         } else {
             diffTime = diff /(1000 * 60 * 60);
             relTime = formatter?.format(-(diffTime.toPrecision(2)), "hours");
