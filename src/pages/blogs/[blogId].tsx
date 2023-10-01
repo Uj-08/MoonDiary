@@ -5,38 +5,33 @@ import { useEffect, useState } from "react";
 import BlogComponent from "@/components/Blog/Blog.component";
 import { Loading } from "..";
 import Image from "next/image";
+import { GetServerSideProps } from "next";
 
-export default function Blog() {
-    const [blogData, setBlogData] = useState<{blogTitle: string, blogImg: string, blogData: string}>();
-    const [loading, setLoading] = useState(true);
-    const router = useRouter()
-    useEffect(() => {
-        if(router.isReady){
-            const blogId = router.query.blogId;
-            fetch(`/api/blogs/${blogId}`)
-            .then(data => data.json())
-            .then(data => setBlogData(data.blog))
-            .then(() => setLoading(false));
-        }
-    }, [router.isReady, router.query.blogId])
-    console.log(blogData)
+export default function Blog({ blogData }) {
+    console.log({ blogData })
     return (
         <>
-            { loading &&
-                <Loading>
-                    <div>
-                    <Image src="/logo.png" alt="loading" fill={true}/>
-                    </div>
-                </Loading>
-            }
-            {!loading &&
                 <Base>
                     <BlogTitleComponent>
                         {blogData?.blogTitle}
                     </BlogTitleComponent>
                     <BlogComponent blogImg={blogData?.blogImg} blogData={blogData?.blogData}/>
                 </Base>
-            }
         </>
     );
 }
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const { req, res, query } = context;
+
+    const blogId = query.blogId;
+
+    const resData = await fetch(`https://next-moondiary.netlify.app/api/blogs/${blogId}`);
+    const blogData = await resData.json();
+        
+    return {
+      props: {
+        blogData: blogData.blog
+      }
+    }
+  }
