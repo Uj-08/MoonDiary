@@ -3,6 +3,8 @@ import type { AppProps } from 'next/app';
 import { createGlobalStyle } from 'styled-components';
 import NextHead from 'next/head';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import { Provider } from 'react-redux';
+import { store } from '../redux/store';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -49,8 +51,10 @@ export default function App({ Component, pageProps }: AppProps) {
           <title>MoonDiary</title>
           <link rel="shortcut icon" href="/favicon.png" type="image/x-icon" />
         </NextHead>
-        <GlobalStyle />
-        <Component {...pageProps} />
+        <Provider store={store}>
+          <GlobalStyle />
+          <Component {...pageProps} />
+        </Provider>
     </GoogleOAuthProvider>
   )
 }

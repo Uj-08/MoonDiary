@@ -5,6 +5,9 @@ import Image from "next/image";
 import parse from "html-react-parser";
 import jwtDecode from "jwt-decode";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/redux/store";
+import { updateIsEditorInit } from "@/redux/slices/blogInfo";
 
 function EditorComponent({ sessionId }: {sessionId: string}) {
     const editorRef = useRef<any>(null);
@@ -13,6 +16,7 @@ function EditorComponent({ sessionId }: {sessionId: string}) {
     const [imageLinkText, setImageLinkText] = useState("");
     const [imageLink, setImageLink] = useState("");
     const router = useRouter();
+    const dispatch = useDispatch<AppDispatch>();
 
     let debounce: NodeJS.Timeout | undefined;
 
@@ -82,6 +86,7 @@ function EditorComponent({ sessionId }: {sessionId: string}) {
                 <Editor
                     apiKey={process.env.NEXT_PUBLIC_MCE_API}
                     onInit={(evt, editor) => {
+                        dispatch(updateIsEditorInit(true));
                         editorRef.current = editor
                     }}
                     onKeyUp={keyUpHandler}

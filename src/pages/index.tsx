@@ -4,9 +4,7 @@ import ArticleGrid from "@/components/ArticleGrid/ArticleGrid.component"
 import { GetServerSideProps } from "next"
 import { hasCookie } from "cookies-next"
 import { COOKIE_NAME } from "@/constants"
-import { useEffect, useState } from "react"
 import styled from "styled-components"
-import Image from "next/image";
 
 export const Loading = styled.div`
    background-color: white;
@@ -42,30 +40,11 @@ export const Loading = styled.div`
 
 export default function Home({blogsData}: {blogsData: any}) {
 
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    if(blogsData) setLoading(false);
-    else setLoading(true);
-  }, [blogsData]);
-
   return (
-    <>
-      {
-        loading &&
-          <Loading>
-            <div>
-              <Image src="/logo.png" alt="loading" fill={true}/>
-            </div>
-          </Loading>
-      }
-      {!loading &&
-        <Base>
-          <HeroSection/>
-          <ArticleGrid blogs={blogsData.blogs}/>
-        </Base>
-      }
-    </>
+    <Base>
+      <HeroSection/>
+      <ArticleGrid blogs={blogsData.blogs}/>
+    </Base>
   )
 };
 
