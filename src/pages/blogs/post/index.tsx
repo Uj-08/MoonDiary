@@ -8,20 +8,11 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { Loading } from "@/pages";
 import Image from "next/image";
+import { GetServerSideProps } from "next";
 
 
-function BlogPost() {
-
-    const [sessionId, setSessionId] = useState("")
+function BlogPost({ sessionId }: { sessionId: string }) {
     const isEditorInit = useSelector((state: RootState) => state.blogInfo.isEditorInit);
-
-    useEffect(() => {
-        if(hasCookie(COOKIE_NAME)) {
-            const sessionToken = getCookie(COOKIE_NAME) as string;
-            setSessionId(sessionToken);
-        }
-    }, [sessionId])
-
     return (
         <>
             <NextHead>
@@ -42,3 +33,28 @@ function BlogPost() {
 }
 
 export default BlogPost;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const { req, res } = context;
+
+    const isSessionAvailable = hasCookie(COOKIE_NAME, {req, res})
+
+    let sessionId;
+
+    if(isSessionAvailable) {
+         sessionId = getCookie(COOKIE_NAME, {req, res});
+    } else {
+        return {
+            redirect: {
+                permanent: false,
+                destination: "/"
+            }
+        }
+    }
+
+    return {
+      props: {
+        sessionId
+      }
+    }
+  }
