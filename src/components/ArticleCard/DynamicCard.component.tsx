@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { AuthorDetail, AuthorProfile, BlogAuthor, BlogData, BlogHeader, BlogTitle, CardDetails, Container, ImageContainer } from "./Card.styles"
+import { AuthorDetail, AuthorProfile, BlogAuthor, BlogData, BlogHeader, BlogTitle, ButtonsContainer, CardDetails, Container, DeleteButton, EditButton, ImageContainer } from "./Card.styles"
 import Image from "next/image";
 import { useRouter } from "next/router";
 // import parse from "html-react-parser";
@@ -13,11 +13,12 @@ export interface DynamicCardTypes {
         blogData: string,
         blogTitle: string,
         blogImg: string,
-        updatedAt: string
-    }
+        updatedAt: string,
+    },
+    clientEmail?: string,
 }
 
-export default function DynamicCard ({ blog }: DynamicCardTypes) {
+export default function DynamicCard ({ blog, clientEmail }: DynamicCardTypes) {
     const { _id, authorEmail, authorName, authorPicture, blogData, blogTitle, blogImg, updatedAt } = blog;
     const [blogDataText, setBlogDataText] = useState(removeTags(blogData));
     
@@ -76,6 +77,12 @@ export default function DynamicCard ({ blog }: DynamicCardTypes) {
                         <div>{authorName}</div>
                         <div>{relTime || "unknown"}</div>
                     </AuthorDetail>
+                    {clientEmail === authorEmail &&
+                        <ButtonsContainer>
+                            <EditButton>Edit</EditButton>
+                            <DeleteButton>Delete</DeleteButton>
+                        </ButtonsContainer>
+                    }
                 </BlogAuthor>
             </CardDetails>
         </Container>

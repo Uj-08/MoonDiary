@@ -20,6 +20,37 @@ export const ImageContainer = styled.div`
     }
 `;
 
+export const ButtonsContainer = styled.div`
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    margin-left: auto;
+    font-size: 13px;
+    gap: 8px;
+    padding-right: 8px;
+`;
+
+export const EditButton = styled.button`
+    all: unset;
+    border-radius: 8px;
+    border: 1px solid #0073E6;
+    padding: 5px 8px;
+    background-color: #ffff;
+    color: #0073E6;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    opacity: 0.6;
+    transition: opacity linear 0.3s;
+    :hover {
+        opacity: 1;
+    }
+`;
+
+export const DeleteButton = styled(EditButton)`
+    background-color: #ffff;
+    border: 1px solid #FF5A5F;
+    color: #FF5A5F;
+`;
+
 export const CardDetails = styled.div`
     padding: 5px 10px;
     overflow: hidden;

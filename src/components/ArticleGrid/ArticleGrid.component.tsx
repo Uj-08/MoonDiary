@@ -28,11 +28,11 @@ import jwtDecode from "jwt-decode";
                 {/* <Card/> */}
                 {blogs.map((blog: any, idx: number) => {
                     return (
-                        <DynamicCard key={idx} blog={blog}/>
+                        <DynamicCard key={idx} blog={blog} clientEmail={client?.email} />
                     )
                 })}
                 {
-                    client && (client?.email === "ujjwalpandey24@gmail.com" || "sinhashairee6@gmail.com") &&
+                    client && (client?.email === "ujjwalpandey24@gmail.com" || client?.email === "sinhashairee6@gmail.com") &&
                     <PostCard />
                 }
             </Grid>
