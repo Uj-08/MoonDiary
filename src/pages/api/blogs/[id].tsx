@@ -13,6 +13,16 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
             res.status(500).json({error: err})
         }
     }
+    else if(req.method === "DELETE") {
+        const {id} = req.query;
+        try {
+            await BlogsModel.findByIdAndDelete(id);
+            res.status(200).json({ id });
+        } catch(err) {
+            console.log("error: ", err);
+            res.status(500).json({error: err})
+        }
+    }
 } 
 
 export default connectDB(handler);

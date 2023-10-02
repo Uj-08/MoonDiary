@@ -43,12 +43,20 @@ export const EditButton = styled.button`
     :hover {
         opacity: 1;
     }
+    :active {
+        background-color: #0073E6;
+        color: #ffff;
+    }
 `;
 
 export const DeleteButton = styled(EditButton)`
     background-color: #ffff;
     border: 1px solid #FF5A5F;
     color: #FF5A5F;
+    :active {
+        background-color: #FF5A5F;
+        color: #ffff;
+    }
 `;
 
 export const CardDetails = styled.div`

@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import ReactDOM from "react-dom";
 import styled from "styled-components";
 
@@ -20,10 +20,19 @@ const Container = styled.div`
 
 interface ModalTypes {
     children: ReactNode
-    hideModal: () => void;
+    hideModal: (e: any) => void;
 }
 
+
 export default function Modal({ children, hideModal }: ModalTypes) {
+    useEffect(() => {
+        if(document !== undefined) {
+            document.body.style.overflow = "hidden";
+        }
+        return () => {
+            document.body.style.overflow = "auto";
+        }
+    }, [])
     return (
         <>
             {ReactDOM.createPortal(

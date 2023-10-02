@@ -1,7 +1,5 @@
 import Base from "@/containers/Base/Base";
 import BlogTitleComponent from "@/components/Blog/BlogTitle/BlogTitle.component";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import BlogComponent from "@/components/Blog/Blog.component";
 import { GetServerSideProps } from "next";
 
@@ -17,7 +15,7 @@ export default function Blog({ blogData }: { blogData: { blogTitle: string; blog
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    const { req, res, query } = context;
+    const { query } = context;
 
     const blogId = query.blogId;
 

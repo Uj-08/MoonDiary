@@ -12,7 +12,7 @@ import { useEffect } from "react";
 import { updateIsEditorInit } from "@/redux/slices/blogInfo";
 
 
-function BlogPost({ sessionId }: { sessionId: string }) {
+function BlogPost({ sessionId, blogData }: { sessionId: string; blogData: { blogTitle: string; blogImg: string; blogData: string } }) {
     const isEditorInit = useSelector((state: RootState) => state.blogInfo.isEditorInit);
     const dispatch = useDispatch<AppDispatch>();
     useEffect(() => {
@@ -33,7 +33,7 @@ function BlogPost({ sessionId }: { sessionId: string }) {
               </Loading>
             }
             <Base>  
-                <EditorComponent sessionId={sessionId}/>
+                <EditorComponent blogData={blogData} sessionId={sessionId}/>
             </Base>
         </>
     )
@@ -42,9 +42,12 @@ function BlogPost({ sessionId }: { sessionId: string }) {
 export default BlogPost;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    const { req, res } = context;
+    const { req, res, query } = context;
+    const blogId = query.blogId;
 
     const isSessionAvailable = hasCookie(COOKIE_NAME, {req, res})
+    const resData = await fetch(`https://next-moondiary.netlify.app/api/blogs/${blogId}`);
+    const blogData = await resData.json();
 
     let sessionId;
 
@@ -61,6 +64,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     return {
       props: {
+        blogData: blogData.blog,
         sessionId
       }
     }

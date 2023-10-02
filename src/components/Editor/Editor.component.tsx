@@ -1,20 +1,20 @@
-import { useState, useRef, ReactNode } from "react"
+import { useState, useRef, ReactNode, useEffect } from "react"
 import { Editor } from "@tinymce/tinymce-react"
 import { BlogTitle, BlogTitleContainer, Button, Container, EditorContainer, InputFileLabel, Preview, PreviewContainer, PreviewData, PreviewImageContainer, RemoveImage, Span, TitleText } from "./Editor.styles";
 import Image from "next/image";
 import parse from "html-react-parser";
 import jwtDecode from "jwt-decode";
 import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/redux/store";
 import { updateIsEditorInit } from "@/redux/slices/blogInfo";
 
-function EditorComponent({ sessionId }: {sessionId: string}) {
+function EditorComponent({ sessionId, blogData }: {sessionId: string; blogData?: { blogTitle: string; blogImg: string; blogData: string }}) {
     const editorRef = useRef<any>(null);
-    const [preview, setPreview] = useState<string | ReactNode>("Write Something...");
-    const [title, setTitle] = useState("");
-    const [imageLinkText, setImageLinkText] = useState("");
-    const [imageLink, setImageLink] = useState("");
+    const [preview, setPreview] = useState<string | ReactNode>(blogData?.blogData ? parse(blogData?.blogData) : "Write Something...");
+    const [title, setTitle] = useState(blogData?.blogTitle || "");
+    const [imageLinkText, setImageLinkText] = useState(blogData?.blogImg || "");
+    const [imageLink, setImageLink] = useState(blogData?.blogImg || "");
     const router = useRouter();
     const dispatch = useDispatch<AppDispatch>();
 
@@ -84,10 +84,11 @@ function EditorComponent({ sessionId }: {sessionId: string}) {
                 <TitleText type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Blog Title..." />
                 <TitleText type="text" value={imageLinkText} onChange={(e) => setImageLinkText(e.target.value)} onBlur={() => setImageLink(imageLinkText)} placeholder="Image Link" />
                 <Editor
+                    initialValue={blogData?.blogData || "Type here..."}
                     apiKey={process.env.NEXT_PUBLIC_MCE_API}
                     onInit={(evt, editor) => {
                         dispatch(updateIsEditorInit(true));
-                        editorRef.current = editor
+                        editorRef.current = editor;
                     }}
                     onKeyUp={keyUpHandler}
                     init={{

@@ -5,6 +5,7 @@ import NextHead from 'next/head';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { Provider } from 'react-redux';
 import { store } from '../redux/store';
+import NextNProgress from 'nextjs-progressbar';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -53,6 +54,7 @@ export default function App({ Component, pageProps }: AppProps) {
         </NextHead>
         <Provider store={store}>
           <GlobalStyle />
+          <NextNProgress color="#b101b1" height={2} />
           <Component {...pageProps} />
         </Provider>
     </GoogleOAuthProvider>
