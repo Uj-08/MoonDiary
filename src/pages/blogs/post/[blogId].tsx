@@ -12,7 +12,7 @@ import { useEffect } from "react";
 import { updateIsEditorInit } from "@/redux/slices/blogInfo";
 
 
-function BlogPost({ sessionId, blogData }: { sessionId: string; blogData: { blogTitle: string; blogImg: string; blogData: string } }) {
+function BlogPost({ sessionId, blogData }: { sessionId: string; blogData: { blogTitle: string; blogImg: string; blogData: string; blogId: string } }) {
     const isEditorInit = useSelector((state: RootState) => state.blogInfo.isEditorInit);
     const dispatch = useDispatch<AppDispatch>();
     useEffect(() => {
@@ -64,7 +64,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     return {
       props: {
-        blogData: blogData.blog,
+        blogData: {
+            ...blogData.blog,
+            blogId
+        },
         sessionId
       }
     }

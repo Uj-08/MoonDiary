@@ -14,15 +14,16 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
             authorEmail: body.authorEmail, 
         });
         try {
-            await newBlog.save();
+            const savedObj = await newBlog.save();
+            const id = savedObj._id;
+            res.status(201).json({ id })
         } catch (err) {
             console.log(err);
             res.status(500).json({message: "Could not connect to database."})
         }
-        res.status(201).json({message: "Success", newBlog })
     }
 
-    if(req.method === "GET") {
+    else if(req.method === "GET") {
         try {
             let blogs = await BlogsModel.find();
             res.status(200).json({ blogs })

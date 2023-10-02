@@ -7,9 +7,9 @@ import jwtDecode from "jwt-decode";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
-import { updateIsEditorInit } from "@/redux/slices/blogInfo";
+import { postBlog, resetCreatedBlogId, updateBlog, updateIsEditorInit } from "@/redux/slices/blogInfo";
 
-function EditorComponent({ sessionId, blogData }: {sessionId: string; blogData?: { blogTitle: string; blogImg: string; blogData: string }}) {
+function EditorComponent({ sessionId, blogData }: {sessionId: string; blogData?: { blogTitle: string; blogImg: string; blogData: string; blogId: string }}) {
     const editorRef = useRef<any>(null);
     const [preview, setPreview] = useState<string | ReactNode>(blogData?.blogData ? parse(blogData?.blogData) : "Write Something...");
     const [title, setTitle] = useState(blogData?.blogTitle || "");
@@ -17,8 +17,16 @@ function EditorComponent({ sessionId, blogData }: {sessionId: string; blogData?:
     const [imageLink, setImageLink] = useState(blogData?.blogImg || "");
     const router = useRouter();
     const dispatch = useDispatch<AppDispatch>();
+    const createdBlogId = useSelector((state: RootState) => state.blogInfo.blogPostUpdateStatus.createdBlogId)
 
     let debounce: NodeJS.Timeout | undefined;
+
+    useEffect(() => {
+        if(createdBlogId) {
+            dispatch(resetCreatedBlogId());
+            router.push("/");
+        }
+    }, [createdBlogId])
 
     function keyUpHandler() {
         clearTimeout(debounce);
@@ -33,34 +41,61 @@ function EditorComponent({ sessionId, blogData }: {sessionId: string; blogData?:
     }
 
     function submitHandler() {
-        if(sessionId !== ""){
+        if(sessionId !== "" ) {
             const authorObj: {name?: string, picture?:string, email?:string} = jwtDecode(sessionId);
-            if(authorObj?.email === "ujjwalpandey24@gmail.com" || authorObj?.email === "sinhashairee6@gmail.com") {
+            if(blogData) {
+                const html = editorRef.current?.getContent();
+                const reqBody = {
+                    blogId: blogData.blogId,
+                    blogTitle: title,
+                    blogImg: imageLink,
+                    blogData: html,
+                    authorName: authorObj.name as string,
+                    authorPicture: authorObj.picture as string,
+                    authorEmail: authorObj.email as string,
+                }
+                dispatch(updateBlog(reqBody));
+            } else {
                 const html = editorRef.current?.getContent();
                 const reqBody = {
                     blogTitle: title,
                     blogImg: imageLink,
                     blogData: html,
-                    authorName: authorObj.name,
-                    authorPicture: authorObj.picture,
-                    authorEmail: authorObj.email,
+                    authorName: authorObj.name as string,
+                    authorPicture: authorObj.picture as string,
+                    authorEmail: authorObj.email as string,
                 }
-                fetch("/api/blogs", {
-                    method: "POST",
-                    body: JSON.stringify(reqBody),
-                    headers: {
-                        "Content-Type": "application/json",
-                    }
-                })
-                    .then(res => res.json())
-                    .then(data => console.log(data))
-                    .then(() => router.push("/"))
-            } else {
-                console.log("Unauthorized User");
+                dispatch(postBlog(reqBody));
             }
-        } else {
-            console.log("Not logged in")
         }
+        // if(sessionId !== ""){
+        //     const authorObj: {name?: string, picture?:string, email?:string} = jwtDecode(sessionId);
+        //     if(authorObj?.email === "ujjwalpandey24@gmail.com" || authorObj?.email === "sinhashairee6@gmail.com") {
+        //         const html = editorRef.current?.getContent();
+        //         const reqBody = {
+        //             blogTitle: title,
+        //             blogImg: imageLink,
+        //             blogData: html,
+        //             authorName: authorObj.name,
+        //             authorPicture: authorObj.picture,
+        //             authorEmail: authorObj.email,
+        //         }
+        //         fetch("/api/blogs", {
+        //             method: "POST",
+        //             body: JSON.stringify(reqBody),
+        //             headers: {
+        //                 "Content-Type": "application/json",
+        //             }
+        //         })
+        //             .then(res => res.json())
+        //             .then(data => console.log(data))
+        //             .then(() => router.push("/"))
+        //     } else {
+        //         console.log("Unauthorized User");
+        //     }
+        // } else {
+        //     console.log("Not logged in")
+        // }
     }
 
     return (
@@ -97,7 +132,7 @@ function EditorComponent({ sessionId, blogData }: {sessionId: string; blogData?:
                     }}
                 />
                 <Button onClick={submitHandler}>
-                    Submit
+                    { blogData?.blogTitle ? "Update" : "Submit" }
                 </Button>
             </EditorContainer>
         </Container>
