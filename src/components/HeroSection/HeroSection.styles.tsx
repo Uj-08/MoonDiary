@@ -10,10 +10,13 @@ export const Container = styled.section`
     display: flex;
     align-items: center;
     justify-content: center;
-    h1{
+    h1 {
         font-size: 6rem;
         color: white;
         font-family: 'Dancing Script', cursive;
+        @media (max-width: 1200px) {
+            font-size: 4rem;
+        }
     }
     &:before {
         content: "";
@@ -28,6 +31,9 @@ export const Container = styled.section`
         background-position: 0 -100px;
         z-index: -2;
         filter: blur(3px);
+        @media (max-width: 1200px) {
+            background-position: 0 0px;
+        }
     }
     &:after {
         content: "";

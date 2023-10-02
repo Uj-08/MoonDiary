@@ -16,6 +16,9 @@ export const Wrapper = styled.header`
     width: 100%;
     background-color: white;
     box-shadow: rgb(0 0 0 / 10%) 0px 0px 5px 0px, rgb(0 0 0 / 10%) 0px 0px 1px 0px;
+    @media (max-width: 1200px) {
+        padding: 0 4rem;
+    }
 `;
 
 export const LogoContainer = styled.div`
@@ -28,6 +31,9 @@ export const NavLinks = styled.ul`
     display: flex;
     list-style: none;
     gap: 4rem;
+    @media (max-width: 1200px) {
+        gap: 2rem;
+    }
     li {
         cursor: pointer;
         text-transform: uppercase;
