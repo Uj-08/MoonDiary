@@ -12,7 +12,7 @@ export const Footer = styled.footer`
     height: 120px;
     width: 100%;
     gap: 20px;
-    margin-top: 150px;
+    margin-top: 100px;
 
     ul {
         list-style: none;

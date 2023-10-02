@@ -12,6 +12,7 @@ export const Container = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    justify-self: center;
     div {
         svg {
             transform: scale(2);

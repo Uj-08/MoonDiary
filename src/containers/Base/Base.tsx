@@ -32,7 +32,14 @@ export default function Base({children}: BaseTypes) {
 
 
     const Container = styled.div<{ showModal?: boolean }>`
+        display: flex;
+        flex-direction: column;
+        min-height: 100dvh;
         filter: ${props => props.showModal ? "blur(5px)" : ""};
+    `;
+
+    const ContentWrapper = styled.div`
+        flex: 1;
     `;
 
     function signInHandler() {
@@ -61,7 +68,9 @@ export default function Base({children}: BaseTypes) {
     return (
         <Container showModal={showModal}>
             <Navbar signInHandler={signInHandler} signedIn={signedIn} />
+            <ContentWrapper>
                 {children}
+            </ContentWrapper>
             <FooterComponent />
             {showModal &&
                 <Modal hideModal={hideModal}>
