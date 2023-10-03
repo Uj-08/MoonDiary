@@ -5,6 +5,12 @@ export const Container = styled.section`
     @media (max-width: 1200px) {
         padding: 0 4rem;
     }
+    @media (max-width: 812px) {
+        padding: 0 2rem;
+    }
+    @media (max-width: 450px) {
+        padding: 0 1rem;
+    }
 `;
 
 export const Title = styled.h2`

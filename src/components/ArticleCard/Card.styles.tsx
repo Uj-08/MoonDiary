@@ -12,7 +12,7 @@ export const Container = styled.div`
 
 export const ImageContainer = styled.div`
     position: relative;
-    height: 50%;
+    aspect-ratio: 4/3;
     img {
         width: 100%;
         aspect-ratio: 4/3;

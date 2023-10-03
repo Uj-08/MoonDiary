@@ -10,18 +10,33 @@ export const PreviewContainer = styled.div`
     border-radius: 8px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     min-height: 800px;
+    @media (max-width: 1200px) {
+        margin: 0 4rem;
+    }
+    @media (max-width: 920px) {
+        max-width: 100%;
+    }
+    @media (max-width: 812px) {
+        margin: 0 2rem;
+    }
+    @media (max-width: 450px) {
+        margin: 0 1rem;
+    }
 `;
 
 export const Preview = styled.div`
     width: 100%;
     height: 100%;
     /* border: 2px solid #eee; */
+    @media (max-width: 920px) {
+        aspect-ratio: 4/3;
+    }
 `;
 
 export const PreviewImageContainer = styled.div`
     position: relative;
     width: 100%;
-    height: 45dvw;
+    aspect-ratio: 4/3;
     img {
         object-fit: cover;
         aspect-ratio: 4/3;

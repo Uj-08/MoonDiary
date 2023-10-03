@@ -137,4 +137,16 @@ export const RemoveImage = styled.div`
 export const PreviewData = styled.div`
     padding: 10px 20px;
     padding-bottom: 40px;
+    @media (max-width: 670px) {
+        font-size: 95%;
+    }
+    @media (max-width: 570px) {
+        font-size: 90%;
+    }
+    @media (max-width: 470px) {
+        font-size: 85%
+    }
+    @media (max-width: 400px) {
+        font-size: 80%
+    }
 `;

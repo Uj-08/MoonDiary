@@ -19,6 +19,12 @@ export const Wrapper = styled.header`
     @media (max-width: 1200px) {
         padding: 0 4rem;
     }
+    @media (max-width: 812px) {
+        padding: 0 2rem;
+    }
+    @media (max-width: 450px) {
+        padding: 0 1rem;
+    }
 `;
 
 export const LogoContainer = styled.div`
@@ -33,6 +39,9 @@ export const NavLinks = styled.ul`
     gap: 4rem;
     @media (max-width: 1200px) {
         gap: 2rem;
+    }
+    @media (max-width: 950px) {
+        display: none;
     }
     li {
         cursor: pointer;
@@ -61,5 +70,8 @@ export const SocialLinks = styled.ul`
     li:hover {
         background-color: #51b016;
         filter: invert(1);
+    }
+    @media (max-width: 950px) {
+        display: none;
     }
 `;
