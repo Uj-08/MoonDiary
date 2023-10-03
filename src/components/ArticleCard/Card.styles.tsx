@@ -105,7 +105,7 @@ export const BlogAuthor = styled.div`
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 `;
 
 export const AuthorProfile = styled.div`
