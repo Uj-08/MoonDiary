@@ -128,7 +128,7 @@ function EditorComponent({ sessionId, blogData }: {sessionId: string; blogData?:
                     onKeyUp={keyUpHandler}
                     init={{
                         height: 700,
-                        content_style: "@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap'); * { font-family: \"Montserrat\", sans-serif;}",
+                        content_style: "@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap'); * { font-family: \"Montserrat\", sans-serif;}  @media (max-width: 670px) {body {font-size: 95%;}} @media (max-width: 570px) {body {font-size: 90%;}} @media (max-width: 470px) {body {font-size: 85%;}} @media (max-width: 400px) {body {font-size: 80%;}}",
                     }}
                 />
                 <Button onClick={submitHandler}>

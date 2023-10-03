@@ -28,7 +28,15 @@ export const Wrapper = styled.header`
 `;
 
 export const LogoContainer = styled.div`
+    position: relative;
+    aspect-ratio: 1;
+    width: 45px;
+    @media (max-width: 450px) {
+        width: 35px;
+    }
     img {
+        height: 100%;
+        width: 100%;
         cursor: pointer;
     }
 `;
@@ -73,5 +81,23 @@ export const SocialLinks = styled.ul`
     }
     @media (max-width: 950px) {
         display: none;
+    }
+`;
+
+export const HamburgerButton = styled.button<{ enabled?: boolean }>`
+    border: none;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    height: 45px;
+    width: 45px;
+    padding: 11px 5px;
+    gap: 5px;
+    span {
+        display: block;
+        background-color: black;
+        width: 100%;
+        height: 3px;
+        border-radius: 8px;
     }
 `;

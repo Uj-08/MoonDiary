@@ -66,30 +66,38 @@ export const CardDetails = styled.div`
     height: min-content;
     display: flex;
     flex-direction: column;
+    height: calc(100% - 247.5px);
     gap: 5px;
     * {
         /* border: 2px solid red; */
     }
 `;
 
+export const MainContent = styled.div`
+    flex: 1;
+`;
+
 export const BlogHeader = styled.div`
     height: 15px;
     /* background-color: red; */
-`;
+    `;
 
 export const BlogTitle = styled.h2`
     font-family: "Arimo", sans-serif;
     text-align: left;
+    margin-bottom: 5px;
+    @media (max-width: 1200px) {
+        font-size: 1.3rem;
+    }
 `;
 
 export const BlogData = styled.p`
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     text-align: left;
     display: -webkit-box;
-    -webkit-line-clamp: 5;
+    -webkit-line-clamp: 6;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    min-height: 100px;
     /* height: 100%; */
 `;
 
@@ -97,7 +105,7 @@ export const BlogAuthor = styled.div`
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-top: 25px;
+    margin-bottom: 20px;
 `;
 
 export const AuthorProfile = styled.div`

@@ -2,7 +2,16 @@ import styled from "styled-components";
 
 export const BlogTitleContainer = styled.div`
     margin-top: 60px;
-    padding: 0 128px;
+    padding: 0 8rem;
+    @media (max-width: 1200px) {
+        padding: 0 4rem;
+    }
+    @media (max-width: 812px) {
+        padding: 0 2rem;
+    }
+    @media (max-width: 450px) {
+        padding: 0 1rem;
+    }
 `;
 
 export const BlogTitle = styled.div`
@@ -14,14 +23,34 @@ export const BlogTitle = styled.div`
     white-space: nowrap;
     text-overflow: ellipsis;
     width: 100%;
+    @media (max-width: 670px) {
+        font-size: 60px;
+    }
+    @media (max-width: 570px) {
+        font-size: 55px;
+    }
+    @media (max-width: 470px) {
+        font-size: 45px;
+    }
 `;
 
 export const Container = styled.div`
-    padding: 0px 128px;
+    padding: 0px 8rem;
     display: flex;
     justify-content: space-between;
     gap: 20px;
-
+    @media (max-width: 1200px) {
+        padding: 0 4rem;
+    }
+    @media (max-width: 1000px) {
+        flex-direction: column-reverse;
+    }
+    @media (max-width: 812px) {
+        padding: 0 2rem;
+    }
+    @media (max-width: 450px) {
+        padding: 0 1rem;
+    }
 `;
 
 export const EditorContainer = styled.div`
@@ -39,6 +68,9 @@ export const TitleText = styled.input`
     &:focus {
         border: 1px solid #c4c4c4;
         outline: none;
+    }
+    @media (max-width: 570px) {
+        font-size: 15px;
     }
 `;
 
@@ -90,7 +122,7 @@ export const Preview = styled.div`
 export const PreviewImageContainer = styled.div`
     position: relative;
     width: 100%;
-    height: 30dvw;
+    aspect-ratio: 4/3;
     img {
         object-fit: cover;
         aspect-ratio: 4/3;

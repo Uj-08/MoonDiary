@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { AuthorDetail, AuthorProfile, BlogAuthor, BlogData, BlogHeader, BlogTitle, ButtonsContainer, CardDetails, Container, DeleteButton, EditButton, ImageContainer } from "./Card.styles"
+import { AuthorDetail, AuthorProfile, BlogAuthor, BlogData, BlogHeader, BlogTitle, ButtonsContainer, CardDetails, Container, DeleteButton, EditButton, ImageContainer, MainContent } from "./Card.styles"
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
@@ -97,11 +97,13 @@ export default function DynamicCard ({ blog, clientEmail }: DynamicCardTypes) {
                 <Image src={blogImg || "https://www.urbansplash.co.uk/images/placeholder-16-9.jpg"} fill={true} alt={"card-hero-img"}/>
             </ImageContainer>
             <CardDetails>
-                <BlogHeader>
-
-                </BlogHeader>
-                <BlogTitle>{blogTitle}</BlogTitle>
-                <BlogData>{blogDataText}</BlogData>
+                <MainContent>
+                    <BlogHeader>
+                        {/* to be added */}
+                    </BlogHeader>
+                    <BlogTitle>{blogTitle}</BlogTitle>
+                    <BlogData>{blogDataText}</BlogData>
+                </MainContent>
                 <BlogAuthor>
                     <AuthorProfile>
                         <Image src={authorPicture} fill={true} alt="profile"/>
