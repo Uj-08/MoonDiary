@@ -82,7 +82,7 @@ export const SocialLinks = styled.ul<{ isHamburger?: boolean }>`
     margin: ${props => props.isHamburger && "0 -16px"};
     li {
         cursor: pointer;
-        /* padding: 0 18px; */
+        padding: 0 18px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -100,7 +100,6 @@ export const SocialLinks = styled.ul<{ isHamburger?: boolean }>`
 export const HamburgerButton = styled.button<{ enabled?: boolean }>`
     border: none;
     background-color: transparent;
-    display: flex;
     flex-direction: column;
     height: 45px;
     width: 45px;
@@ -118,5 +117,9 @@ export const HamburgerButton = styled.button<{ enabled?: boolean }>`
         width: 100%;
         height: 4px;
         border-radius: 8px;
+    }
+    display: none;
+    @media (max-width: 950px) {
+        display: flex;
     }
 `;
