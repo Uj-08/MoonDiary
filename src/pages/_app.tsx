@@ -42,6 +42,10 @@ const GlobalStyle = createGlobalStyle`
   ::-webkit-scrollbar-thumb:hover {
     background: #000000bb;
   }
+
+  .next-progress-spinner {
+    display: none;
+}
 `;
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -53,7 +57,9 @@ export default function App({ Component, pageProps }: AppProps) {
         </NextHead>
         <Provider store={store}>
           <GlobalStyle />
-          <NextNProgress color="#b101b1" height={2} />
+          <NextNProgress color="#b101b1" height={2} options={{
+            showSpinner: false,
+          }} />
           <Component {...pageProps} />
         </Provider>
     </GoogleOAuthProvider>
