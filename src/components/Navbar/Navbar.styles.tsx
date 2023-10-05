@@ -62,10 +62,10 @@ export const NavLinks = styled.ul<{ isHamburger?: boolean }>`
     }
     li {
         cursor: pointer;
-        text-transform: uppercase;
-        font-family: 'Anton', sans-serif;
+        text-transform: ${props => !props.isHamburger && "uppercase"};
+        font-family: ${props => props.isHamburger ? "Segoe UI,Tahoma,Geneva,Verdana,sans-serif" : "Anton, sans-serif"};
         font-size: 1.3rem;
-        letter-spacing: 2px;
+        letter-spacing: ${props => !props.isHamburger && "2px"};
     }
     li:hover {
         color: #b101b1;
