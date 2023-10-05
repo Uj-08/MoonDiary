@@ -7,11 +7,13 @@ import BaseTypes from "./Base.types";
 import styled from "styled-components";
 import { getCookie, hasCookie, setCookie, deleteCookie } from "cookies-next";
 import { COOKIE_NAME } from "@/constants";
+import HamburgerMenu from "@/components/Navbar/HamburgerMenu/HamburgerMenu";
 
 export default function Base({children}: BaseTypes) {
 
     const [showModal, setShowModal] = useState(false);
     const [signedIn, setSignedIn] = useState(false);
+    const [showHamburger, setShowHamburger] = useState(false);
 
     useEffect(() => {
         if(showModal) {
@@ -67,13 +69,16 @@ export default function Base({children}: BaseTypes) {
 
     return (
         <Container showModal={showModal}>
-            <Navbar signInHandler={signInHandler} signedIn={signedIn} />
+            <Navbar signInHandler={signInHandler} signedIn={signedIn} hmbgrClickHandler={() => setShowHamburger(showHamburger => !showHamburger)} />
+            {showHamburger &&
+                <HamburgerMenu showHamburger={showHamburger} setShowHamburger={setShowHamburger} signInHandler={signInHandler} signedIn={signedIn} />
+            }
             <ContentWrapper>
                 {children}
             </ContentWrapper>
             <FooterComponent />
             {showModal &&
-                <Modal hideModal={hideModal}>
+                <Modal hideModal={hideModal} >
                     <div onClick={(e) => e.stopPropagation()}>
                         <GoogleLogin onSuccess={successHandler}/>
                     </div>

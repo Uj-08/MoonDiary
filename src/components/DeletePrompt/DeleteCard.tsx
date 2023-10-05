@@ -39,8 +39,11 @@ const CancelButton = styled(ModalDeleteButton)`
 `;
 
 function DeleteCard({ blogTitle, onDeleteHandler, onCancelHandler }: DeleteCardTypes) {
+    function containerClickHandler(e: React.MouseEvent<HTMLDivElement>) {
+        e.stopPropagation();
+    }
   return (
-    <Container>
+    <Container onClick={containerClickHandler}>
         <div>Delete {blogTitle} ?</div>
         <div>
             <ModalDeleteButton onClick={onDeleteHandler} >

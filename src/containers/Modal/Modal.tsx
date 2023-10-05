@@ -16,6 +16,7 @@ const Container = styled.div`
     justify-content: center;
     cursor: pointer;
     overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
 `;
 
 interface ModalTypes {

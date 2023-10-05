@@ -34,22 +34,31 @@ export const LogoContainer = styled.div`
     @media (max-width: 450px) {
         width: 35px;
     }
+    -webkit-tap-highlight-color: transparent;
+    :active {
+        img {
+            transform: rotate(360deg);
+        }
+    }
     img {
+        transition: transform 0.3s linear;
         height: 100%;
         width: 100%;
         cursor: pointer;
     }
 `;
 
-export const NavLinks = styled.ul`
+export const NavLinks = styled.ul<{ isHamburger?: boolean }>`
     display: flex;
+    flex-direction: ${props => props.isHamburger ? "column" : "row"};
+    align-items: ${props => props.isHamburger ? "center" : ""};
     list-style: none;
     gap: 4rem;
     @media (max-width: 1200px) {
         gap: 2rem;
     }
     @media (max-width: 950px) {
-        display: none;
+        display: ${props => !props.isHamburger && "none"};
     }
     li {
         cursor: pointer;
@@ -63,13 +72,17 @@ export const NavLinks = styled.ul`
     }
 `;
 
-export const SocialLinks = styled.ul`
+export const SocialLinks = styled.ul<{ isHamburger?: boolean }>`
     display: flex;
     list-style: none;
-    height: 100%;
+    height: ${props => !props.isHamburger && "100%"};
+    justify-content: ${props => props.isHamburger && "space-evenly"};
+    border-top: ${props => props.isHamburger && "1px solid #75757549"};
+    padding-top: ${props => props.isHamburger && "20px"};
+    margin: ${props => props.isHamburger && "0 -16px"};
     li {
         cursor: pointer;
-        padding: 0 18px;
+        /* padding: 0 18px; */
         display: flex;
         align-items: center;
         justify-content: center;
@@ -80,7 +93,7 @@ export const SocialLinks = styled.ul`
         filter: invert(1);
     }
     @media (max-width: 950px) {
-        display: none;
+        display: ${props => !props.isHamburger && "none"};
     }
 `;
 
@@ -93,11 +106,17 @@ export const HamburgerButton = styled.button<{ enabled?: boolean }>`
     width: 45px;
     padding: 11px 5px;
     gap: 5px;
+    :active {
+        span {
+            background-color: #8c8c8c;
+        }
+    }
     span {
+        transition: 0.2s background-color linear;
         display: block;
         background-color: black;
         width: 100%;
-        height: 3px;
+        height: 4px;
         border-radius: 8px;
     }
 `;

@@ -1,12 +1,10 @@
-import { useState } from "react";
 import { LogoContainer, Wrapper, NavLinks, SocialLinks, HamburgerButton } from "./Navbar.styles"
 import NavbarTypes from "./Navbar.types";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
-export default function Navbar({ signInHandler, signedIn }: NavbarTypes) {
+export default function Navbar({ signInHandler, signedIn, hmbgrClickHandler }: NavbarTypes) {
     const router = useRouter();
-    const [enabled, setEnabled] = useState(false)
 
     return (
         <Wrapper>
@@ -24,9 +22,11 @@ export default function Navbar({ signInHandler, signedIn }: NavbarTypes) {
                 <li><Image src="/instagram.png" alt={""} height="25" width="25" /></li>
                 <li><Image src="/linkedin.png" alt={""} height="25" width="25" /></li>
             </SocialLinks>
-            {/* <HamburgerButton enabled={enabled} onClick={() => setEnabled(val => !val)}>
+            <HamburgerButton onClick={hmbgrClickHandler}>
                 <span />
-            </HamburgerButton> */}
+                <span />
+                <span />
+            </HamburgerButton>
         </Wrapper>
     );
 }
