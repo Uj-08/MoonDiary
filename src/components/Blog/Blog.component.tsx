@@ -15,10 +15,10 @@ export default function BlogComponent({ blogImg, blogData }: BlogComponentTypes)
                 <PreviewImageContainer>
                     <Image src={blogImg || "https://www.urbansplash.co.uk/images/placeholder-16-9.jpg"} alt={"hero image"} fill={true} />
                 </PreviewImageContainer>
+            </Preview>
                 <PreviewData>
                     {blogData ? parse(blogData) : ""}
                 </PreviewData>
-            </Preview>
         </PreviewContainer>
     )
 };

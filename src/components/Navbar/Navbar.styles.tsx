@@ -66,6 +66,7 @@ export const NavLinks = styled.ul<{ isHamburger?: boolean }>`
         font-family: ${props => props.isHamburger ? "Segoe UI,Tahoma,Geneva,Verdana,sans-serif" : "Anton, sans-serif"};
         font-size: 1.3rem;
         letter-spacing: ${props => !props.isHamburger && "2px"};
+        transition: color linear 200ms;
     }
     li:hover {
         color: #b101b1;
@@ -87,6 +88,7 @@ export const SocialLinks = styled.ul<{ isHamburger?: boolean }>`
         align-items: center;
         justify-content: center;
         height: 100%;
+        transition: background-color linear 200ms;
     }
     li:hover {
         background-color: #51b016;

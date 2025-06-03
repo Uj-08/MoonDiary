@@ -25,5 +25,5 @@ export const Grid = styled.div`
     display: grid;
     padding-top: 1rem;
     grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
-    gap: 1.5rem;
+    gap: 2rem;
 `;

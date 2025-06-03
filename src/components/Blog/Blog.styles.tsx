@@ -15,13 +15,15 @@ export const PreviewContainer = styled.div`
     }
     @media (max-width: 920px) {
         max-width: 100%;
+        margin: 0 0rem;
+        border-radius: 0px;
+        box-shadow: none;
     }
-    @media (max-width: 812px) {
-        margin: 0 2rem;
+    /* @media (max-width: 812px) {
+        
     }
     @media (max-width: 450px) {
-        margin: 0 1rem;
-    }
+    } */
 `;
 
 export const Preview = styled.div`

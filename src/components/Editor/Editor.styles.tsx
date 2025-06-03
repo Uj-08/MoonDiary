@@ -174,11 +174,12 @@ export const PreviewData = styled.div`
     }
     @media (max-width: 570px) {
         font-size: 90%;
+        padding: 10px 1rem;
     }
-    @media (max-width: 470px) {
+    /* @media (max-width: 470px) {
         font-size: 85%
     }
     @media (max-width: 400px) {
         font-size: 80%
-    }
+    } */
 `;
