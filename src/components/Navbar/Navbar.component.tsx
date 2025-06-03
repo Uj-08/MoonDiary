@@ -1,9 +1,10 @@
+import React from "react";
 import { LogoContainer, Wrapper, NavLinks, SocialLinks, HamburgerButton } from "./Navbar.styles"
 import NavbarTypes from "./Navbar.types";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
-export default function Navbar({ signInHandler, signedIn, hmbgrClickHandler }: NavbarTypes) {
+const Navbar = ({ signInHandler, signedIn, hmbgrClickHandler }: NavbarTypes) => {
     const router = useRouter();
 
     return (
@@ -30,3 +31,5 @@ export default function Navbar({ signInHandler, signedIn, hmbgrClickHandler }: N
         </Wrapper>
     );
 }
+
+export default React.memo(Navbar);

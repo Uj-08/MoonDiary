@@ -9,7 +9,7 @@ export const Wrapper = styled.header`
     border-top: none;
     border-bottom-right-radius: 1rem;
     border-bottom-left-radius: 1rem;
-    z-index: 999;
+    z-index: 10;
     position: fixed;
     top: 0;
     left: 0;
