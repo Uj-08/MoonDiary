@@ -3,8 +3,9 @@ import BlogTitleComponent from "@/components/Blog/BlogTitle/BlogTitle.component"
 import BlogComponent from "@/components/Blog/Blog.component";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
+import React from "react";
 
-export default function Blog({ blogData }: { blogData: { blogTitle: string; blogImg: string; blogData: string } }) {
+const Blog = ({ blogData }: { blogData: { blogTitle: string; blogImg: string; blogData: string } }) => {
     return (
       <>
       <Head>
@@ -19,6 +20,8 @@ export default function Blog({ blogData }: { blogData: { blogTitle: string; blog
       </>
     );
 }
+
+export default React.memo(Blog)
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const { query } = context;

@@ -10,6 +10,17 @@ import { getCookie, hasCookie, setCookie, deleteCookie } from "cookies-next";
 import { COOKIE_NAME } from "@/constants";
 import HamburgerMenu from "@/components/Navbar/HamburgerMenu/HamburgerMenu";
 
+const Container = styled.div<{ showModal?: boolean }>`
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+    filter: ${(props) => (props.showModal ? "blur(5px)" : "")};
+  `;
+
+const ContentWrapper = styled.div`
+    flex: 1;
+  `;
+
 const Base = ({ children }: BaseTypes) => {
   const [showModal, setShowModal] = useState(false);
   const [signedIn, setSignedIn] = useState(false);
@@ -30,17 +41,6 @@ const Base = ({ children }: BaseTypes) => {
       setSignedIn(false);
     }
   }, [signedIn]);
-
-  const Container = styled.div<{ showModal?: boolean }>`
-    display: flex;
-    flex-direction: column;
-    min-height: 100dvh;
-    filter: ${(props) => (props.showModal ? "blur(5px)" : "")};
-  `;
-
-  const ContentWrapper = styled.div`
-    flex: 1;
-  `;
 
   function signInHandler() {
     if (signedIn) {

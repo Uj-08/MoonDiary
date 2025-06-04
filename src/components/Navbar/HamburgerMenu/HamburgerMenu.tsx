@@ -35,7 +35,7 @@ const HamburgerContainer = styled.nav<{ showHamburger: boolean }>`
     showHamburger
       ? "transform: translateX(0%);"
       : "transform: translateX(100%);"}
-  transition: transform 300ms linear;
+  transition: transform 200ms ease-in-out;
 `;
 
 const TopContainer = styled.div`

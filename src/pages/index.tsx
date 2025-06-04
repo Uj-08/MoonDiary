@@ -6,6 +6,7 @@ import { hasCookie } from "cookies-next";
 import { COOKIE_NAME } from "@/constants";
 import styled from "styled-components";
 import Head from "next/head";
+import React from "react";
 
 export const Loading = styled.div`
   background-color: white;
@@ -39,7 +40,7 @@ export const Loading = styled.div`
   }
 `;
 
-export default function Home({ blogsData }: { blogsData: any }) {
+const Home = ({ blogsData }: { blogsData: any }) => {
   return (
     <>
       <Head>
@@ -53,6 +54,8 @@ export default function Home({ blogsData }: { blogsData: any }) {
     </>
   );
 }
+
+export default React.memo(Home);
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { req, res } = context;

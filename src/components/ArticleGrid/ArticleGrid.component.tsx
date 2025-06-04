@@ -4,8 +4,9 @@ import PostCard from "../ArticleCard/PostCard.component";
 import DynamicCard from "../ArticleCard/DynamicCard.component";
 import { getCookie, hasCookie } from "cookies-next";
 import jwtDecode from "jwt-decode";
+import React from "react";
 
-export default function ArticleGrid({ blogs }: { blogs: any }) {
+const ArticleGrid = ({ blogs }: { blogs: any }) => {
   const [client, setClient] = useState<{ email: string }>();
 
   useEffect(() => {
@@ -36,3 +37,5 @@ export default function ArticleGrid({ blogs }: { blogs: any }) {
     </Container>
   );
 }
+
+export default React.memo(ArticleGrid);
