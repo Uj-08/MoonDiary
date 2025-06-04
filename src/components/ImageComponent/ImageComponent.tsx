@@ -92,6 +92,10 @@ function ImageComponent({
         setIsShimmerMounted(false);
     }, []);
 
+    const errorHandler = useCallback(() => {
+        setImageSource("https://www.codewithfaraz.com/tools/placeholder?size=invalid")
+    }, []);
+
     return (
         <Container
             aspectRatio={aspectRatio}
@@ -108,7 +112,7 @@ function ImageComponent({
                 priority={isPriority}
                 quality={quality}
                 onLoadingComplete={handleLoading}
-                onError={() => setImageSource("https://www.codewithfaraz.com/tools/placeholder?size=invalid")}
+                onError={errorHandler}
             />
             {isShimmerMounted && (
                 <Shimmer onTransitionEnd={unMountShimmer} title={alt} isLoading={isLoading} />
