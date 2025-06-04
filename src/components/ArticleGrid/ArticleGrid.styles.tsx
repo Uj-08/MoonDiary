@@ -9,7 +9,7 @@ export const Container = styled.section`
         padding: 0 2rem;
     }
     @media (max-width: 450px) {
-        padding: 0 8px;
+        padding: 0 1rem;
     }
 `;
 
@@ -26,4 +26,7 @@ export const Grid = styled.div`
     padding-top: 1rem;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 1rem 5px;
+    @media (max-width: 380px) {
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    }
 `;
