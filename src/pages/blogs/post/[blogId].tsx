@@ -5,8 +5,8 @@ import { getCookie, hasCookie } from "cookies-next";
 import { COOKIE_NAME } from "@/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
-import { Loading } from "@/pages";
-import Image from "next/image";
+// import { Loading } from "@/pages";
+// import Image from "next/image";
 import { GetServerSideProps } from "next";
 import { useEffect } from "react";
 import { updateIsEditorInit } from "@/redux/slices/blogInfo";
@@ -17,23 +17,23 @@ function BlogPost({ sessionId, blogData }: { sessionId: string; blogData: { blog
     const dispatch = useDispatch<AppDispatch>();
     useEffect(() => {
         return () => {
-            if(isEditorInit) dispatch(updateIsEditorInit(false));
+            if (isEditorInit) dispatch(updateIsEditorInit(false));
         }
     }, [])
     return (
         <>
             <NextHead>
-                <title>MoonDiary | Post</title>
+                <title>Blog Post</title>
             </NextHead>
-            {!isEditorInit && 
+            {/* {!isEditorInit && 
                 <Loading>
                     <div>
                         <Image src="/logo.png" alt="loading" fill={true}/>
                     </div>
               </Loading>
-            }
-            <Base>  
-                <EditorComponent blogData={blogData} sessionId={sessionId}/>
+            } */}
+            <Base>
+                <EditorComponent blogData={blogData} sessionId={sessionId} />
             </Base>
         </>
     )
@@ -45,14 +45,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const { req, res, query } = context;
     const blogId = query.blogId;
 
-    const isSessionAvailable = hasCookie(COOKIE_NAME, {req, res})
+    const isSessionAvailable = hasCookie(COOKIE_NAME, { req, res })
     const resData = await fetch(`https://next-moondiary.netlify.app/api/blogs/${blogId}`);
     const blogData = await resData.json();
 
     let sessionId;
 
-    if(isSessionAvailable) {
-         sessionId = getCookie(COOKIE_NAME, {req, res});
+    if (isSessionAvailable) {
+        sessionId = getCookie(COOKIE_NAME, { req, res });
     } else {
         return {
             redirect: {
@@ -63,12 +63,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
 
     return {
-      props: {
-        blogData: {
-            ...blogData.blog,
-            blogId
-        },
-        sessionId
-      }
+        props: {
+            blogData: {
+                ...blogData.blog,
+                blogId
+            },
+            sessionId
+        }
     }
-  }
+}

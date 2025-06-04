@@ -5,6 +5,7 @@ import { GetServerSideProps } from "next";
 import { hasCookie } from "cookies-next";
 import { COOKIE_NAME } from "@/constants";
 import styled from "styled-components";
+import Head from "next/head";
 
 export const Loading = styled.div`
   background-color: white;
@@ -40,10 +41,15 @@ export const Loading = styled.div`
 
 export default function Home({ blogsData }: { blogsData: any }) {
   return (
-    <Base>
-      <HeroSection />
-      <ArticleGrid blogs={blogsData.blogs} />
-    </Base>
+    <>
+      <Head>
+        <title>MoonDiary - Home</title>
+      </Head>
+      <Base>
+        <HeroSection />
+        <ArticleGrid blogs={blogsData.blogs} />
+      </Base>
+    </>
   );
 }
 
@@ -53,7 +59,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const isSessionAvailable = hasCookie(COOKIE_NAME, { req, res });
   if (isSessionAvailable) {
   }
-  const resData = await fetch("https://next-moondiary.netlify.app/api/blogs");
+
+  const resData = await fetch(`${process.env.BASE_URL}/api/blogs`);
   const blogsData = await resData.json();
 
   return {

@@ -110,6 +110,7 @@ export const BlogData = styled.p`
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  height: 97.5px;
   /* height: 100%; */
 `;
 
@@ -122,6 +123,7 @@ export const BlogAuthor = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
+  flex: 1;
 `;
 
 export const AuthorProfile = styled.div`
