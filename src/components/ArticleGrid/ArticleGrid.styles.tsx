@@ -9,7 +9,7 @@ export const Container = styled.section`
         padding: 0 2rem;
     }
     @media (max-width: 450px) {
-        padding: 0 1rem;
+        padding: 0 8px;
     }
 `;
 
@@ -24,6 +24,6 @@ export const Title = styled.h2`
 export const Grid = styled.div`
     display: grid;
     padding-top: 1rem;
-    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 1rem 5px;
 `;

@@ -15,13 +15,13 @@ import {
   ImageContainer,
   MainContent,
 } from "./Card.styles";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
 import { deleteBlog, resetDeletedBlogId } from "@/redux/slices/blogInfo";
 import Modal from "@/containers/Modal/Modal";
 import DeleteCard from "../DeletePrompt/DeleteCard";
+import ImageComponent from "../ImageComponent/ImageComponent";
 // import parse from "html-react-parser";
 
 export interface DynamicCardTypes {
@@ -36,9 +36,10 @@ export interface DynamicCardTypes {
     updatedAt: string;
   };
   clientEmail?: string;
+  index: number;
 }
 
-export default function DynamicCard({ blog, clientEmail }: DynamicCardTypes) {
+export default function DynamicCard({ blog, clientEmail, index }: DynamicCardTypes) {
   const {
     _id,
     authorEmail,
@@ -49,14 +50,7 @@ export default function DynamicCard({ blog, clientEmail }: DynamicCardTypes) {
     blogImg,
     updatedAt,
   } = blog;
-  const [blogDataText, setBlogDataText] = useState(removeTags(blogData));
-  const [blogImage, setBlogImage] = useState(
-    blogImg ?? "https://www.urbansplash.co.uk/images/placeholder-16-9.jpg"
-  );
-  const [authorImage, setAuthorImage] = useState(
-    authorPicture ??
-      "https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"
-  );
+  // const [blogDataText, setBlogDataText] = useState(removeTags(blogData));
   const blogDeleteStatus = useSelector(
     (state: RootState) => state.blogInfo.blogDeleteStatus
   );
@@ -70,9 +64,9 @@ export default function DynamicCard({ blog, clientEmail }: DynamicCardTypes) {
     }
   }, [blogDeleteStatus.deletedBlogId]);
 
-  useEffect(() => {
-    setBlogDataText(removeTags(blogData));
-  }, [blogData]);
+  // useEffect(() => {
+  //   setBlogDataText(removeTags(blogData));
+  // }, [blogData]);
 
   const router = useRouter();
 
@@ -87,7 +81,12 @@ export default function DynamicCard({ blog, clientEmail }: DynamicCardTypes) {
     // Regular expression to identify HTML tags in
     // the input string. Replacing the identified
     // HTML tag with a null string.
-    return blogData.replace(/(<([^>]+)>)/gi, "");
+    const plainText = blogData
+      .replace(/<[^>]*>/g, "")           // remove HTML tags
+      .replace(/&[a-z]+;|&#\d+;/gi, " ") // remove HTML entities
+      .replace(/\s+/g, " ")              // collapse multiple spaces
+      .trim();
+    return plainText;
   }
 
   const formatter = new Intl.RelativeTimeFormat("en");
@@ -125,40 +124,32 @@ export default function DynamicCard({ blog, clientEmail }: DynamicCardTypes) {
   return (
     <Container onClick={routeHandler}>
       <ImageContainer>
-        <Image
-          onError={() =>
-            setBlogImage(
-              "https://www.urbansplash.co.uk/images/placeholder-16-9.jpg"
-            )
-          }
-          src={blogImage}
-          fill={true}
-          alt={"card-hero-img"}
+        <ImageComponent
+          src={blogImg}
+          aspectRatio={4 / 3}
+          alt={"Card Image"}
+          isPriority={index <= 3}
         />
       </ImageContainer>
       <CardDetails>
         <MainContent>
           <BlogHeader>{/* to be added */}</BlogHeader>
           <BlogTitle>{blogTitle}</BlogTitle>
-          <BlogData>{blogDataText}</BlogData>
+          <BlogData>{removeTags(blogData)}</BlogData>
         </MainContent>
         <BlogAuthorContainer>
           <BlogAuthor>
             <AuthorProfile>
-              <Image
-                src={authorImage}
-                onError={() =>
-                  setAuthorImage(
-                    "https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"
-                  )
-                }
-                fill={true}
-                alt="profile"
+              <ImageComponent
+                src={authorPicture}
+                aspectRatio={1}
+                alt={"profile picture"}
+                isPriority={index <= 3}
               />
             </AuthorProfile>
             <AuthorDetail>
               <div>{authorName}</div>
-              <div>{relTime || "unknown"}</div>
+              <div>{relTime ?? "unknown"}</div>
             </AuthorDetail>
             {clientEmail === authorEmail && (
               <ButtonsContainer>

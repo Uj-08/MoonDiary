@@ -36,9 +36,6 @@ export const Preview = styled.div`
 `;
 
 export const PreviewImageContainer = styled.div`
-    position: relative;
-    width: 100%;
-    aspect-ratio: 4/3;
     img {
         object-fit: cover;
         aspect-ratio: 4/3;

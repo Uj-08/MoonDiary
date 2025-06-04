@@ -1,8 +1,9 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  height: 510px;
-  width: 350px;
+  width: 100%;
+  max-width: 350px;
+  aspect-ratio: 2/3;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: rgb(0 0 0 / 20%) 0px 12px 28px 0px,
@@ -19,12 +20,8 @@ export const Container = styled.div`
 `;
 
 export const ImageContainer = styled.div`
-  position: relative;
-  aspect-ratio: 4/3;
-  overflow: hidden;
   img {
     width: 100%;
-    aspect-ratio: 4/3;
     object-fit: cover;
     object-position: center;
     transition: transform 200ms linear;
@@ -78,7 +75,7 @@ export const CardDetails = styled.div`
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 30px;
   height: calc(100% - 270px);
   * {
     /* border: 2px solid red; */
@@ -87,6 +84,9 @@ export const CardDetails = styled.div`
 
 export const MainContent = styled.div`
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 `;
 
 export const BlogHeader = styled.div`
@@ -97,7 +97,6 @@ export const BlogHeader = styled.div`
 export const BlogTitle = styled.h2`
   font-family: "Arimo", sans-serif;
   text-align: left;
-  margin-bottom: 5px;
   @media (max-width: 1200px) {
     font-size: 1.3rem;
   }

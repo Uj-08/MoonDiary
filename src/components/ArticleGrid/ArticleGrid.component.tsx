@@ -26,7 +26,7 @@ export default function ArticleGrid({ blogs }: { blogs: any }) {
         {/* <Card/> */}
         {blogs?.map((blog: any, idx: number) => {
           return (
-            <DynamicCard key={idx} blog={blog} clientEmail={client?.email} />
+            <DynamicCard key={idx} index={idx} blog={blog} clientEmail={client?.email} />
           );
         })}
         {client &&

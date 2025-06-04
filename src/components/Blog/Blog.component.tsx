@@ -3,10 +3,9 @@ import {
   PreviewContainer,
   PreviewImageContainer,
 } from "./Blog.styles";
-import Image from "next/image";
 import { PreviewData } from "../Editor/Editor.styles";
 import parse from "html-react-parser";
-import { useState } from "react";
+import ImageComponent from "../ImageComponent/ImageComponent";
 
 export interface BlogComponentTypes {
   blogImg?: string;
@@ -17,22 +16,15 @@ export default function BlogComponent({
   blogImg,
   blogData,
 }: BlogComponentTypes) {
-  const [blogImage, setBlogImage] = useState(
-    blogImg ?? "https://www.urbansplash.co.uk/images/placeholder-16-9.jpg"
-  );
   return (
     <PreviewContainer>
       <Preview>
         <PreviewImageContainer>
-          <Image
-            src={blogImage}
-            alt={"hero image"}
-            fill={true}
-            onError={() =>
-              setBlogImage(
-                "https://www.urbansplash.co.uk/images/placeholder-16-9.jpg"
-              )
-            }
+          <ImageComponent
+            aspectRatio={4 / 3}
+            src={blogImg as string}
+            alt="hero image"
+            isPriority
           />
         </PreviewImageContainer>
       </Preview>

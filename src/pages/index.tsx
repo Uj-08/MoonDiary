@@ -44,6 +44,7 @@ export default function Home({ blogsData }: { blogsData: any }) {
     <>
       <Head>
         <title>MoonDiary - Home</title>
+        <link rel="preload" as="image" href="/cover.jpeg" />
       </Head>
       <Base>
         <HeroSection />

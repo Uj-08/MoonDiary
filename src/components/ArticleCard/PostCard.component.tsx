@@ -2,8 +2,9 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 
 export const Container = styled.div`
-  height: 510px;
-  width: 350px;
+  width: 100%;
+  max-width: 350px;
+  aspect-ratio: 2/3;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: rgb(0 0 0 / 20%) 0px 12px 28px 0px,
