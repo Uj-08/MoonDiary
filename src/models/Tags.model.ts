@@ -8,12 +8,11 @@ const TagsSchema = new Schema(
             required: true,
             unique: true,
             trim: true,
-            lowercase: true,
         },
         blogIds: [
             {
                 type: Schema.Types.ObjectId,
-                ref: "blogs",
+                ref: "Blogs",
             },
         ],
     },

@@ -14,6 +14,8 @@ import {
   EditButton,
   ImageContainer,
   MainContent,
+  Tag,
+  TagsContainer,
 } from "./Card.styles";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
@@ -34,6 +36,12 @@ export interface DynamicCardTypes {
     blogTitle: string;
     blogImg: string;
     updatedAt: string;
+    tags: [
+      {
+        _id: string
+        name: string
+      }
+    ]
   };
   clientEmail?: string;
   index: number;
@@ -49,6 +57,7 @@ export default function DynamicCard({ blog, clientEmail, index }: DynamicCardTyp
     blogTitle,
     blogImg,
     updatedAt,
+    tags,
   } = blog;
   // const [blogDataText, setBlogDataText] = useState(removeTags(blogData));
   const blogDeleteStatus = useSelector(
@@ -133,7 +142,13 @@ export default function DynamicCard({ blog, clientEmail, index }: DynamicCardTyp
       </ImageContainer>
       <CardDetails>
         <MainContent>
-          <BlogHeader>{/* to be added */}</BlogHeader>
+          <BlogHeader>
+            <TagsContainer>
+              {Array.isArray(tags) && tags.length > 0 && 
+                tags.map((tag) => <Tag key={tag._id}>#{tag.name}</Tag>)
+              }
+            </TagsContainer>
+          </BlogHeader>
           <BlogTitle>{blogTitle}</BlogTitle>
           <BlogData>{removeTags(blogData)}</BlogData>
         </MainContent>

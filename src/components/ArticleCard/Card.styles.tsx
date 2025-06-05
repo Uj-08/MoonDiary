@@ -20,6 +20,7 @@ export const Container = styled.div`
 `;
 
 export const ImageContainer = styled.div`
+  overflow: hidden;
   img {
     width: 100%;
     object-fit: cover;
@@ -49,12 +50,13 @@ export const EditButton = styled.button`
   color: #0073e6;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  opacity: 0.6;
-  transition: opacity linear 0.3s;
-  :hover {
+  /* opacity: 0.7; */
+  transition: background-color linear 0.2s;
+  /* transition: color linear 0.3s; */
+  /* :hover {
     opacity: 1;
-  }
-  :active {
+  } */
+  :hover {
     background-color: #0073e6;
     color: #ffff;
   }
@@ -64,7 +66,7 @@ export const DeleteButton = styled(EditButton)`
   background-color: #ffff;
   border: 1px solid #ff5a5f;
   color: #ff5a5f;
-  :active {
+  :hover {
     background-color: #ff5a5f;
     color: #ffff;
   }
@@ -90,8 +92,27 @@ export const MainContent = styled.div`
 `;
 
 export const BlogHeader = styled.div`
-  height: 15px;
+  height: 25px;
   /* background-color: red; */
+`;
+
+export const TagsContainer = styled.div`
+  display: flex;
+  padding: 4px 0 0 0;
+  gap: 4px;
+`;
+
+export const Tag = styled.div`
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  /* text-transform: capitalize; */
+  padding: 2px 8px;
+  /* border: 1px solid rgb(177, 1, 177); */
+  background-color: rgb(177, 1, 177);
+  display: flex;
+  border-radius: 8px;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  color: white;
 `;
 
 export const BlogTitle = styled.h2`
