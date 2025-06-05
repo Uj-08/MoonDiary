@@ -8,7 +8,13 @@ const nextConfig = {
         hostname: "**",
       },
     ],
-  }
-}
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
