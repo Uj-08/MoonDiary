@@ -20,11 +20,7 @@ const ArticleGrid = ({ blogs }: { blogs: any }) => {
 
   return (
     <Container>
-      {/* <Title>
-                Recent:
-            </Title> */}
       <Grid>
-        {/* <Card/> */}
         {blogs?.map((blog: any, idx: number) => {
           return (
             <DynamicCard key={idx} index={idx} blog={blog} clientEmail={client?.email} />
@@ -32,7 +28,9 @@ const ArticleGrid = ({ blogs }: { blogs: any }) => {
         })}
         {client &&
           (client?.email === "ujjwalpandey24@gmail.com" ||
-            client?.email === "sinhashairee6@gmail.com") && <PostCard />}
+            client?.email === "sinhashairee6@gmail.com" ||
+            client?.email === "psykidbiz@gmail.com"
+          ) && <PostCard />}
       </Grid>
     </Container>
   );
