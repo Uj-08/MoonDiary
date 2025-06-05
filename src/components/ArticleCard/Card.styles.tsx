@@ -102,22 +102,47 @@ export const TagsContainer = styled.div`
   gap: 4px;
 `;
 
-export const Tag = styled.div`
+export const Tag = styled.div<{ bgColor: string }>`
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  /* text-transform: capitalize; */
   padding: 2px 8px;
-  /* border: 1px solid rgb(177, 1, 177); */
-  background-color: rgb(177, 1, 177);
+  /* background-color: rgb(177, 1, 177); */
+  /* background-color: rgb(177, 1, 177); */
+  background-color: ${({ bgColor }) => bgColor};
   display: flex;
   border-radius: 8px;
   font-size: 12px;
   letter-spacing: 0.5px;
   color: white;
+  span {
+    max-width: 90px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+`;
+
+export const MoreTag = styled.div<{ color: string }>`
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  padding: 2px 8px;
+  display: flex;
+  border-radius: 8px;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  color: ${({ color }) => color};
+  border: ${({ color }) => `1px solid ${color}`};
+  background-color: #fff;
+  span {
+    max-width: 90px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 `;
 
 export const BlogTitle = styled.h2`
   font-family: "Arimo", sans-serif;
   text-align: left;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
   @media (max-width: 1200px) {
     font-size: 1.3rem;
   }

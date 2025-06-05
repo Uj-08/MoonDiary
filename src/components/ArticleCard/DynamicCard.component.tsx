@@ -14,6 +14,7 @@ import {
   EditButton,
   ImageContainer,
   MainContent,
+  MoreTag,
   Tag,
   TagsContainer,
 } from "./Card.styles";
@@ -130,6 +131,55 @@ export default function DynamicCard({ blog, clientEmail, index }: DynamicCardTyp
     setShowDeleteModal(false);
   }
 
+  // const colorPalette = [
+  //   "#5D3587",
+  //   "#392467",
+  //   "#FFD1E3",
+  //   "#A367B1",
+  // ];
+
+  // const colorPalette = [
+  //   "#B101B1", // Primary magenta
+  //   "#7A0BC0", // Deep violet (analogous)
+  //   "#3F0071", // Rich indigo (darker anchor)
+  //   "#009FBD", // Aqua cyan (cool contrast)
+  //   "#F806CC", // Neon pink (vibrant match)
+  //   "#F31559", // Bold rose red (hot contrast)
+  //   "#FF6D28", // Warm orange (energetic pop)
+  //   "#1C1678", // Midnight blue (depth & contrast)
+  // ];
+
+  const colorPalette = [
+    "#B101B1", // Primary rich magenta
+    "#7A0BC0", // Deep violet — an elegant, darker shade
+    "#3F0071", // Midnight purple — adds depth
+    "#F31559", // Bold reddish-pink — energizing contrast
+    "#C70A80", // Muted raspberry — complementary and cohesive
+    "#009FBD", // Cool cyan — balances the heat
+    "#FF6D28", // Warm orange — vibrant highlight
+    "#A367B1", // Soft lilac — eases intensity while staying on theme
+  ];
+
+  let usedIndex: number[] = [];
+
+  const getRandomInt = (max: number): number => {
+    if (usedIndex.length >= max) {
+      usedIndex = [];
+    }
+
+    let randIndex = Math.floor(Math.random() * max);
+
+    while (usedIndex.includes(randIndex)) {
+      randIndex = Math.floor(Math.random() * max);
+    }
+
+    usedIndex.push(randIndex);
+    return randIndex;
+  };
+
+  const getRandomColor = (): string => {
+    return colorPalette[getRandomInt(colorPalette.length)];
+  };
   return (
     <Container onClick={routeHandler}>
       <ImageContainer>
@@ -144,8 +194,13 @@ export default function DynamicCard({ blog, clientEmail, index }: DynamicCardTyp
         <MainContent>
           <BlogHeader>
             <TagsContainer>
-              {Array.isArray(tags) && tags.length > 0 && 
-                tags.map((tag) => <Tag key={tag._id}>#{tag.name}</Tag>)
+              {Array.isArray(tags) && tags.length > 0 &&
+                tags.map((tag, idx) => {
+                  if (idx <= 1) return <Tag bgColor={getRandomColor()} key={tag._id}><span>#{tag.name}</span></Tag>
+                })
+              }
+              {Array.isArray(tags) && tags.length > 0 && tags.length > 2 &&
+                <MoreTag color={getRandomColor()}>+{tags.length - 2} more</MoreTag>
               }
             </TagsContainer>
           </BlogHeader>

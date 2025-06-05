@@ -1,8 +1,13 @@
 import styled from "styled-components";
 
-export const PreviewContainer = styled.div`
-    margin: 0 8rem;
-    flex-basis: 100%;
+export const Container = styled.div`
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+`;
+
+export const PreviewContainer = styled.section`
+    flex: 1;
     max-width: 60%;
     font-family: 'Montserrat', sans-serif;
     background-color: #fff;
@@ -46,4 +51,20 @@ export const PreviewImageContainer = styled.div`
         left: 50%;
         transform: translateX(-25%);
     }
+`;
+
+export const AdditionalSection = styled.section`
+    
+`
+
+export const AdditionalSectionTitle = styled.div`
+    font-family: "Arimo", sans-serif;
+    font-size: 1.8rem;
+    margin-bottom: 12px;
+`;
+
+export const AdditionalData = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 `;
