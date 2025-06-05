@@ -35,7 +35,7 @@ export const LogoContainer = styled.div`
         width: 35px;
     }
     -webkit-tap-highlight-color: transparent;
-    :active {
+    :hover {
         img {
             transform: rotate(360deg);
         }
