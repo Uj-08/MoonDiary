@@ -21,7 +21,7 @@ export default function FooterComponent() {
                     </a>
                 </li>
             </ul>
-            <span>© MoonDiary 2023</span>
+            <span>© MoonDiary 2025</span>
         </Footer>
     )
 }
