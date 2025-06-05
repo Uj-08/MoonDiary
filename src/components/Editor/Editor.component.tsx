@@ -19,6 +19,7 @@ function EditorComponent({ sessionId, blogData }: { sessionId: string; blogData?
     const router = useRouter();
     const dispatch = useDispatch<AppDispatch>();
     const createdBlogId = useSelector((state: RootState) => state.blogInfo.blogPostUpdateStatus.createdBlogId)
+    const [tagsArr, setTagsArr] = useState<string[]>([]);
 
     let debounce: NodeJS.Timeout | undefined;
 
@@ -54,6 +55,7 @@ function EditorComponent({ sessionId, blogData }: { sessionId: string; blogData?
                     authorName: authorObj.name as string,
                     authorPicture: authorObj.picture as string,
                     authorEmail: authorObj.email as string,
+                    tags: tagsArr
                 }
                 dispatch(updateBlog(reqBody));
             } else {
@@ -65,6 +67,7 @@ function EditorComponent({ sessionId, blogData }: { sessionId: string; blogData?
                     authorName: authorObj.name as string,
                     authorPicture: authorObj.picture as string,
                     authorEmail: authorObj.email as string,
+                    tags: tagsArr
                 }
                 dispatch(postBlog(reqBody));
             }
@@ -123,7 +126,7 @@ function EditorComponent({ sessionId, blogData }: { sessionId: string; blogData?
                 </PreviewContainer>
                 <EditorContainer>
                     <TitleText type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Blog Title..." />
-                    <InputTagComponent tags={blogData?.tags} />
+                    <InputTagComponent tags={blogData?.tags} setTagsArr={setTagsArr} />
                     <TitleText type="text" value={imageLinkText} onChange={(e) => setImageLinkText(e.target.value)} onBlur={() => setImageLink(imageLinkText)} placeholder="Image Link" />
                     <Editor
                         initialValue={blogData?.blogData || "Type here..."}

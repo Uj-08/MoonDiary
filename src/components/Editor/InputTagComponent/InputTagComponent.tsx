@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect, SetStateAction, Dispatch } from "react";
 import { TitleText } from "../Editor.styles";
 import styled from "styled-components";
 
@@ -58,7 +58,7 @@ export const Suggestion = styled.li`
     }
 `;
 
-const InputTagComponent = ({ tags }: { tags: TagType[] }) => {
+const InputTagComponent = ({ tags, setTagsArr }: { tags: TagType[], setTagsArr: Dispatch<SetStateAction<string>> }) => {
     const [tagsField, setTagsField] = useState(
         tags?.map((tag) => `#${tag.name}`).join(" ") || ""
     );
@@ -66,11 +66,21 @@ const InputTagComponent = ({ tags }: { tags: TagType[] }) => {
     const [showSuggestions, setShowSuggestions] = useState(false);
     const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
 
+    useEffect(() => {
+        const tagsArray = tagsField
+            .split(" ")
+            .filter(tag => tag.startsWith("#"))
+            .map(tag => tag.slice(1))
+
+        setTagsArr(tagsArray)
+
+    }, [tagsField, setTagsArr])
+
     const fetchSuggestions = (query: string) => {
         fetch(`/api/tags?search=${query}`)
             .then((res) => res.json())
             .then((data) => {
-                setSuggestions(data.tags || []);
+                setSuggestions(data.tags ?? []);
                 setShowSuggestions(true);
             })
             .catch(() => setSuggestions([]));
