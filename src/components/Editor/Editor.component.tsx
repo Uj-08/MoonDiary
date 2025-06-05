@@ -9,7 +9,7 @@ import { AppDispatch, RootState } from "@/redux/store";
 import { postBlog, resetCreatedBlogId, updateBlog, updateIsEditorInit } from "@/redux/slices/blogInfo";
 import ImageComponent from "../ImageComponent/ImageComponent";
 
-function EditorComponent({ sessionId, blogData }: { sessionId: string; blogData?: { blogTitle: string; blogImg: string; blogData: string; blogId: string } }) {
+function EditorComponent({ sessionId, blogData }: { sessionId: string; blogData?: { blogTitle: string; blogImg: string; blogData: string; blogId: string, tags: [{ _id: string, name: string }] } }) {
     const editorRef = useRef<any>(null);
     const [preview, setPreview] = useState<string | ReactNode>(blogData?.blogData ? parse(blogData?.blogData) : "Write Something...");
     const [title, setTitle] = useState(blogData?.blogTitle || "");
