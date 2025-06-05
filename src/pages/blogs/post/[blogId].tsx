@@ -46,7 +46,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const blogId = query.blogId;
 
     const isSessionAvailable = hasCookie(COOKIE_NAME, { req, res })
-    const resData = await fetch(`https://next-moondiary.netlify.app/api/blogs/${blogId}`);
+    const resData = await fetch(`${process.env.BASE_URL}/api/blogs/${blogId}`);
     const blogData = await resData.json();
 
     let sessionId;

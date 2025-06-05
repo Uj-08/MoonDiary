@@ -13,7 +13,7 @@ function EditorComponent({ sessionId, blogData }: { sessionId: string; blogData?
     const editorRef = useRef<any>(null);
     const [preview, setPreview] = useState<string | ReactNode>(blogData?.blogData ? parse(blogData?.blogData) : "Write Something...");
     const [title, setTitle] = useState(blogData?.blogTitle || "");
-    const [tags, setTags] = useState(blogData?.blogTitle || "");
+    const [tags, setTags] = useState(blogData?.tags.map(tag => `#${tag.name}`).join(' ')|| "");
     const [imageLinkText, setImageLinkText] = useState(blogData?.blogImg || "");
     const [imageLink, setImageLink] = useState(blogData?.blogImg || "");
     const router = useRouter();

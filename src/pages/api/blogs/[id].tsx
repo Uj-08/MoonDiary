@@ -7,7 +7,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { id } = req.query;
     if (req.method === "GET") {
         try {
-            let blog = await BlogsModel.findById(id);
+            let blog = await BlogsModel.findById(id).populate("tags", "name");
             res.status(200).json({ blog })
         } catch (err) {
             console.log("error: ", err);
