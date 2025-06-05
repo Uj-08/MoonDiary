@@ -8,12 +8,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
 import { postBlog, resetCreatedBlogId, updateBlog, updateIsEditorInit } from "@/redux/slices/blogInfo";
 import ImageComponent from "../ImageComponent/ImageComponent";
+import InputTagComponent from "./InputTagComponent/InputTagComponent";
 
 function EditorComponent({ sessionId, blogData }: { sessionId: string; blogData?: { blogTitle: string; blogImg: string; blogData: string; blogId: string, tags: [{ _id: string, name: string }] } }) {
     const editorRef = useRef<any>(null);
     const [preview, setPreview] = useState<string | ReactNode>(blogData?.blogData ? parse(blogData?.blogData) : "Write Something...");
     const [title, setTitle] = useState(blogData?.blogTitle || "");
-    const [tags, setTags] = useState(blogData?.tags.map(tag => `#${tag.name}`).join(' ')|| "");
     const [imageLinkText, setImageLinkText] = useState(blogData?.blogImg || "");
     const [imageLink, setImageLink] = useState(blogData?.blogImg || "");
     const router = useRouter();
@@ -123,7 +123,7 @@ function EditorComponent({ sessionId, blogData }: { sessionId: string; blogData?
                 </PreviewContainer>
                 <EditorContainer>
                     <TitleText type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Blog Title..." />
-                    <TitleText type="text" value={tags} onChange={(e) => setTags(e.target.value)} placeholder="Tags..." />
+                    <InputTagComponent tags={blogData?.tags} />
                     <TitleText type="text" value={imageLinkText} onChange={(e) => setImageLinkText(e.target.value)} onBlur={() => setImageLink(imageLinkText)} placeholder="Image Link" />
                     <Editor
                         initialValue={blogData?.blogData || "Type here..."}
