@@ -10,6 +10,7 @@ const BlogSchema = new Schema(
         authorName: { type: String, required: true },
         authorPicture: { type: String, required: true },
         authorEmail: { type: String, required: true },
+        isDraft: { type: Boolean, require: true }
     },
     { timestamps: true }
 );

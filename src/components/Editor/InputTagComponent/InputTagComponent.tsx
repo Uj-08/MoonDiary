@@ -120,7 +120,7 @@ const InputTagComponent = ({ tags, setTagsArr }: { tags: TagType[], setTagsArr: 
                 type="text"
                 value={tagsField}
                 onChange={handleChange}
-                placeholder="Tags..."
+                placeholder="#Tags"
             />
 
             {showSuggestions && suggestions.length > 0 && (

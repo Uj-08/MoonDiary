@@ -1,6 +1,6 @@
 import { useState, useRef, ReactNode, useEffect } from "react"
 import { Editor } from "@tinymce/tinymce-react"
-import { BlogTitle, BlogTitleContainer, Button, Container, EditorContainer, InputFileLabel, Preview, PreviewContainer, PreviewData, PreviewImageContainer, RemoveImage, Span, TitleText } from "./Editor.styles";
+import { BlogTitle, BlogTitleContainer, Button, Container, DraftField, EditorContainer, InputFileLabel, Preview, PreviewContainer, PreviewData, PreviewImageContainer, RemoveImage, Span, TitleText } from "./Editor.styles";
 import parse from "html-react-parser";
 import jwtDecode from "jwt-decode";
 import { useRouter } from "next/router";
@@ -9,8 +9,9 @@ import { AppDispatch, RootState } from "@/redux/store";
 import { postBlog, resetCreatedBlogId, updateBlog, updateIsEditorInit } from "@/redux/slices/blogInfo";
 import ImageComponent from "../ImageComponent/ImageComponent";
 import InputTagComponent from "./InputTagComponent/InputTagComponent";
+import IsDraftToggle from "./ToogleDraft";
 
-function EditorComponent({ sessionId, blogData }: { sessionId: string; blogData?: { blogTitle: string; blogImg: string; blogData: string; blogId: string, tags: [{ _id: string, name: string }] } }) {
+function EditorComponent({ sessionId, blogData }: { sessionId: string; blogData?: { blogTitle: string; blogImg: string; blogData: string; blogId: string, isDraft: boolean, tags: [{ _id: string, name: string }] } }) {
     const editorRef = useRef<any>(null);
     const [preview, setPreview] = useState<string | ReactNode>(blogData?.blogData ? parse(blogData?.blogData) : "Write Something...");
     const [title, setTitle] = useState(blogData?.blogTitle || "");
@@ -20,6 +21,7 @@ function EditorComponent({ sessionId, blogData }: { sessionId: string; blogData?
     const dispatch = useDispatch<AppDispatch>();
     const createdBlogId = useSelector((state: RootState) => state.blogInfo.blogPostUpdateStatus.createdBlogId)
     const [tagsArr, setTagsArr] = useState<string[]>([]);
+    const [isDraft, setIsDraft] = useState(blogData?.isDraft ?? true)
 
     let debounce: NodeJS.Timeout | undefined;
 
@@ -55,6 +57,7 @@ function EditorComponent({ sessionId, blogData }: { sessionId: string; blogData?
                     authorName: authorObj.name as string,
                     authorPicture: authorObj.picture as string,
                     authorEmail: authorObj.email as string,
+                    isDraft: isDraft,
                     tags: tagsArr
                 }
                 dispatch(updateBlog(reqBody));
@@ -67,39 +70,12 @@ function EditorComponent({ sessionId, blogData }: { sessionId: string; blogData?
                     authorName: authorObj.name as string,
                     authorPicture: authorObj.picture as string,
                     authorEmail: authorObj.email as string,
+                    isDraft: isDraft,
                     tags: tagsArr
                 }
                 dispatch(postBlog(reqBody));
             }
         }
-        // if(sessionId !== ""){
-        //     const authorObj: {name?: string, picture?:string, email?:string} = jwtDecode(sessionId);
-        //     if(authorObj?.email === "ujjwalpandey24@gmail.com" || authorObj?.email === "sinhashairee6@gmail.com") {
-        //         const html = editorRef.current?.getContent();
-        //         const reqBody = {
-        //             blogTitle: title,
-        //             blogImg: imageLink,
-        //             blogData: html,
-        //             authorName: authorObj.name,
-        //             authorPicture: authorObj.picture,
-        //             authorEmail: authorObj.email,
-        //         }
-        //         fetch("/api/blogs", {
-        //             method: "POST",
-        //             body: JSON.stringify(reqBody),
-        //             headers: {
-        //                 "Content-Type": "application/json",
-        //             }
-        //         })
-        //             .then(res => res.json())
-        //             .then(data => console.log(data))
-        //             .then(() => router.push("/"))
-        //     } else {
-        //         console.log("Unauthorized User");
-        //     }
-        // } else {
-        //     console.log("Not logged in")
-        // }
     }
 
     return (
@@ -125,7 +101,10 @@ function EditorComponent({ sessionId, blogData }: { sessionId: string; blogData?
                     </Preview>
                 </PreviewContainer>
                 <EditorContainer>
-                    <TitleText type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Blog Title..." />
+                    <DraftField>
+                        Draft: <IsDraftToggle isDraft={isDraft} setIsDraft={setIsDraft} />
+                    </DraftField>
+                    <TitleText type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Title..." />
                     <InputTagComponent tags={blogData?.tags} setTagsArr={setTagsArr} />
                     <TitleText type="text" value={imageLinkText} onChange={(e) => setImageLinkText(e.target.value)} onBlur={() => setImageLink(imageLinkText)} placeholder="Image Link" />
                     <Editor

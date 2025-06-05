@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+export const Container = styled.div<{ isDraft: boolean }>`
   width: 100%;
   max-width: 350px;
   aspect-ratio: 2/3;
@@ -17,6 +17,7 @@ export const Container = styled.div`
       rgba(177, 1, 177, 0.1) 0px 2px 4px 0px,
       rgba(177, 1, 177, 0.05) 0px 0px 0px 1px inset;
   }
+  ${({ isDraft }) => isDraft && "filter: grayscale(1)"};
 `;
 
 export const ImageContainer = styled.div`
@@ -44,10 +45,10 @@ export const ButtonsContainer = styled.div`
 export const EditButton = styled.button`
   all: unset;
   border-radius: 8px;
-  border: 1px solid #0073e6;
+  border: 1px solid #009FBD;
   padding: 5px 8px;
   background-color: #ffff;
-  color: #0073e6;
+  color: #009FBD;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   /* opacity: 0.7; */
@@ -57,17 +58,17 @@ export const EditButton = styled.button`
     opacity: 1;
   } */
   :hover {
-    background-color: #0073e6;
+    background-color: #009FBD;
     color: #ffff;
   }
 `;
 
 export const DeleteButton = styled(EditButton)`
   background-color: #ffff;
-  border: 1px solid #ff5a5f;
-  color: #ff5a5f;
+  border: 1px solid #F31559;
+  color: #F31559;
   :hover {
-    background-color: #ff5a5f;
+    background-color: #F31559;
     color: #ffff;
   }
 `;

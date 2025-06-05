@@ -2,7 +2,7 @@ import Base from "@/containers/Base/Base";
 import HeroSection from "@/components/HeroSection/HeroSection.component";
 import ArticleGrid from "@/components/ArticleGrid/ArticleGrid.component";
 import { GetServerSideProps } from "next";
-import { hasCookie } from "cookies-next";
+import { getCookie, hasCookie } from "cookies-next";
 import { COOKIE_NAME } from "@/constants";
 import styled from "styled-components";
 import Head from "next/head";
@@ -63,8 +63,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const isSessionAvailable = hasCookie(COOKIE_NAME, { req, res });
   if (isSessionAvailable) {
   }
-
-  const resData = await fetch(`${process.env.BASE_URL}/api/blogs`);
+  console.log(context)
+  const resData = await fetch(`${process.env.BASE_URL}/api/blogs`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-session-token': getCookie("clientMD", context) as string, 
+    },
+  });
   const blogsData = await resData.json();
 
   return {

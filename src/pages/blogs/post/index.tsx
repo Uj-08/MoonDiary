@@ -5,8 +5,6 @@ import { getCookie, hasCookie } from "cookies-next";
 import { COOKIE_NAME } from "@/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
-// import { Loading } from "@/pages";
-// import Image from "next/image";
 import { GetServerSideProps } from "next";
 import { useEffect } from "react";
 import { updateIsEditorInit } from "@/redux/slices/blogInfo";
@@ -26,13 +24,6 @@ function BlogPost({ sessionId }: { sessionId: string }) {
             <NextHead>
                 <title>MoonDiary | Post</title>
             </NextHead>
-            {/* {!isEditorInit && 
-                <Loading>
-                    <div>
-                        <Image src="/logo.png" alt="loading" fill={true}/>
-                    </div>
-              </Loading>
-            } */}
             <Base>
                 <EditorComponent sessionId={sessionId} />
             </Base>

@@ -59,6 +59,7 @@ export default function DynamicCard({ blog, clientEmail, index }: DynamicCardTyp
     blogImg,
     updatedAt,
     tags,
+    isDraft
   } = blog;
   // const [blogDataText, setBlogDataText] = useState(removeTags(blogData));
   const blogDeleteStatus = useSelector(
@@ -181,7 +182,7 @@ export default function DynamicCard({ blog, clientEmail, index }: DynamicCardTyp
     return colorPalette[getRandomInt(colorPalette.length)];
   };
   return (
-    <Container onClick={routeHandler}>
+    <Container onClick={routeHandler} isDraft={isDraft}>
       <ImageContainer>
         <ImageComponent
           src={blogImg}

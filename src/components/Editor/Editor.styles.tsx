@@ -135,6 +135,16 @@ export const PreviewImageContainer = styled.div`
     }
 `;
 
+export const DraftField = styled.div`
+    display: flex;
+    font-family: 'Montserrat', sans-serif;
+    margin-bottom: 10px;
+    align-items: center;
+    gap: 10px;
+    color: #686868;
+    font-size: 18px;
+`;
+
 export const InputFileLabel = styled.label`
     position: absolute;
     color: white;
