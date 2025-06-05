@@ -31,11 +31,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
             });
 
             //add blogIds to the tags
-            console.log(await Promise.all(tagDocs.map(tag =>
+            await Promise.all(tagDocs.map(tag =>
                 TagsModel.findByIdAndUpdate(tag._id, {
                     $addToSet: { blogIds: newBlog._id },
                 })
-            )))
+            ))
 
             const savedObj = await newBlog.save();
             const id = savedObj._id;
