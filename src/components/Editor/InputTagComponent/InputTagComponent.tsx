@@ -60,7 +60,7 @@ export const Suggestion = styled.li`
 
 const InputTagComponent = ({ tags }: { tags: TagType[] }) => {
     const [tagsField, setTagsField] = useState(
-        tags.map((tag) => `#${tag.name}`).join(" ") || ""
+        tags?.map((tag) => `#${tag.name}`).join(" ") || ""
     );
     const [suggestions, setSuggestions] = useState<TagType[]>([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
