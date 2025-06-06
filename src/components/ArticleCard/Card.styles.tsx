@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const Container = styled.div<{ isDraft: boolean }>`
   width: 100%;
   max-width: 350px;
+  min-width: 300px;
   aspect-ratio: 2/3;
   border-radius: 8px;
   overflow: hidden;
@@ -18,6 +19,8 @@ export const Container = styled.div<{ isDraft: boolean }>`
       rgba(177, 1, 177, 0.05) 0px 0px 0px 1px inset;
   }
   ${({ isDraft }) => isDraft && "filter: grayscale(1)"};
+  display: flex;
+  flex-direction: column;
 `;
 
 export const ImageContainer = styled.div`
@@ -74,12 +77,11 @@ export const DeleteButton = styled(EditButton)`
 `;
 
 export const CardDetails = styled.div`
+  flex: 1;
   padding: 5px 10px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: 30px;
-  height: calc(100% - 270px);
   * {
     /* border: 2px solid red; */
   }
@@ -169,6 +171,7 @@ export const BlogData = styled.p`
 export const BlogAuthorContainer = styled.div`
   flex: 1;
   display: flex;
+  max-height: 60px;
 `;
 
 export const BlogAuthor = styled.div`

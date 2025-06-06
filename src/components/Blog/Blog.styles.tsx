@@ -61,12 +61,14 @@ export const PreviewImageContainer = styled.div`
 
 export const AdditionalSection = styled.section`
     max-width: 40%;
+    flex-shrink: 0;
     padding: 0 1rem;
     display: flex;
     flex-direction: column;
     gap: 8px;
     @media (max-width: 920px) {
         max-width: 100%;
+        padding: 1rem 0;
     }
 `
 
@@ -74,6 +76,9 @@ export const TagsContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
+    @media (max-width: 920px) {
+        padding: 0 8px;
+    }
 `;
 
 export const AdditionalSectionTitle = styled.div`
@@ -96,6 +101,8 @@ export const AdditionalData = styled.div`
         ::-webkit-scrollbar {
             display: none;
         }
+        padding: 8px;
+        padding-bottom: 40px;
     }
 `;
 
