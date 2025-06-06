@@ -103,7 +103,12 @@ export const TagsContainer = styled.div`
   gap: 4px;
 `;
 
-export const Tag = styled.div<{ bgColor: string }>`
+export const Tag = styled.div<{ 
+  bgColor: string, 
+  maxWidth: string, 
+  fontSize: string, 
+  letterSpacing: string 
+}>`
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   padding: 2px 8px;
   /* background-color: rgb(177, 1, 177); */
@@ -111,11 +116,12 @@ export const Tag = styled.div<{ bgColor: string }>`
   background-color: ${({ bgColor }) => bgColor};
   display: flex;
   border-radius: 8px;
-  font-size: 12px;
-  letter-spacing: 0.5px;
+  /* font-size: 12px; */
+  /* letter-spacing: 0.5px; */
   color: white;
+  ${({ fontSize, letterSpacing }) => `font-size: ${fontSize}; letter-spacing: ${letterSpacing};`}
   span {
-    max-width: 90px;
+    ${({ maxWidth }) => `max-width: ${maxWidth};`}
     overflow: hidden;
     text-overflow: ellipsis;
   }

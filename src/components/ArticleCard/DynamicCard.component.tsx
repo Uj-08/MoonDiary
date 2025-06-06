@@ -197,11 +197,11 @@ export default function DynamicCard({ blog, clientEmail, index }: DynamicCardTyp
             <TagsContainer>
               {Array.isArray(tags) && tags.length > 0 &&
                 tags.map((tag, idx) => {
-                  if (idx <= 1) return <Tag bgColor={getRandomColor()} key={tag._id}><span>#{tag.name}</span></Tag>
+                  if (idx <= 1) return <Tag title={`#${tag.name}`} maxWidth={"90px"} fontSize="12px" letterSpacing="0.5px" bgColor={getRandomColor()} key={tag._id}><span>#{tag.name}</span></Tag>
                 })
               }
               {Array.isArray(tags) && tags.length > 0 && tags.length > 2 &&
-                <MoreTag color={getRandomColor()}>+{tags.length - 2} more</MoreTag>
+                <MoreTag title={tags.slice(2).map((tag) => `#${tag.name}`).join(" ")} color={getRandomColor()}>+{tags.length - 2} more</MoreTag>
               }
             </TagsContainer>
           </BlogHeader>

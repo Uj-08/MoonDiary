@@ -11,15 +11,10 @@ import { COOKIE_NAME } from "@/constants";
 import HamburgerMenu from "@/components/Navbar/HamburgerMenu/HamburgerMenu";
 
 const Container = styled.div<{ showModal?: boolean }>`
-    display: flex;
-    flex-direction: column;
     min-height: 100dvh;
     filter: ${(props) => (props.showModal ? "blur(5px)" : "")};
-  `;
-
-const ContentWrapper = styled.div`
-    flex: 1;
-  `;
+    height: 100%;
+`;
 
 const Base = ({ children }: BaseTypes) => {
   const [showModal, setShowModal] = useState(false);
@@ -78,7 +73,7 @@ const Base = ({ children }: BaseTypes) => {
         signInHandler={signInHandler}
         signedIn={signedIn}
       />
-      <ContentWrapper>{children}</ContentWrapper>
+      {children}
       <FooterComponent />
       {showModal && (
         <Modal hideModal={hideModal}>

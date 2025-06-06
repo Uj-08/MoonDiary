@@ -2,8 +2,17 @@ import styled from "styled-components";
 
 export const Container = styled.div`
     display: flex;
-    gap: 16px;
+    gap: 8px;
     justify-content: center;
+    padding: 0 1rem;
+    @media (max-width: 920px) {
+        flex-direction: column;
+        padding: 0;
+        max-width: 100%;
+        border-radius: 0px;
+        box-shadow: none;
+    }
+    height: 100%;
 `;
 
 export const PreviewContainer = styled.section`
@@ -15,12 +24,9 @@ export const PreviewContainer = styled.section`
     border-radius: 8px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     min-height: 800px;
-    @media (max-width: 1200px) {
-        margin: 0 4rem;
-    }
+    height: 100%;
     @media (max-width: 920px) {
         max-width: 100%;
-        margin: 0 0rem;
         border-radius: 0px;
         box-shadow: none;
     }
@@ -36,7 +42,7 @@ export const Preview = styled.div`
     height: 100%;
     /* border: 2px solid #eee; */
     @media (max-width: 920px) {
-        aspect-ratio: 4/3;
+
     }
 `;
 
@@ -54,17 +60,97 @@ export const PreviewImageContainer = styled.div`
 `;
 
 export const AdditionalSection = styled.section`
-    
+    max-width: 40%;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    @media (max-width: 920px) {
+        max-width: 100%;
+    }
 `
+
+export const TagsContainer = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+`;
 
 export const AdditionalSectionTitle = styled.div`
     font-family: "Arimo", sans-serif;
     font-size: 1.8rem;
     margin-bottom: 12px;
+    @media (max-width: 920px) {
+        display: none;
+    }
 `;
 
 export const AdditionalData = styled.div`
     display: flex;
     flex-direction: column;
     gap: 8px;
+    @media (max-width: 920px) {
+        flex-direction: row;
+        overflow-X: scroll;
+        width: 100%;
+        ::-webkit-scrollbar {
+            display: none;
+        }
+    }
+`;
+
+export const AboutCard = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    gap: 12px;
+    max-width: 300px;
+    @media (max-width: 920px) { 
+        display: none;
+    }
+
+
+   background: linear-gradient(45deg, #7a0bc099, #e94ce999);
+  border-radius: 8px;
+  padding: 30px 12px;
+  color: white;
+  box-shadow: 0 2px 6px rgba(122, 11, 192, 0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(255, 77, 155, 0.2);
+  }
+`;
+
+export const Author = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+`;
+
+export const AuthorName = styled.h3`
+    font-weight: bold;
+    font-size: 20px;
+`;
+
+export const AuthorBio = styled.p`
+    font-style: italic;
+    /* letter-spacing: 0.9px; */
+    line-height: 17px;
+`;
+
+export const AuthorProfile = styled.div`
+    position: relative;
+    height: 70px;
+    width: 70px;
+    border-radius: 100%;
+    overflow: hidden;
+    text-align: left;
+    img {
+        width: 100%;
+        object-fit: cover;
+    }
 `;

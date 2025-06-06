@@ -24,7 +24,7 @@ const placeholderShimmer = keyframes`
 	}
 `;
 
-const Shimmer = styled.div<{ isLoading: boolean }>`
+export const Shimmer = styled.div<{ isLoading: boolean }>`
 	position: absolute;
 	width: 100%;
 	height: 100%;

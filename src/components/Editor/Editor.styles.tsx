@@ -54,7 +54,14 @@ export const Container = styled.div`
 `;
 
 export const EditorContainer = styled.div`
-    flex-basis: 100%;
+    width: 100%;
+    min-height: 700px;
+    position: relative;
+    .shimmer {
+        z-index: 10;
+        border-radius: 8px;
+        opacity: 1;
+    }
 `;
 
 export const TitleText = styled.input`

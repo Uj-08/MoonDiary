@@ -8,7 +8,7 @@ import { store } from '../redux/store';
 import NextNProgress from 'nextjs-progressbar';
 
 const GlobalStyle = createGlobalStyle`
-  * {
+  *, *::before, *::after {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
