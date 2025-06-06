@@ -1,6 +1,6 @@
 import { useState, useRef, ReactNode, useEffect } from "react"
 import { Editor } from "@tinymce/tinymce-react"
-import { BlogTitle, BlogTitleContainer, Button, Container, DraftField, EditorContainer, InputFileLabel, Preview, PreviewContainer, PreviewData, PreviewImageContainer, RemoveImage, Span, TitleText } from "./Editor.styles";
+import { BlogTitle, BlogTitleContainer, Button, Container, DraftField, EditorContainer, InputFileLabel, Loader, Preview, PreviewContainer, PreviewData, PreviewImageContainer, RemoveImage, Span, TitleText } from "./Editor.styles";
 import parse from "html-react-parser";
 import jwtDecode from "jwt-decode";
 import { useRouter } from "next/router";
@@ -23,6 +23,7 @@ function EditorComponent({ sessionId, blogData }: { sessionId: string; blogData?
     const [tagsArr, setTagsArr] = useState<string[]>([]);
     const [isDraft, setIsDraft] = useState(blogData?.isDraft ?? true)
     const isEditorInit = useSelector((state: RootState) => state.blogInfo.isEditorInit);
+    const blogPostUpdateStatus = useSelector((state: RootState) => state.blogInfo.blogPostUpdateStatus);
 
     let debounce: NodeJS.Timeout | undefined;
 
@@ -127,7 +128,9 @@ function EditorComponent({ sessionId, blogData }: { sessionId: string; blogData?
                         />
                     </EditorContainer>   
                     <Button onClick={submitHandler}>
-                        {blogData?.blogTitle ? "Update" : "Submit"}
+                        {
+                            blogPostUpdateStatus.isLoading ? <Loader /> : blogData?.blogTitle ? "Update" : "Submit"
+                        }
                     </Button>
                 </EditorContainer>
             </Container>

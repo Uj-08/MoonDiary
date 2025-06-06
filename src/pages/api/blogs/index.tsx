@@ -44,7 +44,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
             res.status(201).json({ id })
         } catch (err) {
             console.log(err);
-            res.status(500).json({ message: "Could not connect to database." })
+            res.status(500).json({ message: err })
         }
     }
 

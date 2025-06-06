@@ -6,12 +6,15 @@ export default function FooterComponent() {
         <Footer>
             <ul>
                 <li>
-                    <a href="#">
-                        <Image src={"/facebook.png"} alt="social-links" fill={true}/>
+                    <a href="mailto:psykidbiz@gmail.com">
+                        <Image src={"/gmail.png"} alt="social-links" fill={true}/>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <Image src={"/logo.png"} alt="social-links" fill={true}/>
+                </li>
+                <li>
+                    <a href="https://www.instagram.com/shaireee_67/">
                         <Image src={"/instagram.png"} alt="social-links" fill={true}/>
                     </a>
                 </li>

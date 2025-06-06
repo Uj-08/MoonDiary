@@ -10,11 +10,12 @@ import jwtDecode from "jwt-decode";
 
 export const Profile = styled.div`
 position: relative;
-height: 30px;
-width: 30px;
+height: 26px;
+width: 26px;
 border-radius: 100%;
 overflow: hidden;
 text-align: left;
+transform: translateY(-2px);
 img {
     width: 100%;
     object-fit: cover;
@@ -56,8 +57,16 @@ const Navbar = ({ signInHandler, signedIn, hmbgrClickHandler }: NavbarTypes) => 
                 <li onClick={signInHandler}>{signedIn ? "Sign Out" : "Sign In"}</li>
             </NavLinks>
             <SocialLinks>
-                <li><Image src="/facebook.png" alt={""} height="25" width="25" /></li>
-                <li><Image src="/instagram.png" alt={""} height="25" width="25" /></li>
+                <li>
+                    <a href="mailto:psykidbiz@gmail.com">
+                        <Image src="/gmail.png" alt={""} height="25" width="25" />
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.instagram.com/shaireee_67/" target="_blank" rel="noreferrer">
+                        <Image src="/instagram.png" alt={""} height="25" width="25" />
+                    </a>
+                </li>
                 <li>
                     <Profile>
                         <ImageComponent aspectRatio={1} src={picture} alt="" />

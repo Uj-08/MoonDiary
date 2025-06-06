@@ -10,6 +10,10 @@ interface BlogInfoType {
         isLoading: boolean,
         createdBlogId: string,
     };
+    error: {
+        isError: boolean,
+        message: string
+    }
 }
 
 const initialState: BlogInfoType = {
@@ -21,6 +25,10 @@ const initialState: BlogInfoType = {
     blogPostUpdateStatus: {
         isLoading: false,
         createdBlogId: "",
+    },
+    error: {
+        isError: false,
+        message: ""
     }
 };
 
@@ -32,19 +40,19 @@ export const deleteBlog = createAsyncThunk(
             const resDataJson = await fetch(`/api/blogs/${blogId}`, {
                 method: "DELETE"
             })
-            const resData  = await resDataJson.json();
+            const resData = await resDataJson.json();
             return {
                 resData
             }
         } catch (err) {
-            throw(err)
+            throw (err)
         }
     }
 )
 
 export const updateBlog = createAsyncThunk(
     "updateBlog",
-    async (reqObj: { 
+    async (reqObj: {
         blogId: string
         blogTitle: string,
         blogImg: string,
@@ -62,26 +70,26 @@ export const updateBlog = createAsyncThunk(
                     "Content-Type": "application/json",
                 }
             })
-            const resData  = await resDataJson.json();
+            const resData = await resDataJson.json();
             return {
                 resData
             }
         } catch (err) {
-            throw(err)
+            throw (err)
         }
     }
 )
 
 export const postBlog = createAsyncThunk(
     "postBlog",
-    async (reqObj: { 
+    async (reqObj: {
         blogTitle: string,
         blogImg: string,
         blogData: string,
         authorName: string,
         authorPicture: string,
         authorEmail: string,
-    }) => {
+    }, { rejectWithValue }) => {
         try {
             const resDataJson = await fetch("/api/blogs", {
                 method: "POST",
@@ -90,12 +98,15 @@ export const postBlog = createAsyncThunk(
                     "Content-Type": "application/json",
                 }
             })
-            const resData  = await resDataJson.json();
-            return {
-                resData
+            if (!resDataJson.ok) {
+                const errorData = await resDataJson.json();
+                console.error("Server responded with error:", errorData);
+                return rejectWithValue(errorData);
             }
+            const resData = await resDataJson.json();
+            return {resData};
         } catch (err) {
-            throw(err)
+            return rejectWithValue(err);
         }
     }
 )
@@ -106,7 +117,7 @@ export const blogInfoSlice = createSlice({
     reducers: {
         updateIsEditorInit: (state, action: PayloadAction<boolean>) => {
             state.isEditorInit = action.payload;
-          },
+        },
 
         resetDeletedBlogId: (state) => {
             state.blogDeleteStatus.deletedBlogId = "";
@@ -114,6 +125,10 @@ export const blogInfoSlice = createSlice({
 
         resetCreatedBlogId: (state) => {
             state.blogPostUpdateStatus.createdBlogId = "";
+        },
+
+        resetErrorState: (state) => {
+            state.error.isError = false;
         }
     },
     extraReducers: (builder) => {
@@ -140,18 +155,20 @@ export const blogInfoSlice = createSlice({
         })
 
         builder.addCase(postBlog.pending, (state) => {
-            state.blogDeleteStatus.isLoading = true;
+            state.blogPostUpdateStatus.isLoading = true;
         })
         builder.addCase(postBlog.fulfilled, (state, action) => {
             state.blogDeleteStatus.isLoading = false;
             state.blogPostUpdateStatus.createdBlogId = action.payload.resData.id;
         })
-        builder.addCase(postBlog.rejected, (state) => {
+        builder.addCase(postBlog.rejected, (state, action) => {
+            state.error.isError = true;
+            state.error.message = action.payload?.message?.message || "Something went wrong.";
             state.blogPostUpdateStatus.isLoading = false;
         })
     },
 });
 
-export const { updateIsEditorInit, resetDeletedBlogId, resetCreatedBlogId } = blogInfoSlice.actions;
+export const { updateIsEditorInit, resetDeletedBlogId, resetCreatedBlogId, resetErrorState } = blogInfoSlice.actions;
 
 export default blogInfoSlice.reducer;

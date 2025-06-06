@@ -5,7 +5,7 @@ const BlogSchema = new Schema(
     {
         blogTitle: { type: String, required: true },
         blogImg: { type: String },
-        tags: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tags" }],
+        tags: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tags", required: true }],
         blogData: { type: String, required: true },
         authorName: { type: String, required: true },
         authorPicture: { type: String, required: true },
