@@ -78,6 +78,11 @@ export const TagsContainer = styled.div`
     gap: 6px;
     @media (max-width: 920px) {
         padding: 0 8px;
+        flex-wrap: nowrap;
+        overflow-x: scroll;
+        ::-webkit-scrollbar {
+            display: none;
+        }
     }
 `;
 
