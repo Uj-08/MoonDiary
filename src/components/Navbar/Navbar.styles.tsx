@@ -90,9 +90,12 @@ export const SocialLinks = styled.ul<{ isHamburger?: boolean }>`
         height: 100%;
         transition: background-color linear 200ms;
     }
-    li:hover {
+    li:hover:not(:last-child) {
         background-color: #51b016;
         filter: invert(1);
+    }
+    li:last-child {
+        cursor: auto;
     }
     @media (max-width: 950px) {
         display: ${props => !props.isHamburger && "none"};

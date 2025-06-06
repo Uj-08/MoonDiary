@@ -17,7 +17,7 @@ export const Footer = styled.footer`
     ul {
         list-style: none;
         display: flex;
-        gap: 100px;
+        gap: 50px;
         li {
             /* border: 1px solid black; */
             width: 20px;

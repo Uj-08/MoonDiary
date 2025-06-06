@@ -95,7 +95,6 @@ function ImageComponent({
     const errorHandler = useCallback(() => {
         setImageSource("https://www.codewithfaraz.com/tools/placeholder?size=invalid")
     }, []);
-
     return (
         <Container
             aspectRatio={aspectRatio}

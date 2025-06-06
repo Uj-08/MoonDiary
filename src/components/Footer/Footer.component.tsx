@@ -15,11 +15,11 @@ export default function FooterComponent() {
                         <Image src={"/instagram.png"} alt="social-links" fill={true}/>
                     </a>
                 </li>
-                <li>
+                {/* <li>
                     <a href="#">
                         <Image src={"/linkedin.png"} alt="social-links" fill={true}/>
                     </a>
-                </li>
+                </li> */}
             </ul>
             <span>© MoonDiary 2025</span>
         </Footer>
