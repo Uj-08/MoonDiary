@@ -20,10 +20,11 @@ import DynamicCard from "../ArticleCard/DynamicCard.component";
 import { BlogComponentTypes } from "@/pages/blogs/[blogId]";
 import parse from "html-react-parser";
 import { Tag } from "../ArticleCard/Card.styles";
+import SkeletalCard from "../ArticleCard/SkeletalCard";
 
 export default function BlogComponent({ blogData }: { blogData: BlogComponentTypes }) {
   const [cardData, setCardData] = useState([])
-  console.log(blogData)
+  const [isCardDataLoading, setIsCardDataLoading] = useState(true)
   useEffect(() => {
     const fetchBlogsByTags = async () => {
       try {
@@ -34,7 +35,7 @@ export default function BlogComponent({ blogData }: { blogData: BlogComponentTyp
         );
 
         setCardData(responses.flat() as [])
-
+        setIsCardDataLoading(false)
       } catch (err) {
         console.error("Failed to fetch blogs by tags", err);
       }
@@ -116,7 +117,17 @@ export default function BlogComponent({ blogData }: { blogData: BlogComponentTyp
             <AuthorBio>"Rolling in and out of Hindu college with my degree in English literature wasn’t enough to curb my craving for expression. Pursuing and juggling various creative skills like dancing, music and theatre has broadened my interests and passion to look out for the next new lesson. Forever trying to wrap my head around this perpetual tease called existence."</AuthorBio>
           </AboutCard>
         }
-        {cardData.length > 0 &&
+        {(isCardDataLoading && cardData.length === 0) &&
+          <>
+            <AdditionalSectionTitle height="45px"/>
+            <AdditionalData>
+              {Array.from({ length: 4 }).map((_, index) => (
+                <SkeletalCard key={index} />
+              ))}
+            </AdditionalData>
+          </>
+        }
+        {(!isCardDataLoading && cardData.length > 0) &&
           <>
             <AdditionalSectionTitle>
               More like this...

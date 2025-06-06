@@ -199,6 +199,7 @@ export const AuthorDetail = styled.div`
   flex-direction: column;
   font-family: "Arimo", sans-serif;
   gap: 1px;
+  flex: 1;
   div {
     &:first-child {
       font-weight: 700;

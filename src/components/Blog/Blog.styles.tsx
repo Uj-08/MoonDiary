@@ -81,10 +81,11 @@ export const TagsContainer = styled.div`
     }
 `;
 
-export const AdditionalSectionTitle = styled.div`
+export const AdditionalSectionTitle = styled.div<{ height?: string }>`
     font-family: "Arimo", sans-serif;
     font-size: 1.8rem;
     margin-bottom: 12px;
+    ${({height}) => height && `height: ${height};`}
     @media (max-width: 920px) {
         display: none;
     }
