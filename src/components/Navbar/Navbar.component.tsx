@@ -7,6 +7,7 @@ import styled from "styled-components";
 import ImageComponent from "../ImageComponent/ImageComponent";
 import { getCookie } from "cookies-next";
 import jwtDecode from "jwt-decode";
+import Link from "next/link";
 
 export const Profile = styled.div`
 position: relative;
@@ -47,25 +48,39 @@ const Navbar = ({ signInHandler, signedIn, hmbgrClickHandler }: NavbarTypes) => 
 
     return (
         <Wrapper>
-            <LogoContainer onClick={() => router.push("/")}>
-                <Image src="/logo.png" alt={""} fill={true} />
+            <LogoContainer>
+                <Link href={"/"}>
+                    <Image src="/logo.png" alt={""} fill={true} />
+                </Link>
             </LogoContainer>
             <NavLinks>
-                <li onClick={() => router.push("/")}>Home</li>
-                <li>Features</li>
-                <li>About Me</li>
+                <li>
+                    <Link href={"/"}>
+                        Home
+                    </Link>
+                </li>
+                <li>
+                    <Link href={"/features"}>
+                        Features
+                    </Link>
+                </li>
+                <li>
+                    <Link href={"/about-me"}>
+                        About Me
+                    </Link>
+                </li>
                 <li onClick={signInHandler}>{signedIn ? "Sign Out" : "Sign In"}</li>
             </NavLinks>
             <SocialLinks>
                 <li>
-                    <a href="mailto:psykidbiz@gmail.com">
+                    <Link href="mailto:psykidbiz@gmail.com">
                         <Image src="/gmail.png" alt={""} height="25" width="25" />
-                    </a>
+                    </Link>
                 </li>
                 <li>
-                    <a href="https://www.instagram.com/shaireee_67/" target="_blank" rel="noreferrer">
+                    <Link href="https://www.instagram.com/shaireee_67/" target="_blank" rel="noreferrer">
                         <Image src="/instagram.png" alt={""} height="25" width="25" />
-                    </a>
+                    </Link>
                 </li>
                 <li>
                     <Profile>

@@ -67,6 +67,10 @@ export const NavLinks = styled.ul<{ isHamburger?: boolean }>`
         font-size: 1.3rem;
         letter-spacing: ${props => !props.isHamburger && "2px"};
         transition: color linear 200ms;
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
     }
     li:hover {
         color: #b101b1;

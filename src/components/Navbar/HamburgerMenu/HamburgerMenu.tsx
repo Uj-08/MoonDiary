@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { NavLinks, SocialLinks } from "../Navbar.styles";
-import { useRouter } from "next/router";
 import Image from "next/image";
+import Link from "next/link";
 
 const Container = styled.div<{ showHamburger: boolean }>`
   height: 100%;
@@ -77,7 +77,7 @@ const HamburgerMenu = ({
   function containerClickHandler(e: React.MouseEvent<HTMLDivElement>) {
     e.stopPropagation();
   }
-  const router = useRouter();
+
   return (
     <Container showHamburger={showHamburger}>
       <HamburgerContainer
@@ -90,25 +90,43 @@ const HamburgerMenu = ({
         </TopContainer>
         <LinkContainer>
           <NavLinks isHamburger={true}>
-            <li onClick={() => router.push("/")}>Home</li>
-            <li>Features</li>
-            <li>About Me</li>
-            <li onClick={signInHandler}>{signedIn ? "Sign Out" : "Sign In"}</li>
+            <li>
+              <Link href={"/"} onClick={() => setShowHamburger(false)} >
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link href={"/features"} onClick={() => setShowHamburger(false)} >
+                Features
+              </Link>
+            </li>
+            <li>
+              <Link href={"/about-me"} onClick={() => setShowHamburger(false)} >
+                About Me
+              </Link>
+            </li>
+            <li onClick={signInHandler}>
+              <div onClick={() => setShowHamburger(false)}>
+                {signedIn ? "Sign Out" : "Sign In"}
+              </div>
+            </li>
           </NavLinks>
           <SocialLinks isHamburger={true}>
             <li>
-                    <a href="mailto:psykidbiz@gmail.com">
-                        <Image src={"/gmail.png"} alt="social-links" height={25} width={25} />
-                    </a>
-                </li>
-                <li>
-                    <Image src={"/logo.png"} alt="social-links" height={25} width={25} />
-                </li>
-                <li>
-                    <a href="https://www.instagram.com/shaireee_67/">
-                        <Image src={"/instagram.png"} alt="social-links" height={25} width={25} />
-                    </a>
-                </li>
+              <Link href="mailto:psykidbiz@gmail.com">
+                <Image src={"/gmail.png"} alt="social-links" height={25} width={25} />
+              </Link>
+            </li>
+            <li>
+              <Link href={"/"}>
+                <Image src={"/logo.png"} alt="social-links" height={25} width={25} />
+              </Link>
+            </li>
+            <li>
+              <Link href="https://www.instagram.com/shaireee_67/" target="_blank" rel="noreferrer">
+                <Image src={"/instagram.png"} alt="social-links" height={25} width={25} />
+              </Link>
+            </li>
           </SocialLinks>
         </LinkContainer>
       </HamburgerContainer>

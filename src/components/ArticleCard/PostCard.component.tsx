@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useRouter } from "next/router";
+import Link from "next/link";
 
 export const Container = styled.div`
   width: 100%;
@@ -31,9 +31,9 @@ export const Container = styled.div`
 `;
 
 export default function PostCard() {
-  const router = useRouter();
   return (
-    <Container onClick={() => router.push("/blogs/post")}>
+    <Link href={"/blogs/post"}>
+    <Container>
       <div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -46,5 +46,6 @@ export default function PostCard() {
         </svg>
       </div>
     </Container>
+    </Link>
   );
 }
