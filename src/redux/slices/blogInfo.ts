@@ -1,7 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 interface BlogInfoType {
-    isEditorInit: boolean;
     blogDeleteStatus: {
         isLoading: boolean;
         deletedBlogId: string;
@@ -17,7 +16,6 @@ interface BlogInfoType {
 }
 
 const initialState: BlogInfoType = {
-    isEditorInit: false,
     blogDeleteStatus: {
         isLoading: false,
         deletedBlogId: "",
@@ -115,10 +113,6 @@ export const blogInfoSlice = createSlice({
     name: "blogInfo",
     initialState,
     reducers: {
-        updateIsEditorInit: (state, action: PayloadAction<boolean>) => {
-            state.isEditorInit = action.payload;
-        },
-
         resetDeletedBlogId: (state) => {
             state.blogDeleteStatus.deletedBlogId = "";
         },
@@ -158,7 +152,7 @@ export const blogInfoSlice = createSlice({
             state.blogPostUpdateStatus.isLoading = true;
         })
         builder.addCase(postBlog.fulfilled, (state, action) => {
-            state.blogDeleteStatus.isLoading = false;
+            state.blogPostUpdateStatus.isLoading = false;
             state.blogPostUpdateStatus.createdBlogId = action.payload.resData.id;
         })
         builder.addCase(postBlog.rejected, (state, action) => {
@@ -169,6 +163,6 @@ export const blogInfoSlice = createSlice({
     },
 });
 
-export const { updateIsEditorInit, resetDeletedBlogId, resetCreatedBlogId, resetErrorState } = blogInfoSlice.actions;
+export const { resetDeletedBlogId, resetCreatedBlogId, resetErrorState } = blogInfoSlice.actions;
 
 export default blogInfoSlice.reducer;

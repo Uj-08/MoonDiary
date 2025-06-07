@@ -27,12 +27,13 @@ const Container = styled.div`
 
 const ModalDeleteButton = styled(DeleteButton)`
     opacity: 1;
+    cursor: pointer;
 `;
 
 const CancelButton = styled(ModalDeleteButton)`
     border: 1px solid #5CD5A7;
     color: #5CD5A7;
-    :active {
+    :hover {
         color: #ffff;
         background-color: #5CD5A7;
     }

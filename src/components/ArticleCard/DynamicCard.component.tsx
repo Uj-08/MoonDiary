@@ -25,7 +25,6 @@ import { deleteBlog, resetDeletedBlogId } from "@/redux/slices/blogInfo";
 import Modal from "@/containers/Modal/Modal";
 import DeleteCard from "../DeletePrompt/DeleteCard";
 import ImageComponent from "../ImageComponent/ImageComponent";
-// import parse from "html-react-parser";
 
 export interface DynamicCardTypes {
   blog: {
@@ -61,7 +60,7 @@ export default function DynamicCard({ blog, clientEmail, index }: DynamicCardTyp
     tags,
     isDraft
   } = blog;
-  // const [blogDataText, setBlogDataText] = useState(removeTags(blogData));
+
   const blogDeleteStatus = useSelector(
     (state: RootState) => state.blogInfo.blogDeleteStatus
   );
@@ -74,10 +73,6 @@ export default function DynamicCard({ blog, clientEmail, index }: DynamicCardTyp
       dispatch(resetDeletedBlogId());
     }
   }, [blogDeleteStatus.deletedBlogId]);
-
-  // useEffect(() => {
-  //   setBlogDataText(removeTags(blogData));
-  // }, [blogData]);
 
   const router = useRouter();
 
@@ -131,24 +126,6 @@ export default function DynamicCard({ blog, clientEmail, index }: DynamicCardTyp
     dispatch(deleteBlog(reqObj));
     setShowDeleteModal(false);
   }
-
-  // const colorPalette = [
-  //   "#5D3587",
-  //   "#392467",
-  //   "#FFD1E3",
-  //   "#A367B1",
-  // ];
-
-  // const colorPalette = [
-  //   "#B101B1", // Primary magenta
-  //   "#7A0BC0", // Deep violet (analogous)
-  //   "#3F0071", // Rich indigo (darker anchor)
-  //   "#009FBD", // Aqua cyan (cool contrast)
-  //   "#F806CC", // Neon pink (vibrant match)
-  //   "#F31559", // Bold rose red (hot contrast)
-  //   "#FF6D28", // Warm orange (energetic pop)
-  //   "#1C1678", // Midnight blue (depth & contrast)
-  // ];
 
   const colorPalette = [
     "#B101B1", // Primary rich magenta
@@ -230,22 +207,20 @@ export default function DynamicCard({ blog, clientEmail, index }: DynamicCardTyp
                 </DeleteButton>
               </ButtonsContainer>
             )}
-            {showDeleteModal && (
-              <Modal
-                hideModal={(e) => {
-                  e.stopPropagation();
+            <Modal
+              show={showDeleteModal}
+              hideModal={() => {
+                setShowDeleteModal(false);
+              }}
+            >
+              <DeleteCard
+                blogTitle={blogTitle}
+                onDeleteHandler={deleteBlogHandler}
+                onCancelHandler={() => {
                   setShowDeleteModal(false);
                 }}
-              >
-                <DeleteCard
-                  blogTitle={blogTitle}
-                  onDeleteHandler={deleteBlogHandler}
-                  onCancelHandler={() => {
-                    setShowDeleteModal(false);
-                  }}
-                />
-              </Modal>
-            )}
+              />
+            </Modal>
           </BlogAuthor>
         </BlogAuthorContainer>
       </CardDetails>

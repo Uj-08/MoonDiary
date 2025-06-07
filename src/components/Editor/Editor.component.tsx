@@ -1,12 +1,11 @@
-import { useState, useRef, ReactNode, useEffect } from "react"
+import { useState, useRef, ReactNode } from "react"
 import { Editor } from "@tinymce/tinymce-react"
 import { BlogTitle, BlogTitleContainer, Button, Container, DraftField, EditorContainer, InputFileLabel, Loader, Preview, PreviewContainer, PreviewData, PreviewImageContainer, RemoveImage, Span, TitleText } from "./Editor.styles";
 import parse from "html-react-parser";
 import jwtDecode from "jwt-decode";
-import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/redux/store";
-import { postBlog, resetCreatedBlogId, updateBlog, updateIsEditorInit } from "@/redux/slices/blogInfo";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/redux/store";
+import { postBlog, updateBlog } from "@/redux/slices/blogInfo";
 import ImageComponent, { Shimmer } from "../ImageComponent/ImageComponent";
 import InputTagComponent from "./InputTagComponent/InputTagComponent";
 import IsDraftToggle from "./ToogleDraft";
@@ -17,22 +16,12 @@ function EditorComponent({ sessionId, blogData }: { sessionId: string; blogData?
     const [title, setTitle] = useState(blogData?.blogTitle || "");
     const [imageLinkText, setImageLinkText] = useState(blogData?.blogImg || "");
     const [imageLink, setImageLink] = useState(blogData?.blogImg || "");
-    const router = useRouter();
-    const dispatch = useDispatch<AppDispatch>();
-    const createdBlogId = useSelector((state: RootState) => state.blogInfo.blogPostUpdateStatus.createdBlogId)
     const [tagsArr, setTagsArr] = useState<string[]>([]);
     const [isDraft, setIsDraft] = useState(blogData?.isDraft ?? true)
-    const isEditorInit = useSelector((state: RootState) => state.blogInfo.isEditorInit);
-    const blogPostUpdateStatus = useSelector((state: RootState) => state.blogInfo.blogPostUpdateStatus);
+    const [isEditorInit, setIsEditorInit] = useState(false);
+    const dispatch = useDispatch<AppDispatch>();
 
     let debounce: NodeJS.Timeout | undefined;
-
-    useEffect(() => {
-        if (createdBlogId) {
-            dispatch(resetCreatedBlogId());
-            router.push("/");
-        }
-    }, [createdBlogId])
 
     function keyUpHandler() {
         clearTimeout(debounce);
@@ -117,8 +106,8 @@ function EditorComponent({ sessionId, blogData }: { sessionId: string; blogData?
                             initialValue={blogData?.blogData || "Type here..."}
                             apiKey={process.env.NEXT_PUBLIC_MCE_API}
                             onInit={(evt, editor) => {
-                                dispatch(updateIsEditorInit(true));
                                 editorRef.current = editor;
+                                setIsEditorInit(true);
                             }}
                             onKeyUp={keyUpHandler}
                             init={{
@@ -129,7 +118,7 @@ function EditorComponent({ sessionId, blogData }: { sessionId: string; blogData?
                     </EditorContainer>   
                     <Button onClick={submitHandler}>
                         {
-                            blogPostUpdateStatus.isLoading ? <Loader /> : blogData?.blogTitle ? "Update" : "Submit"
+                            blogData?.blogTitle ? "Update" : "Submit"
                         }
                     </Button>
                 </EditorContainer>

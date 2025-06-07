@@ -97,14 +97,18 @@ const HamburgerMenu = ({
           </NavLinks>
           <SocialLinks isHamburger={true}>
             <li>
-              <Image src="/facebook.png" alt={""} height="25" width="25" />
-            </li>
-            <li>
-              <Image src="/instagram.png" alt={""} height="25" width="25" />
-            </li>
-            <li>
-              <Image src="/linkedin.png" alt={""} height="25" width="25" />
-            </li>
+                    <a href="mailto:psykidbiz@gmail.com">
+                        <Image src={"/gmail.png"} alt="social-links" height={25} width={25} />
+                    </a>
+                </li>
+                <li>
+                    <Image src={"/logo.png"} alt="social-links" height={25} width={25} />
+                </li>
+                <li>
+                    <a href="https://www.instagram.com/shaireee_67/">
+                        <Image src={"/instagram.png"} alt="social-links" height={25} width={25} />
+                    </a>
+                </li>
           </SocialLinks>
         </LinkContainer>
       </HamburgerContainer>

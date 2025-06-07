@@ -3,22 +3,9 @@ import EditorComponent from "@/components/Editor/Editor.component";
 import NextHead from "next/head";
 import { getCookie, hasCookie } from "cookies-next";
 import { COOKIE_NAME } from "@/constants";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/redux/store";
 import { GetServerSideProps } from "next";
-import { useEffect } from "react";
-import { updateIsEditorInit } from "@/redux/slices/blogInfo";
 
 function BlogPost({ sessionId }: { sessionId: string }) {
-    const isEditorInit = useSelector(
-        (state: RootState) => state.blogInfo.isEditorInit
-    );
-    const dispatch = useDispatch<AppDispatch>();
-    useEffect(() => {
-        return () => {
-            if (isEditorInit) dispatch(updateIsEditorInit(false));
-        };
-    }, []);
     return (
         <>
             <NextHead>

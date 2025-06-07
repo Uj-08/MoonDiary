@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 
 export const BlogTitleContainer = styled.div`
     margin-top: 60px;
@@ -199,19 +199,4 @@ export const PreviewData = styled.div`
     @media (max-width: 400px) {
         font-size: 80%
     } */
-`;
-
-const spin = keyframes`
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-`;
-
-export const Loader = styled.div`
-  border: 2px solid rgba(255, 255, 255, 0.3); 
-  border-top: 2px solid #7A0BC0;  /* Primary color */
-  border-radius: 50%;
-  width: 19px;
-  height: 19px;
-  animation: ${spin} 0.8s linear infinite;
-  margin: auto;
 `;
