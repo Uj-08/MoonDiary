@@ -9,12 +9,13 @@ import { COOKIE_NAME } from "@/constants";
 import HamburgerMenu from "@/components/Navbar/HamburgerMenu/HamburgerMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import { resetErrorState } from "@/redux/slices/blogInfo";
-import { Container, Loader, Toast } from "./Base.styles";
+import { resetCreatedBlogId, resetDeletedBlogId, resetErrorState, resetSuccessState } from "@/redux/slices/blogInfo";
+import { Container, Loader, ToastContainer } from "./Base.styles";
 import { useRouter } from "next/router";
+import Toast from "../Toast";
 
 const Base = ({ children }: BaseTypes) => {
-  const [showModal, setShowModal] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
   const [signedIn, setSignedIn] = useState(false);
   const [showHamburger, setShowHamburger] = useState(false);
   const blogInfo = useSelector((state: RootState) => state.blogInfo);
@@ -22,12 +23,26 @@ const Base = ({ children }: BaseTypes) => {
   const router = useRouter();
 
   useEffect(() => {
+    if (blogInfo.blogPostUpdateStatus.createdBlogId) {
+      dispatch(resetCreatedBlogId())
+      router.push("/");
+    } else if (blogInfo.blogDeleteStatus.deletedBlogId) {
+      dispatch(resetDeletedBlogId())
+    }
+
+  }, [blogInfo.blogDeleteStatus.deletedBlogId, blogInfo.blogPostUpdateStatus.createdBlogId, dispatch, router])
+
+  useEffect(() => {
     if (blogInfo.error.isError) {
       setTimeout(() => {
         dispatch(resetErrorState());
-      }, 2000)
+      }, 4000)
+    } else if (blogInfo.success.isSuccessful) {
+      setTimeout(() => {
+        dispatch(resetSuccessState());
+      }, 4000)
     }
-  }, [blogInfo.error.isError, dispatch])
+  }, [blogInfo.error.isError, blogInfo.success.isSuccessful, dispatch])
 
   useEffect(() => {
     if (hasCookie(COOKIE_NAME)) {
@@ -43,17 +58,17 @@ const Base = ({ children }: BaseTypes) => {
       setSignedIn(false);
       router.reload()
     } else {
-      setShowModal(true);
+      setShowLoginModal(true);
     }
   }
 
   function hideModal() {
-    setShowModal(false);
+    setShowLoginModal(false);
   }
 
   function successHandler(credentialResponse: any) {
     setCookie(COOKIE_NAME, credentialResponse?.credential);
-    setShowModal(false);
+    setShowLoginModal(false);
     if (hasCookie(COOKIE_NAME)) {
       setSignedIn(true);
     } else {
@@ -64,7 +79,7 @@ const Base = ({ children }: BaseTypes) => {
 
   return (
     <>
-      <Container showModal={showModal}>
+      <Container showModal={showLoginModal}>
         <Navbar
           signInHandler={signInHandler}
           signedIn={signedIn}
@@ -77,20 +92,28 @@ const Base = ({ children }: BaseTypes) => {
           signedIn={signedIn}
         />
         {children}
-        <Toast show={blogInfo.error.isError}>
-          {
-            blogInfo.error.message
-          }
-        </Toast>
         <FooterComponent />
       </Container>
-      <Modal show={showModal} hideModal={hideModal}>
-        <div onClick={(e) => e.stopPropagation()}>
-          <GoogleLogin onSuccess={successHandler} />
-        </div>
-      </Modal>
-      <Modal show={(blogInfo.blogPostUpdateStatus.isLoading || blogInfo.blogDeleteStatus.isLoading)} hideModal={hideModal}>
-        <Loader />
+      <ToastContainer>
+        <Toast 
+          show={blogInfo.error.isError} 
+          message={blogInfo.error.message} 
+          isError 
+        />
+        <Toast 
+          show={blogInfo.success.isSuccessful} 
+          message={blogInfo.success.message} 
+          isError={false} 
+        />
+      </ToastContainer>
+      <Modal showModal={showLoginModal || (blogInfo.blogPostUpdateStatus.isLoading || blogInfo.blogDeleteStatus.isLoading)} hideModal={hideModal}>
+        {
+          showLoginModal ?
+            <div onClick={(e) => e.stopPropagation()}>
+              <GoogleLogin onSuccess={successHandler} />
+            </div> :
+            <Loader />
+        }
       </Modal>
     </>
   );

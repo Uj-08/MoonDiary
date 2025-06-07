@@ -208,7 +208,7 @@ export default function DynamicCard({ blog, clientEmail, index }: DynamicCardTyp
               </ButtonsContainer>
             )}
             <Modal
-              show={showDeleteModal}
+              showModal={showDeleteModal}
               hideModal={() => {
                 setShowDeleteModal(false);
               }}

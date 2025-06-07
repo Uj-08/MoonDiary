@@ -1,70 +1,56 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect } from "react";
 import ReactDOM from "react-dom";
 import styled from "styled-components";
+import { useMountAnimation } from "@/hooks/useMountAnimation";
 
 const Container = styled.div<{ visible: boolean }>`
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0,0,0,0.7);
     position: fixed;
     left: 0;
     top: 0;
     z-index: 9999999;
+    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
     opacity: ${(props) => (props.visible ? 1 : 0)};
     transition: opacity 300ms ease-in-out;
-    pointer-events: ${(props) => (props.visible ? "auto" : "none")};
+    pointer-events: ${(props) => (props.visible ? "all" : "none")};
 `;
 
 interface ModalProps {
     children: ReactNode;
-    show: boolean;
-    hideModal: () => void;
+    hideModal: (e: any) => void;
+    showModal: boolean;
 }
 
-const MIN_VISIBLE_DURATION = 500; // ms
-
-export default function Modal({ children, show, hideModal }: ModalProps) {
-    const [shouldRender, setShouldRender] = useState(show);
-    const [visible, setVisible] = useState(false);
-    const [openedAt, setOpenedAt] = useState<number | null>(null);
+export default function Modal({ children, hideModal, showModal }: ModalProps) {
+    const { shouldRender, visible, onTransitionEnd } = useMountAnimation({
+        isActive: showModal,
+        minVisibleTime: 500
+    });
 
     useEffect(() => {
-        if (show) {
-            setShouldRender(true);
-            setTimeout(() => setVisible(true), 10);
-            setOpenedAt(Date.now());
+        if (shouldRender) {
             document.body.style.overflow = "hidden";
-        } else {
-            const now = Date.now();
-            const timeOpen = openedAt ? now - openedAt : 0;
-            const remaining = Math.max(0, MIN_VISIBLE_DURATION - timeOpen);
-
-            // Wait until min duration is fulfilled
-            setTimeout(() => {
-                setVisible(false);
-                document.body.style.overflow = "auto";
-            }, remaining);
         }
-    }, [show]);
-
-    const handleTransitionEnd = () => {
-        if (!visible) {
-            setShouldRender(false);
-        }
-    };
+        return () => {
+            document.body.style.overflow = "auto";
+        };
+    }, [shouldRender]);
 
     if (!shouldRender) return null;
 
     return ReactDOM.createPortal(
         <Container
-            visible={visible}
             onClick={hideModal}
-            onTransitionEnd={handleTransitionEnd}
+            visible={visible}
+            onTransitionEnd={onTransitionEnd}
         >
-            <div onClick={(e) => e.stopPropagation()}>{children}</div>
+            {children}
         </Container>,
         document.getElementById("modal-portal") as HTMLElement
     );

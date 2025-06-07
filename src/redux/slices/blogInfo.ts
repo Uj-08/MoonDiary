@@ -1,4 +1,4 @@
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 interface BlogInfoType {
     blogDeleteStatus: {
@@ -9,6 +9,10 @@ interface BlogInfoType {
         isLoading: boolean,
         createdBlogId: string,
     };
+    success: {
+        isSuccessful: boolean,
+        message: string
+    }
     error: {
         isError: boolean,
         message: string
@@ -24,6 +28,10 @@ const initialState: BlogInfoType = {
         isLoading: false,
         createdBlogId: "",
     },
+    success: {
+        isSuccessful: false,
+        message: ""
+    },
     error: {
         isError: false,
         message: ""
@@ -32,18 +40,21 @@ const initialState: BlogInfoType = {
 
 export const deleteBlog = createAsyncThunk(
     "deleteBlog",
-    async (reqObj: { blogId: string }) => {
+    async (reqObj: { blogId: string }, { rejectWithValue }) => {
         const { blogId } = reqObj;
         try {
             const resDataJson = await fetch(`/api/blogs/${blogId}`, {
                 method: "DELETE"
             })
-            const resData = await resDataJson.json();
-            return {
-                resData
+            if (!resDataJson.ok) {
+                const errorData = await resDataJson.json();
+                console.error("Server responded with error:", errorData);
+                return rejectWithValue(errorData);
             }
+            const resData = await resDataJson.json();
+            return { resData };
         } catch (err) {
-            throw (err)
+            return rejectWithValue(err);
         }
     }
 )
@@ -58,7 +69,7 @@ export const updateBlog = createAsyncThunk(
         authorName: string,
         authorPicture: string,
         authorEmail: string,
-    }) => {
+    }, { rejectWithValue }) => {
         const { blogId, ...reqBody } = reqObj;
         try {
             const resDataJson = await fetch(`/api/blogs/${blogId}`, {
@@ -68,12 +79,15 @@ export const updateBlog = createAsyncThunk(
                     "Content-Type": "application/json",
                 }
             })
-            const resData = await resDataJson.json();
-            return {
-                resData
+            if (!resDataJson.ok) {
+                const errorData = await resDataJson.json();
+                console.error("Server responded with error:", errorData);
+                return rejectWithValue(errorData);
             }
+            const resData = await resDataJson.json();
+            return { resData };
         } catch (err) {
-            throw (err)
+            return rejectWithValue(err);
         }
     }
 )
@@ -102,7 +116,7 @@ export const postBlog = createAsyncThunk(
                 return rejectWithValue(errorData);
             }
             const resData = await resDataJson.json();
-            return {resData};
+            return { resData };
         } catch (err) {
             return rejectWithValue(err);
         }
@@ -123,7 +137,11 @@ export const blogInfoSlice = createSlice({
 
         resetErrorState: (state) => {
             state.error.isError = false;
-        }
+        },
+
+        resetSuccessState: (state) => {
+            state.success.isSuccessful = false;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(deleteBlog.pending, (state) => {
@@ -132,20 +150,28 @@ export const blogInfoSlice = createSlice({
         builder.addCase(deleteBlog.fulfilled, (state, action) => {
             state.blogDeleteStatus.isLoading = false;
             state.blogDeleteStatus.deletedBlogId = action.payload.resData.id;
+            state.success.isSuccessful = true;
+            state.success.message = "Blog deleted successfully!";
         })
-        builder.addCase(deleteBlog.rejected, (state) => {
+        builder.addCase(deleteBlog.rejected, (state, action) => {
+            state.error.isError = true;
+            state.error.message = action.payload?.message || "Something went wrong.";
             state.blogDeleteStatus.isLoading = false;
         })
 
         builder.addCase(updateBlog.pending, (state) => {
-            state.blogDeleteStatus.isLoading = true;
+            state.blogPostUpdateStatus.isLoading = true;
         })
         builder.addCase(updateBlog.fulfilled, (state, action) => {
-            state.blogDeleteStatus.isLoading = false;
-            state.blogPostUpdateStatus.createdBlogId = action.payload.resData.id;
-        })
-        builder.addCase(updateBlog.rejected, (state) => {
             state.blogPostUpdateStatus.isLoading = false;
+            state.blogPostUpdateStatus.createdBlogId = action.payload.resData.id;
+            state.success.isSuccessful = true;
+            state.success.message = "Blog updated successfully!";
+        })
+        builder.addCase(updateBlog.rejected, (state, action) => {
+            state.error.isError = true;
+            state.blogPostUpdateStatus.isLoading = false;
+            state.error.message = action.payload?.message || "Something went wrong.";
         })
 
         builder.addCase(postBlog.pending, (state) => {
@@ -154,15 +180,17 @@ export const blogInfoSlice = createSlice({
         builder.addCase(postBlog.fulfilled, (state, action) => {
             state.blogPostUpdateStatus.isLoading = false;
             state.blogPostUpdateStatus.createdBlogId = action.payload.resData.id;
+            state.success.isSuccessful = true;
+            state.success.message = "Blog created successfully!";
         })
         builder.addCase(postBlog.rejected, (state, action) => {
             state.error.isError = true;
-            state.error.message = action.payload?.message?.message || "Something went wrong.";
+            state.error.message = action.payload?.message || "Something went wrong.";
             state.blogPostUpdateStatus.isLoading = false;
         })
     },
 });
 
-export const { resetDeletedBlogId, resetCreatedBlogId, resetErrorState } = blogInfoSlice.actions;
+export const { resetDeletedBlogId, resetCreatedBlogId, resetErrorState, resetSuccessState } = blogInfoSlice.actions;
 
 export default blogInfoSlice.reducer;

@@ -15,7 +15,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
             }).sort({ updatedAt: -1 }).populate("tags", "name");
             res.status(200).json(blogs)
         } catch (err) {
-            console.log("error: ", err);
             res.status(500).json({ error: err })
         }
     }

@@ -44,7 +44,7 @@ const Navbar = ({ signInHandler, signedIn, hmbgrClickHandler }: NavbarTypes) => 
     const picture =
         clientDecode?.picture ??
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5BSEPxHF0-PRxJlVMHla55wvcxWdSi8RU2g&s";
-    console.log({ picture })
+
     return (
         <Wrapper>
             <LogoContainer onClick={() => router.push("/")}>

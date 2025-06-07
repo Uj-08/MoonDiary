@@ -11,8 +11,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
             let blog = await BlogsModel.findById(id).populate("tags", sendAll ? "" : "name");
             res.status(200).json({ blog })
         } catch (err) {
-            console.log("error: ", err);
-            res.status(500).json({ error: err })
+            res.status(500).json(err)
         }
     }
     else if (req.method === "PUT") {
@@ -52,8 +51,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
             res.status(200).json({ id });
         } catch (err) {
-            console.log("error: ", err);
-            res.status(500).json({ error: err });
+            res.status(500).json(err);
         }
     }
     else if (req.method === "DELETE") {
@@ -72,8 +70,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
             await BlogsModel.findByIdAndDelete(id);
             res.status(200).json({ id });
         } catch (err) {
-            console.log("error: ", err);
-            res.status(500).json({ error: err })
+            res.status(500).json(err)
         }
     }
 }

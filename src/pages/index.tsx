@@ -63,7 +63,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const isSessionAvailable = hasCookie(COOKIE_NAME, { req, res });
   if (isSessionAvailable) {
   }
-  console.log(context)
+
   const resData = await fetch(`${process.env.BASE_URL}/api/blogs`, {
     method: 'GET',
     headers: {

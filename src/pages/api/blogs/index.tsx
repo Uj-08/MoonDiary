@@ -43,8 +43,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
             const id = savedObj._id;
             res.status(201).json({ id })
         } catch (err) {
-            console.log(err);
-            res.status(500).json({ message: err })
+            res.status(500).json(err)
         }
     }
 
@@ -78,8 +77,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
             res.status(200).json({ blogs });
         } catch (err) {
-            console.log("error: ", err);
-            res.status(500).json({ error: err });
+            res.status(500).json(err);
         }
     }
 }

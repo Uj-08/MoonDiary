@@ -77,7 +77,7 @@ export default function BlogComponent({ blogData }: { blogData: BlogComponentTyp
   const getRandomColor = (): string => {
     return colorPalette[getRandomInt(colorPalette.length)];
   };
-  console.log(typeof (blogData.blogData))
+
   return (
     <Container>
       <PreviewContainer>

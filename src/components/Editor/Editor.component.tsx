@@ -1,6 +1,6 @@
 import { useState, useRef, ReactNode } from "react"
 import { Editor } from "@tinymce/tinymce-react"
-import { BlogTitle, BlogTitleContainer, Button, Container, DraftField, EditorContainer, InputFileLabel, Loader, Preview, PreviewContainer, PreviewData, PreviewImageContainer, RemoveImage, Span, TitleText } from "./Editor.styles";
+import { BlogTitle, BlogTitleContainer, Button, Container, DraftField, EditorContainer, Preview, PreviewContainer, PreviewData, PreviewImageContainer, RemoveImage, Span, TitleText } from "./Editor.styles";
 import parse from "html-react-parser";
 import jwtDecode from "jwt-decode";
 import { useDispatch } from "react-redux";
@@ -19,6 +19,7 @@ function EditorComponent({ sessionId, blogData }: { sessionId: string; blogData?
     const [tagsArr, setTagsArr] = useState<string[]>([]);
     const [isDraft, setIsDraft] = useState(blogData?.isDraft ?? true)
     const [isEditorInit, setIsEditorInit] = useState(false);
+    const [data, setData] = useState("");
     const dispatch = useDispatch<AppDispatch>();
 
     let debounce: NodeJS.Timeout | undefined;
@@ -32,37 +33,38 @@ function EditorComponent({ sessionId, blogData }: { sessionId: string; blogData?
 
     function previewHandler() {
         const html = editorRef?.current?.getContent();
-        if (html) setPreview(parse(html));
+        if (html) {
+            setPreview(parse(html));
+            setData(html);
+        }
     }
 
     function submitHandler() {
         if (sessionId !== "") {
             const authorObj: { name?: string, picture?: string, email?: string } = jwtDecode(sessionId);
             if (blogData) {
-                const html = editorRef.current?.getContent();
                 const reqBody = {
                     blogId: blogData.blogId,
                     blogTitle: title,
                     blogImg: imageLink,
-                    blogData: html,
+                    blogData: data,
                     authorName: authorObj.name as string,
                     authorPicture: authorObj.picture as string,
                     authorEmail: authorObj.email as string,
                     isDraft: isDraft,
-                    tags: tagsArr
+                    tags: tagsArr,
                 }
                 dispatch(updateBlog(reqBody));
             } else {
-                const html = editorRef.current?.getContent();
                 const reqBody = {
                     blogTitle: title,
                     blogImg: imageLink,
-                    blogData: html,
+                    blogData: data,
                     authorName: authorObj.name as string,
                     authorPicture: authorObj.picture as string,
                     authorEmail: authorObj.email as string,
                     isDraft: isDraft,
-                    tags: tagsArr
+                    tags: tagsArr,
                 }
                 dispatch(postBlog(reqBody));
             }
@@ -115,7 +117,7 @@ function EditorComponent({ sessionId, blogData }: { sessionId: string; blogData?
                                 content_style: "@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap'); * { font-family: \"Montserrat\", sans-serif;}  @media (max-width: 670px) {body {font-size: 95%;}} @media (max-width: 570px) {body {font-size: 90%;}} @media (max-width: 470px) {body {font-size: 85%;}} @media (max-width: 400px) {body {font-size: 80%;}}",
                             }}
                         />
-                    </EditorContainer>   
+                    </EditorContainer>
                     <Button onClick={submitHandler}>
                         {
                             blogData?.blogTitle ? "Update" : "Submit"
