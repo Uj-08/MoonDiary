@@ -19,7 +19,6 @@ function EditorComponent({ sessionId, blogData }: { sessionId: string; blogData?
     const [tagsArr, setTagsArr] = useState<string[]>([]);
     const [isDraft, setIsDraft] = useState(blogData?.isDraft ?? true)
     const [isEditorInit, setIsEditorInit] = useState(false);
-    const [data, setData] = useState("");
     const dispatch = useDispatch<AppDispatch>();
 
     let debounce: NodeJS.Timeout | undefined;
@@ -33,13 +32,12 @@ function EditorComponent({ sessionId, blogData }: { sessionId: string; blogData?
 
     function previewHandler() {
         const html = editorRef?.current?.getContent();
-        if (html) {
-            setPreview(parse(html));
-            setData(html);
-        }
+        if (html) setPreview(parse(html));
     }
 
     function submitHandler() {
+        const html = editorRef?.current?.getContent();
+        console.log(html)
         if (sessionId !== "") {
             const authorObj: { name?: string, picture?: string, email?: string } = jwtDecode(sessionId);
             if (blogData) {
@@ -47,7 +45,7 @@ function EditorComponent({ sessionId, blogData }: { sessionId: string; blogData?
                     blogId: blogData.blogId,
                     blogTitle: title,
                     blogImg: imageLink,
-                    blogData: data,
+                    blogData: html,
                     authorName: authorObj.name as string,
                     authorPicture: authorObj.picture as string,
                     authorEmail: authorObj.email as string,
@@ -59,7 +57,7 @@ function EditorComponent({ sessionId, blogData }: { sessionId: string; blogData?
                 const reqBody = {
                     blogTitle: title,
                     blogImg: imageLink,
-                    blogData: data,
+                    blogData: html,
                     authorName: authorObj.name as string,
                     authorPicture: authorObj.picture as string,
                     authorEmail: authorObj.email as string,
