@@ -155,6 +155,7 @@ export default function DynamicCard({ blog, clientEmail, index }: DynamicCardTyp
   const getRandomColor = (): string => {
     return colorPalette[getRandomInt(colorPalette.length)];
   };
+
   return (
     <Link href={`/blogs/${_id}`} legacyBehavior>
       <Container isDraft={isDraft}>

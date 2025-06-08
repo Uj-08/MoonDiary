@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   AboutCard,
   AdditionalData,
@@ -21,6 +21,7 @@ import { BlogComponentTypes } from "@/pages/blogs/[blogId]";
 import parse from "html-react-parser";
 import { Tag } from "../ArticleCard/Card.styles";
 import SkeletalCard from "../ArticleCard/SkeletalCard";
+import { ClientContext } from "@/containers/Base/Base";
 
 export default function BlogComponent({ blogData }: { blogData: BlogComponentTypes }) {
   const [cardData, setCardData] = useState([])
@@ -88,6 +89,9 @@ export default function BlogComponent({ blogData }: { blogData: BlogComponentTyp
     return colorPalette[getRandomInt(colorPalette.length)];
   };
 
+  const client = useContext(ClientContext);
+  console.log(client)
+
   return (
     <Container>
       <PreviewContainer>
@@ -145,7 +149,7 @@ export default function BlogComponent({ blogData }: { blogData: BlogComponentTyp
             <AdditionalData>
               {cardData.map(((blog: any, idx: number) => {
                 return (
-                  <DynamicCard key={idx} index={idx} blog={blog} clientEmail={"client?.email"} />
+                  <DynamicCard key={idx} index={idx} blog={blog} clientEmail={client?.email} />
                 );
               }))}
             </AdditionalData>

@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { LogoContainer, Wrapper, NavLinks, SocialLinks, HamburgerButton } from "./Navbar.styles"
 import NavbarTypes from "./Navbar.types";
 import Image from "next/image";
-import { useRouter } from "next/router";
 import styled from "styled-components";
 import ImageComponent from "../ImageComponent/ImageComponent";
-import { getCookie } from "cookies-next";
-import jwtDecode from "jwt-decode";
 import Link from "next/link";
 
 export const Profile = styled.div`
@@ -23,29 +20,7 @@ img {
 }
 `;
 
-const Navbar = ({ signInHandler, signedIn, hmbgrClickHandler }: NavbarTypes) => {
-    const router = useRouter();
-    const [clientDecode, setClientDecode] = useState<any>(null);
-
-    useEffect(() => {
-        if (signedIn) {
-            const client = getCookie("clientMD");
-
-            if (client) {
-                try {
-                    const decoded = jwtDecode(client as string);
-                    setClientDecode(decoded);
-                } catch (err) {
-                    console.error("Invalid token:", err);
-                }
-            }
-        }
-    }, [signedIn]);
-
-    const picture =
-        clientDecode?.picture ??
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5BSEPxHF0-PRxJlVMHla55wvcxWdSi8RU2g&s";
-
+const Navbar = ({ signInHandler, signedIn, picture, hmbgrClickHandler }: NavbarTypes) => {
     return (
         <Wrapper>
             <LogoContainer>
