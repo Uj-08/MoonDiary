@@ -38,10 +38,12 @@ export default function BlogComponent({ blogData }: { blogData: BlogComponentTyp
         setIsCardDataLoading(false)
       } catch (err) {
         console.error("Failed to fetch blogs by tags", err);
+        setIsCardDataLoading(false);
       }
     };
 
     if (blogData?.tags?.length) {
+      setIsCardDataLoading(true)
       fetchBlogsByTags();
     }
   }, [blogData]);

@@ -16,8 +16,8 @@ export const Container = styled.div`
 `;
 
 export const PreviewContainer = styled.section`
-    flex: 1;
     max-width: 60%;
+    flex: 1;
     font-family: 'Montserrat', sans-serif;
     background-color: #fff;
     overflow: hidden;
@@ -62,6 +62,7 @@ export const PreviewImageContainer = styled.div`
 export const AdditionalSection = styled.section`
     max-width: 40%;
     flex-shrink: 0;
+    flex-basis: 382px;
     padding: 0 1rem;
     display: flex;
     flex-direction: column;
