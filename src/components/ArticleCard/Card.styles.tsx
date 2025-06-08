@@ -117,6 +117,7 @@ export const Tag = styled.div<{
   /* background-color: rgb(177, 1, 177); */
   background-color: ${({ bgColor }) => bgColor};
   display: flex;
+  align-items: center;
   border-radius: 8px;
   /* font-size: 12px; */
   /* letter-spacing: 0.5px; */
