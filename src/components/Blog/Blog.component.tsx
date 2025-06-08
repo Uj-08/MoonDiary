@@ -33,16 +33,24 @@ export default function BlogComponent({ blogData }: { blogData: BlogComponentTyp
             fetch(`/api/tags/${tag._id}?filterId=${blogData._id}`).then(res => res.json())
           )
         );
+        const flatData = responses.flat();
 
-        setCardData(responses.flat() as [])
-        setIsCardDataLoading(false)
+        const uniqueData = flatData.filter(
+          (item, index, self) => {
+            return index === self.findIndex((t) => t._id === item._id) // Replace `id` with your unique key
+          }
+        );
+
+        setCardData(uniqueData as []);
       } catch (err) {
         console.error("Failed to fetch blogs by tags", err);
+      } finally {
         setIsCardDataLoading(false);
       }
     };
 
     if (blogData?.tags?.length) {
+      setCardData([]);
       setIsCardDataLoading(true)
       fetchBlogsByTags();
     }
@@ -121,7 +129,7 @@ export default function BlogComponent({ blogData }: { blogData: BlogComponentTyp
         }
         {(isCardDataLoading && cardData.length === 0) &&
           <>
-            <AdditionalSectionTitle height="45px"/>
+            <AdditionalSectionTitle height="45px" />
             <AdditionalData>
               {Array.from({ length: 4 }).map((_, index) => (
                 <SkeletalCard key={index} />
