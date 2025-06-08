@@ -134,6 +134,7 @@ export const MoreTag = styled.div<{ color: string }>`
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   padding: 2px 8px;
   display: flex;
+  align-items: center;
   border-radius: 8px;
   font-size: 12px;
   letter-spacing: 0.5px;
