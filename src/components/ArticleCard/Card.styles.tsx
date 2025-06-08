@@ -164,8 +164,7 @@ export const BlogData = styled.p`
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  height: 97.5px;
-  /* height: 100%; */
+  max-height: 100%;
 `;
 
 export const BlogAuthorContainer = styled.div`
