@@ -33,3 +33,34 @@ export const Grid = styled.div`
         grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     }
 `;
+
+export const SortContainer = styled.div`
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  font-family: "Arimo", sans-serif;
+`;
+
+export const Label = styled.label`
+  font-weight: 500;
+  color: #333;
+`;
+
+export const Select = styled.select`
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  font-size: 0.95rem;
+  color: #333;
+  appearance: none;
+  cursor: pointer;
+  transition: border 0.2s ease;
+
+  &:focus {
+    border-color: rgba(189, 16, 224, 0.5);
+    outline: none;
+  }
+`;

@@ -58,17 +58,19 @@ const Home = ({ blogsData }: { blogsData: any }) => {
 export default React.memo(Home);
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { req, res } = context;
+  const { req, res, query } = context;
 
   const isSessionAvailable = hasCookie(COOKIE_NAME, { req, res });
   if (isSessionAvailable) {
   }
 
-  const resData = await fetch(`${process.env.BASE_URL}/api/blogs`, {
+  const { sort = "updatedAt", order = "-1" } = query;
+
+  const resData = await fetch(`${process.env.BASE_URL}/api/blogs?sort=${sort}&order=${order}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'x-session-token': getCookie("clientMD", context) as string, 
+      'x-session-token': getCookie("clientMD", context) as string,
     },
   });
   const blogsData = await resData.json();

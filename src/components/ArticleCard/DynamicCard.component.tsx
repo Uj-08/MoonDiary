@@ -42,7 +42,8 @@ export interface DynamicCardTypes {
         _id: string
         name: string
       }
-    ]
+    ],
+    isDraft: boolean
   };
   clientEmail?: string;
   index: number;
@@ -67,15 +68,14 @@ export default function DynamicCard({ blog, clientEmail, index }: DynamicCardTyp
   );
   const dispatch = useDispatch<AppDispatch>();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     if (blogDeleteStatus.deletedBlogId) {
       router.replace(router.asPath);
       dispatch(resetDeletedBlogId());
     }
-  }, [blogDeleteStatus.deletedBlogId]);
-
-  const router = useRouter();
+  }, [blogDeleteStatus.deletedBlogId, dispatch, router]);
 
   function removeTags(blogData: string) {
     if (blogData === null || blogData === "") return false;
@@ -92,16 +92,33 @@ export default function DynamicCard({ blog, clientEmail, index }: DynamicCardTyp
     return plainText;
   }
 
-  const formatter = new Intl.RelativeTimeFormat("en");
-  let relTime;
+  const formatter = new Intl.RelativeTimeFormat("en", { numeric: "auto" });
+
+  let relTime: string | undefined;
+
   if (updatedAt) {
-    const diff = new Date().getTime() - new Date(updatedAt).getTime();
-    let diffTime = diff / (1000 * 60 * 60 * 24);
-    if (diffTime > 1) {
-      relTime = formatter?.format(-Math.floor(diffTime), "days");
+    const now = Date.now();
+    const updated = new Date(updatedAt).getTime();
+    const diffInMs = now - updated;
+
+    const seconds = Math.floor(diffInMs / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+
+    if (days >= 1) {
+      relTime = formatter.format(-days, "day");
+    } else if (hours >= 1) {
+      relTime = formatter.format(-hours, "hour");
+    } else if (minutes >= 1) {
+      relTime = formatter.format(-minutes, "minute");
     } else {
-      diffTime = diff / (1000 * 60 * 60);
-      relTime = formatter?.format(-diffTime.toPrecision(2), "hours");
+      relTime = formatter.format(-seconds, "second");
+    }
+
+    // Capitalize if it's purely alphabetic (e.g., "yesterday", "an hour ago")
+    if (/^[a-zA-Z\s]+$/.test(relTime)) {
+      relTime = relTime.charAt(0).toUpperCase() + relTime.slice(1);
     }
   }
 
