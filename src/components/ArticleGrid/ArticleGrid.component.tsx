@@ -38,21 +38,25 @@ const ArticleGrid = ({ blogs }: { blogs: any }) => {
 
   return (
     <Container>
-      <SortContainer>
-      <Label htmlFor="sort">Sort By:</Label>
-      <Select id="sort" name="sort" value={sort} onChange={handleSortChange}>
-        <option value="createdAt">Date Created</option>
-        <option value="updatedAt">Last Updated</option>
-        <option value="blogTitle">Title</option>
-      </Select>
-
-      <Label htmlFor="order">Order:</Label>
-      <Select id="order" name="order" value={order} onChange={handleOrderChange}>
-        <option value="1">Ascending</option>
-        <option value="-1">Descending</option>
-      </Select>
-    </SortContainer>
       <Grid>
+        <SortContainer>
+          <span>
+            <Label htmlFor="sort">Sort By:</Label>
+            <Select id="sort" name="sort" value={sort} onChange={handleSortChange}>
+              <option value="createdAt">Date Created</option>
+              <option value="updatedAt">Last Updated</option>
+              <option value="blogTitle">Title</option>
+            </Select>
+          </span>
+
+          <span>
+            <Label htmlFor="order">Order:</Label>
+            <Select id="order" name="order" value={order} onChange={handleOrderChange}>
+              <option value="1">Ascending</option>
+              <option value="-1">Descending</option>
+            </Select>
+          </span>
+        </SortContainer>
         {blogs?.map((blog: any, idx: number) => {
           return (
             <DynamicCard key={idx} index={idx} blog={blog} clientEmail={client?.email} />

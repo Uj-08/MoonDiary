@@ -24,6 +24,11 @@ export const Title = styled.h2`
 export const Grid = styled.div`
     display: grid;
     padding-top: 1rem;
+
+    & > :first-child {
+        grid-column: 1 / -1;
+    }
+
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 1rem 5px;
     @media (max-width: 768px) {
@@ -36,28 +41,39 @@ export const Grid = styled.div`
 
 export const SortContainer = styled.div`
   display: flex;
-  gap: 1rem;
+  gap: 12px;
   align-items: center;
-  margin-bottom: 1.5rem;
   flex-wrap: wrap;
   font-family: "Arimo", sans-serif;
+  span {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  @media (max-width: 728px) {
+        justify-content: center;
+    }
+   @media (max-width: 500px) {
+        font-size: 14px;
+    }
 `;
 
 export const Label = styled.label`
   font-weight: 500;
-  color: #333;
+  color: #000;
 `;
 
 export const Select = styled.select`
-  padding: 0.5rem 1rem;
+  padding: 6px 12px;
   border-radius: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid #fff;
   background-color: #fff;
-  font-size: 0.95rem;
-  color: #333;
+  font-size: 14px;
+  color: #000;
   appearance: none;
   cursor: pointer;
   transition: border 0.2s ease;
+  box-shadow: 0 2px 6px rgba(189, 16, 224, 0.08);
 
   &:focus {
     border-color: rgba(189, 16, 224, 0.5);
