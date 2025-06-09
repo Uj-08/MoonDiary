@@ -12,10 +12,10 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
             try {
                 const sendAll = req.query.sendAll === "true";
                 const blog = await BlogsModel.findById(id).populate("tags", sendAll ? "" : "name");
-                return res.status(200).json({ blog });
+                return res.status(200).json(blog);
             } catch (err) {
                 console.error("GET error:", err);
-                return res.status(500).json({ error: "Failed to fetch blog." });
+                return res.status(500).json(err);
             }
 
         case HttpMethod.PUT:
@@ -53,10 +53,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
                     })
                 ));
 
-                return res.status(200).json({ id });
+                return res.status(200).json({id});
             } catch (err) {
-                console.error("PUT error:", err);
-                return res.status(500).json({ error: "Failed to update blog." });
+                return res.status(500).json(err);
             }
 
         case HttpMethod.DELETE:
@@ -75,8 +74,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
                 await BlogsModel.findByIdAndDelete(id);
                 return res.status(200).json({ id });
             } catch (err) {
-                console.error("DELETE error:", err);
-                return res.status(500).json({ error: "Failed to delete blog." });
+                return res.status(500).json(err);
             }
 
         default:

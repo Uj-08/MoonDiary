@@ -4,8 +4,10 @@ import Head from "next/head";
 import { GetServerSideProps } from "next";
 import { hasCookie } from "cookies-next";
 import { COOKIE_NAME } from "@/constants";
+import FeatureCard from "@/components/FeatureCard";
 
-const Features = ({ blogsData }: { blogsData: any }) => {
+const Features = ({ tags }: { tags: any }) => {
+    console.log(tags)
     return (
         <>
             <Head>
@@ -13,11 +15,9 @@ const Features = ({ blogsData }: { blogsData: any }) => {
                 {/* <link rel="preload" as="image" href="/cover.jpeg" /> */}
             </Head>
             <Base>
-                <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "75dvh" }}>
-                    <h3>
-                        Building Features...
-                    </h3>
-                </div>
+                {
+                    tags.map((tag, index) => <FeatureCard key={index} tagData={tag} />)
+                }
             </Base>
         </>
     );
@@ -32,18 +32,18 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     if (isSessionAvailable) {
     }
 
-    //   const resData = await fetch(`${process.env.BASE_URL}/api/blogs`, {
-    //     method: 'GET',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       'x-session-token': getCookie("clientMD", context) as string, 
-    //     },
-    //   });
-    //   const blogsData = await resData.json();
+    const resData = await fetch(`${process.env.BASE_URL}/api/tags`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            //   'x-session-token': getCookie("clientMD", context) as string, 
+        },
+    });
+    const tags = await resData.json();
 
     return {
         props: {
-            //   blogsData: blogsData,
+            tags
         },
     };
 };

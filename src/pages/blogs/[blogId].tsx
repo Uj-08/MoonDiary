@@ -42,7 +42,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return {
     props: {
-      blogData: blogData.blog
+      blogData: blogData
     }
   }
 }

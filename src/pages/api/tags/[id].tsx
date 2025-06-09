@@ -26,8 +26,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
                 return res.status(200).json(blogs);
             } catch (err) {
-                console.error("GET /api/tags/[id]:", err);
-                return res.status(500).json({ error: "Internal server error" });
+                return res.status(500).json(err);
             }
 
         default:

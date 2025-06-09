@@ -32,7 +32,7 @@ const BlogSchema = new Schema(
             type: String, validate: {
                 validator: function (value: string) {
                     if (!this.isDraft) {
-                        return value !== "<p>Type here...</p>";
+                        return value;
                     }
                     return true;
                 },

@@ -12,40 +12,15 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    /* background-color: red; */
-    /* scrollbar-gutter: hidden; */
   }
   
   body {
-    overflow: overlay;
-    scrollbar-gutter: stable;
     background-color: #ededed;
-  }
-
-  ::-webkit-scrollbar {
-    width: 10px;
-    overflow: overlay;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
-    background-color: #73737344;
-  }
-  
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: #0000008b;
-    border-radius: 10px;
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: #000000bb;
   }
 
   .next-progress-spinner {
     display: none;
-}
+  }
 `;
 
 export default function App({ Component, pageProps }: AppProps) {

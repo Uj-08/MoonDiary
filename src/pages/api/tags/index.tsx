@@ -23,11 +23,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
                         blogIds: { $not: { $size: 0 } },
                     });
 
-                    return res.status(200).json({ tags });
+                    return res.status(200).json(tags);
                 }
             } catch (err) {
                 console.error("Tag search error:", err);
-                return res.status(500).json({ error: "Internal server error" });
+                return res.status(500).json(err);
             }
         }
 

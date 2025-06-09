@@ -90,7 +90,6 @@ export default function BlogComponent({ blogData }: { blogData: BlogComponentTyp
   };
 
   const client = useContext(ClientContext);
-  console.log(client)
 
   return (
     <Container>

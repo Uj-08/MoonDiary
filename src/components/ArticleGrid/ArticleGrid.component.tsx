@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Container, Title, Grid } from "./ArticleGrid.styles";
-import PostCard from "../ArticleCard/PostCard.component";
+import PostCard from "../Blog/AddPostButton";
 import DynamicCard from "../ArticleCard/DynamicCard.component";
 import { getCookie, hasCookie } from "cookies-next";
 import jwtDecode from "jwt-decode";
@@ -26,11 +26,6 @@ const ArticleGrid = ({ blogs }: { blogs: any }) => {
             <DynamicCard key={idx} index={idx} blog={blog} clientEmail={client?.email} />
           );
         })}
-        {client &&
-          (client?.email === "ujjwalpandey24@gmail.com" ||
-            client?.email === "sinhashairee6@gmail.com" ||
-            client?.email === "psykidbiz@gmail.com"
-          ) && <PostCard />}
       </Grid>
     </Container>
   );

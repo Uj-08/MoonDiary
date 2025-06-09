@@ -49,7 +49,7 @@ const Home = ({ blogsData }: { blogsData: any }) => {
       </Head>
       <Base>
         <HeroSection />
-        <ArticleGrid blogs={blogsData.blogs} />
+        <ArticleGrid blogs={blogsData} />
       </Base>
     </>
   );

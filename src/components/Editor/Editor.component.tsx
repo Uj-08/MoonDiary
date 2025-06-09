@@ -37,7 +37,6 @@ function EditorComponent({ sessionId, blogData }: { sessionId: string; blogData?
 
     function submitHandler() {
         const html = editorRef?.current?.getContent();
-        console.log(html)
         if (sessionId !== "") {
             const authorObj: { name?: string, picture?: string, email?: string } = jwtDecode(sessionId);
             if (blogData) {
@@ -103,7 +102,7 @@ function EditorComponent({ sessionId, blogData }: { sessionId: string; blogData?
                             <Shimmer className="shimmer" isLoading />
                         }
                         <Editor
-                            initialValue={blogData?.blogData || "Type here..."}
+                            initialValue={blogData?.blogData}
                             apiKey={process.env.NEXT_PUBLIC_MCE_API}
                             onInit={(evt, editor) => {
                                 editorRef.current = editor;

@@ -34,10 +34,10 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
                     .populate("tags", "name")
                     .sort({ updatedAt: -1 });
 
-                return res.status(200).json({ blogs });
+                return res.status(200).json(blogs);
             } catch (err) {
                 console.error("GET error:", err);
-                return res.status(500).json({ error: "Failed to fetch blogs" });
+                return res.status(500).json(err);
             }
         case HttpMethod.POST:
             try {
@@ -76,7 +76,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
                 return res.status(201).json({ id: savedBlog._id });
             } catch (err) {
                 console.error("POST error:", err);
-                return res.status(500).json({ error: "Failed to create blog" });
+                return res.status(500).json(err);
             }
 
         default:

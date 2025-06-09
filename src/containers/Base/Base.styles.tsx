@@ -29,4 +29,5 @@ export const ToastContainer = styled.div`
   flex-direction: column;
   gap: 8px;
   padding: 1rem;
+  z-index: 10;
 `;

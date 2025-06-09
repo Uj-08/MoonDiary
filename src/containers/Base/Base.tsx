@@ -14,6 +14,7 @@ import { Container, Loader, ToastContainer } from "./Base.styles";
 import { useRouter } from "next/router";
 import Toast from "../Toast";
 import jwtDecode from "jwt-decode";
+import AddPostButton from "@/components/Blog/AddPostButton";
 export const ClientContext = createContext<any>(null);
 
 const Base = ({ children }: BaseTypes) => {
@@ -82,24 +83,24 @@ const Base = ({ children }: BaseTypes) => {
 
   const [clientDecode, setClientDecode] = useState<any>(null);
 
-    useEffect(() => {
-        if (signedIn) {
-            const client = getCookie("clientMD");
+  useEffect(() => {
+    if (signedIn) {
+      const client = getCookie("clientMD");
 
-            if (client) {
-                try {
-                    const decoded = jwtDecode(client as string);
-                    setClientDecode(decoded);
-                } catch (err) {
-                    console.error("Invalid token:", err);
-                }
-            }
+      if (client) {
+        try {
+          const decoded = jwtDecode(client as string);
+          setClientDecode(decoded);
+        } catch (err) {
+          console.error("Invalid token:", err);
         }
-    }, [signedIn]);
+      }
+    }
+  }, [signedIn]);
 
-    const picture =
-        clientDecode?.picture ??
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5BSEPxHF0-PRxJlVMHla55wvcxWdSi8RU2g&s";
+  const picture =
+    clientDecode?.picture ??
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5BSEPxHF0-PRxJlVMHla55wvcxWdSi8RU2g&s";
 
   return (
     <ClientContext.Provider value={clientDecode}>
@@ -120,15 +121,20 @@ const Base = ({ children }: BaseTypes) => {
         <FooterComponent />
       </Container>
       <ToastContainer>
-        <Toast 
-          show={blogInfo.error.isError} 
-          message={blogInfo.error.message} 
-          isError 
+        {!router.asPath.startsWith("/blogs/post") && clientDecode &&
+          (clientDecode?.email === "ujjwalpandey24@gmail.com" ||
+            clientDecode?.email === "sinhashairee6@gmail.com" ||
+            clientDecode?.email === "psykidbiz@gmail.com"
+          ) && <AddPostButton />}
+        <Toast
+          show={blogInfo.error.isError}
+          message={blogInfo.error.message}
+          isError
         />
-        <Toast 
-          show={blogInfo.success.isSuccessful} 
-          message={blogInfo.success.message} 
-          isError={false} 
+        <Toast
+          show={blogInfo.success.isSuccessful}
+          message={blogInfo.success.message}
+          isError={false}
         />
       </ToastContainer>
       <Modal showModal={showLoginModal || (blogInfo.blogPostUpdateStatus.isLoading || blogInfo.blogDeleteStatus.isLoading)} hideModal={hideModal}>
