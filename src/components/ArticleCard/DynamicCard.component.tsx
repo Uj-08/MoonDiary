@@ -26,6 +26,7 @@ import Modal from "@/containers/Modal/Modal";
 import DeleteCard from "../DeletePrompt/DeleteCard";
 import ImageComponent from "../ImageComponent/ImageComponent";
 import Link from "next/link";
+import { useShuffledColors } from "@/hooks/useShuffledColors";
 
 export interface DynamicCardTypes {
   blog: {
@@ -141,37 +142,7 @@ export default function DynamicCard({ blog, clientEmail, index }: DynamicCardTyp
     setShowDeleteModal(false);
   }
 
-  const colorPalette = [
-    "#B101B1", // Primary rich magenta
-    "#7A0BC0", // Deep violet — an elegant, darker shade
-    "#3F0071", // Midnight purple — adds depth
-    "#F31559", // Bold reddish-pink — energizing contrast
-    "#C70A80", // Muted raspberry — complementary and cohesive
-    "#009FBD", // Cool cyan — balances the heat
-    "#FF6D28", // Warm orange — vibrant highlight
-    "#A367B1", // Soft lilac — eases intensity while staying on theme
-  ];
-
-  let usedIndex: number[] = [];
-
-  const getRandomInt = (max: number): number => {
-    if (usedIndex.length >= max) {
-      usedIndex = [];
-    }
-
-    let randIndex = Math.floor(Math.random() * max);
-
-    while (usedIndex.includes(randIndex)) {
-      randIndex = Math.floor(Math.random() * max);
-    }
-
-    usedIndex.push(randIndex);
-    return randIndex;
-  };
-
-  const getRandomColor = (): string => {
-    return colorPalette[getRandomInt(colorPalette.length)];
-  };
+  const getRandomColor = useShuffledColors();
 
   return (
     <Link href={`/blogs/${_id}`} legacyBehavior>
