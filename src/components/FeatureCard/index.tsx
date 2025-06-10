@@ -55,7 +55,7 @@ const FeatureCard = ({
         <Link href={`/features/${tagData._id}`} legacyBehavior>
             <Container>
                 <Text>#{tagData.name}</Text>
-                <span>{tagData.blogIds.length}</span>
+                <span>({tagData.blogIds.length})</span>
             </Container>
         </Link>
     );
