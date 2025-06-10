@@ -118,6 +118,9 @@ export const AdditionalData = styled.div`
     margin: -10px -30px -40px -40px;
     overflow-y: scroll;
     max-height: 1400px;
+    ::-webkit-scrollbar {
+            display: none;
+        }
     div {
         flex-shrink: 0;
     }
@@ -125,9 +128,6 @@ export const AdditionalData = styled.div`
         flex-direction: row;
         overflow-X: scroll;
         width: 100%;
-        ::-webkit-scrollbar {
-            display: none;
-        }
         padding: 0;
         margin: 0;
         padding: 8px;
