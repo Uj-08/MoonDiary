@@ -1,7 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { Container, Title, Grid, FilterContainer, SortContainer, Label, Select } from "./ArticleGrid.styles";
+import { Container, Grid, SortContainer, Label, Select } from "./ArticleGrid.styles";
 import DynamicCard from "../ArticleCard/DynamicCard.component";
 import { getCookie, hasCookie } from "cookies-next";
 import jwtDecode from "jwt-decode";
@@ -21,8 +21,11 @@ const ArticleGrid = ({ blogs }: { blogs: any }) => {
 
 
   const { sort = "updatedAt", order = "-1" } = router.query;
+  const [sortState, setSortState] = useState(sort)
+  const [orderState, setOrderState] = useState(order)
 
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSortState(e.target.value);
     router.push({
       pathname: router.pathname,
       query: { ...router.query, sort: e.target.value },
@@ -30,6 +33,7 @@ const ArticleGrid = ({ blogs }: { blogs: any }) => {
   };
 
   const handleOrderChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setOrderState(e.target.value);
     router.push({
       pathname: router.pathname,
       query: { ...router.query, order: e.target.value },
@@ -42,7 +46,7 @@ const ArticleGrid = ({ blogs }: { blogs: any }) => {
         <SortContainer>
           <span>
             <Label htmlFor="sort">Sort By:</Label>
-            <Select id="sort" name="sort" value={sort} onChange={handleSortChange}>
+            <Select id="sort" name="sort" value={sortState} onChange={handleSortChange}>
               <option value="createdAt">Date Created</option>
               <option value="updatedAt">Last Updated</option>
               <option value="blogTitle">Title</option>
@@ -51,7 +55,7 @@ const ArticleGrid = ({ blogs }: { blogs: any }) => {
 
           <span>
             <Label htmlFor="order">Order:</Label>
-            <Select id="order" name="order" value={order} onChange={handleOrderChange}>
+            <Select id="order" name="order" value={orderState} onChange={handleOrderChange}>
               <option value="1">Ascending</option>
               <option value="-1">Descending</option>
             </Select>
