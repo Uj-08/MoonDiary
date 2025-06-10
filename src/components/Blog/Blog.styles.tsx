@@ -24,7 +24,6 @@ export const PreviewContainer = styled.section`
     border-radius: 8px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     min-height: 800px;
-    height: 100%;
     @media (max-width: 920px) {
         max-width: 100%;
         border-radius: 0px;
@@ -118,7 +117,7 @@ export const AdditionalData = styled.div`
     padding: 10px 30px 40px 40px;
     margin: -10px -30px -40px -40px;
     overflow-y: scroll;
-    max-height: 1000px;
+    max-height: 1400px;
     div {
         flex-shrink: 0;
     }
