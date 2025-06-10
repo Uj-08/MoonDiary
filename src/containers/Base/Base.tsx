@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext, useContext } from "react";
+import React, { useState, useEffect, createContext } from "react";
 import Navbar from "@/components/Navbar/Navbar.component";
 import FooterComponent from "@/components/Footer/Footer.component";
 import { GoogleLogin } from "@react-oauth/google";
@@ -123,7 +123,6 @@ const Base = ({ children }: BaseTypes) => {
       <ToastContainer>
         {!router.asPath.startsWith("/blogs/post") && clientDecode &&
           (clientDecode?.email === "ujjwalpandey24@gmail.com" ||
-            clientDecode?.email === "sinhashairee6@gmail.com" ||
             clientDecode?.email === "psykidbiz@gmail.com"
           ) && <AddPostButton />}
         <Toast

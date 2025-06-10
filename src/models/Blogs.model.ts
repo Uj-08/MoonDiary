@@ -44,7 +44,7 @@ const BlogSchema = new Schema(
         authorEmail: {
             type: String, required: true, validate: {
                 validator: function (value: string) {
-                    return (value === "sinhashairee6@gmail.com" || value === "psykidbiz@gmail.com" || value === "ujjwalpandey24@gmail.com");
+                    return (value === "psykidbiz@gmail.com" || value === "ujjwalpandey24@gmail.com");
                 },
                 message: "You are not authorized to post.",
             },

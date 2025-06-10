@@ -85,7 +85,7 @@ export default function BlogComponent({ blogData }: { blogData: BlogComponentTyp
         </TagsContainer>
 
         {
-          (blogData?.authorEmail === "sinhashairee6@gmail.com" ||
+          (
             blogData?.authorEmail === "psykidbiz@gmail.com") &&
           <AboutCard>
             <Author>
