@@ -54,7 +54,7 @@ export default function BlogComponent({ blogData }: { blogData: BlogComponentTyp
             return index === self.findIndex((t) => t._id === item._id) // Replace `id` with your unique key
           }
         );
-        if (uniqueData.length <= 2) {
+        if (uniqueData.length <= 4) {
           const filterIds = uniqueData.map(ud => ud._id) ?? []
           additionalBlogs = await fetchFillData(3 - uniqueData.length, filterIds)
           uniqueData = [
@@ -128,7 +128,7 @@ export default function BlogComponent({ blogData }: { blogData: BlogComponentTyp
           <>
             {/* <AdditionalSectionTitle height="45px" /> */}
             <AdditionalData>
-              {Array.from({ length: 3 }).map((_, index) => (
+              {Array.from({ length: 5 }).map((_, index) => (
                 <SkeletalCard key={index} />
               ))}
             </AdditionalData>

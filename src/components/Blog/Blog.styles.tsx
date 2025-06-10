@@ -76,6 +76,7 @@ export const AdditionalSection = styled.section`
 export const TagsContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
+    padding: 12px 0px;
     @media (max-width: 920px) {
         padding: 0 8px;
         flex-wrap: nowrap;
@@ -114,6 +115,13 @@ export const AdditionalData = styled.div`
     display: flex;
     flex-direction: column;
     gap: 8px;
+    padding: 10px 30px 40px 40px;
+    margin: -10px -30px -40px -40px;
+    overflow-y: scroll;
+    max-height: 1000px;
+    div {
+        flex-shrink: 0;
+    }
     @media (max-width: 920px) {
         flex-direction: row;
         overflow-X: scroll;
@@ -121,7 +129,10 @@ export const AdditionalData = styled.div`
         ::-webkit-scrollbar {
             display: none;
         }
+        padding: 0;
+        margin: 0;
         padding: 8px;
         padding-bottom: 40px;
+        margin-bottom: -40px;
     }
 `;
