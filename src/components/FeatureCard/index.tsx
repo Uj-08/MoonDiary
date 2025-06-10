@@ -52,7 +52,6 @@ const FeatureCard = ({
         nonDraftCount: number;
     };
 }) => {
-    console.log(tagData)
     return (
         <Link href={`/features/${tagData._id}`} legacyBehavior>
             <Container>
