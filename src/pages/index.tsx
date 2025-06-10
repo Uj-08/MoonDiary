@@ -44,7 +44,7 @@ const Home = ({ blogsData }: { blogsData: any }) => {
   return (
     <>
       <Head>
-        <title>MoonDiary - Home</title>
+        <title>MoonDiary</title>
         <link rel="preload" as="image" href="/cover.jpeg" />
       </Head>
       <Base>

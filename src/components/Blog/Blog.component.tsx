@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import {
-  AboutCard,
+  // AboutCard,
   AdditionalData,
   AdditionalSection,
-  Author,
-  AuthorBio,
-  AuthorName,
-  AuthorProfile,
+  // Author,
+  // AuthorBio,
+  // AuthorName,
+  // AuthorProfile,
   BlogTag,
   Container,
   Preview,
@@ -27,7 +27,18 @@ export default function BlogComponent({ blogData }: { blogData: BlogComponentTyp
   const [cardData, setCardData] = useState([])
   const [isCardDataLoading, setIsCardDataLoading] = useState(true)
   useEffect(() => {
+    const fetchFillData = async (limit: number, filterIds: String[]) => {
+      try {
+        const blogs = await fetch(`/api/blogs/?filterIds=${[blogData._id, ...filterIds]}&limit=${limit}`)
+          .then(res => res.json())
+        return blogs;
+      } catch (err) {
+        console.error("Failed to fetch blogs by tags", err);
+        return [];
+      }
+    };
     const fetchBlogsByTags = async () => {
+      let additionalBlogs = [];
       try {
         const responses = await Promise.all(
           blogData?.tags.map(tag =>
@@ -38,12 +49,19 @@ export default function BlogComponent({ blogData }: { blogData: BlogComponentTyp
         );
         const flatData = responses.flat();
 
-        const uniqueData = flatData.filter(
+        let uniqueData = flatData.filter(
           (item, index, self) => {
             return index === self.findIndex((t) => t._id === item._id) // Replace `id` with your unique key
           }
         );
-
+        if (uniqueData.length <= 2) {
+          const filterIds = uniqueData.map(ud => ud._id) ?? []
+          additionalBlogs = await fetchFillData(3 - uniqueData.length, filterIds)
+          uniqueData = [
+            ...uniqueData,
+            ...additionalBlogs
+          ]
+        }
         setCardData(uniqueData as []);
       } catch (err) {
         console.error("Failed to fetch blogs by tags", err);
@@ -89,7 +107,7 @@ export default function BlogComponent({ blogData }: { blogData: BlogComponentTyp
           }
         </TagsContainer>
 
-        {
+        {/* {
           (
             blogData?.authorEmail === "psykidbiz@gmail.com") &&
           <AboutCard>
@@ -105,12 +123,12 @@ export default function BlogComponent({ blogData }: { blogData: BlogComponentTyp
             </Author>
             <AuthorBio>"Rolling in and out of Hindu college with my degree in English literature wasn’t enough to curb my craving for expression. Pursuing and juggling various creative skills like dancing, music and theatre has broadened my interests and passion to look out for the next new lesson. Forever trying to wrap my head around this perpetual tease called existence."</AuthorBio>
           </AboutCard>
-        }
+        } */}
         {(isCardDataLoading && cardData.length === 0) &&
           <>
             {/* <AdditionalSectionTitle height="45px" /> */}
             <AdditionalData>
-              {Array.from({ length: 4 }).map((_, index) => (
+              {Array.from({ length: 3 }).map((_, index) => (
                 <SkeletalCard key={index} />
               ))}
             </AdditionalData>

@@ -34,15 +34,22 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
                 const ALLOWED_SORT_FIELDS = ["updatedAt", "createdAt", "blogTitle"];
                 const ALLOWED_ORDER_VALUES = ["1", "-1"];
 
-                let { sort = "updatedAt", order = "-1" } = req.query;
-
+                let { sort = "updatedAt", order = "-1", limit, filterIds } = req.query;
+                const filterIdsArray = filterIds && (filterIds as string).split(",")
                 // Validate
                 if (!ALLOWED_SORT_FIELDS.includes(sort)) sort = "updatedAt";
                 if (!ALLOWED_ORDER_VALUES.includes(order)) order = "-1";
 
+                // Handle filterId (exclude this blog ID if provided)
+                if (Array.isArray(filterIdsArray) && filterIdsArray?.length > 0) {
+                    query._id = { $nin: filterIdsArray };
+                }
+
+                // Fetch blogs
                 const blogs = await BlogsModel.find(query)
                     .populate("tags", "name")
-                    .sort({ [sort]: Number(order) });
+                    .sort({ [sort]: Number(order) })
+                    .limit(limit ? Number(limit) : 0);
 
                 return res.status(200).json(blogs);
             } catch (err) {
