@@ -76,7 +76,6 @@ export const AdditionalSection = styled.section`
 export const TagsContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
     @media (max-width: 920px) {
         padding: 0 8px;
         flex-wrap: nowrap;
@@ -85,6 +84,15 @@ export const TagsContainer = styled.div`
             display: none;
         }
     }
+`;
+
+export const BlogTag = styled.span`
+    padding: 4px 3px;
+    font-family: "Arimo", sans-serif;
+    font-weight: bold;
+    font-style: italic;
+    letter-spacing: 0.3px;
+    cursor: pointer;
 `;
 
 export const AdditionalSectionTitle = styled.div<{ height?: string }>`

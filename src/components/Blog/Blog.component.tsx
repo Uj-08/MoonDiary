@@ -8,6 +8,7 @@ import {
   AuthorBio,
   AuthorName,
   AuthorProfile,
+  BlogTag,
   Container,
   Preview,
   PreviewContainer,
@@ -19,7 +20,6 @@ import ImageComponent from "../ImageComponent/ImageComponent";
 import DynamicCard from "../ArticleCard/DynamicCard.component";
 import { BlogComponentTypes } from "@/pages/blogs/[blogId]";
 import parse from "html-react-parser";
-import { Tag } from "../ArticleCard/Card.styles";
 import SkeletalCard from "../ArticleCard/SkeletalCard";
 import { ClientContext } from "@/containers/Base/Base";
 import { useShuffledColors } from "@/hooks/useShuffledColors";
@@ -85,7 +85,7 @@ export default function BlogComponent({ blogData }: { blogData: BlogComponentTyp
           {
             blogData.tags.map((tag) => 
               <Link key={tag._id} href={`/features/${tag._id}`} legacyBehavior>
-                <Tag fontSize="14px" letterSpacing="0.8px" bgColor={getRandomColor()} >#{tag.name}</Tag>
+                <BlogTag>#{tag.name}</BlogTag>
               </Link>
           )
           }
@@ -110,7 +110,7 @@ export default function BlogComponent({ blogData }: { blogData: BlogComponentTyp
         }
         {(isCardDataLoading && cardData.length === 0) &&
           <>
-            <AdditionalSectionTitle height="45px" />
+            {/* <AdditionalSectionTitle height="45px" /> */}
             <AdditionalData>
               {Array.from({ length: 4 }).map((_, index) => (
                 <SkeletalCard key={index} />
@@ -120,9 +120,9 @@ export default function BlogComponent({ blogData }: { blogData: BlogComponentTyp
         }
         {(!isCardDataLoading && cardData.length > 0) &&
           <>
-            <AdditionalSectionTitle>
-              More like this...
-            </AdditionalSectionTitle>
+            {/* <AdditionalSectionTitle> */}
+              {/* More like this... */}
+            {/* </AdditionalSectionTitle> */}
             <AdditionalData>
               {cardData.map(((blog: any, idx: number) => {
                 return (
