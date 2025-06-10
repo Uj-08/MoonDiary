@@ -17,11 +17,21 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
                     (bid: string) => bid.toString() !== filterId
                 );
 
+                // Allowed sort fields and orders
+                const ALLOWED_SORT_FIELDS = ["updatedAt", "createdAt", "blogTitle"];
+                const ALLOWED_ORDER_VALUES = ["1", "-1"];
+
+                let { sort = "updatedAt", order = "-1" } = req.query;
+
+                // Validate
+                if (!ALLOWED_SORT_FIELDS.includes(sort)) sort = "updatedAt";
+                if (!ALLOWED_ORDER_VALUES.includes(order)) order = "-1";
+
                 const blogs = await BlogsModel.find({
                     _id: { $in: blogIds },
                     isDraft: { $ne: true },
                 })
-                    .sort({ updatedAt: -1 })
+                    .sort({ [sort]: Number(order) })
                     .populate("tags", "name");
 
                 return res.status(200).json(blogs);

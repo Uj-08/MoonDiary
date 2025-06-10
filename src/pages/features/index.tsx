@@ -8,7 +8,6 @@ import FeatureCard from "@/components/FeatureCard";
 import { Container } from "./features.styles";
 
 const Features = ({ tags }: { tags: any }) => {
-    console.log(tags)
     return (
         <>
             <Head>

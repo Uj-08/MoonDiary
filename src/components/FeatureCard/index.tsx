@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
@@ -47,13 +48,16 @@ const FeatureCard = ({
     tagData: {
         name: string;
         blogIds: Array<string>;
+        _id: string;
     };
 }) => {
     return (
-        <Container>
-            <Text>#{tagData.name}</Text>
-            <span>{tagData.blogIds.length}</span>
-        </Container>
+        <Link href={`/features/${tagData._id}`} legacyBehavior>
+            <Container>
+                <Text>#{tagData.name}</Text>
+                <span>{tagData.blogIds.length}</span>
+            </Container>
+        </Link>
     );
 };
 
