@@ -5,6 +5,7 @@ import { GetServerSideProps } from "next";
 import { hasCookie } from "cookies-next";
 import { COOKIE_NAME } from "@/constants";
 import FeatureCard from "@/components/FeatureCard";
+import { Container } from "./features.styles";
 
 const Features = ({ tags }: { tags: any }) => {
     console.log(tags)
@@ -15,9 +16,11 @@ const Features = ({ tags }: { tags: any }) => {
                 {/* <link rel="preload" as="image" href="/cover.jpeg" /> */}
             </Head>
             <Base>
+            <Container>
                 {
                     tags.map((tag, index) => <FeatureCard key={index} tagData={tag} />)
                 }
+            </Container>
             </Base>
         </>
     );
