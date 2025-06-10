@@ -111,6 +111,7 @@ export const Tag = styled.div<{
   fontSize: string, 
   letterSpacing: string 
 }>`
+  cursor: pointer;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   padding: 2px 8px;
   /* background-color: rgb(177, 1, 177); */

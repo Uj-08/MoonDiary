@@ -34,7 +34,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
                     .sort({ [sort]: Number(order) })
                     .populate("tags", "name");
 
-                return res.status(200).json(blogs);
+                return res.status(200).json({blogs, name: tag.name});
             } catch (err) {
                 return res.status(500).json(err);
             }

@@ -23,6 +23,7 @@ import { Tag } from "../ArticleCard/Card.styles";
 import SkeletalCard from "../ArticleCard/SkeletalCard";
 import { ClientContext } from "@/containers/Base/Base";
 import { useShuffledColors } from "@/hooks/useShuffledColors";
+import Link from "next/link";
 
 export default function BlogComponent({ blogData }: { blogData: BlogComponentTypes }) {
   const [cardData, setCardData] = useState([])
@@ -32,7 +33,9 @@ export default function BlogComponent({ blogData }: { blogData: BlogComponentTyp
       try {
         const responses = await Promise.all(
           blogData?.tags.map(tag =>
-            fetch(`/api/tags/${tag._id}?filterId=${blogData._id}`).then(res => res.json())
+            fetch(`/api/tags/${tag._id}?filterId=${blogData._id}`)
+              .then(res => res.json())
+              .then(data => data.blogs)
           )
         );
         const flatData = responses.flat();
@@ -80,7 +83,11 @@ export default function BlogComponent({ blogData }: { blogData: BlogComponentTyp
       <AdditionalSection>
         <TagsContainer>
           {
-            blogData.tags.map((tag) => <Tag key={tag._id} fontSize="14px" letterSpacing="0.8px" bgColor={getRandomColor()} >#{tag.name}</Tag>)
+            blogData.tags.map((tag) => 
+              <Link key={tag._id} href={`/features/${tag._id}`} legacyBehavior>
+                <Tag fontSize="14px" letterSpacing="0.8px" bgColor={getRandomColor()} >#{tag.name}</Tag>
+              </Link>
+          )
           }
         </TagsContainer>
 

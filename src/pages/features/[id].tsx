@@ -11,18 +11,26 @@ import React from "react";
 export const Container = styled.div`
     min-height: calc(100dvh);
     padding: 100px;
+    h2 {
+        font-family: Anton, sans-serif; 
+        letter-spacing: 0.8px;
+    }
 `
 
 const Home = ({ blogsData }: { blogsData: any }) => {
+    console.log(blogsData)
     return (
         <>
             <Head>
-                <title>MoonDiary - Home</title>
+                <title>MoonDiary - #{blogsData.name}</title>
                 <link rel="preload" as="image" href="/cover.jpeg" />
             </Head>
             <Base>
                 <Container>
-                    <ArticleGrid blogs={blogsData} />
+                    <h2>
+                        #{blogsData.name}
+                    </h2>
+                    <ArticleGrid blogs={blogsData.blogs} />
                 </Container>
             </Base>
         </>
@@ -33,7 +41,7 @@ export default React.memo(Home);
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const { req, res, query } = context;
-    
+
     const isSessionAvailable = hasCookie(COOKIE_NAME, { req, res });
     if (isSessionAvailable) {
     }

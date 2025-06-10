@@ -161,7 +161,12 @@ export default function DynamicCard({ blog, clientEmail, index }: DynamicCardTyp
               <TagsContainer>
                 {Array.isArray(tags) && tags.length > 0 &&
                   tags.map((tag, idx) => {
-                    if (idx <= 1) return <Tag title={`#${tag.name}`} maxWidth={"90px"} fontSize="12px" letterSpacing="0.5px" bgColor={getRandomColor()} key={tag._id}><span>#{tag.name}</span></Tag>
+                    if (idx <= 1) return (
+                      <Link key={tag._id} href={`/features/${tag._id}`} legacyBehavior>
+                        <Tag title={`#${tag.name}`} maxWidth={"90px"} fontSize="12px" letterSpacing="0.5px" bgColor={getRandomColor()} ><span>#{tag.name}</span></Tag>
+                      </Link>
+
+                    )
                   })
                 }
                 {Array.isArray(tags) && tags.length > 0 && tags.length > 2 &&
