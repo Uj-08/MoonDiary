@@ -86,13 +86,18 @@ export const TagsContainer = styled.div`
     }
 `;
 
-export const BlogTag = styled.span`
+export const BlogTag = styled.span<{ textColor: string }>`
     padding: 4px 3px;
     font-family: "Arimo", sans-serif;
     font-weight: bold;
     font-style: italic;
     letter-spacing: 0.3px;
     cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 200ms linear;
+    :hover {
+        opacity: 0.8;
+    }
 `;
 
 export const AdditionalSectionTitle = styled.div<{ height?: string }>`

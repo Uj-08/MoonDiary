@@ -3,7 +3,6 @@ import {
   AboutCard,
   AdditionalData,
   AdditionalSection,
-  AdditionalSectionTitle,
   Author,
   AuthorBio,
   AuthorName,
@@ -80,11 +79,13 @@ export default function BlogComponent({ blogData }: { blogData: BlogComponentTyp
       <AdditionalSection>
         <TagsContainer>
           {
-            blogData.tags.map((tag) => 
-              <Link key={tag._id} href={`/features/${tag._id}`} legacyBehavior>
-                <BlogTag>#{tag.name}</BlogTag>
-              </Link>
-          )
+            blogData.tags.map((tag) => {
+              return (
+                <Link key={tag._id} href={`/features/${tag._id}`} legacyBehavior>
+                  <BlogTag>#{tag.name}</BlogTag>
+                </Link>
+              )
+            })
           }
         </TagsContainer>
 
@@ -118,7 +119,7 @@ export default function BlogComponent({ blogData }: { blogData: BlogComponentTyp
         {(!isCardDataLoading && cardData.length > 0) &&
           <>
             {/* <AdditionalSectionTitle> */}
-              {/* More like this... */}
+            {/* More like this... */}
             {/* </AdditionalSectionTitle> */}
             <AdditionalData>
               {cardData.map(((blog: any, idx: number) => {
