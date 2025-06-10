@@ -5,7 +5,15 @@ import { GetServerSideProps } from "next";
 import { hasCookie } from "cookies-next";
 import { COOKIE_NAME } from "@/constants";
 import FeatureCard from "@/components/FeatureCard";
-import { Container } from "./features.styles";
+import styled from "styled-components";
+
+export const Container = styled.div`
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    min-height: calc(100dvh - 220px);
+    padding: 200px 6rem;
+    gap: 12px;
+`;
 
 const Features = ({ tags }: { tags: any }) => {
     return (
@@ -15,11 +23,11 @@ const Features = ({ tags }: { tags: any }) => {
                 {/* <link rel="preload" as="image" href="/cover.jpeg" /> */}
             </Head>
             <Base>
-            <Container>
-                {
-                    tags.map((tag, index) => <FeatureCard key={index} tagData={tag} />)
-                }
-            </Container>
+                <Container>
+                    {
+                        tags.map((tag, index) => <FeatureCard key={index} tagData={tag} />)
+                    }
+                </Container>
             </Base>
         </>
     );

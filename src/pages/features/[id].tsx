@@ -13,7 +13,6 @@ export const Container = styled.div`
     padding: 100px;
 `
 
-
 const Home = ({ blogsData }: { blogsData: any }) => {
     return (
         <>
