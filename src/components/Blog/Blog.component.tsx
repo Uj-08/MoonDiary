@@ -22,7 +22,6 @@ import { BlogComponentTypes } from "@/pages/blogs/[blogId]";
 import parse from "html-react-parser";
 import SkeletalCard from "../ArticleCard/SkeletalCard";
 import { ClientContext } from "@/containers/Base/Base";
-import { useShuffledColors } from "@/hooks/useShuffledColors";
 import Link from "next/link";
 
 export default function BlogComponent({ blogData }: { blogData: BlogComponentTypes }) {
@@ -60,8 +59,6 @@ export default function BlogComponent({ blogData }: { blogData: BlogComponentTyp
       fetchBlogsByTags();
     }
   }, [blogData]);
-
-  const getRandomColor = useShuffledColors()
 
   const client = useContext(ClientContext);
 
