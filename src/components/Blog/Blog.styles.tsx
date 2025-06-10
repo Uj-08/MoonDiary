@@ -122,7 +122,7 @@ export const AdditionalData = styled.div`
             display: none;
         }
     div {
-        flex-shrink: 0; 
+        flex-shrink: 0;
     }
     @media (max-width: 920px) {
         flex-direction: row;
