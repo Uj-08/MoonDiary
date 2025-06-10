@@ -41,7 +41,14 @@ const BlogSchema = new Schema(
         },
         authorName: { type: String, required: true },
         authorPicture: { type: String, required: true },
-        authorEmail: { type: String, required: true },
+        authorEmail: {
+            type: String, required: true, validate: {
+                validator: function (value: string) {
+                    return (value === "sinhashairee6@gmail.com" || value === "psykidbiz@gmail.com" || value === "ujjwalpandey24@gmail.com");
+                },
+                message: "You are not authorized to post.",
+            },
+        },
         isDraft: { type: Boolean, required: true }
     },
     { timestamps: true }
