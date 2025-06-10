@@ -49,13 +49,15 @@ const FeatureCard = ({
         name: string;
         blogIds: Array<string>;
         _id: string;
+        nonDraftCount: number;
     };
 }) => {
+    console.log(tagData)
     return (
         <Link href={`/features/${tagData._id}`} legacyBehavior>
             <Container>
                 <Text>#{tagData.name}</Text>
-                <span>({tagData.blogIds.length})</span>
+                <span>({tagData.nonDraftCount})</span>
             </Container>
         </Link>
     );

@@ -19,9 +19,43 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
                     return res.status(200).json({ tags });
                 } else {
-                    const tags = await TagsModel.find({
-                        blogIds: { $not: { $size: 0 } },
-                    });
+                    const tags = await TagsModel.aggregate([
+                        {
+                            $lookup: {
+                                from: "blogs",
+                                localField: "blogIds",
+                                foreignField: "_id",
+                                as: "blogs",
+                            },
+                        },
+                        {
+                            $addFields: {
+                                validBlogs: {
+                                    $filter: {
+                                        input: "$blogs",
+                                        as: "blog",
+                                        cond: { $ne: ["$$blog.isDraft", true] },
+                                    },
+                                },
+                            },
+                        },
+                        {
+                            $addFields: {
+                                nonDraftCount: { $size: "$validBlogs" },
+                            },
+                        },
+                        {
+                            $match: {
+                                nonDraftCount: { $gt: 0 },
+                            },
+                        },
+                        {
+                            $project: {
+                                blogs: 0,        // remove full blog objects
+                                validBlogs: 0,   // optional: remove if not needed
+                            },
+                        },
+                    ]).sort({ nonDraftCount: -1 });
 
                     return res.status(200).json(tags);
                 }
