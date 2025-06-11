@@ -55,7 +55,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
                                 validBlogs: 0,   // optional: remove if not needed
                             },
                         },
-                    ]).sort({ nonDraftCount: -1 });
+                    ]).sort({ name: 1 });
 
                     return res.status(200).json(tags);
                 }
