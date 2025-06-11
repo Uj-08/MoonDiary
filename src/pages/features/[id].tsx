@@ -10,15 +10,26 @@ import React from "react";
 
 export const Container = styled.div`
     min-height: calc(100dvh);
-    padding: 100px;
-    h2 {
-        font-family: Anton, sans-serif; 
-        letter-spacing: 0.8px;
-    }
+    padding-top: 120px;
 `
 
+export const FeatureHeader = styled.h2`
+    font-family: Anton, sans-serif; 
+    letter-spacing: 0.8px;
+    padding: 1rem 8rem;
+    @media (max-width: 1200px) {
+        padding: 0 4rem;
+    }
+    @media (max-width: 812px) {
+        padding: 0 2rem;
+    }
+    @media (max-width: 450px) {
+        padding: 0 1rem;
+    }
+    padding-bottom: 0;
+`;
+
 const Home = ({ blogsData }: { blogsData: any }) => {
-    console.log(blogsData)
     return (
         <>
             <Head>
@@ -27,9 +38,9 @@ const Home = ({ blogsData }: { blogsData: any }) => {
             </Head>
             <Base>
                 <Container>
-                    <h2>
+                    <FeatureHeader>
                         #{blogsData.name}
-                    </h2>
+                    </FeatureHeader>
                     <ArticleGrid blogs={blogsData.blogs} />
                 </Container>
             </Base>

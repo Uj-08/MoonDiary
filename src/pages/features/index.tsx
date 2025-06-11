@@ -8,10 +8,17 @@ import FeatureCard from "@/components/FeatureCard";
 import styled from "styled-components";
 
 export const Container = styled.div`
+    display: flex;
+    min-height: calc(100dvh - 200px);
+    justify-content: center;
+    align-items: center;
+    padding-top: 80px;
+`;
+
+export const Grid = styled.div`
+    width: 90%;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    min-height: calc(100dvh - 220px);
-    padding: 200px 6rem;
     gap: 12px;
 `;
 
@@ -24,9 +31,11 @@ const Features = ({ tags }: { tags: any }) => {
             </Head>
             <Base>
                 <Container>
-                    {
-                        tags.map((tag, index) => <FeatureCard key={index} tagData={tag} />)
-                    }
+                    <Grid>
+                        {
+                            tags.map((tag, index) => <FeatureCard key={index} tagData={tag} />)
+                        }
+                    </Grid>
                 </Container>
             </Base>
         </>

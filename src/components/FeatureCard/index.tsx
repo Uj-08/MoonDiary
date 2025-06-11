@@ -10,15 +10,14 @@ export const Container = styled.div`
   justify-content: center;
   gap: 10px;
   border-radius: 10px;
-  color: #ffffffa2;
+  color: #474646;
   cursor: pointer;
   min-height: 120px;
   overflow: hidden;
   font-family: Anton, sans-serif;
   letter-spacing: 0.7px;
 
-  background: rgba(0, 0, 0, 0.25);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  background: rgba(163, 163, 163, 0.25);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   border-radius: 10px;
@@ -26,10 +25,9 @@ export const Container = styled.div`
   transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
 
   &:hover {
-    color: #fff;
+    color: #000000;
     transform: translateY(-4px) scale(1.02);
-    background: rgba(0, 0, 0, 0.5); /* red accent variation */
-    box-shadow: 0 12px 36px rgba(189, 16, 224, 0.4); /* stronger glow in purple */
+    background: rgba(255, 255, 255, 0.5);
     border-color: rgba(255, 255, 255, 0.3);
   }
 `;
