@@ -107,47 +107,19 @@ export default function BlogComponent({ blogData }: { blogData: BlogComponentTyp
           }
         </TagsContainer>
 
-        {/* {
-          (
-            blogData?.authorEmail === "psykidbiz@gmail.com") &&
-          <AboutCard>
-            <Author>
-              <AuthorProfile>
-                <ImageComponent
-                  src={blogData?.authorPicture}
-                  aspectRatio={1}
-                  alt={"profile picture"}
-                />
-              </AuthorProfile>
-              <AuthorName>{blogData?.authorName}</AuthorName>
-            </Author>
-            <AuthorBio>"Rolling in and out of Hindu college with my degree in English literature wasn’t enough to curb my craving for expression. Pursuing and juggling various creative skills like dancing, music and theatre has broadened my interests and passion to look out for the next new lesson. Forever trying to wrap my head around this perpetual tease called existence."</AuthorBio>
-          </AboutCard>
-        } */}
-        {(isCardDataLoading && cardData.length === 0) &&
-          <>
-            {/* <AdditionalSectionTitle height="45px" /> */}
-            <AdditionalData>
-              {Array.from({ length: 5 }).map((_, index) => (
+        <AdditionalData>
+          {
+            (isCardDataLoading && cardData.length === 0) ?
+              Array.from({ length: 5 }).map((_, index) => (
                 <SkeletalCard key={index} />
-              ))}
-            </AdditionalData>
-          </>
-        }
-        {(!isCardDataLoading && cardData.length > 0) &&
-          <>
-            {/* <AdditionalSectionTitle> */}
-            {/* More like this... */}
-            {/* </AdditionalSectionTitle> */}
-            <AdditionalData>
-              {cardData.map(((blog: any, idx: number) => {
+              )) :
+              cardData.map(((blog: any, idx: number) => {
                 return (
                   <DynamicCard key={idx} index={idx} blog={blog} clientEmail={client?.email} />
                 );
-              }))}
-            </AdditionalData>
-          </>
-        }
+              }))
+          }
+        </AdditionalData>
       </AdditionalSection>
     </Container>
   );

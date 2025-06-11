@@ -12,7 +12,6 @@ export const Container = styled.div`
         border-radius: 0px;
         box-shadow: none;
     }
-    height: 100%;
 `;
 
 export const PreviewContainer = styled.section`
@@ -23,7 +22,6 @@ export const PreviewContainer = styled.section`
     overflow: hidden;
     border-radius: 8px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    min-height: 800px;
     @media (max-width: 920px) {
         max-width: 100%;
         border-radius: 0px;
@@ -100,16 +98,6 @@ export const BlogTag = styled.span<{ textColor: string }>`
     }
 `;
 
-export const AdditionalSectionTitle = styled.div<{ height?: string }>`
-    font-family: "Arimo", sans-serif;
-    font-size: 1.8rem;
-    margin-bottom: 12px;
-    ${({height}) => height && `height: ${height};`}
-    @media (max-width: 920px) {
-        display: none;
-    }
-`;
-
 export const AdditionalData = styled.div`
     display: flex;
     flex-direction: column;
@@ -117,10 +105,9 @@ export const AdditionalData = styled.div`
     padding: 10px 30px 40px 40px;
     margin: -10px -30px -40px -40px;
     overflow-y: scroll;
-    max-height: 1400px;
     ::-webkit-scrollbar {
-            display: none;
-        }
+        display: none;
+    }
     div {
         flex-shrink: 0;
     }

@@ -26,7 +26,7 @@ const Features = ({ tags }: { tags: any }) => {
     return (
         <>
             <Head>
-                <title>MoonDiary - Features</title>
+                <title>MoonDiary | Features</title>
                 {/* <link rel="preload" as="image" href="/cover.jpeg" /> */}
             </Head>
             <Base>

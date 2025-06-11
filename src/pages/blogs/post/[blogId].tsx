@@ -10,7 +10,7 @@ function BlogPost({ sessionId, blogData }: { sessionId: string; blogData: { blog
     return (
         <>
             <NextHead>
-                <title>Blog Post</title>
+                <title>MoonDiary | New Blog</title>
             </NextHead>
             <Base>
                 <EditorComponent blogData={blogData} sessionId={sessionId} />

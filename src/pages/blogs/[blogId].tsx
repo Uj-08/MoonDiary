@@ -18,7 +18,7 @@ const Blog = ({ blogData }: {blogData: BlogComponentTypes}) => {
   return (
     <>
       <Head>
-        <title>{blogData.blogTitle}</title>
+        <title>MoonDiary | {blogData.blogTitle}</title>
       </Head>
       <Base>
         <BlogTitleComponent>
