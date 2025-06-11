@@ -124,6 +124,11 @@ export const Tag = styled.div<{
   /* letter-spacing: 0.5px; */
   color: white;
   ${({ fontSize, letterSpacing }) => `font-size: ${fontSize}; letter-spacing: ${letterSpacing};`}
+  opacity: 0.8;
+  transition: opacity 200ms linear;
+  :hover {
+    opacity: 1;
+  }
   span {
     ${({ maxWidth }) => `max-width: ${maxWidth};`}
     overflow: hidden;
