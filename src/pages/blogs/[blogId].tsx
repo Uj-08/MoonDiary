@@ -22,13 +22,13 @@ export interface BlogComponentTypes {
 
 const Blog = ({ blogData }: { blogData: BlogComponentTypes }) => {
 
-  //SEO
+//SEO
   const description = blogData?.seoDescription || (stripHtml(blogData.blogData || '').result.replace(/\s+/g, ' ').trim().slice(0, 160) + '...');
   const keywords = blogData?.tags?.map(tag => tag.name).join(', ');
 
   const datePublished = new Date(blogData.createdAt).toISOString();
   const dateModified = new Date(blogData.updatedAt || blogData.createdAt).toISOString();
-  const url = `https://next-moondiary.netlify.app/blogs/${blogData._id}`
+  const url = `https://moondiary.netlify.app/blogs/${blogData._id}`
 
   return (
     <>

@@ -78,7 +78,7 @@ const AboutMe = () => {
             <Author>
               <AuthorProfile>
                 <ImageComponent
-                  src={"https://moondiary.netlify.app/img/pro.jpg"}
+                  src={"https://old-moondiary.netlify.app/img/pro.jpg"}
                   aspectRatio={1}
                   alt={"profile picture"}
                 />
