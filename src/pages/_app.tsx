@@ -16,6 +16,7 @@ const GlobalStyle = createGlobalStyle`
   
   body {
     background-color: #ededed;
+    min-width: 360px;
   }
 
   .next-progress-spinner {
