@@ -25,6 +25,8 @@ export default function MyDocument() {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link href="https://fonts.googleapis.com/css2?family=Anton&family=Dancing+Script:wght@600&family=Babylonica&family=Montserrat:wght@500&display=swap" rel="stylesheet" />
+
+        <meta name="google-site-verification" content="DxXahG35Puco67FBn_AczaFs5kPLyzHjljN0x8tiq7U" />
       </Head>
       <body>
         <Main />
