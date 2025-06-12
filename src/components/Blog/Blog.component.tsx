@@ -22,7 +22,6 @@ import parse from "html-react-parser";
 import SkeletalCard from "../ArticleCard/SkeletalCard";
 import { ClientContext } from "@/containers/Base/Base";
 import Link from "next/link";
-import { DiscussionEmbed } from 'disqus-react';
 
 export default function BlogComponent({ blogData }: { blogData: BlogComponentTypes }) {
   const [cardData, setCardData] = useState([])
@@ -79,12 +78,6 @@ export default function BlogComponent({ blogData }: { blogData: BlogComponentTyp
   }, [blogData]);
 
   const client = useContext(ClientContext);
-  const disqusShortname = "moondiary"; // replace with your Disqus shortname
-  const disqusConfig = {
-    url: `https://next-moondiary.netlify.app/blogs/${blogData._id}`,
-    identifier: blogData._id,
-    title: blogData.blogTitle,
-  };
 
   return (
     <Container>
