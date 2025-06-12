@@ -8,7 +8,7 @@ User-agent: *
 Allow: /
 
 Sitemap: ${baseUrl}/sitemap.xml
-  `.trim();
+    `.trim();
 
     res.setHeader("Content-Type", "text/plain");
     res.write(robots);

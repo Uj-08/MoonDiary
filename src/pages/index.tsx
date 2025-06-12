@@ -45,6 +45,7 @@ const Home = ({ blogsData }: { blogsData: any }) => {
     <>
       <Head>
         <link rel="preload" as="image" href="/cover.jpeg" />
+        <meta name="robots" content="index,follow" />
       </Head>
       <Base>
         <HeroSection />

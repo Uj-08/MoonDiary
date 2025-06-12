@@ -37,6 +37,9 @@ const Blog = ({ blogData }: { blogData: BlogComponentTypes }) => {
         <meta name="keywords" content={keywords} />
         <meta name="author" content={blogData.authorName} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <meta name="robots" content="index,follow" />
+
         <link
           rel="canonical"
           href={`https://next-moondiary.netlify.app/blogs/${blogData._id}`}
