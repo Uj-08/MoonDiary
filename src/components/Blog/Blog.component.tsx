@@ -22,6 +22,7 @@ import parse from "html-react-parser";
 import SkeletalCard from "../ArticleCard/SkeletalCard";
 import { ClientContext } from "@/containers/Base/Base";
 import Link from "next/link";
+import { DiscussionEmbed } from 'disqus-react';
 
 export default function BlogComponent({ blogData }: { blogData: BlogComponentTypes }) {
   const [cardData, setCardData] = useState([])
@@ -78,49 +79,58 @@ export default function BlogComponent({ blogData }: { blogData: BlogComponentTyp
   }, [blogData]);
 
   const client = useContext(ClientContext);
+  const disqusShortname = "moondiary"; // replace with your Disqus shortname
+  const disqusConfig = {
+    url: `https://next-moondiary.netlify.app/blogs/${blogData._id}`,
+    identifier: blogData._id,
+    title: blogData.blogTitle,
+  };
 
   return (
-    <Container>
-      <PreviewContainer>
-        <Preview>
-          <PreviewImageContainer>
-            <ImageComponent
-              aspectRatio={4 / 3}
-              src={blogData.blogImg}
-              alt="hero image"
-              isPriority
-            />
-          </PreviewImageContainer>
-          <PreviewData>{blogData?.blogData ? parse(blogData?.blogData) : ""}</PreviewData>
-        </Preview>
-      </PreviewContainer>
-      <AdditionalSection>
-        <TagsContainer>
-          {
-            blogData.tags.map((tag) => {
-              return (
-                <Link key={tag._id} href={`/features/${tag._id}`} legacyBehavior>
-                  <BlogTag>{`#${tag.name}`}</BlogTag>
-                </Link>
-              )
-            })
-          }
-        </TagsContainer>
-
-        <AdditionalData>
-          {
-            (isCardDataLoading && cardData.length === 0) ?
-              Array.from({ length: 3 }).map((_, index) => (
-                <SkeletalCard key={index} />
-              )) :
-              cardData.map(((blog: any, idx: number) => {
+    <>
+      <Container>
+        <PreviewContainer>
+          <Preview>
+            <PreviewImageContainer>
+              <ImageComponent
+                aspectRatio={4 / 3}
+                src={blogData.blogImg}
+                alt="hero image"
+                isPriority
+              />
+            </PreviewImageContainer>
+            <PreviewData>{blogData?.blogData ? parse(blogData?.blogData) : ""}</PreviewData>
+          </Preview>
+        </PreviewContainer>
+        <AdditionalSection>
+          <TagsContainer>
+            {
+              blogData.tags.map((tag) => {
                 return (
-                  <DynamicCard key={idx} index={idx} blog={blog} clientEmail={client?.email} />
-                );
-              }))
-          }
-        </AdditionalData>
-      </AdditionalSection>
-    </Container>
+                  <Link key={tag._id} href={`/features/${tag._id}`} legacyBehavior>
+                    <BlogTag>{`#${tag.name}`}</BlogTag>
+                  </Link>
+                )
+              })
+            }
+          </TagsContainer>
+
+          <AdditionalData>
+            {
+              (isCardDataLoading && cardData.length === 0) ?
+                Array.from({ length: 3 }).map((_, index) => (
+                  <SkeletalCard key={index} />
+                )) :
+                cardData.map(((blog: any, idx: number) => {
+                  return (
+                    <DynamicCard key={idx} index={idx} blog={blog} clientEmail={client?.email} />
+                  );
+                }))
+            }
+          </AdditionalData>
+        </AdditionalSection>
+      </Container>
+      <DiscussionEmbed shortname={disqusShortname} config={disqusConfig} />
+    </>
   );
 }
