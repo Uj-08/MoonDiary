@@ -87,50 +87,47 @@ export default function BlogComponent({ blogData }: { blogData: BlogComponentTyp
   };
 
   return (
-    <>
-      <Container>
-        <PreviewContainer>
-          <Preview>
-            <PreviewImageContainer>
-              <ImageComponent
-                aspectRatio={4 / 3}
-                src={blogData.blogImg}
-                alt="hero image"
-                isPriority
-              />
-            </PreviewImageContainer>
-            <PreviewData>{blogData?.blogData ? parse(blogData?.blogData) : ""}</PreviewData>
-          </Preview>
-        </PreviewContainer>
-        <AdditionalSection>
-          <TagsContainer>
-            {
-              blogData.tags.map((tag) => {
-                return (
-                  <Link key={tag._id} href={`/features/${tag._id}`} legacyBehavior>
-                    <BlogTag>{`#${tag.name}`}</BlogTag>
-                  </Link>
-                )
-              })
-            }
-          </TagsContainer>
+    <Container>
+      <PreviewContainer>
+        <Preview>
+          <PreviewImageContainer>
+            <ImageComponent
+              aspectRatio={4 / 3}
+              src={blogData.blogImg}
+              alt="hero image"
+              isPriority
+            />
+          </PreviewImageContainer>
+          <PreviewData>{blogData?.blogData ? parse(blogData?.blogData) : ""}</PreviewData>
+        </Preview>
+      </PreviewContainer>
+      <AdditionalSection>
+        <TagsContainer>
+          {
+            blogData.tags.map((tag) => {
+              return (
+                <Link key={tag._id} href={`/features/${tag._id}`} legacyBehavior>
+                  <BlogTag>{`#${tag.name}`}</BlogTag>
+                </Link>
+              )
+            })
+          }
+        </TagsContainer>
 
-          <AdditionalData>
-            {
-              (isCardDataLoading && cardData.length === 0) ?
-                Array.from({ length: 3 }).map((_, index) => (
-                  <SkeletalCard key={index} />
-                )) :
-                cardData.map(((blog: any, idx: number) => {
-                  return (
-                    <DynamicCard key={idx} index={idx} blog={blog} clientEmail={client?.email} />
-                  );
-                }))
-            }
-          </AdditionalData>
-        </AdditionalSection>
-      </Container>
-      <DiscussionEmbed shortname={disqusShortname} config={disqusConfig} />
-    </>
+        <AdditionalData>
+          {
+            (isCardDataLoading && cardData.length === 0) ?
+              Array.from({ length: 3 }).map((_, index) => (
+                <SkeletalCard key={index} />
+              )) :
+              cardData.map(((blog: any, idx: number) => {
+                return (
+                  <DynamicCard key={idx} index={idx} blog={blog} clientEmail={client?.email} />
+                );
+              }))
+          }
+        </AdditionalData>
+      </AdditionalSection>
+    </Container>
   );
 }
