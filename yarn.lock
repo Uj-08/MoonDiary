@@ -886,11 +886,6 @@ dir-glob@^3.0.1:
   dependencies:
     path-type "^4.0.0"
 
-disqus-react@^1.1.6:
-  version "1.1.6"
-  resolved "https://registry.yarnpkg.com/disqus-react/-/disqus-react-1.1.6.tgz#7755416824759bc8e79a43dc089c6f88110ef29d"
-  integrity sha512-xyhgQO3aJkXqXMUASAuAOoykMdSIcAnIsoPsotk0NQkYoaSw7MwbR3WQfJgbAKhh3SCoag9wYkTTgaCkpu3LkA==
-
 doctrine@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/doctrine/-/doctrine-2.1.0.tgz"

@@ -18,7 +18,6 @@
     "@types/react-dom": "18.0.10",
     "babel-plugin-styled-components": "^2.1.1",
     "cookies-next": "^2.1.1",
-    "disqus-react": "^1.1.6",
     "eslint": "8.32.0",
     "eslint-config-next": "13.1.4",
     "html-react-parser": "^3.0.12",
