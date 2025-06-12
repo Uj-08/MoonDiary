@@ -1,9 +1,7 @@
 import React from "react";
 import Base from "@/containers/Base/Base";
 import Head from "next/head";
-import { GetServerSideProps } from "next";
-import { hasCookie } from "cookies-next";
-import { COOKIE_NAME } from "@/constants";
+import { GetStaticProps } from "next";
 import styled from "styled-components";
 import ImageComponent from "@/components/ImageComponent/ImageComponent";
 
@@ -45,7 +43,6 @@ export const AuthorName = styled.h3`
 
 export const AuthorBio = styled.p`
   font-style: italic;
-  /* letter-spacing: 0.9px; */
   line-height: 17px;
 `;
 
@@ -62,65 +59,50 @@ export const AuthorProfile = styled.div`
   }
 `;
 
-const AboutMe = ({ blogsData }: { blogsData: any }) => {
-    return (
-        <>
-            <Head>
-                <title>About Me | MoonDiary</title>
-            </Head>
-            <Base>
-                <div
-                    style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        height: "75dvh",
-                    }}
-                >
-                    <AboutCard>
-                        <Author>
-                            <AuthorProfile>
-                                <ImageComponent
-                                    src={"https://moondiary.netlify.app/img/pro.jpg"}
-                                    aspectRatio={1}
-                                    alt={"profile picture"}
-                                />
-                            </AuthorProfile>
-                            <AuthorName>{"Shairee Sinha"}</AuthorName>
-                        </Author>
-                        <AuthorBio>
-                            {
-                                "Rolling in and out of Hindu college with my degree in English literature wasn’t enough to curb my craving for expression. Pursuing and juggling various creative skills like dancing, music and theatre has broadened my interests and passion to look out for the next new lesson. Forever trying to wrap my head around this perpetual tease called existence."
-                            }
-                        </AuthorBio>
-                    </AboutCard>
-                </div>
-            </Base>
-        </>
-    );
+const AboutMe = () => {
+  return (
+    <>
+      <Head>
+        <title>About Me | MoonDiary</title>
+      </Head>
+      <Base>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "75dvh",
+          }}
+        >
+          <AboutCard>
+            <Author>
+              <AuthorProfile>
+                <ImageComponent
+                  src={"https://moondiary.netlify.app/img/pro.jpg"}
+                  aspectRatio={1}
+                  alt={"profile picture"}
+                />
+              </AuthorProfile>
+              <AuthorName>{"Shairee Sinha"}</AuthorName>
+            </Author>
+            <AuthorBio>
+              {
+                "Rolling in and out of Hindu college with my degree in English literature wasn’t enough to curb my craving for expression. Pursuing and juggling various creative skills like dancing, music and theatre has broadened my interests and passion to look out for the next new lesson. Forever trying to wrap my head around this perpetual tease called existence."
+              }
+            </AuthorBio>
+          </AboutCard>
+        </div>
+      </Base>
+    </>
+  );
 };
 
 export default React.memo(AboutMe);
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    const { req, res } = context;
-
-    const isSessionAvailable = hasCookie(COOKIE_NAME, { req, res });
-    if (isSessionAvailable) {
-    }
-
-    //   const resData = await fetch(`${process.env.BASE_URL}/api/blogs`, {
-    //     method: 'GET',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       'x-session-token': getCookie("clientMD", context) as string,
-    //     },
-    //   });
-    //   const blogsData = await resData.json();
-
-    return {
-        props: {
-            //   blogsData: blogsData,
-        },
-    };
+// ✅ Changed from getServerSideProps to getStaticProps
+export const getStaticProps: GetStaticProps = async () => {
+  return {
+    props: {}, // No props needed here
+    revalidate: 3600, // Optional: regenerate every hour (ISR)
+  };
 };

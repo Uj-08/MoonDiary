@@ -4,41 +4,41 @@ import ArticleGrid from "@/components/ArticleGrid/ArticleGrid.component";
 import { GetServerSideProps } from "next";
 import { getCookie, hasCookie } from "cookies-next";
 import { COOKIE_NAME } from "@/constants";
-import styled from "styled-components";
+// import styled from "styled-components";
 import Head from "next/head";
 import React from "react";
 
-export const Loading = styled.div`
-  background-color: white;
-  display: flex;
-  height: 100dvh;
-  width: 100dvw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 9999;
-  div {
-    position: relative;
-    height: 70px;
-    width: 70px;
-    animation: loadingAnimation 1.5s ease-in-out 0s infinite alternate forwards;
-  }
+// export const Loading = styled.div`
+//   background-color: white;
+//   display: flex;
+//   height: 100dvh;
+//   width: 100dvw;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   position: fixed;
+//   top: 0;
+//   left: 0;
+//   z-index: 9999;
+//   div {
+//     position: relative;
+//     height: 70px;
+//     width: 70px;
+//     animation: loadingAnimation 1.5s ease-in-out 0s infinite alternate forwards;
+//   }
 
-  @keyframes loadingAnimation {
-    0% {
-      transform: rotate(0deg);
-    }
-    50% {
-      transform: rotate(360deg);
-    }
-    100% {
-      transform: rotate(720deg);
-    }
-  }
-`;
+//   @keyframes loadingAnimation {
+//     0% {
+//       transform: rotate(0deg);
+//     }
+//     50% {
+//       transform: rotate(360deg);
+//     }
+//     100% {
+//       transform: rotate(720deg);
+//     }
+//   }
+// `;
 
 const Home = ({ blogsData }: { blogsData: any }) => {
   return (
