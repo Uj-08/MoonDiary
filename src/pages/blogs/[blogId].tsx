@@ -42,7 +42,7 @@ const Blog = ({ blogData }: { blogData: BlogComponentTypes }) => {
 
         <link
           rel="canonical"
-          href={`https://next-moondiary.netlify.app/blogs/${blogData._id}`}
+          href={`${process.env.BASE_URL}/blogs/${blogData._id}`}
         />
 
         <script type="application/ld+json">
@@ -78,7 +78,7 @@ const Blog = ({ blogData }: { blogData: BlogComponentTypes }) => {
         <meta property="og:title" content={blogData.blogTitle} />
         <meta property="og:description" content={description} />
         <meta property="og:image" content={blogData.blogImg} />
-        <meta property="og:url" content={`https://next-moondiary.netlify.app/blogs/${blogData._id}`} />
+        <meta property="og:url" content={`${process.env.BASE_URL}/blogs/${blogData._id}`} />
         <meta property="article:published_time" content={datePublished} />
         <meta property="article:modified_time" content={dateModified} />
         <meta property="article:author" content={blogData.authorName} />
