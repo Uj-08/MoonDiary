@@ -27,6 +27,7 @@ import DeleteCard from "../DeletePrompt/DeleteCard";
 import ImageComponent from "../ImageComponent/ImageComponent";
 import Link from "next/link";
 import { useShuffledColors } from "@/hooks/useShuffledColors";
+import { stripHtml } from 'string-strip-html';
 
 export interface DynamicCardTypes {
   blog: {
@@ -53,6 +54,7 @@ export interface DynamicCardTypes {
 export default function DynamicCard({ blog, clientEmail, index }: DynamicCardTypes) {
   const {
     _id,
+    // slug,
     authorEmail,
     authorName,
     authorPicture,
@@ -78,20 +80,7 @@ export default function DynamicCard({ blog, clientEmail, index }: DynamicCardTyp
     }
   }, [blogDeleteStatus.deletedBlogId, dispatch, router]);
 
-  function removeTags(blogData: string) {
-    if (blogData === null || blogData === "") return false;
-    else blogData = blogData.toString();
-
-    // Regular expression to identify HTML tags in
-    // the input string. Replacing the identified
-    // HTML tag with a null string.
-    const plainText = blogData
-      .replace(/<[^>]*>/g, "")           // remove HTML tags
-      .replace(/&[a-z]+;|&#\d+;/gi, " ") // remove HTML entities
-      .replace(/\s+/g, " ")              // collapse multiple spaces
-      .trim();
-    return plainText;
-  }
+  const blogBody = stripHtml(blogData)
 
   const formatter = new Intl.RelativeTimeFormat("en", { numeric: "auto" });
 
@@ -175,7 +164,7 @@ export default function DynamicCard({ blog, clientEmail, index }: DynamicCardTyp
               </TagsContainer>
             </BlogHeader>
             <BlogTitle>{blogTitle}</BlogTitle>
-            <BlogData>{removeTags(blogData)}</BlogData>
+            <BlogData>{blogBody.result}</BlogData>
           </MainContent>
           <BlogAuthorContainer>
             <BlogAuthor>

@@ -9,11 +9,13 @@ import { postBlog, updateBlog } from "@/redux/slices/blogInfo";
 import ImageComponent, { Shimmer } from "../ImageComponent/ImageComponent";
 import InputTagComponent from "./InputTagComponent/InputTagComponent";
 import IsDraftToggle from "./ToogleDraft";
+import slugify from "slugify";
 
 function EditorComponent({ sessionId, blogData }: { sessionId: string; blogData?: { blogTitle: string; blogImg: string; blogData: string; blogId: string, isDraft: boolean, tags: [{ _id: string, name: string }] } }) {
     const editorRef = useRef<any>(null);
     const [preview, setPreview] = useState<string | ReactNode>(blogData?.blogData ? parse(blogData?.blogData) : "Write Something...");
     const [title, setTitle] = useState(blogData?.blogTitle || "");
+    const [seoDescription, setSeoDescription] = useState(blogData?.seoDescription || "");
     const [imageLinkText, setImageLinkText] = useState(blogData?.blogImg || "");
     const [imageLink, setImageLink] = useState(blogData?.blogImg || "");
     const [tagsArr, setTagsArr] = useState<string[]>([]);
@@ -37,12 +39,15 @@ function EditorComponent({ sessionId, blogData }: { sessionId: string; blogData?
 
     function submitHandler() {
         const html = editorRef?.current?.getContent();
+        const generatedSlug = slugify(title);
         if (sessionId !== "") {
             const authorObj: { name?: string, picture?: string, email?: string } = jwtDecode(sessionId);
             if (blogData) {
                 const reqBody = {
                     blogId: blogData.blogId,
                     blogTitle: title,
+                    slug: generatedSlug,
+                    seoDescription: seoDescription,
                     blogImg: imageLink,
                     blogData: html,
                     authorName: authorObj.name as string,
@@ -55,6 +60,8 @@ function EditorComponent({ sessionId, blogData }: { sessionId: string; blogData?
             } else {
                 const reqBody = {
                     blogTitle: title,
+                    slug: generatedSlug,
+                    seoDescription: seoDescription,
                     blogImg: imageLink,
                     blogData: html,
                     authorName: authorObj.name as string,
@@ -95,6 +102,7 @@ function EditorComponent({ sessionId, blogData }: { sessionId: string; blogData?
                         Draft: <IsDraftToggle isDraft={isDraft} setIsDraft={setIsDraft} />
                     </DraftField>
                     <TitleText type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Title..." />
+                    <TitleText type="text" value={seoDescription} onChange={(e) => setSeoDescription(e.target.value)} placeholder="SEO description..." />
                     <InputTagComponent tags={blogData?.tags} setTagsArr={setTagsArr} />
                     <TitleText type="text" value={imageLinkText} onChange={(e) => setImageLinkText(e.target.value)} onBlur={() => setImageLink(imageLinkText)} placeholder="Image Link" />
                     <EditorContainer>

@@ -100,7 +100,7 @@ export default function BlogComponent({ blogData }: { blogData: BlogComponentTyp
             blogData.tags.map((tag) => {
               return (
                 <Link key={tag._id} href={`/features/${tag._id}`} legacyBehavior>
-                  <BlogTag>#{tag.name}</BlogTag>
+                  <BlogTag>{`#${tag.name}`}</BlogTag>
                 </Link>
               )
             })

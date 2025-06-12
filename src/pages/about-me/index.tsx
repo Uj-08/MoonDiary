@@ -66,8 +66,7 @@ const AboutMe = ({ blogsData }: { blogsData: any }) => {
     return (
         <>
             <Head>
-                <title>MoonDiary | About Me</title>
-                {/* <link rel="preload" as="image" href="/cover.jpeg" /> */}
+                <title>About Me | MoonDiary</title>
             </Head>
             <Base>
                 <div

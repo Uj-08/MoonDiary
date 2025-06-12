@@ -28,7 +28,6 @@ export default function App({ Component, pageProps }: AppProps) {
     <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_CLIENT_ID || ""}>
         <NextHead>
           <title>MoonDiary</title>
-          <link rel="shortcut icon" href="/favicon.png" type="image/x-icon" />
         </NextHead>
         <Provider store={store}>
           <GlobalStyle />

@@ -96,6 +96,7 @@ export const postBlog = createAsyncThunk(
     "postBlog",
     async (reqObj: {
         blogTitle: string,
+        slug: string,
         blogImg: string,
         blogData: string,
         authorName: string,

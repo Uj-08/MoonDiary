@@ -84,7 +84,7 @@ export const TagsContainer = styled.div`
     }
 `;
 
-export const BlogTag = styled.span<{ textColor: string }>`
+export const BlogTag = styled.span`
     padding: 4px 3px;
     font-family: "Arimo", sans-serif;
     font-weight: bold;

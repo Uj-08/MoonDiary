@@ -73,6 +73,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
                 // Create the new blog
                 const newBlog = new BlogsModel({
                     blogTitle: body.blogTitle,
+                    slug: body.slug,
+                    seoDescription: body.seoDescription,
                     blogImg: body.blogImg,
                     blogData: body.blogData,
                     authorName: body.authorName,

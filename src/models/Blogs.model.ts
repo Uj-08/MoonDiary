@@ -3,7 +3,8 @@ const Schema = mongoose.Schema;
 
 const BlogSchema = new Schema(
     {
-        blogTitle: { type: String, required: true },
+        blogTitle: { type: String, required: true, unique: true },
+        slug: { type: String, required: true, unique: true, index: true },
         blogImg: {
             type: String,
             validate: {
@@ -48,6 +49,17 @@ const BlogSchema = new Schema(
                 },
                 message: "You are not authorized to post.",
             },
+        },
+        seoDescription: {
+            type: String, validate: {
+                validator: function (value: string) {
+                    if (!this.isDraft) {
+                        return value;
+                    }
+                    return true;
+                },
+                message: "SEO description can't be empty when publishing.",
+            }
         },
         isDraft: { type: Boolean, required: true }
     },
