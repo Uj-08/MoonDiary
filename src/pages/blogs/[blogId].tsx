@@ -26,8 +26,8 @@ const Blog = ({ blogData }: { blogData: BlogComponentTypes }) => {
   const description = blogData?.seoDescription || (stripHtml(blogData.blogData || '').result.replace(/\s+/g, ' ').trim().slice(0, 160) + '...');
   const keywords = blogData?.tags?.map(tag => tag.name).join(', ');
 
-  const published_time = new Date(blogData.createdAt).toISOString();
-  const modified_time = new Date(blogData.updatedAt || blogData.createdAt).toISOString();
+  const datePublished = new Date(blogData.createdAt).toISOString();
+  const dateModified = new Date(blogData.updatedAt || blogData.createdAt).toISOString();
 
   return (
     <>
@@ -37,15 +37,47 @@ const Blog = ({ blogData }: { blogData: BlogComponentTypes }) => {
         <meta name="keywords" content={keywords} />
         <meta name="author" content={blogData.authorName} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link
+          rel="canonical"
+          href={`https://next-moondiary.netlify.app/blogs/${blogData._id}`}
+        />
+
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            "headline": blogData.blogTitle,
+            "image": blogData.blogImg,
+            "author": {
+              "@type": "Person",
+              "name": blogData.authorName
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "MoonDiary",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://moondiary.netlify.app/logo.png"
+              }
+            },
+            "datePublished": datePublished,
+            "dateModified": dateModified,
+            "description": description,
+            "mainEntityOfPage": {
+              "@type": "WebPage",
+              "@id": `https://moondiary.netlify.app/blogs/${blogData._id}`  // ← using ID for now
+            }
+          })}
+        </script>
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="article" />
         <meta property="og:title" content={blogData.blogTitle} />
         <meta property="og:description" content={description} />
         <meta property="og:image" content={blogData.blogImg} />
-        {/* <meta property="og:url" content={`https://next-moondiary.netlify.app/blogs/${blogData.slug}`} /> */}
-        <meta property="article:published_time" content={published_time} />
-        <meta property="article:modified_time" content={modified_time} />
+        <meta property="og:url" content={`https://next-moondiary.netlify.app/blogs/${blogData._id}`} />
+        <meta property="article:published_time" content={datePublished} />
+        <meta property="article:modified_time" content={dateModified} />
         <meta property="article:author" content={blogData.authorName} />
 
         {/* Twitter */}
