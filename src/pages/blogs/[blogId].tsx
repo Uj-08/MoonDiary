@@ -28,6 +28,7 @@ const Blog = ({ blogData }: { blogData: BlogComponentTypes }) => {
 
   const datePublished = new Date(blogData.createdAt).toISOString();
   const dateModified = new Date(blogData.updatedAt || blogData.createdAt).toISOString();
+  const url = `https://next-moondiary.netlify.app/blogs/${blogData._id}`
 
   return (
     <>
@@ -42,7 +43,7 @@ const Blog = ({ blogData }: { blogData: BlogComponentTypes }) => {
 
         <link
           rel="canonical"
-          href={`${process.env.BASE_URL}/blogs/${blogData._id}`}
+          href={url}
         />
 
         <script type="application/ld+json">
@@ -68,7 +69,7 @@ const Blog = ({ blogData }: { blogData: BlogComponentTypes }) => {
             "description": description,
             "mainEntityOfPage": {
               "@type": "WebPage",
-              "@id": `https://moondiary.netlify.app/blogs/${blogData._id}`  // ← using ID for now
+              "@id": `${url}`  // ← using ID for now
             }
           })}
         </script>
@@ -78,7 +79,7 @@ const Blog = ({ blogData }: { blogData: BlogComponentTypes }) => {
         <meta property="og:title" content={blogData.blogTitle} />
         <meta property="og:description" content={description} />
         <meta property="og:image" content={blogData.blogImg} />
-        <meta property="og:url" content={`${process.env.BASE_URL}/blogs/${blogData._id}`} />
+        <meta property="og:url" content={url} />
         <meta property="article:published_time" content={datePublished} />
         <meta property="article:modified_time" content={dateModified} />
         <meta property="article:author" content={blogData.authorName} />
