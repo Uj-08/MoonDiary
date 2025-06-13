@@ -1,4 +1,6 @@
+import { BlogType } from "@/types/blog";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import type { ObjectId } from "mongoose";
 
 interface BlogInfoType {
     blogDeleteStatus: {
@@ -40,10 +42,9 @@ const initialState: BlogInfoType = {
 
 export const deleteBlog = createAsyncThunk(
     "deleteBlog",
-    async (reqObj: { blogId: string }, { rejectWithValue }) => {
-        const { blogId } = reqObj;
+    async (_id: ObjectId, { rejectWithValue }) => {
         try {
-            const resDataJson = await fetch(`/api/blogs/${blogId}`, {
+            const resDataJson = await fetch(`/api/blogs/${_id}`, {
                 method: "DELETE"
             })
             if (!resDataJson.ok) {
@@ -61,21 +62,11 @@ export const deleteBlog = createAsyncThunk(
 
 export const updateBlog = createAsyncThunk(
     "updateBlog",
-    async (reqObj: {
-        blogId: string,
-        slug: string
-        blogTitle: string,
-        blogImg: string,
-        blogData: string,
-        authorName: string,
-        authorPicture: string,
-        authorEmail: string,
-    }, { rejectWithValue }) => {
-        const { blogId, ...reqBody } = reqObj;
+    async (reqObj: BlogType, { rejectWithValue }) => {
         try {
-            const resDataJson = await fetch(`/api/blogs/${blogId}`, {
+            const resDataJson = await fetch(`/api/blogs/${reqObj._id}`, {
                 method: "PUT",
-                body: JSON.stringify(reqBody),
+                body: JSON.stringify(reqObj),
                 headers: {
                     "Content-Type": "application/json",
                 }
@@ -95,15 +86,7 @@ export const updateBlog = createAsyncThunk(
 
 export const postBlog = createAsyncThunk(
     "postBlog",
-    async (reqObj: {
-        blogTitle: string,
-        slug: string,
-        blogImg: string,
-        blogData: string,
-        authorName: string,
-        authorPicture: string,
-        authorEmail: string,
-    }, { rejectWithValue }) => {
+    async (reqObj: BlogType, { rejectWithValue }) => {
         try {
             const resDataJson = await fetch("/api/blogs", {
                 method: "POST",

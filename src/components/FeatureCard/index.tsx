@@ -1,3 +1,4 @@
+import { FeaturesTagType } from "@/types/tag";
 import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
@@ -41,20 +42,15 @@ export const Text = styled.span`
 `;
 
 const FeatureCard = ({
-    tagData,
+    tag,
 }: {
-    tagData: {
-        name: string;
-        blogIds: Array<string>;
-        _id: string;
-        nonDraftCount: number;
-    };
+    tag: FeaturesTagType
 }) => {
     return (
-        <Link href={`/features/${tagData._id}`} legacyBehavior>
+        <Link href={`/features/${tag._id}`} legacyBehavior>
             <Container>
-                <Text>#{tagData.name}</Text>
-                <span>({tagData.nonDraftCount})</span>
+                <Text>#{tag.name}</Text>
+                <span>({tag.nonDraftCount})</span>
             </Container>
         </Link>
     );

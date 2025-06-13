@@ -1,5 +1,5 @@
 import React from 'react'
-import { AuthorDetail, AuthorProfile, BlogAuthor, BlogAuthorContainer, BlogData, BlogHeader, BlogTitle, CardDetails, Container, MainContent, TagsContainer } from './Card.styles'
+import { AuthorDetail, AuthorProfile, BlogAuthor, BlogAuthorContainer, BlogData, BlogHeader, BlogTitle, CardDetails, Container, MainContent, TagsContainer } from './ArticleCard.styles'
 import { Shimmer } from '../ImageComponent/ImageComponent'
 import styled from 'styled-components'
 

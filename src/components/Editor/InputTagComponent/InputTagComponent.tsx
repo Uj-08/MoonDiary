@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect, SetStateAction, Dispatch } from "react";
 import { TitleText } from "../Editor.styles";
 import styled from "styled-components";
-
-type TagType = { _id: string; name: string };
+import { TagType } from "@/types/tag";
 
 const Container = styled.div`
     position: relative;
@@ -58,7 +57,8 @@ export const Suggestion = styled.li`
     }
 `;
 
-const InputTagComponent = ({ tags, setTagsArr }: { tags: TagType[], setTagsArr: Dispatch<SetStateAction<string>> }) => {
+const InputTagComponent = ({ tags, setTagsArr }: { tags: TagType[], setTagsArr: Dispatch<SetStateAction<string[]>> }) => {
+    console.log(tags)
     const [tagsField, setTagsField] = useState(
         tags?.map((tag) => `#${tag.name}`).join(" ") || ""
     );
@@ -127,7 +127,7 @@ const InputTagComponent = ({ tags, setTagsArr }: { tags: TagType[], setTagsArr: 
                 <SuggestionWindow>
                     {suggestions.map((tag) => (
                         <Suggestion
-                            key={tag._id}
+                            key={tag._id.toString()}
                             onClick={() => insertTag(tag.name)}
                         >
                             #{tag.name}

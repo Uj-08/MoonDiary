@@ -25,35 +25,26 @@ import {
     TitleText,
 } from "./Editor.styles";
 import { blogContentStyle, BlogPreviewContent } from "./BlogContentStyle";
-
-interface BlogDataType {
-    blogTitle: string;
-    blogImg: string;
-    blogData: string;
-    blogId: string;
-    isDraft: boolean;
-    tags: { _id: string; name: string }[];
-    seoDescription?: string;
-}
+import { PopulatedBlogType } from "@/types/blog";
 
 interface EditorComponentProps {
-    sessionId: string;
-    blogData?: BlogDataType;
+    readonly sessionId: string;
+    readonly blog?: PopulatedBlogType;
 }
 
-function EditorComponent({ sessionId, blogData }: EditorComponentProps) {
+function EditorComponent({ sessionId, blog }: EditorComponentProps) {
     const editorRef = useRef<any>(null);
     const dispatch = useDispatch<AppDispatch>();
 
     const [preview, setPreview] = useState<string | ReactNode>(
-        blogData?.blogData ? (parse(blogData.blogData) as ReactNode) : "Write Something..."
+        blog?.blogData ? (parse(blog.blogData) as ReactNode) : "Write Something..."
     );
-    const [title, setTitle] = useState(blogData?.blogTitle || "");
-    const [seoDescription, setSeoDescription] = useState(blogData?.seoDescription || "");
-    const [imageLinkText, setImageLinkText] = useState(blogData?.blogImg || "");
-    const [imageLink, setImageLink] = useState(blogData?.blogImg || "");
+    const [title, setTitle] = useState(blog?.blogTitle ?? "");
+    const [seoDescription, setSeoDescription] = useState(blog?.seoDescription ?? "");
+    const [imageLinkText, setImageLinkText] = useState(blog?.blogImg ?? "");
+    const [imageLink, setImageLink] = useState(blog?.blogImg ?? "");
     const [tagsArr, setTagsArr] = useState<string[]>([]);
-    const [isDraft, setIsDraft] = useState(blogData?.isDraft ?? true);
+    const [isDraft, setIsDraft] = useState(blog?.isDraft ?? true);
     const [isEditorInit, setIsEditorInit] = useState(false);
 
     let debounce: NodeJS.Timeout | undefined;
@@ -65,7 +56,7 @@ function EditorComponent({ sessionId, blogData }: EditorComponentProps) {
 
     const previewHandler = () => {
         const html = editorRef.current?.getContent();
-        if (html) setPreview(parse(html) as ReactNode);
+        if (html) setPreview(parse(html));
     };
 
     const submitHandler = () => {
@@ -76,6 +67,7 @@ function EditorComponent({ sessionId, blogData }: EditorComponentProps) {
             const authorObj: { name?: string; picture?: string; email?: string } = jwtDecode(sessionId);
 
             const reqBody = {
+                ...blog,
                 blogTitle: title,
                 slug: generatedSlug,
                 seoDescription,
@@ -86,10 +78,9 @@ function EditorComponent({ sessionId, blogData }: EditorComponentProps) {
                 authorEmail: authorObj.email as string,
                 isDraft,
                 tags: tagsArr,
-                ...(blogData && { blogId: blogData.blogId }),
             };
 
-            dispatch(blogData ? updateBlog(reqBody) : postBlog(reqBody));
+            dispatch(blog ? updateBlog(reqBody) : postBlog(reqBody));
         }
     };
 
@@ -138,7 +129,7 @@ function EditorComponent({ sessionId, blogData }: EditorComponentProps) {
                         placeholder="SEO description..."
                     />
 
-                    <InputTagComponent tags={blogData?.tags} setTagsArr={setTagsArr} />
+                    <InputTagComponent tags={blog?.tags} setTagsArr={setTagsArr} />
 
                     <TitleText
                         type="text"
@@ -152,7 +143,7 @@ function EditorComponent({ sessionId, blogData }: EditorComponentProps) {
                         {!isEditorInit && <Shimmer className="shimmer" isLoading />}
 
                         <Editor
-                            initialValue={blogData?.blogData}
+                            initialValue={blog?.blogData}
                             apiKey={process.env.NEXT_PUBLIC_MCE_API}
                             onInit={(_, editor) => {
                                 editorRef.current = editor;
@@ -171,7 +162,7 @@ function EditorComponent({ sessionId, blogData }: EditorComponentProps) {
                         />
                     </EditorContainer>
 
-                    <Button onClick={submitHandler}>{blogData?.blogTitle ? "Update" : "Submit"}</Button>
+                    <Button onClick={submitHandler}>{blog?.blogTitle ? "Update" : "Submit"}</Button>
                 </EditorContainer>
             </Container>
         </>

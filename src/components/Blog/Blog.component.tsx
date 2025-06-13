@@ -1,12 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import {
-  // AboutCard,
   AdditionalData,
   AdditionalSection,
-  // Author,
-  // AuthorBio,
-  // AuthorName,
-  // AuthorProfile,
   BlogTag,
   Container,
   Preview,
@@ -16,21 +11,21 @@ import {
 } from "./Blog.styles";
 import { PreviewData } from "../Editor/Editor.styles";
 import ImageComponent from "../ImageComponent/ImageComponent";
-import DynamicCard from "../ArticleCard/DynamicCard.component";
-import { BlogComponentTypes } from "@/pages/blogs/[slug]";
-import parse from "html-react-parser";
+import DynamicCard from "../ArticleCard/ArticleCard.component";
 import SkeletalCard from "../ArticleCard/SkeletalCard";
 import { ClientContext } from "@/containers/Base/Base";
 import Link from "next/link";
 import { BlogPreviewContent } from "../Editor/BlogContentStyle";
+import { PopulatedBlogType } from "@/types/blog";
+import parse from "html-react-parser";
 
-export default function BlogComponent({ blogData }: { blogData: BlogComponentTypes }) {
+const BlogComponent = ({ blog }: { blog: PopulatedBlogType }) => {
   const [cardData, setCardData] = useState([])
   const [isCardDataLoading, setIsCardDataLoading] = useState(true)
   useEffect(() => {
     const fetchFillData = async (limit: number, filterIds: String[]) => {
       try {
-        const blogs = await fetch(`/api/blogs/?filterIds=${[blogData._id, ...filterIds]}&limit=${limit}`)
+        const blogs = await fetch(`/api/blogs/?filterIds=${[blog._id, ...filterIds]}&limit=${limit}`)
           .then(res => res.json())
         return blogs;
       } catch (err) {
@@ -42,8 +37,8 @@ export default function BlogComponent({ blogData }: { blogData: BlogComponentTyp
       let additionalBlogs = [];
       try {
         const responses = await Promise.all(
-          blogData?.tags.map(tag =>
-            fetch(`/api/tags/${tag._id}?filterId=${blogData._id}`)
+          blog?.tags.map(tag =>
+            fetch(`/api/tags/${tag._id}?filterId=${blog._id}`)
               .then(res => res.json())
               .then(data => data.blogs)
           )
@@ -71,12 +66,12 @@ export default function BlogComponent({ blogData }: { blogData: BlogComponentTyp
       }
     };
 
-    if (blogData?.tags?.length) {
+    if (blog?.tags?.length) {
       setCardData([]);
       setIsCardDataLoading(true)
       fetchBlogsByTags();
     }
-  }, [blogData]);
+  }, [blog]);
 
   const client = useContext(ClientContext);
 
@@ -87,14 +82,14 @@ export default function BlogComponent({ blogData }: { blogData: BlogComponentTyp
           <PreviewImageContainer>
             <ImageComponent
               aspectRatio={4 / 3}
-              src={blogData.blogImg}
+              src={blog.blogImg}
               alt="hero image"
               isPriority
             />
           </PreviewImageContainer>
           <PreviewData>
             <BlogPreviewContent>
-              {blogData?.blogData ? parse(blogData?.blogData) : ""}
+              {blog?.blogData ? parse(blog?.blogData) : ""}
             </BlogPreviewContent>
           </PreviewData>
         </Preview>
@@ -102,9 +97,9 @@ export default function BlogComponent({ blogData }: { blogData: BlogComponentTyp
       <AdditionalSection>
         <TagsContainer>
           {
-            blogData.tags.map((tag) => {
+            blog.tags.map((tag) => {
               return (
-                <Link key={tag._id} href={`/features/${tag._id}`} legacyBehavior>
+                <Link key={tag._id.toString()} href={`/features/${tag._id}`} legacyBehavior>
                   <BlogTag>{`#${tag.name}`}</BlogTag>
                 </Link>
               )
@@ -129,3 +124,5 @@ export default function BlogComponent({ blogData }: { blogData: BlogComponentTyp
     </Container>
   );
 }
+
+export default React.memo(BlogComponent);

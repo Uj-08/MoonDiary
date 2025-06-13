@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   AuthorDetail,
   AuthorProfile,
@@ -17,42 +17,20 @@ import {
   MoreTag,
   Tag,
   TagsContainer,
-} from "./Card.styles";
+} from "./ArticleCard.styles";
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/redux/store";
-import { deleteBlog, resetDeletedBlogId } from "@/redux/slices/blogInfo";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/redux/store";
+import { deleteBlog } from "@/redux/slices/blogInfo";
 import Modal from "@/containers/Modal/Modal";
 import DeleteCard from "../DeletePrompt/DeleteCard";
 import ImageComponent from "../ImageComponent/ImageComponent";
 import Link from "next/link";
 import { useShuffledColors } from "@/hooks/useShuffledColors";
 import { stripHtml } from 'string-strip-html';
+import { ArticleCardTypes } from "./ArticleCard.types";
 
-export interface DynamicCardTypes {
-  blog: {
-    _id: string;
-    authorEmail: string;
-    authorName: string;
-    authorPicture: string;
-    blogData: string;
-    blogTitle: string;
-    slug: string;
-    blogImg: string;
-    updatedAt: string;
-    tags: [
-      {
-        _id: string
-        name: string
-      }
-    ],
-    isDraft: boolean
-  };
-  clientEmail?: string;
-  index: number;
-}
-
-export default function DynamicCard({ blog, clientEmail, index }: DynamicCardTypes) {
+export const ArticleCard = ({ blog, clientEmail, index }: ArticleCardTypes) => {
   const {
     _id,
     // slug,
@@ -67,19 +45,9 @@ export default function DynamicCard({ blog, clientEmail, index }: DynamicCardTyp
     isDraft
   } = blog;
 
-  const blogDeleteStatus = useSelector(
-    (state: RootState) => state.blogInfo.blogDeleteStatus
-  );
   const dispatch = useDispatch<AppDispatch>();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const router = useRouter();
-
-  useEffect(() => {
-    if (blogDeleteStatus.deletedBlogId) {
-      router.replace(router.asPath);
-      dispatch(resetDeletedBlogId());
-    }
-  }, [blogDeleteStatus.deletedBlogId, dispatch, router]);
 
   const blogBody = (stripHtml(blogData || ''));
 
@@ -125,10 +93,7 @@ export default function DynamicCard({ blog, clientEmail, index }: DynamicCardTyp
 
   async function deleteBlogHandler(e: React.MouseEvent<HTMLButtonElement>) {
     e.stopPropagation();
-    const reqObj = {
-      blogId: _id,
-    };
-    dispatch(deleteBlog(reqObj));
+    dispatch(deleteBlog(_id));
     setShowDeleteModal(false);
   }
 
@@ -152,7 +117,7 @@ export default function DynamicCard({ blog, clientEmail, index }: DynamicCardTyp
                 {Array.isArray(tags) && tags.length > 0 &&
                   tags.map((tag, idx) => {
                     if (idx <= 1) return (
-                      <Link key={tag._id} href={`/features/${tag._id}`} legacyBehavior>
+                      <Link key={tag._id.toString()} href={`/features/${tag._id}`} legacyBehavior>
                         <Tag title={`#${tag.name}`} maxWidth={"90px"} fontSize="12px" letterSpacing="0.5px" bgColor={getRandomColor()} ><span>#{tag.name}</span></Tag>
                       </Link>
 
@@ -210,3 +175,5 @@ export default function DynamicCard({ blog, clientEmail, index }: DynamicCardTyp
     </Link>
   );
 }
+
+export default ArticleCard;

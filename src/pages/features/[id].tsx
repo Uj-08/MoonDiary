@@ -7,6 +7,7 @@ import { GetStaticProps, GetStaticPaths } from "next";
 import dbConnect from "@/lib/dbConnect";
 import TagsModel from "@/models/Tags.model";
 import BlogsModel from "@/models/Blogs.model";
+import { PopulatedBlogType } from "@/types/blog";
 
 export const Container = styled.div`
   min-height: calc(100dvh);
@@ -29,24 +30,24 @@ export const FeatureHeader = styled.h2`
   padding-bottom: 0;
 `;
 
-const TagPage = ({ blogsData }: { blogsData: any }) => {
+const TagPage = ({ data }: { data: { blogs: PopulatedBlogType[], name: string } }) => {
     return (
         <>
             <Head>
-                <title>{`#${blogsData.name} | MoonDiary`}</title>
+                <title>{`#${data.name} | MoonDiary`}</title>
                 <meta
                     name="description"
-                    content={`Explore blog posts related to #${blogsData.name} on MoonDiary`}
+                    content={`Explore blog posts related to #${data.name} on MoonDiary`}
                 />
                 <meta
                     name="keywords"
-                    content={`#${blogsData.name}`}
+                    content={`#${data.name}`}
                 />
             </Head>
             <Base>
                 <Container>
-                    <FeatureHeader>#{blogsData.name}</FeatureHeader>
-                    <ArticleGrid blogs={blogsData.blogs} />
+                    <FeatureHeader>#{data.name}</FeatureHeader>
+                    <ArticleGrid blogsArray={data.blogs} />
                 </Container>
             </Base>
         </>
@@ -95,23 +96,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
             .populate("tags", "name")
             .lean();
 
-        // 🔁 Convert _id and nested _ids to strings
-        // const serializedBlogs = blogs.map((blog: any) => ({
-        //     ...blog,
-        //     _id: blog._id.toString(),
-        //     createdAt: blog.createdAt?.toISOString(),
-        //     updatedAt: blog.updatedAt?.toISOString(),
-        //     tags: blog.tags?.map((tag: any) => ({
-        //         ...tag,
-        //         _id: tag._id.toString(),
-        //     })),
-        // }));
-
         const serializedBlogs = JSON.parse(JSON.stringify(blogs));
 
         return {
             props: {
-                blogsData: {
+                data: {
                     blogs: serializedBlogs,
                     name: tag.name,
                 },

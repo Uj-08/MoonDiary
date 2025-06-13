@@ -4,43 +4,11 @@ import ArticleGrid from "@/components/ArticleGrid/ArticleGrid.component";
 import { GetServerSideProps } from "next";
 import { getCookie, hasCookie } from "cookies-next";
 import { COOKIE_NAME } from "@/constants";
-// import styled from "styled-components";
 import Head from "next/head";
 import React from "react";
+import { BlogType } from "@/types/blog";
 
-// export const Loading = styled.div`
-//   background-color: white;
-//   display: flex;
-//   height: 100dvh;
-//   width: 100dvw;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   position: fixed;
-//   top: 0;
-//   left: 0;
-//   z-index: 9999;
-//   div {
-//     position: relative;
-//     height: 70px;
-//     width: 70px;
-//     animation: loadingAnimation 1.5s ease-in-out 0s infinite alternate forwards;
-//   }
-
-//   @keyframes loadingAnimation {
-//     0% {
-//       transform: rotate(0deg);
-//     }
-//     50% {
-//       transform: rotate(360deg);
-//     }
-//     100% {
-//       transform: rotate(720deg);
-//     }
-//   }
-// `;
-
-const Home = ({ blogsData }: { blogsData: any }) => {
+const Home = ({ blogsArray }: { blogsArray: BlogType[] }) => {
   return (
     <>
       <Head>
@@ -49,7 +17,7 @@ const Home = ({ blogsData }: { blogsData: any }) => {
       </Head>
       <Base>
         <HeroSection />
-        <ArticleGrid blogs={blogsData} />
+        <ArticleGrid blogsArray={blogsArray} />
       </Base>
     </>
   );
@@ -73,11 +41,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       'x-session-token': getCookie(COOKIE_NAME, context) as string,
     },
   });
-  const blogsData = await resData.json();
+  const blogsArray = await resData.json();
 
   return {
     props: {
-      blogsData: blogsData,
+      blogsArray,
     },
   };
 };

@@ -2,12 +2,13 @@ import React from "react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Container, Grid, SortContainer, Label, Select } from "./ArticleGrid.styles";
-import DynamicCard from "../ArticleCard/DynamicCard.component";
+import DynamicCard from "../ArticleCard/ArticleCard.component";
 import { getCookie, hasCookie } from "cookies-next";
 import jwtDecode from "jwt-decode";
 import { COOKIE_NAME } from "@/constants";
+import { PopulatedBlogType } from "@/types/blog";
 
-const ArticleGrid = ({ blogs }: { blogs: any }) => {
+const ArticleGrid = ({ blogsArray }: { blogsArray: PopulatedBlogType[] }) => {
   const router = useRouter();
   const [client, setClient] = useState<{ email: string }>();
 
@@ -62,7 +63,7 @@ const ArticleGrid = ({ blogs }: { blogs: any }) => {
             </Select>
           </span>
         </SortContainer>
-        {blogs?.map((blog: any, idx: number) => {
+        {blogsArray?.map((blog, idx: number) => {
           return (
             <DynamicCard key={idx} index={idx} blog={blog} clientEmail={client?.email} />
           );

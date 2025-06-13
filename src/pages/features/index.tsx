@@ -6,6 +6,7 @@ import { hasCookie } from "cookies-next";
 import { COOKIE_NAME } from "@/constants";
 import FeatureCard from "@/components/FeatureCard";
 import styled from "styled-components";
+import { FeaturesTagType, TagType } from "@/types/tag";
 
 export const Container = styled.div`
     display: flex;
@@ -22,7 +23,7 @@ export const Grid = styled.div`
     gap: 12px;
 `;
 
-const Features = ({ tags }: { tags: any }) => {
+const Features = ({ tags }: { tags: FeaturesTagType[] }) => {
 
     // SEO
     const keywords = tags.map(tag => tag.name).join(", ");
@@ -43,7 +44,7 @@ const Features = ({ tags }: { tags: any }) => {
                 <Container>
                     <Grid>
                         {
-                            tags.map((tag, index) => <FeatureCard key={index} tagData={tag} />)
+                            tags.map((tag, index) => <FeatureCard key={index} tag={tag} />)
                         }
                     </Grid>
                 </Container>

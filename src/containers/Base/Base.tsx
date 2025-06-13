@@ -27,6 +27,13 @@ const Base = ({ children }: BaseTypes) => {
   const router = useRouter();
 
   useEffect(() => {
+      if (blogInfo.blogDeleteStatus.deletedBlogId) {
+        router.reload();
+        dispatch(resetDeletedBlogId());
+      }
+    }, [blogInfo.blogDeleteStatus.deletedBlogId, dispatch, router]);
+
+  useEffect(() => {
     if (blogInfo.blogPostUpdateStatus.createdBlogId) {
       dispatch(resetCreatedBlogId())
       router.push("/");

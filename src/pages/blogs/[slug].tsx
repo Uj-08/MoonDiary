@@ -7,38 +7,24 @@ import BlogComponent from "@/components/Blog/Blog.component";
 import { GetStaticProps, GetStaticPaths } from "next";
 import BlogsModel from "@/models/Blogs.model";
 import dbConnect from "@/lib/dbConnect";
-export interface BlogComponentTypes {
-  _id: string,
-  blogTitle: string;
-  slug: string;
-  blogImg: string;
-  blogData: string;
-  seoDescription?: string
-  createdAt: Date;
-  updatedAt: Date;
-  tags: Array<{
-    _id: string,
-    name: string
-  }>
-  authorName: string;
-}
+import { PopulatedBlogType } from "@/types/blog";
 
-const Blog = ({ blogData }: { blogData: BlogComponentTypes }) => {
+const Blog = ({ blog }: { blog: PopulatedBlogType }) => {
   //SEO
-  const description = blogData?.seoDescription || (stripHtml(blogData.blogData || '').result.replace(/\s+/g, ' ').trim().slice(0, 160) + '...');
-  const keywords = blogData?.tags?.map(tag => tag.name).join(', ');
+  const description = blog?.seoDescription || (stripHtml(blog.blogData || '').result.replace(/\s+/g, ' ').trim().slice(0, 160) + '...');
+  const keywords = blog?.tags?.map(tag => tag.name).join(', ');
 
-  const datePublished = new Date(blogData.createdAt).toISOString();
-  const dateModified = new Date(blogData.updatedAt || blogData.createdAt).toISOString();
-  const url = `https://moondiary.netlify.app/blogs/${blogData.slug}`
+  const datePublished = new Date(blog.createdAt).toISOString();
+  const dateModified = new Date(blog.updatedAt || blog.createdAt).toISOString();
+  const url = `https://moondiary.netlify.app/blogs/${blog.slug}`
 
   return (
     <>
       <Head>
-        <title>{blogData.blogTitle} | MoonDiary</title>
+        <title>{blog.blogTitle} | MoonDiary</title>
         <meta name="description" content={description} />
         <meta name="keywords" content={keywords} />
-        <meta name="author" content={blogData.authorName} />
+        <meta name="author" content={blog.authorName} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         <meta name="robots" content="index,follow" />
@@ -52,11 +38,11 @@ const Blog = ({ blogData }: { blogData: BlogComponentTypes }) => {
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "BlogPosting",
-            "headline": blogData.blogTitle,
-            "image": blogData.blogImg,
+            "headline": blog.blogTitle,
+            "image": blog.blogImg,
             "author": {
               "@type": "Person",
-              "name": blogData.authorName
+              "name": blog.authorName
             },
             "publisher": {
               "@type": "Organization",
@@ -78,25 +64,25 @@ const Blog = ({ blogData }: { blogData: BlogComponentTypes }) => {
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="article" />
-        <meta property="og:title" content={blogData.blogTitle} />
+        <meta property="og:title" content={blog.blogTitle} />
         <meta property="og:description" content={description} />
-        <meta property="og:image" content={blogData.blogImg} />
+        <meta property="og:image" content={blog.blogImg} />
         <meta property="og:url" content={url} />
         <meta property="article:published_time" content={datePublished} />
         <meta property="article:modified_time" content={dateModified} />
-        <meta property="article:author" content={blogData.authorName} />
+        <meta property="article:author" content={blog.authorName} />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={blogData.blogTitle} />
+        <meta name="twitter:title" content={blog.blogTitle} />
         <meta name="twitter:description" content={description} />
-        <meta name="twitter:image" content={blogData.blogImg} />
+        <meta name="twitter:image" content={blog.blogImg} />
       </Head>
       <Base>
         <BlogTitleComponent>
-          {blogData.blogTitle}
+          {blog.blogTitle}
         </BlogTitleComponent>
-        <BlogComponent blogData={blogData} />
+        <BlogComponent blog={blog} />
       </Base>
     </>
   );
@@ -121,7 +107,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
     return {
       props: {
-        blogData: JSON.parse(JSON.stringify(blogDoc)),
+        blog: JSON.parse(JSON.stringify(blogDoc)),
       },
       revalidate: 3600,
     };

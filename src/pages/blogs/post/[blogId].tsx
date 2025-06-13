@@ -4,16 +4,19 @@ import NextHead from 'next/head';
 import { getCookie, hasCookie } from "cookies-next";
 import { COOKIE_NAME } from "@/constants";
 import { GetServerSideProps } from "next";
+import jwtDecode from "jwt-decode";
+import { ClientType } from "@/types/client";
+import { PopulatedBlogType } from "@/types/blog";
 
 
-function BlogPost({ sessionId, blogData }: { sessionId: string; blogData: { blogTitle: string; blogImg: string; blogData: string; blogId: string } }) {
+function BlogPost({ sessionId, blog }: { sessionId: string; blog: PopulatedBlogType }) {
     return (
         <>
             <NextHead>
                 <title>MoonDiary | New Blog</title>
             </NextHead>
             <Base>
-                <EditorComponent blogData={blogData} sessionId={sessionId} />
+                <EditorComponent blog={blog} sessionId={sessionId} />
             </Base>
         </>
     )
@@ -27,12 +30,20 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     const isSessionAvailable = hasCookie(COOKIE_NAME, { req, res })
     const resData = await fetch(`${process.env.BASE_URL}/api/blogs/${blogId}`);
-    const blogData = await resData.json();
+    const blog: PopulatedBlogType = await resData.json();
 
     let sessionId;
 
     if (isSessionAvailable) {
         sessionId = getCookie(COOKIE_NAME, { req, res });
+        const clientObj: ClientType = jwtDecode(sessionId as string);
+        if (clientObj.email !== blog.authorEmail)
+            return {
+                redirect: {
+                    permanent: false,
+                    destination: "/"
+                }
+            }
     } else {
         return {
             redirect: {
@@ -44,10 +55,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     return {
         props: {
-            blogData: {
-                ...blogData,
-                blogId
-            },
+            blog,
             sessionId
         }
     }

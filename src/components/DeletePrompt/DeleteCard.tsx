@@ -1,5 +1,5 @@
 import React from 'react'
-import { DeleteButton } from '../ArticleCard/Card.styles';
+import { DeleteButton } from '../ArticleCard/ArticleCard.styles';
 import styled from 'styled-components';
 
 interface DeleteCardTypes {
@@ -43,19 +43,19 @@ function DeleteCard({ blogTitle, onDeleteHandler, onCancelHandler }: DeleteCardT
     function containerClickHandler(e: React.MouseEvent<HTMLDivElement>) {
         e.stopPropagation();
     }
-  return (
-    <Container onClick={containerClickHandler}>
-        <div>Delete {blogTitle} ?</div>
-        <div>
-            <ModalDeleteButton onClick={onDeleteHandler} >
-                Confirm
-            </ModalDeleteButton>
-            <CancelButton onClick={onCancelHandler} >
-                Cancel
-            </CancelButton> 
-        </div>
-    </Container>
-  )
+    return (
+        <Container onClick={containerClickHandler}>
+            <div>Delete {blogTitle} ?</div>
+            <div>
+                <ModalDeleteButton onClick={onDeleteHandler} >
+                    Confirm
+                </ModalDeleteButton>
+                <CancelButton onClick={onCancelHandler} >
+                    Cancel
+                </CancelButton>
+            </div>
+        </Container>
+    )
 }
 
 export default DeleteCard
