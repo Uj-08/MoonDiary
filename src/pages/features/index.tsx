@@ -23,10 +23,21 @@ export const Grid = styled.div`
 `;
 
 const Features = ({ tags }: { tags: any }) => {
+
+    // SEO
+    const keywords = tags.map(tag => tag.name).join(", ");
     return (
         <>
             <Head>
                 <title>Features | MoonDiary</title>
+                <meta
+                    name="description"
+                    content={`Explore blogs by #tags on MoonDiary`}
+                />
+                <meta
+                    name="keywords"
+                    content={keywords}
+                />
             </Head>
             <Base>
                 <Container>

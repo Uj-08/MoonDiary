@@ -27,10 +27,19 @@ export const FeatureHeader = styled.h2`
 `;
 
 const TagPage = ({ blogsData }: { blogsData: any }) => {
+    console.log(blogsData)
     return (
         <>
             <Head>
                 <title>{`#${blogsData.name} | MoonDiary`}</title>
+                <meta
+                    name="description"
+                    content={`Explore blog posts related to #${blogsData.name} on MoonDiary`}
+                />
+                <meta
+                    name="keywords"
+                    content={`#${blogsData.name}`}
+                />
             </Head>
             <Base>
                 <Container>
