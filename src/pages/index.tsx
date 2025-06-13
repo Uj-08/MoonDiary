@@ -70,7 +70,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'x-session-token': getCookie("clientMD", context) as string,
+      'x-session-token': getCookie(COOKIE_NAME, context) as string,
     },
   });
   const blogsData = await resData.json();

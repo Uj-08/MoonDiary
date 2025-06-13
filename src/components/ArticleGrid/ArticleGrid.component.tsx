@@ -5,14 +5,15 @@ import { Container, Grid, SortContainer, Label, Select } from "./ArticleGrid.sty
 import DynamicCard from "../ArticleCard/DynamicCard.component";
 import { getCookie, hasCookie } from "cookies-next";
 import jwtDecode from "jwt-decode";
+import { COOKIE_NAME } from "@/constants";
 
 const ArticleGrid = ({ blogs }: { blogs: any }) => {
   const router = useRouter();
   const [client, setClient] = useState<{ email: string }>();
 
   useEffect(() => {
-    if (hasCookie("clientMD")) {
-      const cookie = getCookie("clientMD");
+    if (hasCookie(COOKIE_NAME)) {
+      const cookie = getCookie(COOKIE_NAME);
       if (typeof cookie === "string") {
         setClient(jwtDecode(cookie));
       }

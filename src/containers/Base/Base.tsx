@@ -85,7 +85,7 @@ const Base = ({ children }: BaseTypes) => {
 
   useEffect(() => {
     if (signedIn) {
-      const client = getCookie("clientMD");
+      const client = getCookie(COOKIE_NAME);
 
       if (client) {
         try {
