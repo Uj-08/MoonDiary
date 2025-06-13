@@ -5,7 +5,6 @@ import Base from "@/containers/Base/Base";
 import BlogTitleComponent from "@/components/Blog/BlogTitle/BlogTitle.component";
 import BlogComponent from "@/components/Blog/Blog.component";
 import { GetStaticProps, GetStaticPaths } from "next";
-import "@/models/Tags.model"; // force registration
 import BlogsModel from "@/models/Blogs.model";
 import dbConnect from "@/lib/dbConnect";
 export interface BlogComponentTypes {
@@ -25,7 +24,6 @@ export interface BlogComponentTypes {
 }
 
 const Blog = ({ blogData }: { blogData: BlogComponentTypes }) => {
-
   //SEO
   const description = blogData?.seoDescription || (stripHtml(blogData.blogData || '').result.replace(/\s+/g, ' ').trim().slice(0, 160) + '...');
   const keywords = blogData?.tags?.map(tag => tag.name).join(', ');
@@ -111,6 +109,10 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   try {
     await dbConnect();
+
+    // Ensure Tags model is registered
+    await import('@/models/Tags.model');
+
     const blogDoc = await BlogsModel.findOne({ slug }).populate("tags").lean();
 
     if (!blogDoc) {
@@ -119,7 +121,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
     return {
       props: {
-        blogData: JSON.parse(JSON.stringify(blogDoc)), // safe for serialization
+        blogData: JSON.parse(JSON.stringify(blogDoc)),
       },
       revalidate: 300,
     };
