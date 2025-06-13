@@ -123,7 +123,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       props: {
         blogData: JSON.parse(JSON.stringify(blogDoc)),
       },
-      revalidate: 300,
+      revalidate: 3600,
     };
   } catch (err) {
     console.error("Error fetching blog:", err);
