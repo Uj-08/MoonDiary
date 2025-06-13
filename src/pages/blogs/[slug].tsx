@@ -5,6 +5,7 @@ import Base from "@/containers/Base/Base";
 import BlogTitleComponent from "@/components/Blog/BlogTitle/BlogTitle.component";
 import BlogComponent from "@/components/Blog/Blog.component";
 import { GetStaticProps, GetStaticPaths } from "next";
+import "@/models/Tags.model"; // force registration
 import BlogsModel from "@/models/Blogs.model";
 import dbConnect from "@/lib/dbConnect";
 export interface BlogComponentTypes {
