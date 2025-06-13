@@ -49,13 +49,13 @@ export const blogRenderStyle = css`
   h6 { font-size: 1rem; }
 
   p {
-    margin-bottom: 1em;
+    margin-bottom: 0.5;
     word-break: break-word;
   }
 
   ul, ol {
     padding-left: 2em;
-    margin-bottom: 1em;
+    margin-bottom: 0.5;
   }
 
   li {
@@ -73,20 +73,20 @@ export const blogRenderStyle = css`
     height: auto;
     display: block;
     border-radius: 12px;
-    margin: 1.5em 0;
+    margin: 0.5em;
   }
 
   blockquote {
     border-left: 4px solid #ccc;
     padding-left: 1em;
-    margin-bottom: 1em;
+    margin-bottom: 0.5;
     color: #555;
     font-style: italic;
   }
 
   pre {
     background-color: #f9f9f9;
-    margin-bottom: 1em;
+    margin-bottom: 0.5em;
     overflow-x: auto;
     border-radius: 6px;
     font-size: 0.95rem;
@@ -95,7 +95,7 @@ export const blogRenderStyle = css`
   code {
     background-color: #eee;
     /* padding: 0.2em 0.4em; */
-    margin-left: 0.4em;
+    margin-left: 1em;
     margin-bottom: 0.2em;
     border-radius: 4px;
     font-family: monospace;
@@ -106,7 +106,7 @@ export const blogRenderStyle = css`
     border: none;
     border-top: 1px solid #ccc;
     /* margin: 2em 0; */
-    margin-bottom: 2em;
+    margin-bottom: 1em;
   }
 `;
 
