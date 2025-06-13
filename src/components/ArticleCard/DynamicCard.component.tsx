@@ -37,6 +37,7 @@ export interface DynamicCardTypes {
     authorPicture: string;
     blogData: string;
     blogTitle: string;
+    slug: string;
     blogImg: string;
     updatedAt: string;
     tags: [
@@ -80,7 +81,7 @@ export default function DynamicCard({ blog, clientEmail, index }: DynamicCardTyp
     }
   }, [blogDeleteStatus.deletedBlogId, dispatch, router]);
 
-  const blogBody = stripHtml(blogData)
+  const blogBody = (stripHtml(blogData || ''));
 
   const formatter = new Intl.RelativeTimeFormat("en", { numeric: "auto" });
 
@@ -134,7 +135,7 @@ export default function DynamicCard({ blog, clientEmail, index }: DynamicCardTyp
   const getRandomColor = useShuffledColors();
 
   return (
-    <Link href={`/blogs/${_id}`} legacyBehavior>
+    <Link href={`/blogs/${blog.slug}`} legacyBehavior>
       <Container isDraft={isDraft}>
         <ImageContainer>
           <ImageComponent

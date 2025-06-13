@@ -62,7 +62,8 @@ export const deleteBlog = createAsyncThunk(
 export const updateBlog = createAsyncThunk(
     "updateBlog",
     async (reqObj: {
-        blogId: string
+        blogId: string,
+        slug: string
         blogTitle: string,
         blogImg: string,
         blogData: string,

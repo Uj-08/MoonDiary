@@ -17,7 +17,7 @@ import {
 import { PreviewData } from "../Editor/Editor.styles";
 import ImageComponent from "../ImageComponent/ImageComponent";
 import DynamicCard from "../ArticleCard/DynamicCard.component";
-import { BlogComponentTypes } from "@/pages/blogs/[blogId]";
+import { BlogComponentTypes } from "@/pages/blogs/[slug]";
 import parse from "html-react-parser";
 import SkeletalCard from "../ArticleCard/SkeletalCard";
 import { ClientContext } from "@/containers/Base/Base";

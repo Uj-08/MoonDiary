@@ -104,9 +104,9 @@ export default React.memo(Blog)
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const { params } = context;
-  const blogId = params?.blogId;
-
-  const resData = await fetch(`${process.env.BASE_URL}/api/blogs/${blogId}`);
+  const slug = params?.slug;
+  console.log({slug})
+  const resData = await fetch(`${process.env.BASE_URL}/api/blogs/slug/${slug}`);
   const blogData = await resData.json();
 
   return {
@@ -122,7 +122,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const blogs = await res.json();
 
   const paths = blogs.map((blog: any) => ({
-    params: { blogId: blog._id.toString() }, // or { slug: blog.slug } if using slugs
+    params: { slug: blog.slug }, // or { slug: blog.slug } if using slugs
   }));
 
   return {

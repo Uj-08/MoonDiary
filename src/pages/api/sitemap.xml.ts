@@ -8,7 +8,7 @@ const generateSitemap = (blogs: any[]) => {
         .map((blog) => {
             return `
   <url>
-    <loc>${baseUrl}/blogs/${blog._id}</loc>
+    <loc>${baseUrl}/blogs/${blog.slug}</loc>
     <lastmod>${new Date(
                 blog.updatedAt || blog.createdAt
             ).toISOString()}</lastmod>
