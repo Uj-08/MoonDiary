@@ -22,6 +22,7 @@ import parse from "html-react-parser";
 import SkeletalCard from "../ArticleCard/SkeletalCard";
 import { ClientContext } from "@/containers/Base/Base";
 import Link from "next/link";
+import { BlogPreviewContent } from "../Editor/BlogContentStyle";
 
 export default function BlogComponent({ blogData }: { blogData: BlogComponentTypes }) {
   const [cardData, setCardData] = useState([])
@@ -91,7 +92,11 @@ export default function BlogComponent({ blogData }: { blogData: BlogComponentTyp
               isPriority
             />
           </PreviewImageContainer>
-          <PreviewData>{blogData?.blogData ? parse(blogData?.blogData) : ""}</PreviewData>
+          <PreviewData>
+            <BlogPreviewContent>
+              {blogData?.blogData ? parse(blogData?.blogData) : ""}
+            </BlogPreviewContent>
+          </PreviewData>
         </Preview>
       </PreviewContainer>
       <AdditionalSection>

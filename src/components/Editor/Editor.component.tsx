@@ -24,6 +24,7 @@ import {
     PreviewImageContainer,
     TitleText,
 } from "./Editor.styles";
+import { blogContentStyle, BlogPreviewContent } from "./BlogContentStyle";
 
 interface BlogDataType {
     blogTitle: string;
@@ -110,7 +111,11 @@ function EditorComponent({ sessionId, blogData }: EditorComponentProps) {
                             />
                         </PreviewImageContainer>
 
-                        <PreviewData>{preview}</PreviewData>
+                        <PreviewData>
+                            <BlogPreviewContent>
+                                {preview}
+                            </BlogPreviewContent>
+                        </PreviewData>
                     </Preview>
                 </PreviewContainer>
 
@@ -156,8 +161,12 @@ function EditorComponent({ sessionId, blogData }: EditorComponentProps) {
                             onKeyUp={keyUpHandler}
                             init={{
                                 height: 700,
-                                content_style:
-                                    "@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap'); * { font-family: \"Montserrat\", sans-serif;}  @media (max-width: 670px) {body {font-size: 95%;}} @media (max-width: 570px) {body {font-size: 90%;}} @media (max-width: 470px) {body {font-size: 85%;}} @media (max-width: 400px) {body {font-size: 80%;}}",
+                                placeholder: "Start writing your blog here...",
+                                plugins: 'autolink link image lists code table hr preview fullscreen',
+                                toolbar:
+                                    'undo redo | formatselect | bold italic underline blockquote | alignleft aligncenter alignright alignjustify | bullist numlist | link image table | code fullscreen preview',
+                                branding: false,
+                                content_style: blogContentStyle
                             }}
                         />
                     </EditorContainer>
