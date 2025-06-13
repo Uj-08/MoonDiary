@@ -13,9 +13,6 @@ export const AboutCard = styled.div`
   font-size: 13px;
   gap: 12px;
   max-width: 300px;
-  @media (max-width: 920px) {
-    display: none;
-  }
 
   background: linear-gradient(45deg, #7a0bc099, #e94ce999);
   border-radius: 8px;
@@ -59,6 +56,15 @@ export const AuthorProfile = styled.div`
   }
 `;
 
+export const Container = styled.div`
+  height: calc(100dvh - 180px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 60px;
+  margin-bottom: -100px;
+`
+
 const AboutMe = () => {
   return (
     <>
@@ -66,14 +72,7 @@ const AboutMe = () => {
         <title>About Me | MoonDiary</title>
       </Head>
       <Base>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "75dvh",
-          }}
-        >
+      <Container>
           <AboutCard>
             <Author>
               <AuthorProfile>
@@ -91,7 +90,7 @@ const AboutMe = () => {
               }
             </AuthorBio>
           </AboutCard>
-        </div>
+      </Container>
       </Base>
     </>
   );
