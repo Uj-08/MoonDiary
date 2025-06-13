@@ -15,7 +15,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
                     const tags = await TagsModel.find({
                         name: new RegExp(search, "i"),
-                    }).limit(3);
+                    }).limit(3).lean();
 
                     return res.status(200).json({ tags });
                 } else {

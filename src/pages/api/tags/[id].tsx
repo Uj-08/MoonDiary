@@ -32,7 +32,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
                     isDraft: { $ne: true },
                 })
                     .sort({ [sort]: Number(order) })
-                    .populate("tags", "name");
+                    .populate("tags", "name")
+                    .lean()
 
                 return res.status(200).json({blogs, name: tag.name});
             } catch (err) {

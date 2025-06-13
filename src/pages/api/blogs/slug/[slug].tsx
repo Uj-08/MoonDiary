@@ -10,7 +10,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         case HttpMethod.GET:
             try {
                 const sendAll = req.query.sendAll === "true";
-                const blog = await BlogsModel.findOne({ slug }).populate("tags", sendAll ? "" : "name");
+                const blog = await BlogsModel.findOne({ slug }).populate("tags", sendAll ? "" : "name").lean();
                 return res.status(200).json(blog);
             } catch (err) {
                 console.error("GET error:", err);

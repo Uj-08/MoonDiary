@@ -49,7 +49,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
                 const blogs = await BlogsModel.find(query)
                     .populate("tags", "name")
                     .sort({ [sort]: Number(order) })
-                    .limit(limit ? Number(limit) : 0);
+                    .limit(limit ? Number(limit) : 0)
+                    .lean();
 
                 return res.status(200).json(blogs);
             } catch (err) {
