@@ -27,7 +27,6 @@ export const FeatureHeader = styled.h2`
 `;
 
 const TagPage = ({ blogsData }: { blogsData: any }) => {
-    console.log(blogsData)
     return (
         <>
             <Head>
