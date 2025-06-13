@@ -6,9 +6,9 @@ import { getCookie, hasCookie } from "cookies-next";
 import { COOKIE_NAME } from "@/constants";
 import Head from "next/head";
 import React from "react";
-import { BlogType } from "@/types/blog";
+import { PopulatedBlogType } from "@/types/blog";
 
-const Home = ({ blogsArray }: { blogsArray: BlogType[] }) => {
+const Home = ({ blogsArray }: { blogsArray: PopulatedBlogType[] }) => {
   return (
     <>
       <Head>
@@ -41,7 +41,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       'x-session-token': getCookie(COOKIE_NAME, context) as string,
     },
   });
-  const blogsArray = await resData.json();
+  const blogsArray: PopulatedBlogType = await resData.json();
 
   return {
     props: {

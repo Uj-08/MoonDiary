@@ -57,11 +57,11 @@ export const AuthorProfile = styled.div`
 `;
 
 export const Container = styled.div`
-  height: calc(100dvh - 180px);
+  height: calc(100dvh - 100px);
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 60px;
+  padding-top: 60px;
   margin-bottom: -100px;
 `
 

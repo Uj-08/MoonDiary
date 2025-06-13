@@ -6,14 +6,15 @@ import { hasCookie } from "cookies-next";
 import { COOKIE_NAME } from "@/constants";
 import FeatureCard from "@/components/FeatureCard";
 import styled from "styled-components";
-import { FeaturesTagType, TagType } from "@/types/tag";
+import { FeaturesTagType } from "@/types/tag";
 
 export const Container = styled.div`
     display: flex;
-    min-height: calc(100dvh - 200px);
+    min-height: calc(100dvh - 120px);
     justify-content: center;
     align-items: center;
     padding-top: 80px;
+    margin-bottom: -100px;
 `;
 
 export const Grid = styled.div`
