@@ -39,6 +39,7 @@ export const blogRenderStyle = css`
     font-weight: 600;
     line-height: 1.3;
     /* margin: 1.5em 0 1em; */
+    margin-bottom: 1em;
   }
 
   h1 { font-size: 2rem; }
@@ -49,13 +50,13 @@ export const blogRenderStyle = css`
   h6 { font-size: 1rem; }
 
   p {
-    margin-bottom: 0.5;
+    margin-bottom: 0.1em;
     word-break: break-word;
   }
 
   ul, ol {
     padding-left: 2em;
-    margin-bottom: 0.5;
+    margin-bottom: 0.5em;
   }
 
   li {
@@ -79,7 +80,7 @@ export const blogRenderStyle = css`
   blockquote {
     border-left: 4px solid #ccc;
     padding-left: 1em;
-    margin-bottom: 0.5;
+    margin-bottom: 0.5em;
     color: #555;
     font-style: italic;
   }
