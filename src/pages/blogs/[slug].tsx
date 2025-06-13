@@ -5,9 +5,12 @@ import Base from "@/containers/Base/Base";
 import BlogTitleComponent from "@/components/Blog/BlogTitle/BlogTitle.component";
 import BlogComponent from "@/components/Blog/Blog.component";
 import { GetStaticProps, GetStaticPaths } from "next";
+import BlogsModel from "@/models/Blogs.model";
+import dbConnect from "@/lib/dbConnect";
 export interface BlogComponentTypes {
   _id: string,
   blogTitle: string;
+  slug: string;
   blogImg: string;
   blogData: string;
   seoDescription?: string
@@ -22,13 +25,13 @@ export interface BlogComponentTypes {
 
 const Blog = ({ blogData }: { blogData: BlogComponentTypes }) => {
 
-//SEO
+  //SEO
   const description = blogData?.seoDescription || (stripHtml(blogData.blogData || '').result.replace(/\s+/g, ' ').trim().slice(0, 160) + '...');
   const keywords = blogData?.tags?.map(tag => tag.name).join(', ');
 
   const datePublished = new Date(blogData.createdAt).toISOString();
   const dateModified = new Date(blogData.updatedAt || blogData.createdAt).toISOString();
-  const url = `https://moondiary.netlify.app/blogs/${blogData._id}`
+  const url = `https://moondiary.netlify.app/blogs/${blogData.slug}`
 
   return (
     <>
@@ -103,30 +106,38 @@ const Blog = ({ blogData }: { blogData: BlogComponentTypes }) => {
 export default React.memo(Blog)
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const { params } = context;
-  const slug = params?.slug;
-  console.log({slug})
-  const resData = await fetch(`${process.env.BASE_URL}/api/blogs/slug/${slug}`);
-  const blogData = await resData.json();
+  const { slug } = context.params as { slug: string };
 
-  return {
-    props: {
-      blogData: blogData,
-    },
-    revalidate: 300
+  try {
+    await dbConnect();
+    const blogDoc = await BlogsModel.findOne({ slug }).populate("tags").lean();
+
+    if (!blogDoc) {
+      return { notFound: true };
+    }
+
+    return {
+      props: {
+        blogData: JSON.parse(JSON.stringify(blogDoc)), // safe for serialization
+      },
+      revalidate: 300,
+    };
+  } catch (err) {
+    console.error("Error fetching blog:", err);
+    return { notFound: true };
   }
-}
+};
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await fetch(`${process.env.BASE_URL}/api/blogs`);
-  const blogs = await res.json();
+  await dbConnect();
+  const blogs = await BlogsModel.find({}, "slug");
 
-  const paths = blogs.map((blog: any) => ({
-    params: { slug: blog.slug }, // or { slug: blog.slug } if using slugs
+  const paths = blogs.map((blog) => ({
+    params: { slug: blog.slug },
   }));
 
   return {
     paths,
-    fallback: 'blocking', // Use 'true' or 'blocking' for on-demand generation
+    fallback: "blocking",
   };
 };
