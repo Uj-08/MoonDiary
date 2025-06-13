@@ -1,35 +1,32 @@
 import Base from "@/containers/Base/Base";
-// import HeroSection from "@/components/HeroSection/HeroSection.component";
 import ArticleGrid from "@/components/ArticleGrid/ArticleGrid.component";
-import { GetServerSideProps } from "next";
-import { getCookie, hasCookie } from "cookies-next";
-import { COOKIE_NAME } from "@/constants";
 import styled from "styled-components";
 import Head from "next/head";
 import React from "react";
+import { GetStaticProps, GetStaticPaths } from "next";
 
 export const Container = styled.div`
-    min-height: calc(100dvh);
-    padding-top: 120px;
-`
-
-export const FeatureHeader = styled.h2`
-    font-family: Anton, sans-serif; 
-    letter-spacing: 0.8px;
-    padding: 1rem 8rem;
-    @media (max-width: 1200px) {
-        padding: 0 4rem;
-    }
-    @media (max-width: 812px) {
-        padding: 0 2rem;
-    }
-    @media (max-width: 450px) {
-        padding: 0 1rem;
-    }
-    padding-bottom: 0;
+  min-height: calc(100dvh);
+  padding-top: 120px;
 `;
 
-const Home = ({ blogsData }: { blogsData: any }) => {
+export const FeatureHeader = styled.h2`
+  font-family: Anton, sans-serif;
+  letter-spacing: 0.8px;
+  padding: 1rem 8rem;
+  @media (max-width: 1200px) {
+    padding: 0 4rem;
+  }
+  @media (max-width: 812px) {
+    padding: 0 2rem;
+  }
+  @media (max-width: 450px) {
+    padding: 0 1rem;
+  }
+  padding-bottom: 0;
+`;
+
+const TagPage = ({ blogsData }: { blogsData: any }) => {
     return (
         <>
             <Head>
@@ -37,39 +34,49 @@ const Home = ({ blogsData }: { blogsData: any }) => {
             </Head>
             <Base>
                 <Container>
-                    <FeatureHeader>
-                        #{blogsData.name}
-                    </FeatureHeader>
+                    <FeatureHeader>#{blogsData.name}</FeatureHeader>
                     <ArticleGrid blogs={blogsData.blogs} />
                 </Container>
             </Base>
         </>
     );
-}
+};
 
-export default React.memo(Home);
+export default React.memo(TagPage);
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    const { req, res, query } = context;
+// 🔁 STATIC PATHS
+export const getStaticPaths: GetStaticPaths = async () => {
+    const res = await fetch(`${process.env.BASE_URL}/api/tags`);
+    const tags = await res.json();
 
-    const isSessionAvailable = hasCookie(COOKIE_NAME, { req, res });
-    if (isSessionAvailable) {
-    }
-
-    const { sort = "updatedAt", order = "-1", id } = query;
-
-    const resData = await fetch(`${process.env.BASE_URL}/api/tags/${id}?sort=${sort}&order=${order}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'x-session-token': getCookie("clientMD", context) as string,
-        },
-    });
-    const blogsData = await resData.json();
+    const paths = tags.map((tag: any) => ({
+        params: { id: tag._id.toString() },
+    }));
 
     return {
-        props: {
-            blogsData: blogsData,
-        },
+        paths,
+        fallback: 'blocking', // Can also use true or false depending on use case
     };
+};
+
+// 🧊 STATIC PROPS
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+    const { id } = params as { id: string };
+
+    try {
+        const res = await fetch(`${process.env.BASE_URL}/api/tags/${id}`);
+        if (!res.ok) throw new Error("Failed to fetch tag");
+
+        const blogsData = await res.json();
+
+        return {
+            props: {
+                blogsData,
+            },
+            revalidate: 300,
+        };
+    } catch (err) {
+        console.error("Error fetching tag:", err);
+        return { notFound: true };
+    }
 };
