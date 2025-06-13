@@ -4,6 +4,9 @@ import styled from "styled-components";
 import Head from "next/head";
 import React from "react";
 import { GetStaticProps, GetStaticPaths } from "next";
+import dbConnect from "@/lib/dbConnect";
+import TagsModel from "@/models/Tags.model";
+import BlogsModel from "@/models/Blogs.model";
 
 export const Container = styled.div`
   min-height: calc(100dvh);
@@ -54,8 +57,8 @@ export default React.memo(TagPage);
 
 // 🔁 STATIC PATHS
 export const getStaticPaths: GetStaticPaths = async () => {
-    const res = await fetch(`${process.env.BASE_URL}/api/tags`);
-    const tags = await res.json();
+    await dbConnect(); // custom helper to connect
+    const tags = await TagsModel.find({}).select("_id");
 
     const paths = tags.map((tag: any) => ({
         params: { id: tag._id.toString() },
@@ -63,28 +66,60 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
     return {
         paths,
-        fallback: 'blocking', // Can also use true or false depending on use case
+        fallback: 'blocking',
     };
 };
 
 // 🧊 STATIC PROPS
 export const getStaticProps: GetStaticProps = async ({ params }) => {
+    await dbConnect();
+
     const { id } = params as { id: string };
 
     try {
-        const res = await fetch(`${process.env.BASE_URL}/api/tags/${id}`);
-        if (!res.ok) throw new Error("Failed to fetch tag");
+        const tag = await TagsModel.findById(id).lean();
+        if (!tag) {
+            return { notFound: true };
+        }
 
-        const blogsData = await res.json();
+        const blogIds = tag.blogIds.filter((bid: any) => bid.toString() !== "");
+
+        const sort = "updatedAt";
+        const order = -1;
+
+        const blogs = await BlogsModel.find({
+            _id: { $in: blogIds },
+            isDraft: { $ne: true },
+        })
+            .sort({ [sort]: order })
+            .populate("tags", "name")
+            .lean();
+
+        // 🔁 Convert _id and nested _ids to strings
+        // const serializedBlogs = blogs.map((blog: any) => ({
+        //     ...blog,
+        //     _id: blog._id.toString(),
+        //     createdAt: blog.createdAt?.toISOString(),
+        //     updatedAt: blog.updatedAt?.toISOString(),
+        //     tags: blog.tags?.map((tag: any) => ({
+        //         ...tag,
+        //         _id: tag._id.toString(),
+        //     })),
+        // }));
+
+        const serializedBlogs = JSON.parse(JSON.stringify(blogs));
 
         return {
             props: {
-                blogsData,
+                blogsData: {
+                    blogs: serializedBlogs,
+                    name: tag.name,
+                },
             },
             revalidate: 300,
         };
     } catch (err) {
-        console.error("Error fetching tag:", err);
+        console.error("Error in getStaticProps:", err);
         return { notFound: true };
     }
 };
