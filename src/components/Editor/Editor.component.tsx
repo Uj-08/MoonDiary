@@ -39,7 +39,10 @@ function EditorComponent({ sessionId, blogData }: { sessionId: string; blogData?
 
     function submitHandler() {
         const html = editorRef?.current?.getContent();
-        const generatedSlug = slugify(title);
+        const generatedSlug = slugify(title, {
+            lower: true,
+            strict: true
+        });
         if (sessionId !== "") {
             const authorObj: { name?: string, picture?: string, email?: string } = jwtDecode(sessionId);
             if (blogData) {
