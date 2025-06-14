@@ -88,7 +88,7 @@ export const ArticleCard = ({ blog, clientEmail, index }: ArticleCardTypes) => {
 
   async function editBlogHandler(e: React.MouseEvent<HTMLButtonElement>) {
     e.stopPropagation();
-    router.push(`blogs/post/${_id}`);
+    router.push(`/blogs/post/${_id}`);
   }
 
   async function deleteBlogHandler(e: React.MouseEvent<HTMLButtonElement>) {

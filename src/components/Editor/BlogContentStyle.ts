@@ -31,113 +31,106 @@ import styled, { css } from "styled-components";
 
 export const blogRenderStyle = css`
   font-family: "Montserrat", sans-serif;
+  font-size: 1em;
+  line-height: 1.4;         /* TinyMCE’s default line-height  [oai_citation:0‡stackoverflow.com](https://stackoverflow.com/questions/68354437/adding-css-class-based-options-to-tinymce-fontsizeselect?utm_source=chatgpt.com) */
   color: #222;
-  font-size: 16px;
-  line-height: 1.6;
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-weight: 600;
-    line-height: 1.3;
-    /* margin: 1.5em 0 1em; */
-    margin-bottom: 1em;
+  * { box-sizing: border-box; }
+
+  /* Headings */
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
   }
 
-  h1 {
-    font-size: 2rem;
+  h1 { 
+    font-size: 2em; 
+    margin: 0.67em 0;
   }
-  h2 {
-    font-size: 1.75rem;
+  h2 { 
+    font-size: 1.5em; 
+    margin: 0.83em 0;
   }
-  h3 {
-    font-size: 1.5rem;
+  h3 { 
+    font-size: 1.17em; 
+    margin: 1em 0;
   }
-  h4 {
-    font-size: 1.25rem;
+  h4 { 
+    /* font-size: 1.25em;  */
+    margin: 1.33em 0;
+    /* color: initial; */
   }
-  h5 {
-    font-size: 1.1rem;
+  h5 { 
+    font-size: 0.83em; 
+    margin: 1.67em 0;
   }
-  h6 {
-    font-size: 1rem;
+  h6 { 
+    font-size: 0.67em; 
+    margin: 2.33em 0;
   }
 
+  /* Paragraphs */
   p {
-    margin-bottom: 0.1em;
-    word-break: break-word;
+    margin: 1em 0;          /* consistent with browser default + TinyMCE spacing  */
+    word-wrap: break-word;
   }
 
-  ul,
-  ol {
-    padding-left: 2em;
-    margin-bottom: 0.5em;
+  /* Lists */
+  ul, ol {
+    margin: 1em 0;
+
+    display: block;
+    padding-inline-start: 40px;
+  }
+  /* li { margin-bottom: 0.5rem; } */
+
+  /* Images */
+  img {
+
   }
 
-  li {
-    /* margin-bottom: 0.5em; */
-  }
-
+  /* Links */
   a {
     color: #0056b3;
     text-decoration: underline;
-    word-break: break-word;
   }
 
-  img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 12px;
-    margin: 0.5em;
-  }
-
+  /* Blockquotes, Code, and Preformatted text */
   blockquote {
-    border-left: 4px solid #ccc;
-    padding-left: 1em;
-    margin-bottom: 0.5em;
+    margin: 0.5em 0;
+    padding-left: 0.5em;
+    border-left: 2px solid #ccc;
     color: #555;
     font-style: italic;
+    margin-inline-start: 10px;
   }
 
   pre {
-    background-color: #f9f9f9;
-    margin-bottom: 0.5em;
+    margin: 0.5em 0;
+    padding: 0.5em 1em;
+    background-color: #f5f5f5;
     overflow-x: auto;
-    border-radius: 6px;
-    font-size: 0.95rem;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.813em;
   }
 
   code {
     background-color: #eee;
-    /* padding: 0.2em 0.4em; */
-    margin-left: 1em;
-    margin-bottom: 0.2em;
+    padding: 0.2em 0.4em;
     border-radius: 4px;
     font-family: monospace;
     font-size: 0.9em;
   }
 
+  /* Horizontal Rule */
   hr {
+    margin: 0.5em 0;
     border: none;
     border-top: 1px solid #ccc;
-    /* margin: 2em 0; */
-    margin-bottom: 1em;
   }
 `;
 
 export const BlogPreviewContent = styled.div`
   ${blogRenderStyle};
-  padding: 24px;
-
-  @media (max-width: 768px) {
-    padding: 16px;
-  }
-
-  @media (max-width: 480px) {
-    padding: 12px;
-  }
+  margin: 16px;
 `;

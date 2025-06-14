@@ -15,6 +15,7 @@ export const Container = styled.div`
     align-items: center;
     padding-top: 80px;
     margin-bottom: -100px;
+    padding-bottom: 30px;
 `;
 
 export const Grid = styled.div`
