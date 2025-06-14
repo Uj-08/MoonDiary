@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useRouter } from "next/router";
 import {
   Container,
@@ -12,35 +12,12 @@ import { PopulatedBlogType } from "@/types/blog";
 import { ClientContext } from "@/containers/Base/Base";
 import { getCookie } from "cookies-next";
 import { COOKIE_NAME } from "@/helpers/constants";
-import { useQuery } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
 import { updateBlogDataIsLoading } from "@/redux/slices/blogInfo";
 
 // Constants
 const DEFAULT_SORT = "updatedAt";
 const DEFAULT_ORDER = "-1";
-
-// Fetcher
-const fetchBlogs = async ({
-  apiPath,
-  sort,
-  order,
-  token,
-}: {
-  apiPath: string;
-  sort: string;
-  order: string;
-  token: string;
-}) => {
-  const res = await fetch(`/api/${apiPath}?sort=${sort}&order=${order}`, {
-    headers: {
-      "Content-Type": "application/json",
-      "x-session-token": token,
-    },
-  });
-  if (!res.ok) throw new Error("Failed to fetch blogs");
-  return res.json();
-};
 
 const ArticleGrid = ({
   blogsArray,
@@ -54,43 +31,14 @@ const ArticleGrid = ({
   const client = useContext(ClientContext);
   const token = getCookie(COOKIE_NAME) as string;
 
-  // State for sorting and ordering
-  const [sortState, setSortState] = useState(DEFAULT_SORT);
-  const [orderState, setOrderState] = useState(DEFAULT_ORDER);
+  const sortQuery = (router.query.sort as string) || DEFAULT_SORT;
+  const orderQuery = (router.query.order as string) || DEFAULT_ORDER;
 
-  // Sync state with router.query when router is ready
-  useEffect(() => {
-    if (!router.isReady) return;
+  const [sortState, setSortState] = useState(sortQuery);
+  const [orderState, setOrderState] = useState(orderQuery);
 
-    const sortQuery = (router.query.sort as string) || DEFAULT_SORT;
-    const orderQuery = (router.query.order as string) || DEFAULT_ORDER;
+  const [blogsArrayState, setBlogsArrayState] = useState(blogsArray);
 
-    setSortState(sortQuery);
-    setOrderState(orderQuery);
-  }, [router.isReady, router.query.sort, router.query.order]);
-
-  // Fetch blogs
-  const { data: blogs, isLoading, isFetching } = useQuery<PopulatedBlogType[], Error>({
-    queryKey: [`blogs-${apiPath}`, apiPath, sortState, orderState],
-    queryFn: () =>
-      fetchBlogs({
-        apiPath,
-        sort: sortState,
-        order: orderState,
-        token,
-      }),
-    // initialData: blogsArray,
-    placeholderData: blogsArray,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-    staleTime: 5 * 60 * 1000,
-    enabled: router.isReady,
-  });
-
-  // Update global loading state
-useEffect(() => {
-  dispatch(updateBlogDataIsLoading(isFetching || isLoading));
-}, [isFetching, isLoading, dispatch]);
 
   // Update URL params without full reload
   const updateQuery = (param: "sort" | "order", value: string) => {
@@ -105,16 +53,60 @@ useEffect(() => {
   };
 
   // Sort/order handlers
-  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleSortChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newSort = e.target.value;
     setSortState(newSort);
     updateQuery("sort", newSort);
+    const blogsData = await fetchBlogs({
+      order: orderState,
+      sort: newSort
+    })
+    setBlogsArrayState(
+      blogsData
+    )
   };
 
-  const handleOrderChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleOrderChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newOrder = e.target.value;
     setOrderState(newOrder);
     updateQuery("order", newOrder);
+    const blogsData = await fetchBlogs({
+      order: newOrder,
+      sort: sortState
+    })
+    setBlogsArrayState(blogsData)
+  };
+
+  // Fetcher
+  const fetchBlogs = async ({
+    sort,
+    order,
+  }: {
+    sort: string;
+    order: string;
+  }) => {
+    try {
+      dispatch(updateBlogDataIsLoading(true));
+
+      const res = await fetch(`/api/${apiPath}?sort=${sort}&order=${order}`, {
+        headers: {
+          "Content-Type": "application/json",
+          "x-session-token": token,
+        },
+      });
+
+      if (!res.ok) {
+        throw new Error(`Failed to fetch blogs: ${res.statusText}`);
+      }
+
+      const data = await res.json();
+      return data;
+    } catch (err: any) {
+      console.log(err.message || "An unknown error occurred.");
+      return [];
+    } finally {
+      dispatch(updateBlogDataIsLoading(false));
+    }
   };
 
   return (
@@ -139,7 +131,7 @@ useEffect(() => {
           </span>
         </SortContainer>
 
-        {blogs?.map((blog, idx) => (
+        {blogsArrayState?.map((blog, idx) => (
           <DynamicCard
             key={blog._id.toString()}
             index={idx}
