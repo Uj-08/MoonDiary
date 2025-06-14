@@ -5,6 +5,10 @@ import Image from "next/image";
 import styled from "styled-components";
 import ImageComponent from "../ImageComponent/ImageComponent";
 import Link from "next/link";
+import logo from "public/logo.png"
+import gmail from "public/gmail.png"
+import insta from "public/instagram.png"
+
 
 export const Profile = styled.div`
 position: relative;
@@ -25,7 +29,7 @@ const Navbar = ({ signInHandler, signedIn, picture, hmbgrClickHandler }: NavbarT
         <Wrapper>
             <LogoContainer>
                 <Link href={"/"}>
-                    <Image src="/logo.png" alt={""} fill={true} />
+                    <Image src={logo} alt={"MoonDiary"} fill={true} placeholder="blur" />
                 </Link>
             </LogoContainer>
             <NavLinks>
@@ -49,12 +53,12 @@ const Navbar = ({ signInHandler, signedIn, picture, hmbgrClickHandler }: NavbarT
             <SocialLinks>
                 <li>
                     <Link href="mailto:psykidbiz@gmail.com">
-                        <Image src="/gmail.png" alt={""} height="25" width="25" />
+                        <Image src={gmail} alt={"gmail"} height="25" width="25" placeholder="blur" />
                     </Link>
                 </li>
                 <li>
                     <Link href="https://www.instagram.com/shaireee_67/" target="_blank" rel="noreferrer">
-                        <Image src="/instagram.png" alt={""} height="25" width="25" />
+                        <Image src={insta} alt={"Instagram"} height="25" width="25" placeholder="blur" />
                     </Link>
                 </li>
                 <li>

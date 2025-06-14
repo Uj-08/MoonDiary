@@ -4,6 +4,9 @@ import { NavLinks, SocialLinks } from "../Navbar.styles";
 import Image from "next/image";
 import Link from "next/link";
 import { dancingScript } from "@/styles/fonts";
+import logo from "public/logo.png"
+import gmail from "public/gmail.png"
+import insta from "public/instagram.png"
 
 const Container = styled.div<{ showHamburger: boolean }>`
   height: 100%;
@@ -118,17 +121,17 @@ const HamburgerMenu = ({
           <SocialLinks isHamburger={true}>
             <li>
               <Link href="mailto:psykidbiz@gmail.com">
-                <Image src={"/gmail.png"} alt="social-links" height={25} width={25} />
+                <Image src={gmail} alt="social-links" height={25} width={25} placeholder="blur" />
               </Link>
             </li>
             <li>
               <Link href={"/"}>
-                <Image src={"/logo.png"} alt="social-links" height={25} width={25} />
+                <Image src={logo} alt="social-links" height={25} width={25} placeholder="blur" />
               </Link>
             </li>
             <li>
               <Link href="https://www.instagram.com/shaireee_67/" target="_blank" rel="noreferrer">
-                <Image src={"/instagram.png"} alt="social-links" height={25} width={25} />
+                <Image src={insta} alt="social-links" height={25} width={25} placeholder="blur" />
               </Link>
             </li>
           </SocialLinks>

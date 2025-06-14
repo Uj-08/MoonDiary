@@ -2,6 +2,9 @@ import Link from "next/link"
 import { Footer } from "./Footer.styles"
 import Image from "next/image"
 import styled from "styled-components"
+import logo from "public/logo.png"
+import gmail from "public/gmail.png"
+import insta from "public/instagram.png"
 
 export const LogoContainer = styled.li`
     :hover {
@@ -20,17 +23,17 @@ export default function FooterComponent() {
             <ul>
                 <li>
                     <Link href="mailto:psykidbiz@gmail.com">
-                        <Image src={"/gmail.png"} alt="social-links" fill={true} />
+                        <Image src={gmail} alt="social-links" fill={true} placeholder="blur"  />
                     </Link>
                 </li>
                 <LogoContainer>
                     <Link href={"/"}>
-                        <Image src={"/logo.png"} alt="social-links" fill={true} />
+                        <Image src={logo} alt="social-links" fill={true} placeholder="blur" />
                     </Link>
                 </LogoContainer>
                 <li>
                     <Link href="https://www.instagram.com/shaireee_67/" target="_blank" rel="noreferrer">
-                        <Image src={"/instagram.png"} alt="social-links" fill={true} />
+                        <Image src={insta} alt="social-links" fill={true} placeholder="blur" />
                     </Link>
                 </li>
             </ul>

@@ -13,8 +13,8 @@ const Home = ({ blogsArray }: { blogsArray: PopulatedBlogType[] }) => {
       <Head>
         <meta name="robots" content="index,follow" />
       </Head>
-        <HeroSection />
-        <ArticleGrid blogsArray={blogsArray} apiPath="blogs/" />
+      <HeroSection />
+      <ArticleGrid blogsArray={blogsArray} apiPath="blogs/" />
     </>
   );
 }
@@ -24,24 +24,42 @@ export default React.memo(Home);
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { req, res, query } = context;
 
-  const isSessionAvailable = hasCookie(COOKIE_NAME, { req, res });
-  if (isSessionAvailable) {
+  try {
+    const isSessionAvailable = hasCookie(COOKIE_NAME, { req, res });
+    const token = getCookie(COOKIE_NAME, context) as string;
+
+    const { sort = "updatedAt", order = "-1" } = query;
+
+    const apiRes = await fetch(`${process.env.BASE_URL}/api/blogs?sort=${sort}&order=${order}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "x-session-token": isSessionAvailable ? token : "",
+      },
+    });
+
+    if (!apiRes.ok) {
+      return {
+        props: {
+          blogsArray: [],
+          error: `Failed to fetch blogs. Status: ${apiRes.status}`,
+        },
+      };
+    }
+
+    const blogsArray: PopulatedBlogType[] = await apiRes.json();
+
+    return {
+      props: {
+        blogsArray,
+      },
+    };
+  } catch (error: any) {
+    return {
+      props: {
+        blogsArray: [],
+        error: error?.message || "Unknown error occurred",
+      },
+    };
   }
-
-  const { sort = "updatedAt", order = "-1" } = query;
-
-  const resData = await fetch(`${process.env.BASE_URL}/api/blogs?sort=${sort}&order=${order}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-session-token': getCookie(COOKIE_NAME, context) as string,
-    },
-  });
-  const blogsArray: PopulatedBlogType = await resData.json();
-
-  return {
-    props: {
-      blogsArray,
-    },
-  };
 };

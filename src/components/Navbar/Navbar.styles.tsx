@@ -50,6 +50,8 @@ export const LogoContainer = styled.div`
 `;
 
 export const NavLinks = styled.ul<{ isHamburger?: boolean }>`
+    margin-right: -90px;
+    color: #272727;
     display: flex;
     flex-direction: ${props => props.isHamburger ? "column" : "row"};
     align-items: ${props => props.isHamburger ? "center" : ""};
@@ -84,11 +86,12 @@ export const NavLinks = styled.ul<{ isHamburger?: boolean }>`
 export const SocialLinks = styled.ul<{ isHamburger?: boolean }>`
     display: flex;
     list-style: none;
-    height: ${props => !props.isHamburger && "100%"};
-    justify-content: ${props => props.isHamburger && "space-evenly"};
-    border-top: ${props => props.isHamburger && "1px solid #75757549"};
-    padding-top: ${props => props.isHamburger && "20px"};
-    margin: ${props => props.isHamburger && "0 -16px"};
+    height: ${props => (!props.isHamburger ? "100%" : "auto")};
+    justify-content: ${props => (props.isHamburger ? "space-evenly" : "normal")};
+    border-top: ${props => (props.isHamburger ? "1px solid #75757549" : "none")};
+    padding-top: ${props => (props.isHamburger ? "20px" : "0")};
+    margin: ${props => (props.isHamburger ? "0 -16px" : "0")};
+
     li {
         cursor: pointer;
         padding: 0 18px;
@@ -98,15 +101,23 @@ export const SocialLinks = styled.ul<{ isHamburger?: boolean }>`
         height: 100%;
         transition: background-color linear 200ms;
     }
+
     li:hover:not(:last-child) {
         background-color: #51b016;
         filter: invert(1);
     }
+
     li:last-child {
         cursor: auto;
     }
+
+    /* Disable hover effects on small screens */
     @media (max-width: 950px) {
         display: ${props => !props.isHamburger && "none"};
+        li:hover:not(:last-child) {
+        background-color: unset;
+        filter: none;
+        }
     }
 `;
 
