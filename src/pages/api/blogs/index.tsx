@@ -31,7 +31,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
                     : { isDraft: { $ne: true } };
 
                 // Allowed sort fields and orders
-                const ALLOWED_SORT_FIELDS = ["updatedAt", "createdAt", "filterIds"];
+                const ALLOWED_SORT_FIELDS = ["updatedAt", "createdAt", "filterIds", "blogTitle"];
                 const ALLOWED_ORDER_VALUES = ["1", "-1"];
 
                 let { sort = "updatedAt", order = "-1", limit, filterIds } = req.query;
