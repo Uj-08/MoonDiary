@@ -1,4 +1,4 @@
-import { montserrat } from "@/styles/fonts";
+import { babylonica, montserrat } from "@/styles/fonts";
 import styled from "styled-components";
 
 export const BlogTitleContainer = styled.div`
@@ -16,7 +16,7 @@ export const BlogTitleContainer = styled.div`
 `;
 
 export const BlogTitle = styled.div`
-    font-family: "Babylonica", cursive;
+    font-family: ${babylonica.style.fontFamily}, cursive;
     font-size: 96px;
     text-align: center;
     margin-bottom: 10px;

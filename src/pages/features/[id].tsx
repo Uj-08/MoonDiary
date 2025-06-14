@@ -8,6 +8,7 @@ import TagsModel from "@/models/Tags.model";
 import BlogsModel from "@/models/Blogs.model";
 import { PopulatedBlogType } from "@/types/blog";
 import { useRouter } from "next/router";
+import { anton } from "@/styles/fonts";
 
 export const Container = styled.div`
   min-height: calc(100dvh);
@@ -15,7 +16,7 @@ export const Container = styled.div`
 `;
 
 export const FeatureHeader = styled.h2`
-  font-family: Anton, sans-serif;
+  font-family: ${anton.style.fontFamily}, sans-serif;
   letter-spacing: 0.8px;
   padding: 1rem 8rem;
   @media (max-width: 1200px) {

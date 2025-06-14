@@ -1,3 +1,4 @@
+import { anton } from "@/styles/fonts";
 import styled from "styled-components";
 
 export const Wrapper = styled.nav`
@@ -63,7 +64,10 @@ export const NavLinks = styled.ul<{ isHamburger?: boolean }>`
     li {
         cursor: pointer;
         text-transform: ${props => !props.isHamburger && "uppercase"};
-        font-family: ${props => props.isHamburger ? "Segoe UI,Tahoma,Geneva,Verdana,sans-serif" : "Anton, sans-serif"};
+        font-family: ${(props) =>
+        props.isHamburger
+            ? `"Segoe UI", Tahoma, Geneva, Verdana, sans-serif`
+            : `${anton.style.fontFamily}, sans-serif`};
         font-size: 1.3rem;
         letter-spacing: ${props => !props.isHamburger && "2px"};
         transition: color linear 200ms;

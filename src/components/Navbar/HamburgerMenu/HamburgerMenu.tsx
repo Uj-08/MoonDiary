@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { NavLinks, SocialLinks } from "../Navbar.styles";
 import Image from "next/image";
 import Link from "next/link";
+import { dancingScript } from "@/styles/fonts";
 
 const Container = styled.div<{ showHamburger: boolean }>`
   height: 100%;
@@ -49,7 +50,7 @@ const TopContainer = styled.div`
   padding: 0 16px;
   align-items: center;
   h2 {
-    font-family: "Dancing Script", cursive;
+    font-family: ${dancingScript.style.fontFamily}, cursive;
     font-size: 2rem;
   }
   div {

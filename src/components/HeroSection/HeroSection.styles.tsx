@@ -1,3 +1,4 @@
+import { dancingScript } from "@/styles/fonts";
 import styled from "styled-components";
 
 export const Container = styled.header`
@@ -45,7 +46,7 @@ export const Title = styled.h1`
     position: absolute;
     font-size: 6rem;
     color: white;
-    font-family: 'Dancing Script', cursive;
+    font-family: ${dancingScript.style.fontFamily}, cursive;
     text-align: center;
     @media (max-width: 1200px) {
         font-size: 4rem;

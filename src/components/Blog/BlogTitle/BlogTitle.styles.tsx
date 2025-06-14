@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { babylonica } from "@/styles/fonts";
 
 export const BlogTitleContainer = styled.div`
     margin-top: 60px;
@@ -16,7 +17,7 @@ export const BlogTitleContainer = styled.div`
 `;
 
 export const BlogTitle = styled.h1`
-    font-family: "Babylonica", cursive;
+    font-family: ${babylonica.style.fontFamily}, cursive;
     font-size: 76px;
     text-align: center;
     margin-bottom: 10px;

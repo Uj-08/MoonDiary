@@ -1,3 +1,4 @@
+import { anton } from "@/styles/fonts";
 import { FeaturesTagType } from "@/types/tag";
 import Link from "next/link";
 import React from "react";
@@ -15,7 +16,7 @@ export const Container = styled.div`
   cursor: pointer;
   min-height: 120px;
   overflow: hidden;
-  font-family: Anton, sans-serif;
+  font-family: ${anton.style.fontFamily}, sans-serif;
   letter-spacing: 0.7px;
 
   background: rgba(163, 163, 163, 0.25);
