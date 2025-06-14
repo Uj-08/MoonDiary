@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState, useEffect, createContext, useMemo, useCallback } from "react";
 import Navbar from "@/components/Navbar/Navbar.component";
 import FooterComponent from "@/components/Footer/Footer.component";
 import { GoogleLogin } from "@react-oauth/google";
@@ -65,30 +65,30 @@ const Base = ({ children }: BaseTypes) => {
     setSignedIn(hasCookie(COOKIE_NAME));
   }, []);
 
-  function signInHandler() {
-    if (signedIn) {
-      deleteCookie(COOKIE_NAME);
-      setSignedIn(false);
-      router.reload()
-    } else {
-      setShowLoginModal(true);
-    }
+const signInHandler = useCallback(() => {
+  if (signedIn) {
+    deleteCookie(COOKIE_NAME);
+    setSignedIn(false);
+    router.reload();
+  } else {
+    setShowLoginModal(true);
   }
+}, [signedIn, router]);
 
-  function hideModal() {
+  const hideModal = () => {
     setShowLoginModal(false);
   }
 
-  function successHandler(credentialResponse: any) {
-    setCookie(COOKIE_NAME, credentialResponse?.credential);
-    setShowLoginModal(false);
-    setSignedIn(true);
-    router.reload()
-  }
+  const successHandler = useCallback((credentialResponse: any) => {
+  setCookie(COOKIE_NAME, credentialResponse?.credential);
+  setShowLoginModal(false);
+  setSignedIn(true);
+  router.reload();
+}, [router]);
 
   const [clientDecode, setClientDecode] = useState<any>(null);
 
-  const getDecodedClient = () => {
+  const getDecodedClient = useMemo(() => {
     try {
       const token = getCookie(COOKIE_NAME);
       return token ? jwtDecode(token as string) : null;
@@ -96,13 +96,13 @@ const Base = ({ children }: BaseTypes) => {
       console.error("Invalid token:", err);
       return null;
     }
-  };
+  }, [signedIn]);
 
   useEffect(() => {
     if (signedIn) {
-      setClientDecode(getDecodedClient());
+      setClientDecode(getDecodedClient);
     }
-  }, [signedIn]);
+  }, [getDecodedClient, signedIn]);
 
   const picture =
     clientDecode?.picture ??
