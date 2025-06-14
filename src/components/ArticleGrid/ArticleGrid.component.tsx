@@ -86,7 +86,7 @@ const ArticleGrid = ({
     placeholderData: (prevData) => prevData,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
-    // staleTime: 5 * 60 * 1000, // 5 minutes cache
+    staleTime: 5 * 60 * 1000, // 5 minutes cache
   });
 
   const updateQuery = (param: "sort" | "order", value: string) => {
