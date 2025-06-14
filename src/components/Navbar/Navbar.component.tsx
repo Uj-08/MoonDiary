@@ -29,7 +29,7 @@ const Navbar = ({ signInHandler, signedIn, picture, hmbgrClickHandler }: NavbarT
         <Wrapper>
             <LogoContainer>
                 <Link href={"/"}>
-                    <Image src={logo} alt={"MoonDiary"} fill={true} placeholder="blur" />
+                    <Image src={logo} alt={"MoonDiary"} fill={true} />
                 </Link>
             </LogoContainer>
             <NavLinks>
