@@ -105,12 +105,13 @@ export const TagsContainer = styled.div`
   gap: 4px;
 `;
 
-export const Tag = styled.div<{ 
+export const Tag = styled.h3<{ 
   bgColor: string, 
   maxWidth: string, 
   fontSize: string, 
   letterSpacing: string 
 }>`
+  all: unset;
   cursor: pointer;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   padding: 2px 8px;

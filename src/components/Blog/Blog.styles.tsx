@@ -14,7 +14,7 @@ export const Container = styled.div`
     }
 `;
 
-export const PreviewContainer = styled.section`
+export const PreviewContainer = styled.main`
     max-width: 60%;
     flex: 1;
     font-family: 'Montserrat', sans-serif;
@@ -84,7 +84,8 @@ export const TagsContainer = styled.div`
     }
 `;
 
-export const BlogTag = styled.span`
+export const BlogTag = styled.h3`
+    all: unset;
     padding: 4px 3px;
     font-family: "Arimo", sans-serif;
     font-weight: bold;

@@ -183,6 +183,6 @@ export const RemoveImage = styled.div`
     }
 `;
 
-export const PreviewData = styled.div`
+export const PreviewData = styled.article`
     
 `;

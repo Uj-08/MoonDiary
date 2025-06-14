@@ -15,7 +15,7 @@ export const BlogTitleContainer = styled.div`
     }
 `;
 
-export const BlogTitle = styled.div`
+export const BlogTitle = styled.h1`
     font-family: "Babylonica", cursive;
     font-size: 76px;
     text-align: center;

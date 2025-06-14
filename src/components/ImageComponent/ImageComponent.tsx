@@ -99,6 +99,7 @@ function ImageComponent({
         <Container
             aspectRatio={aspectRatio}
             width={width}
+            className="aspect-ratio"
         >
 
             <Image
