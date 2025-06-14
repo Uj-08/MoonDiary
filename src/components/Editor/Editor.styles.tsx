@@ -1,3 +1,4 @@
+import { montserrat } from "@/styles/fonts";
 import styled from "styled-components";
 
 export const BlogTitleContainer = styled.div`
@@ -92,7 +93,7 @@ export const Button = styled.button`
     border-radius: 8px;
     box-shadow: 0 2px 2px -2px rgba(34,47,62,.1), 0 8px 8px -4px rgba(34,47,62,.07);
     text-transform: uppercase;
-    font-family: 'Montserrat', sans-serif;
+    font-family: ${montserrat.style.fontFamily};
     letter-spacing: 1px;
     font-weight: 900;
     font-size: 16px;
@@ -105,7 +106,7 @@ export const Span = styled.span``;
 
 export const PreviewContainer = styled.div`
     flex-basis: 100%;
-    font-family: 'Montserrat', sans-serif;
+    font-family: ${montserrat.style.fontFamily};
     background-color: #fff;
     ${Span} {
         display: block;
@@ -144,7 +145,7 @@ export const PreviewImageContainer = styled.div`
 
 export const DraftField = styled.div`
     display: flex;
-    font-family: 'Montserrat', sans-serif;
+    font-family: ${montserrat.style.fontFamily};
     margin-bottom: 10px;
     align-items: center;
     gap: 10px;

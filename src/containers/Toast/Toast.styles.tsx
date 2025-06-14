@@ -1,3 +1,4 @@
+import { montserrat } from "@/styles/fonts";
 import styled, { css } from "styled-components";
 
 export const ToastContainer = styled.div<{
@@ -10,7 +11,7 @@ export const ToastContainer = styled.div<{
   color: #fff;
   padding: 1rem;
   border-radius: 8px;
-  font-family: "Montserrat", sans-serif;
+  font-family: ${montserrat.style.fontFamily};
 
   ${({ isError }) =>
     isError

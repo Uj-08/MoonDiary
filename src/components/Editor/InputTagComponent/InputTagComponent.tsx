@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, SetStateAction, Dispatch } from "re
 import { TitleText } from "../Editor.styles";
 import styled from "styled-components";
 import { TagType } from "@/types/tag";
+import { montserrat } from "@/styles/fonts";
 
 const Container = styled.div`
     position: relative;
@@ -29,7 +30,7 @@ export const SuggestionWindow = styled.ul`
 `;
 
 export const Suggestion = styled.li`
-    font-family: 'Montserrat', sans-serif;
+    font-family: ${montserrat.style.fontFamily};
     background-color: #fff;
     padding: 5px 10px; 
     cursor: pointer;

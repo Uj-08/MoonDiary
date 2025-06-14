@@ -27,10 +27,11 @@ export const blogContentStyle = /* css */ `
   }
 `;
 
+import { montserrat } from "@/styles/fonts";
 import styled, { css } from "styled-components";
 
 export const blogRenderStyle = css`
-  font-family: "Montserrat", sans-serif;
+  font-family: ${montserrat.style.fontFamily};
   font-size: 1em;
   line-height: 1.4;         /* TinyMCE’s default line-height  [oai_citation:0‡stackoverflow.com](https://stackoverflow.com/questions/68354437/adding-css-class-based-options-to-tinymce-fontsizeselect?utm_source=chatgpt.com) */
   color: #222;

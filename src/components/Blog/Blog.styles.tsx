@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { montserrat } from "@/styles/fonts";
 
 export const Container = styled.div`
     display: flex;
@@ -17,7 +18,7 @@ export const Container = styled.div`
 export const PreviewContainer = styled.main`
     max-width: 60%;
     flex: 1;
-    font-family: 'Montserrat', sans-serif;
+    font-family: ${montserrat.style.fontFamily};
     background-color: #fff;
     overflow: hidden;
     border-radius: 8px;

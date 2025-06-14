@@ -3,12 +3,13 @@ import Head from "next/head";
 import { GetStaticProps } from "next";
 import styled from "styled-components";
 import ImageComponent from "@/components/ImageComponent/ImageComponent";
+import { montserrat } from "@/styles/fonts";
 
 export const AboutCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: "Montserrat", sans-serif;
+  font-family: ${montserrat.style.fontFamily};
   font-size: 13px;
   gap: 12px;
   max-width: 300px;

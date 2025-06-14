@@ -71,7 +71,7 @@ const ArticleGrid = ({
 
   // Fetch blogs
   const { data: blogs, isLoading, isFetching } = useQuery<PopulatedBlogType[], Error>({
-    queryKey: ["blogs", apiPath, sortState, orderState],
+    queryKey: [`blogs-${apiPath}`, apiPath, sortState, orderState],
     queryFn: () =>
       fetchBlogs({
         apiPath,
@@ -79,8 +79,8 @@ const ArticleGrid = ({
         order: orderState,
         token,
       }),
-    initialData: blogsArray,
-    placeholderData: (prev) => prev,
+    // initialData: blogsArray,
+    placeholderData: blogsArray,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     staleTime: 5 * 60 * 1000,
@@ -89,8 +89,8 @@ const ArticleGrid = ({
 
   // Update global loading state
 useEffect(() => {
-  dispatch(updateBlogDataIsLoading(isLoading || isFetching));
-}, [isLoading, isFetching, dispatch]);
+  dispatch(updateBlogDataIsLoading(isFetching || isLoading));
+}, [isFetching, isLoading, dispatch]);
 
   // Update URL params without full reload
   const updateQuery = (param: "sort" | "order", value: string) => {
