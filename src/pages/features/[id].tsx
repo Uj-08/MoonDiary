@@ -1,4 +1,3 @@
-import Base from "@/containers/Base/Base";
 import ArticleGrid from "@/components/ArticleGrid/ArticleGrid.component";
 import styled from "styled-components";
 import Head from "next/head";
@@ -8,6 +7,7 @@ import dbConnect from "@/lib/dbConnect";
 import TagsModel from "@/models/Tags.model";
 import BlogsModel from "@/models/Blogs.model";
 import { PopulatedBlogType } from "@/types/blog";
+import { useRouter } from "next/router";
 
 export const Container = styled.div`
   min-height: calc(100dvh);
@@ -31,6 +31,8 @@ export const FeatureHeader = styled.h2`
 `;
 
 const TagPage = ({ data }: { data: { blogs: PopulatedBlogType[], name: string } }) => {
+    const router = useRouter();
+    const { id } = router.query;
     return (
         <>
             <Head>
@@ -46,7 +48,7 @@ const TagPage = ({ data }: { data: { blogs: PopulatedBlogType[], name: string } 
             </Head>
             <Container>
                 <FeatureHeader>#{data.name}</FeatureHeader>
-                <ArticleGrid blogsArray={data.blogs} />
+                <ArticleGrid blogsArray={data.blogs} apiPath={`tags/${id}`} />
             </Container>
         </>
     );

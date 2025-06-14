@@ -1,5 +1,4 @@
 import React from "react";
-import Base from "@/containers/Base/Base";
 import Head from "next/head";
 import { GetStaticProps } from "next";
 import styled from "styled-components";

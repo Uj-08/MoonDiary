@@ -18,7 +18,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
                 );
 
                 // Allowed sort fields and orders
-                const ALLOWED_SORT_FIELDS = ["updatedAt", "createdAt", "blogTitle"];
+                const ALLOWED_SORT_FIELDS = ["updatedAt", "createdAt"];
                 const ALLOWED_ORDER_VALUES = ["1", "-1"];
 
                 let { sort = "updatedAt", order = "-1" } = req.query;
@@ -35,7 +35,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
                     .populate("tags", "name")
                     .lean()
 
-                return res.status(200).json({blogs, name: tag.name});
+                return res.status(200).json(blogs);
             } catch (err) {
                 return res.status(500).json(err);
             }

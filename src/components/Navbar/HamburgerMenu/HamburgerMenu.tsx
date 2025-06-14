@@ -17,6 +17,9 @@ const Container = styled.div<{ showHamburger: boolean }>`
       : "backdrop-filter: blur(0px);"}
   pointer-events: none;
   transition: backdrop-filter 200ms linear;
+  @media (max-width: 950px) {
+        display: "none";
+    }
 `;
 
 const HamburgerContainer = styled.nav<{ showHamburger: boolean }>`

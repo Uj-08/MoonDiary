@@ -127,6 +127,10 @@ export const blogInfoSlice = createSlice({
         resetSuccessState: (state) => {
             state.success.isSuccessful = false;
         },
+
+        updateBlogDataIsLoading: (state, action) => {
+            state.blogPostUpdateStatus.isLoading = action.payload;
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(deleteBlog.pending, (state) => {
@@ -176,6 +180,6 @@ export const blogInfoSlice = createSlice({
     },
 });
 
-export const { resetDeletedBlogId, resetCreatedBlogId, resetErrorState, resetSuccessState } = blogInfoSlice.actions;
+export const { resetDeletedBlogId, resetCreatedBlogId, resetErrorState, resetSuccessState, updateBlogDataIsLoading } = blogInfoSlice.actions;
 
 export default blogInfoSlice.reducer;

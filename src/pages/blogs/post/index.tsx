@@ -1,4 +1,3 @@
-import Base from "@/containers/Base/Base";
 import EditorComponent from "@/components/Editor/Editor.component";
 import NextHead from "next/head";
 import { getCookie, hasCookie } from "cookies-next";

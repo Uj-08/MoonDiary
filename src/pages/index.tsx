@@ -1,4 +1,3 @@
-import Base from "@/containers/Base/Base";
 import HeroSection from "@/components/HeroSection/HeroSection.component";
 import ArticleGrid from "@/components/ArticleGrid/ArticleGrid.component";
 import { GetServerSideProps } from "next";
@@ -15,7 +14,7 @@ const Home = ({ blogsArray }: { blogsArray: PopulatedBlogType[] }) => {
         <meta name="robots" content="index,follow" />
       </Head>
         <HeroSection />
-        <ArticleGrid blogsArray={blogsArray} />
+        <ArticleGrid blogsArray={blogsArray} apiPath="blogs/" />
     </>
   );
 }

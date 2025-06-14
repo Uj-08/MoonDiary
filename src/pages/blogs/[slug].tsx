@@ -1,7 +1,6 @@
 import React from "react";
 import Head from "next/head";
 import { stripHtml } from "string-strip-html";
-import Base from "@/containers/Base/Base";
 import BlogTitleComponent from "@/components/Blog/BlogTitle/BlogTitle.component";
 import BlogComponent from "@/components/Blog/Blog.component";
 import { GetStaticProps, GetStaticPaths } from "next";
