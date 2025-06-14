@@ -42,11 +42,11 @@ const fetchRelatedBlogs = async (blog: PopulatedBlogType) => {
     );
 
     // Fill extra if needed
-    if (uniqueData.length <= 2) {
+    if (uniqueData.length <= 3) {
       const filterIds = uniqueData.map((item) => item._id);
       const fillRes = await fetch(
         `/api/blogs/?filterIds=${[blog._id, ...filterIds]}&limit=${
-          3 - uniqueData.length
+          4 - uniqueData.length
         }`
       ).then((res) => res.json());
 
@@ -104,7 +104,7 @@ const BlogComponent = ({ blog }: { blog: PopulatedBlogType }) => {
 
         <AdditionalData>
           {isLoading && cardData.length === 0
-            ? Array.from({ length: 3 }).map((_, index) => (
+            ? Array.from({ length: 4 }).map((_, index) => (
                 <SkeletalCard key={index} />
               ))
             : cardData.map((relatedBlog: any, idx: number) => (
