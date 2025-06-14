@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
-import { useState } from "react";
 import {
   Container,
   Grid,
@@ -13,79 +12,110 @@ import { PopulatedBlogType } from "@/types/blog";
 import { ClientContext } from "@/containers/Base/Base";
 import { getCookie } from "cookies-next";
 import { COOKIE_NAME } from "@/helpers/constants";
+import { useQuery } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
 import { updateBlogDataIsLoading } from "@/redux/slices/blogInfo";
 
-const ArticleGrid = ({ blogsArray, apiPath }: { blogsArray: PopulatedBlogType[], apiPath: string }) => {
+// Fetcher function
+const fetchBlogs = async ({
+  apiPath,
+  sort,
+  order,
+  token,
+}: {
+  apiPath: string;
+  sort: string;
+  order: string;
+  token: string;
+}) => {
+  const res = await fetch(`/api/${apiPath}?sort=${sort}&order=${order}`, {
+    headers: {
+      "Content-Type": "application/json",
+      "x-session-token": token,
+    },
+  });
+  if (!res.ok) throw new Error("Failed to fetch blogs");
+  return res.json();
+};
+
+const ArticleGrid = ({
+  blogsArray,
+  apiPath,
+}: {
+  blogsArray: PopulatedBlogType[];
+  apiPath: string;
+}) => {
   const router = useRouter();
   const client = useContext(ClientContext);
+  const token = useMemo(() => getCookie(COOKIE_NAME) as string, []);
   const dispatch = useDispatch();
 
-  const { sort = "updatedAt", order = "-1" } = router.query;
-  const [sortState, setSortState] = useState(sort);
-  const [orderState, setOrderState] = useState(order);
+  // Get query params from router
+  const querySort = useMemo(
+    () => (router.query.sort as string) || "updatedAt",
+    [router.query.sort]
+  );
+  const queryOrder = useMemo(
+    () => (router.query.order as string) || "-1",
+    [router.query.order]
+  );
 
-  const handleSortChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newSort = e.target.value;
-    setSortState(newSort);
-    const updatedBlogs = await getBlogs({
-      sort: newSort,
-      order: orderState as string,
-    });
-    setBlogsArrayState(updatedBlogs);
+  const [sortState, setSortState] = useState(querySort);
+  const [orderState, setOrderState] = useState(queryOrder);
+
+  // Stable query key
+  const queryKey = useMemo(
+    () => ["blogs", apiPath, querySort, queryOrder],
+    [apiPath, querySort, queryOrder]
+  );
+
+  const {
+    data: blogs,
+    isLoading,
+    // isError,
+  } = useQuery<PopulatedBlogType[], Error>({
+    queryKey,
+    queryFn: () =>
+      fetchBlogs({
+        apiPath,
+        sort: querySort,
+        order: queryOrder,
+        token,
+      }),
+    initialData: blogsArray,
+    placeholderData: (prevData) => prevData,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    // staleTime: 5 * 60 * 1000, // 5 minutes cache
+  });
+
+  const updateQuery = (param: "sort" | "order", value: string) => {
     router.replace(
-      { pathname: router.pathname, query: { ...router.query, sort: newSort } },
+      {
+        pathname: router.pathname,
+        query: { ...router.query, [param]: value },
+      },
       undefined,
       { shallow: true }
     );
   };
 
-  const handleOrderChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newSort = e.target.value;
+    setSortState(newSort);
+    updateQuery("sort", newSort);
+  };
+
+  const handleOrderChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newOrder = e.target.value;
     setOrderState(newOrder);
-    const updatedBlogs = await getBlogs({
-      sort: sortState as string,
-      order: newOrder,
-    });
-    setBlogsArrayState(updatedBlogs);
-    router.replace(
-      {
-        pathname: router.pathname,
-        query: { ...router.query, order: newOrder },
-      },
-      undefined,
-      {
-        shallow: true,
-      }
-    );
+    updateQuery("order", newOrder);
   };
 
-  const getBlogs = async ({ sort, order }: { sort: string; order: string }) => {
-    try {
-      dispatch(updateBlogDataIsLoading(true))
-      const res = await fetch(`/api/${apiPath}?sort=${sort}&order=${order}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "x-session-token": getCookie(COOKIE_NAME) as string,
-        },
-      });
-
-      if (!res.ok) {
-        throw new Error(`Failed to fetch blogs: ${res.status} ${res.statusText}`);
-      }
-
-      const data = await res.json();
-      return data;
-    } catch (err: any) {
-      console.log(err.message || "Something went wrong while fetching blogs.");
-      return [];
-    } finally {
-      dispatch(updateBlogDataIsLoading(false));
-    }
-  };
-
-  const [blogsArrayState, setBlogsArrayState] = useState(blogsArray);
+  useEffect(() => {
+    console.log({ isLoading })
+    dispatch(updateBlogDataIsLoading(isLoading));
+  }, [isLoading, dispatch]);
 
   return (
     <Container>
@@ -93,12 +123,7 @@ const ArticleGrid = ({ blogsArray, apiPath }: { blogsArray: PopulatedBlogType[],
         <SortContainer>
           <span>
             <Label htmlFor="sort">Sort By:</Label>
-            <Select
-              id="sort"
-              name="sort"
-              value={sortState}
-              onChange={handleSortChange}
-            >
+            <Select id="sort" value={sortState} onChange={handleSortChange}>
               <option value="createdAt">Date Created</option>
               <option value="updatedAt">Last Updated</option>
               <option value="blogTitle">Title</option>
@@ -107,27 +132,21 @@ const ArticleGrid = ({ blogsArray, apiPath }: { blogsArray: PopulatedBlogType[],
 
           <span>
             <Label htmlFor="order">Order:</Label>
-            <Select
-              id="order"
-              name="order"
-              value={orderState}
-              onChange={handleOrderChange}
-            >
+            <Select id="order" value={orderState} onChange={handleOrderChange}>
               <option value="1">Ascending</option>
               <option value="-1">Descending</option>
             </Select>
           </span>
         </SortContainer>
-        {blogsArrayState?.map((blog, idx: number) => {
-          return (
-            <DynamicCard
-              key={blog._id.toString()}
-              index={idx}
-              blog={blog}
-              clientEmail={client?.email}
-            />
-          );
-        })}
+
+        {blogs?.map((blog, idx) => (
+          <DynamicCard
+            key={blog._id.toString()}
+            index={idx}
+            blog={blog}
+            clientEmail={client?.email}
+          />
+        ))}
       </Grid>
     </Container>
   );
