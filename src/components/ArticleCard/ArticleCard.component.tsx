@@ -9,6 +9,7 @@ import {
   BlogTitle,
   ButtonsContainer,
   CardDetails,
+  CardReadTimeBadge,
   Container,
   DeleteButton,
   EditButton,
@@ -29,6 +30,8 @@ import Link from "next/link";
 import { useShuffledColors } from "@/hooks/useShuffledColors";
 import { stripHtml } from 'string-strip-html';
 import { ArticleCardTypes } from "./ArticleCard.types";
+import { OverlayContainer } from "../Blog/Blog.styles";
+import { getReadingTime } from "@/helpers/getReadingTime";
 
 export const ArticleCard = ({ blog, clientEmail, index }: ArticleCardTypes) => {
   const {
@@ -48,8 +51,6 @@ export const ArticleCard = ({ blog, clientEmail, index }: ArticleCardTypes) => {
   const dispatch = useDispatch<AppDispatch>();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const router = useRouter();
-
-  const blogBody = (stripHtml(blogData || ''));
 
   const formatter = new Intl.RelativeTimeFormat("en", { numeric: "auto" });
 
@@ -99,10 +100,18 @@ export const ArticleCard = ({ blog, clientEmail, index }: ArticleCardTypes) => {
 
   const getRandomColor = useShuffledColors();
 
+  const blogBody = (stripHtml(blogData || '')).result;
+  const readingTime = `${getReadingTime(blogBody)} min read`;
+
   return (
     <Link href={`/blogs/${blog.slug}`} legacyBehavior>
       <Container isDraft={isDraft}>
         <ImageContainer>
+          <OverlayContainer>
+            <CardReadTimeBadge>
+              {readingTime}
+            </CardReadTimeBadge>
+          </OverlayContainer>
           <ImageComponent
             src={blogImg}
             aspectRatio={4 / 3}
@@ -130,7 +139,7 @@ export const ArticleCard = ({ blog, clientEmail, index }: ArticleCardTypes) => {
               </TagsContainer>
             </BlogHeader>
             <BlogTitle>{blogTitle}</BlogTitle>
-            <BlogData>{blogBody.result}</BlogData>
+            <BlogData>{blogBody}</BlogData>
           </MainContent>
           <BlogAuthorContainer>
             <BlogAuthor>

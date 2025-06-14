@@ -1,12 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   AdditionalData,
   AdditionalSection,
   BlogTag,
+  ButtonContainer,
   Container,
+  OverlayContainer,
+  PostButton,
   Preview,
   PreviewContainer,
   PreviewImageContainer,
+  ReadTimeBadge,
   TagsContainer,
 } from "./Blog.styles";
 import { PreviewData } from "../Editor/Editor.styles";
@@ -19,6 +23,14 @@ import { BlogPreviewContent } from "../Editor/BlogContentStyle";
 import { PopulatedBlogType } from "@/types/blog";
 import parse from "html-react-parser";
 import { useQuery } from "@tanstack/react-query";
+import { getReadingTime } from "@/helpers/getReadingTime";
+import { stripHtml } from "string-strip-html";
+import { deleteBlog } from "@/redux/slices/blogInfo";
+import { useDispatch } from "react-redux";
+import Modal from "@/containers/Modal/Modal";
+import DeleteCard from "../DeletePrompt/DeleteCard";
+import { useRouter } from "next/router";
+import { AppDispatch } from "@/redux/store";
 
 const ADDITIONAL_CARDS_LENGTH = 4;
 
@@ -47,8 +59,7 @@ const fetchRelatedBlogs = async (blog: PopulatedBlogType) => {
     if (uniqueData.length < ADDITIONAL_CARDS_LENGTH) {
       const filterIds = uniqueData.map((item) => item._id);
       const fillRes = await fetch(
-        `/api/blogs/?filterIds=${[blog._id, ...filterIds]}&limit=${
-          ADDITIONAL_CARDS_LENGTH - uniqueData.length
+        `/api/blogs/?filterIds=${[blog._id, ...filterIds]}&limit=${ADDITIONAL_CARDS_LENGTH - uniqueData.length
         }`
       ).then((res) => res.json());
 
@@ -63,7 +74,12 @@ const fetchRelatedBlogs = async (blog: PopulatedBlogType) => {
 };
 
 const BlogComponent = ({ blog }: { blog: PopulatedBlogType }) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
   const client = useContext(ClientContext);
+  const text = stripHtml(blog.blogData).result;
+  const readingTime = `${getReadingTime(text)} min read`;
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const {
     data: cardData = [],
@@ -76,11 +92,60 @@ const BlogComponent = ({ blog }: { blog: PopulatedBlogType }) => {
     staleTime: 5 * 60 * 1000, // 5 min
   });
 
+  function showDeleteModalHandler(e: React.MouseEvent<HTMLButtonElement>) {
+    e.stopPropagation();
+    setShowDeleteModal(true);
+  }
+
+  async function editBlogHandler(e: React.MouseEvent<HTMLButtonElement>) {
+    e.stopPropagation();
+    router.push(`/blogs/post/${blog._id}`);
+  }
+
+  function deleteBlogHandler(e: React.MouseEvent<HTMLButtonElement>) {
+    e.stopPropagation();
+    setShowDeleteModal(false);
+
+    // Push first, dispatch right after — ensures user escapes immediately
+    router.push("/").then(() => {
+      dispatch(deleteBlog(blog._id));
+    });
+  }
+
   return (
     <Container>
       <PreviewContainer>
         <Preview>
           <PreviewImageContainer>
+            <OverlayContainer>
+              <ReadTimeBadge>
+                {readingTime}
+              </ReadTimeBadge>
+            </OverlayContainer>
+            {client?.email === blog.authorEmail && (
+              <ButtonContainer>
+                <PostButton onClick={editBlogHandler} >
+                  Edit
+                </PostButton>
+                <PostButton onClick={showDeleteModalHandler} >
+                  Delete
+                </PostButton>
+              </ButtonContainer>
+            )}
+            <Modal
+              showModal={showDeleteModal}
+              hideModal={() => {
+                setShowDeleteModal(false);
+              }}
+            >
+              <DeleteCard
+                blogTitle={blog.blogTitle}
+                onDeleteHandler={deleteBlogHandler}
+                onCancelHandler={() => {
+                  setShowDeleteModal(false);
+                }}
+              />
+            </Modal>
             <ImageComponent
               aspectRatio={4 / 3}
               src={blog.blogImg}
@@ -108,16 +173,16 @@ const BlogComponent = ({ blog }: { blog: PopulatedBlogType }) => {
         <AdditionalData>
           {(isError || isLoading || cardData.length === 0)
             ? Array.from({ length: ADDITIONAL_CARDS_LENGTH }).map((_, index) => (
-                <SkeletalCard key={index} />
-              ))
+              <SkeletalCard key={index} />
+            ))
             : cardData.map((relatedBlog: any, idx: number) => (
-                <DynamicCard
-                  key={relatedBlog._id}
-                  index={idx}
-                  blog={relatedBlog}
-                  clientEmail={client?.email}
-                />
-              ))}
+              <DynamicCard
+                key={relatedBlog._id}
+                index={idx}
+                blog={relatedBlog}
+                clientEmail={client?.email}
+              />
+            ))}
         </AdditionalData>
       </AdditionalSection>
     </Container>

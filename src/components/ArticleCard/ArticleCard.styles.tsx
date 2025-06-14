@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { ReadTimeBadge } from "../Blog/Blog.styles";
 
 export const Container = styled.div<{ isDraft: boolean }>`
   width: 100%;
@@ -25,6 +26,7 @@ export const Container = styled.div<{ isDraft: boolean }>`
 
 export const ImageContainer = styled.div`
   overflow: hidden;
+  position: relative;
   img {
     width: 100%;
     object-fit: cover;
@@ -35,6 +37,11 @@ export const ImageContainer = styled.div`
     }
   }
 `;
+
+export const CardReadTimeBadge = styled(ReadTimeBadge)`
+  padding: 3px 6px;
+  font-size: 0.6em;
+`
 
 export const ButtonsContainer = styled.div`
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;

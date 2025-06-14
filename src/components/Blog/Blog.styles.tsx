@@ -45,6 +45,7 @@ export const Preview = styled.div`
 `;
 
 export const PreviewImageContainer = styled.div`
+    position: relative;
     img {
         object-fit: cover;
         aspect-ratio: 4/3;
@@ -54,6 +55,58 @@ export const PreviewImageContainer = styled.div`
         top: 70%;
         left: 50%;
         transform: translateX(-25%);
+    }
+`;
+
+export const OverlayContainer = styled.div`
+    position: absolute;
+    right: 0rem;
+    bottom: 0rem;
+    color: #fff;
+    z-index: 1;
+    display: flex;
+    gap: 8px;
+    padding: 1rem;
+    font-family: ${montserrat.style.fontFamily};
+`;
+
+export const ButtonContainer = styled(OverlayContainer)`
+    bottom: 0rem;
+    left: 0rem;
+    right: initial;
+`;
+
+export const PostButton = styled.button`
+    font-size: 0.8em;
+    padding: 6px 12px;
+    color: #e1e1e1;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 8px;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight: bold;
+    :hover {
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.3);
+    }
+`
+
+export const ReadTimeBadge = styled.span`
+    font-size: 0.8em;
+    padding: 6px 12px;
+    font-weight: 600;
+    color: #e6e6e6;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+    white-space: nowrap;
+    font-weight: bold;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(3px);
+    border-radius: 4px;
+    :hover {
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.3);
     }
 `;
 
