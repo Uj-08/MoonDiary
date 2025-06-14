@@ -20,6 +20,8 @@ import { PopulatedBlogType } from "@/types/blog";
 import parse from "html-react-parser";
 import { useQuery } from "@tanstack/react-query";
 
+const ADDITIONAL_CARDS_LENGTH = 4;
+
 // Fetch related blogs
 const fetchRelatedBlogs = async (blog: PopulatedBlogType) => {
   if (!blog || !blog.tags?.length) return [];
@@ -42,11 +44,11 @@ const fetchRelatedBlogs = async (blog: PopulatedBlogType) => {
     );
 
     // Fill extra if needed
-    if (uniqueData.length <= 3) {
+    if (uniqueData.length < ADDITIONAL_CARDS_LENGTH) {
       const filterIds = uniqueData.map((item) => item._id);
       const fillRes = await fetch(
         `/api/blogs/?filterIds=${[blog._id, ...filterIds]}&limit=${
-          4 - uniqueData.length
+          ADDITIONAL_CARDS_LENGTH - uniqueData.length
         }`
       ).then((res) => res.json());
 
@@ -66,7 +68,8 @@ const BlogComponent = ({ blog }: { blog: PopulatedBlogType }) => {
   const {
     data: cardData = [],
     isLoading,
-  } = useQuery({
+    isError
+  } = useQuery<PopulatedBlogType[]>({
     queryKey: ["relatedBlogs", blog._id],
     queryFn: () => fetchRelatedBlogs(blog),
     enabled: !!blog?.tags?.length, // Only run if tags exist
@@ -103,8 +106,8 @@ const BlogComponent = ({ blog }: { blog: PopulatedBlogType }) => {
         </TagsContainer>
 
         <AdditionalData>
-          {isLoading && cardData.length === 0
-            ? Array.from({ length: 4 }).map((_, index) => (
+          {(isError || isLoading || cardData.length === 0)
+            ? Array.from({ length: ADDITIONAL_CARDS_LENGTH }).map((_, index) => (
                 <SkeletalCard key={index} />
               ))
             : cardData.map((relatedBlog: any, idx: number) => (
