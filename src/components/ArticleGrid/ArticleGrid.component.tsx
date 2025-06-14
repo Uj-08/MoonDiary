@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import {
   Container,
@@ -16,7 +16,11 @@ import { useQuery } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
 import { updateBlogDataIsLoading } from "@/redux/slices/blogInfo";
 
-// Fetcher function
+// Constants
+const DEFAULT_SORT = "updatedAt";
+const DEFAULT_ORDER = "-1";
+
+// Fetcher
 const fetchBlogs = async ({
   apiPath,
   sort,
@@ -40,55 +44,55 @@ const fetchBlogs = async ({
 
 const ArticleGrid = ({
   blogsArray,
-  apiPath, //to differentiate api calls between home and features
+  apiPath,
 }: {
   blogsArray: PopulatedBlogType[];
   apiPath: string;
 }) => {
   const router = useRouter();
-  const client = useContext(ClientContext);
-  const token = useMemo(() => getCookie(COOKIE_NAME) as string, []);
   const dispatch = useDispatch();
+  const client = useContext(ClientContext);
+  const token = getCookie(COOKIE_NAME) as string;
 
-  // Get query params from router
-  const querySort = useMemo(
-    () => (router.query.sort as string) || "updatedAt",
-    [router.query.sort]
-  );
-  const queryOrder = useMemo(
-    () => (router.query.order as string) || "-1",
-    [router.query.order]
-  );
+  // State for sorting and ordering
+  const [sortState, setSortState] = useState(DEFAULT_SORT);
+  const [orderState, setOrderState] = useState(DEFAULT_ORDER);
 
-  const [sortState, setSortState] = useState(querySort);
-  const [orderState, setOrderState] = useState(queryOrder);
+  // Sync state with router.query when router is ready
+  useEffect(() => {
+    if (!router.isReady) return;
 
-  // Stable query key
-  const queryKey = useMemo(
-    () => ["blogs", apiPath, querySort, queryOrder],
-    [apiPath, querySort, queryOrder]
-  );
+    const sortQuery = (router.query.sort as string) || DEFAULT_SORT;
+    const orderQuery = (router.query.order as string) || DEFAULT_ORDER;
 
-  const {
-    data: blogs,
-    isLoading,
-    // isError,
-  } = useQuery<PopulatedBlogType[], Error>({
-    queryKey,
+    setSortState(sortQuery);
+    setOrderState(orderQuery);
+  }, [router.isReady, router.query.sort, router.query.order]);
+
+  // Fetch blogs
+  const { data: blogs, isLoading, isFetching } = useQuery<PopulatedBlogType[], Error>({
+    queryKey: ["blogs", apiPath, sortState, orderState],
     queryFn: () =>
       fetchBlogs({
         apiPath,
-        sort: querySort,
-        order: queryOrder,
+        sort: sortState,
+        order: orderState,
         token,
       }),
     initialData: blogsArray,
-    placeholderData: (prevData) => prevData,
+    placeholderData: (prev) => prev,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
-    staleTime: 5 * 60 * 1000, // 5 minutes cache
+    staleTime: 5 * 60 * 1000,
+    enabled: router.isReady,
   });
 
+  // Update global loading state
+useEffect(() => {
+  dispatch(updateBlogDataIsLoading(isLoading || isFetching));
+}, [isLoading, isFetching, dispatch]);
+
+  // Update URL params without full reload
   const updateQuery = (param: "sort" | "order", value: string) => {
     router.replace(
       {
@@ -100,6 +104,7 @@ const ArticleGrid = ({
     );
   };
 
+  // Sort/order handlers
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newSort = e.target.value;
     setSortState(newSort);
@@ -111,11 +116,6 @@ const ArticleGrid = ({
     setOrderState(newOrder);
     updateQuery("order", newOrder);
   };
-
-  useEffect(() => {
-    console.log({ isLoading })
-    dispatch(updateBlogDataIsLoading(isLoading));
-  }, [isLoading, dispatch]);
 
   return (
     <Container>
