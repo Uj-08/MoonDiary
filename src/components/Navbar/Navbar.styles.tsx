@@ -62,6 +62,7 @@ export const NavLinks = styled.ul<{ isHamburger?: boolean }>`
     }
     @media (max-width: 950px) {
         display: ${props => !props.isHamburger && "none"};
+        margin-right: 0;
     }
     li {
         cursor: pointer;
