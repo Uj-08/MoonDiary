@@ -26,7 +26,7 @@ export const ClientContext = createContext<ClientContextType | null>(null);
 const Base = ({ children }: BaseTypes) => {
 
   const [showLoginModal, setShowLoginModal] = useState(false);
-  const [signedIn, setSignedIn] = useState(false);
+  const [signedIn, setSignedIn] = useState(hasCookie(COOKIE_NAME));
   const [showHamburger, setShowHamburger] = useState(false);
   const blogInfo = useSelector((state: RootState) => state.blogInfo);
   const dispatch = useDispatch();
@@ -60,10 +60,6 @@ const Base = ({ children }: BaseTypes) => {
       }, 4000)
     }
   }, [blogInfo.error.isError, blogInfo.success.isSuccessful, dispatch])
-
-  useEffect(() => {
-    setSignedIn(hasCookie(COOKIE_NAME));
-  }, []);
 
 const signInHandler = useCallback(() => {
   if (signedIn) {
