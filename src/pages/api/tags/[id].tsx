@@ -18,7 +18,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
                 );
 
                 // Allowed sort fields and orders
-                const ALLOWED_SORT_FIELDS = ["updatedAt", "createdAt"];
+                const ALLOWED_SORT_FIELDS = ["updatedAt", "createdAt", "blogTitle"];
                 const ALLOWED_ORDER_VALUES = ["1", "-1"];
 
                 let { sort = "updatedAt", order = "-1" } = req.query;
