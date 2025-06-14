@@ -121,17 +121,17 @@ const HamburgerMenu = ({
           <SocialLinks isHamburger={true}>
             <li>
               <Link href="mailto:psykidbiz@gmail.com">
-                <Image src={gmail} alt="social-links" height={25} width={25} placeholder="blur" />
+                <Image src={gmail} alt="social-links" height={25} width={25} />
               </Link>
             </li>
             <li>
               <Link href={"/"}>
-                <Image src={logo} alt="social-links" height={25} width={25} placeholder="blur" />
+                <Image src={logo} alt="social-links" height={25} width={25} />
               </Link>
             </li>
             <li>
               <Link href="https://www.instagram.com/shaireee_67/" target="_blank" rel="noreferrer">
-                <Image src={insta} alt="social-links" height={25} width={25} placeholder="blur" />
+                <Image src={insta} alt="social-links" height={25} width={25} />
               </Link>
             </li>
           </SocialLinks>

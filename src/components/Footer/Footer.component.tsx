@@ -23,17 +23,17 @@ export default function FooterComponent() {
             <ul>
                 <li>
                     <Link href="mailto:psykidbiz@gmail.com">
-                        <Image src={gmail} alt="social-links" fill={true} placeholder="blur"  />
+                        <Image src={gmail} alt="social-links" fill={true} />
                     </Link>
                 </li>
                 <LogoContainer>
                     <Link href={"/"}>
-                        <Image src={logo} alt="social-links" fill={true} placeholder="blur" />
+                        <Image src={logo} alt="social-links" fill={true} />
                     </Link>
                 </LogoContainer>
                 <li>
                     <Link href="https://www.instagram.com/shaireee_67/" target="_blank" rel="noreferrer">
-                        <Image src={insta} alt="social-links" fill={true} placeholder="blur" />
+                        <Image src={insta} alt="social-links" fill={true} />
                     </Link>
                 </li>
             </ul>

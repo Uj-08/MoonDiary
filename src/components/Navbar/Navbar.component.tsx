@@ -53,12 +53,12 @@ const Navbar = ({ signInHandler, signedIn, picture, hmbgrClickHandler }: NavbarT
             <SocialLinks>
                 <li>
                     <Link href="mailto:psykidbiz@gmail.com">
-                        <Image src={gmail} alt={"gmail"} height="25" width="25" placeholder="blur" />
+                        <Image src={gmail} alt={"gmail"} height="25" width="25"/>
                     </Link>
                 </li>
                 <li>
                     <Link href="https://www.instagram.com/shaireee_67/" target="_blank" rel="noreferrer">
-                        <Image src={insta} alt={"Instagram"} height="25" width="25" placeholder="blur" />
+                        <Image src={insta} alt={"Instagram"} height="25" width="25"/>
                     </Link>
                 </li>
                 <li>

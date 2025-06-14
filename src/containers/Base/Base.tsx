@@ -26,11 +26,15 @@ export const ClientContext = createContext<ClientContextType | null>(null);
 const Base = ({ children }: BaseTypes) => {
 
   const [showLoginModal, setShowLoginModal] = useState(false);
-  const [signedIn, setSignedIn] = useState(hasCookie(COOKIE_NAME));
+  const [signedIn, setSignedIn] = useState(false);
   const [showHamburger, setShowHamburger] = useState(false);
   const blogInfo = useSelector((state: RootState) => state.blogInfo);
   const dispatch = useDispatch();
   const router = useRouter();
+
+  useEffect(() => {
+    setSignedIn(hasCookie(COOKIE_NAME))
+  }, [])
 
   useEffect(() => {
     if (blogInfo.blogDeleteStatus.deletedBlogId) {
