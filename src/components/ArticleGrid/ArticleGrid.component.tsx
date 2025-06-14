@@ -40,7 +40,7 @@ const fetchBlogs = async ({
 
 const ArticleGrid = ({
   blogsArray,
-  apiPath,
+  apiPath, //to differentiate api calls between home and features
 }: {
   blogsArray: PopulatedBlogType[];
   apiPath: string;
