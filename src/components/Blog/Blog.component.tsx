@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import {
   AdditionalData,
   AdditionalSection,
@@ -18,61 +18,60 @@ import Link from "next/link";
 import { BlogPreviewContent } from "../Editor/BlogContentStyle";
 import { PopulatedBlogType } from "@/types/blog";
 import parse from "html-react-parser";
+import { useQuery } from "@tanstack/react-query";
+
+// Fetch related blogs
+const fetchRelatedBlogs = async (blog: PopulatedBlogType) => {
+  if (!blog || !blog.tags?.length) return [];
+
+  try {
+    // Fetch related by tags
+    const tagResponses = await Promise.all(
+      blog.tags.map((tag) =>
+        fetch(`/api/tags/${tag._id}?filterId=${blog._id}`).then((res) =>
+          res.json()
+        )
+      )
+    );
+    let flatData = tagResponses.flat();
+
+    // Remove duplicates
+    let uniqueData = flatData.filter(
+      (item, index, self) =>
+        index === self.findIndex((t) => t._id === item._id)
+    );
+
+    // Fill extra if needed
+    if (uniqueData.length <= 2) {
+      const filterIds = uniqueData.map((item) => item._id);
+      const fillRes = await fetch(
+        `/api/blogs/?filterIds=${[blog._id, ...filterIds]}&limit=${
+          3 - uniqueData.length
+        }`
+      ).then((res) => res.json());
+
+      uniqueData = [...uniqueData, ...fillRes];
+    }
+
+    return uniqueData;
+  } catch (err) {
+    console.error("Failed to fetch related blogs", err);
+    return [];
+  }
+};
 
 const BlogComponent = ({ blog }: { blog: PopulatedBlogType }) => {
-  const [cardData, setCardData] = useState([])
-  const [isCardDataLoading, setIsCardDataLoading] = useState(true)
-  useEffect(() => {
-    const fetchFillData = async (limit: number, filterIds: String[]) => {
-      try {
-        const blogs = await fetch(`/api/blogs/?filterIds=${[blog._id, ...filterIds]}&limit=${limit}`)
-          .then(res => res.json())
-        return blogs;
-      } catch (err) {
-        console.error("Failed to fetch blogs by tags", err);
-        return [];
-      }
-    };
-    const fetchBlogsByTags = async () => {
-      let additionalBlogs = [];
-      try {
-        const responses = await Promise.all(
-          blog?.tags.map(tag =>
-            fetch(`/api/tags/${tag._id}?filterId=${blog._id}`)
-              .then(res => res.json())
-          )
-        );
-        const flatData = responses.flat();
-
-        let uniqueData = flatData.filter(
-          (item, index, self) => {
-            return index === self.findIndex((t) => t._id === item._id) // Replace `id` with your unique key
-          }
-        );
-        if (uniqueData.length <= 2) {
-          const filterIds = uniqueData.map(ud => ud._id) ?? []
-          additionalBlogs = await fetchFillData(3 - uniqueData.length, filterIds)
-          uniqueData = [
-            ...uniqueData,
-            ...additionalBlogs
-          ]
-        }
-        setCardData(uniqueData as []);
-      } catch (err) {
-        console.error("Failed to fetch blogs by tags", err);
-      } finally {
-        setIsCardDataLoading(false);
-      }
-    };
-
-    if (blog?.tags?.length) {
-      setCardData([]);
-      setIsCardDataLoading(true)
-      fetchBlogsByTags();
-    }
-  }, [blog]);
-
   const client = useContext(ClientContext);
+
+  const {
+    data: cardData = [],
+    isLoading,
+  } = useQuery({
+    queryKey: ["relatedBlogs", blog._id],
+    queryFn: () => fetchRelatedBlogs(blog),
+    enabled: !!blog?.tags?.length, // Only run if tags exist
+    staleTime: 5 * 60 * 1000, // 5 min
+  });
 
   return (
     <Container>
@@ -88,40 +87,38 @@ const BlogComponent = ({ blog }: { blog: PopulatedBlogType }) => {
           </PreviewImageContainer>
           <PreviewData>
             <BlogPreviewContent>
-              {blog?.blogData ? parse(blog?.blogData) : ""}
+              {blog?.blogData ? parse(blog.blogData) : ""}
             </BlogPreviewContent>
           </PreviewData>
         </Preview>
       </PreviewContainer>
+
       <AdditionalSection>
         <TagsContainer>
-          {
-            blog.tags.map((tag) => {
-              return (
-                <Link key={tag._id.toString()} href={`/features/${tag._id}`} legacyBehavior>
-                  <BlogTag>{`#${tag.name}`}</BlogTag>
-                </Link>
-              )
-            })
-          }
+          {blog.tags.map((tag) => (
+            <Link key={tag._id.toString()} href={`/features/${tag._id}`} legacyBehavior>
+              <BlogTag>{`#${tag.name}`}</BlogTag>
+            </Link>
+          ))}
         </TagsContainer>
 
         <AdditionalData>
-          {
-            (isCardDataLoading && cardData.length === 0) ?
-              Array.from({ length: 3 }).map((_, index) => (
+          {isLoading && cardData.length === 0
+            ? Array.from({ length: 3 }).map((_, index) => (
                 <SkeletalCard key={index} />
-              )) :
-              cardData.map(((blog: any, idx: number) => {
-                return (
-                  <DynamicCard key={idx} index={idx} blog={blog} clientEmail={client?.email} />
-                );
-              }))
-          }
+              ))
+            : cardData.map((relatedBlog: any, idx: number) => (
+                <DynamicCard
+                  key={relatedBlog._id}
+                  index={idx}
+                  blog={relatedBlog}
+                  clientEmail={client?.email}
+                />
+              ))}
         </AdditionalData>
       </AdditionalSection>
     </Container>
   );
-}
+};
 
 export default React.memo(BlogComponent);
