@@ -1,5 +1,6 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
 import { BlogType } from "@/types/blog";
+import { ADMIN_EMAILS } from "@/helpers/constants";
 
 // Extend BlogType with Document to ensure _id, createdAt, updatedAt are included
 interface BlogDocument extends BlogType, Document { }
@@ -51,7 +52,7 @@ const BlogSchema: Schema<BlogDocument> = new Schema(
             required: true,
             validate: {
                 validator: function (value: string) {
-                    return ["psykidbiz@gmail.com", "ujjwalpandey24@gmail.com"].includes(value);
+                    return ADMIN_EMAILS.includes(value);
                 },
                 message: "You are not authorized to post.",
             },

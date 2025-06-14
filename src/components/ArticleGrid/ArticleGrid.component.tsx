@@ -5,7 +5,7 @@ import { Container, Grid, SortContainer, Label, Select } from "./ArticleGrid.sty
 import DynamicCard from "../ArticleCard/ArticleCard.component";
 import { getCookie, hasCookie } from "cookies-next";
 import jwtDecode from "jwt-decode";
-import { COOKIE_NAME } from "@/constants";
+import { COOKIE_NAME } from "@/helpers/constants";
 import { PopulatedBlogType } from "@/types/blog";
 
 const ArticleGrid = ({ blogsArray }: { blogsArray: PopulatedBlogType[] }) => {

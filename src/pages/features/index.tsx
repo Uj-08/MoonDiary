@@ -3,7 +3,7 @@ import Base from "@/containers/Base/Base";
 import Head from "next/head";
 import { GetServerSideProps } from "next";
 import { hasCookie } from "cookies-next";
-import { COOKIE_NAME } from "@/constants";
+import { COOKIE_NAME } from "@/helpers/constants";
 import FeatureCard from "@/components/FeatureCard";
 import styled from "styled-components";
 import { FeaturesTagType } from "@/types/tag";

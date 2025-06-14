@@ -3,7 +3,7 @@ import HeroSection from "@/components/HeroSection/HeroSection.component";
 import ArticleGrid from "@/components/ArticleGrid/ArticleGrid.component";
 import { GetServerSideProps } from "next";
 import { getCookie, hasCookie } from "cookies-next";
-import { COOKIE_NAME } from "@/constants";
+import { COOKIE_NAME } from "@/helpers/constants";
 import Head from "next/head";
 import React from "react";
 import { PopulatedBlogType } from "@/types/blog";

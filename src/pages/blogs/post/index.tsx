@@ -2,7 +2,7 @@ import Base from "@/containers/Base/Base";
 import EditorComponent from "@/components/Editor/Editor.component";
 import NextHead from "next/head";
 import { getCookie, hasCookie } from "cookies-next";
-import { COOKIE_NAME } from "@/constants";
+import { COOKIE_NAME } from "@/helpers/constants";
 import { GetServerSideProps } from "next";
 
 function BlogPost({ sessionId }: { sessionId: string }) {

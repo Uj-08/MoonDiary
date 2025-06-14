@@ -5,7 +5,7 @@ import { GoogleLogin } from "@react-oauth/google";
 import Modal from "../Modal/Modal";
 import BaseTypes from "./Base.types";
 import { hasCookie, setCookie, deleteCookie, getCookie } from "cookies-next";
-import { COOKIE_NAME } from "@/constants";
+import { ADMIN_EMAILS, COOKIE_NAME } from "@/helpers/constants";
 import HamburgerMenu from "@/components/Navbar/HamburgerMenu/HamburgerMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
@@ -15,7 +15,13 @@ import { useRouter } from "next/router";
 import Toast from "../Toast";
 import jwtDecode from "jwt-decode";
 import AddPostButton from "@/components/Blog/AddPostButton";
-export const ClientContext = createContext<any>(null);
+
+interface ClientContextType {
+  email?: string;
+  name?: string;
+  picture?: string;
+}
+export const ClientContext = createContext<ClientContextType | null>(null);
 
 const Base = ({ children }: BaseTypes) => {
 
@@ -27,21 +33,21 @@ const Base = ({ children }: BaseTypes) => {
   const router = useRouter();
 
   useEffect(() => {
-      if (blogInfo.blogDeleteStatus.deletedBlogId) {
-        router.reload();
-        dispatch(resetDeletedBlogId());
-      }
-    }, [blogInfo.blogDeleteStatus.deletedBlogId, dispatch, router]);
-
-  useEffect(() => {
-    if (blogInfo.blogPostUpdateStatus.createdBlogId) {
-      dispatch(resetCreatedBlogId())
-      router.push("/");
-    } else if (blogInfo.blogDeleteStatus.deletedBlogId) {
-      dispatch(resetDeletedBlogId())
+    if (blogInfo.blogDeleteStatus.deletedBlogId) {
+      router.reload();
+      dispatch(resetDeletedBlogId());
     }
 
-  }, [blogInfo.blogDeleteStatus.deletedBlogId, blogInfo.blogPostUpdateStatus.createdBlogId, dispatch, router])
+    if (blogInfo.blogPostUpdateStatus.createdBlogId) {
+      dispatch(resetCreatedBlogId());
+      router.push("/");
+    }
+  }, [
+    blogInfo.blogDeleteStatus.deletedBlogId,
+    blogInfo.blogPostUpdateStatus.createdBlogId,
+    dispatch,
+    router,
+  ]);
 
   useEffect(() => {
     if (blogInfo.error.isError) {
@@ -56,12 +62,8 @@ const Base = ({ children }: BaseTypes) => {
   }, [blogInfo.error.isError, blogInfo.success.isSuccessful, dispatch])
 
   useEffect(() => {
-    if (hasCookie(COOKIE_NAME)) {
-      setSignedIn(true);
-    } else {
-      setSignedIn(false);
-    }
-  }, [signedIn]);
+    setSignedIn(hasCookie(COOKIE_NAME));
+  }, []);
 
   function signInHandler() {
     if (signedIn) {
@@ -80,28 +82,25 @@ const Base = ({ children }: BaseTypes) => {
   function successHandler(credentialResponse: any) {
     setCookie(COOKIE_NAME, credentialResponse?.credential);
     setShowLoginModal(false);
-    if (hasCookie(COOKIE_NAME)) {
-      setSignedIn(true);
-    } else {
-      setSignedIn(false);
-    }
+    setSignedIn(true);
     router.reload()
   }
 
   const [clientDecode, setClientDecode] = useState<any>(null);
 
+  const getDecodedClient = () => {
+    try {
+      const token = getCookie(COOKIE_NAME);
+      return token ? jwtDecode(token as string) : null;
+    } catch (err) {
+      console.error("Invalid token:", err);
+      return null;
+    }
+  };
+
   useEffect(() => {
     if (signedIn) {
-      const client = getCookie(COOKIE_NAME);
-
-      if (client) {
-        try {
-          const decoded = jwtDecode(client as string);
-          setClientDecode(decoded);
-        } catch (err) {
-          console.error("Invalid token:", err);
-        }
-      }
+      setClientDecode(getDecodedClient());
     }
   }, [signedIn]);
 
@@ -129,9 +128,7 @@ const Base = ({ children }: BaseTypes) => {
       </Container>
       <ToastContainer>
         {!router.asPath.startsWith("/blogs/post") && clientDecode &&
-          (clientDecode?.email === "ujjwalpandey24@gmail.com" ||
-            clientDecode?.email === "psykidbiz@gmail.com"
-          ) && <AddPostButton />}
+          ADMIN_EMAILS.includes(clientDecode?.email) && <AddPostButton />}
         <Toast
           show={blogInfo.error.isError}
           message={blogInfo.error.message}
