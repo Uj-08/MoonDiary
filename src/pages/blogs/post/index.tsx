@@ -11,9 +11,7 @@ function BlogPost({ sessionId }: { sessionId: string }) {
             <NextHead>
                 <title>New Post | MoonDiary</title>
             </NextHead>
-            <Base>
-                <EditorComponent sessionId={sessionId} />
-            </Base>
+            <EditorComponent sessionId={sessionId} />
         </>
     );
 }

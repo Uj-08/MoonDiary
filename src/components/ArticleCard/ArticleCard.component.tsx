@@ -176,4 +176,4 @@ export const ArticleCard = ({ blog, clientEmail, index }: ArticleCardTypes) => {
   );
 }
 
-export default ArticleCard;
+export default React.memo(ArticleCard);

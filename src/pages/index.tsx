@@ -15,10 +15,8 @@ const Home = ({ blogsArray }: { blogsArray: PopulatedBlogType[] }) => {
         <link rel="preload" as="image" href="/cover.jpeg" />
         <meta name="robots" content="index,follow" />
       </Head>
-      <Base>
         <HeroSection />
         <ArticleGrid blogsArray={blogsArray} />
-      </Base>
     </>
   );
 }

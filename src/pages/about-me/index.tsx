@@ -71,27 +71,25 @@ const AboutMe = () => {
       <Head>
         <title>About Me | MoonDiary</title>
       </Head>
-      <Base>
       <Container>
-          <AboutCard>
-            <Author>
-              <AuthorProfile>
-                <ImageComponent
-                  src={"https://old-moondiary.netlify.app/img/pro.jpg"}
-                  aspectRatio={1}
-                  alt={"profile picture"}
-                />
-              </AuthorProfile>
-              <AuthorName>{"Shairee Sinha"}</AuthorName>
-            </Author>
-            <AuthorBio>
-              {
-                "Rolling in and out of Hindu college with my degree in English literature wasn’t enough to curb my craving for expression. Pursuing and juggling various creative skills like dancing, music and theatre has broadened my interests and passion to look out for the next new lesson. Forever trying to wrap my head around this perpetual tease called existence."
-              }
-            </AuthorBio>
-          </AboutCard>
+        <AboutCard>
+          <Author>
+            <AuthorProfile>
+              <ImageComponent
+                src={"https://old-moondiary.netlify.app/img/pro.jpg"}
+                aspectRatio={1}
+                alt={"profile picture"}
+              />
+            </AuthorProfile>
+            <AuthorName>{"Shairee Sinha"}</AuthorName>
+          </Author>
+          <AuthorBio>
+            {
+              "Rolling in and out of Hindu college with my degree in English literature wasn’t enough to curb my craving for expression. Pursuing and juggling various creative skills like dancing, music and theatre has broadened my interests and passion to look out for the next new lesson. Forever trying to wrap my head around this perpetual tease called existence."
+            }
+          </AuthorBio>
+        </AboutCard>
       </Container>
-      </Base>
     </>
   );
 };

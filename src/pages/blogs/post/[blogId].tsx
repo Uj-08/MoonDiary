@@ -15,9 +15,7 @@ function BlogPost({ sessionId, blog }: { sessionId: string; blog: PopulatedBlogT
             <NextHead>
                 <title>MoonDiary | New Blog</title>
             </NextHead>
-            <Base>
-                <EditorComponent blog={blog} sessionId={sessionId} />
-            </Base>
+            <EditorComponent blog={blog} sessionId={sessionId} />
         </>
     )
 }

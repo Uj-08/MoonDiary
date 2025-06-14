@@ -42,15 +42,13 @@ const Features = ({ tags }: { tags: FeaturesTagType[] }) => {
                     content={keywords}
                 />
             </Head>
-            <Base>
-                <Container>
-                    <Grid>
-                        {
-                            tags.map((tag, index) => <FeatureCard key={index} tag={tag} />)
-                        }
-                    </Grid>
-                </Container>
-            </Base>
+            <Container>
+                <Grid>
+                    {
+                        tags.map((tag, index) => <FeatureCard key={index} tag={tag} />)
+                    }
+                </Grid>
+            </Container>
         </>
     );
 }

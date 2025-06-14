@@ -6,6 +6,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { Provider } from 'react-redux';
 import { store } from '../redux/store';
 import NextNProgress from 'nextjs-progressbar';
+import Base from '@/containers/Base/Base';
 
 const GlobalStyle = createGlobalStyle`
   *, *::before, *::after {
@@ -27,16 +28,18 @@ const GlobalStyle = createGlobalStyle`
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_CLIENT_ID || ""}>
-        <NextHead>
-          <title>MoonDiary</title>
-        </NextHead>
-        <Provider store={store}>
-          <GlobalStyle />
-          <NextNProgress color="#b101b1" height={2} options={{
-            showSpinner: false,
-          }} />
+      <NextHead>
+        <title>MoonDiary</title>
+      </NextHead>
+      <Provider store={store}>
+        <GlobalStyle />
+        <NextNProgress color="#b101b1" height={2} options={{
+          showSpinner: false,
+        }} />
+        <Base>
           <Component {...pageProps} />
-        </Provider>
+        </Base>
+      </Provider>
     </GoogleOAuthProvider>
   )
 }

@@ -44,12 +44,10 @@ const TagPage = ({ data }: { data: { blogs: PopulatedBlogType[], name: string } 
                     content={`#${data.name}`}
                 />
             </Head>
-            <Base>
-                <Container>
-                    <FeatureHeader>#{data.name}</FeatureHeader>
-                    <ArticleGrid blogsArray={data.blogs} />
-                </Container>
-            </Base>
+            <Container>
+                <FeatureHeader>#{data.name}</FeatureHeader>
+                <ArticleGrid blogsArray={data.blogs} />
+            </Container>
         </>
     );
 };

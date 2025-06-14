@@ -78,12 +78,10 @@ const Blog = ({ blog }: { blog: PopulatedBlogType }) => {
         <meta name="twitter:description" content={description} />
         <meta name="twitter:image" content={blog.blogImg} />
       </Head>
-      <Base>
-        <BlogTitleComponent>
-          {blog.blogTitle}
-        </BlogTitleComponent>
-        <BlogComponent blog={blog} />
-      </Base>
+      <BlogTitleComponent>
+        {blog.blogTitle}
+      </BlogTitleComponent>
+      <BlogComponent blog={blog} />
     </>
   );
 }
