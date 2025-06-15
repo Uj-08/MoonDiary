@@ -1,13 +1,14 @@
+import React from "react";
 import HeroSection from "@/components/HeroSection/HeroSection.component";
 import ArticleGrid from "@/components/ArticleGrid/ArticleGrid.component";
 import { GetServerSideProps } from "next";
 import { getCookie, hasCookie } from "cookies-next";
 import { COOKIE_NAME } from "@/helpers/constants";
 import Head from "next/head";
-import React from "react";
 import { PopulatedBlogType } from "@/types/blog";
 
 const Home = ({ blogsArray }: { blogsArray: PopulatedBlogType[] }) => {
+
   return (
     <>
       <Head>
@@ -23,10 +24,9 @@ export default React.memo(Home);
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { req, res, query } = context;
-
   try {
     const isSessionAvailable = hasCookie(COOKIE_NAME, { req, res });
-    const token = getCookie(COOKIE_NAME, context) as string;
+    const token = isSessionAvailable ? getCookie(COOKIE_NAME, context) as string : "";
 
     const { sort = "updatedAt", order = "-1" } = query;
 
@@ -34,7 +34,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "x-session-token": isSessionAvailable ? token : "",
+        "x-session-token": token,
       },
     });
 

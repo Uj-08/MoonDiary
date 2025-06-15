@@ -41,11 +41,20 @@ export const ImageContainer = styled.div`
     }
 `;
 
-export const Title = styled.h1`
+export const HiddenTitle = styled.h1`
     z-index: 3;
     position: absolute;
     font-size: 6rem;
     color: white;
+    text-align: center;
+    visibility: hidden;
+`;
+export const Title = styled.h2`
+    z-index: 3;
+    position: absolute;
+    font-size: 6rem;
+    color: white;
+    
     font-family: ${dancingScript.style.fontFamily}, cursive;
     text-align: center;
     @media (max-width: 1200px) {
