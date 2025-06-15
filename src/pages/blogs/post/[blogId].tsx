@@ -32,7 +32,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     let sessionId;
 
     if (isSessionAvailable) {
-        sessionId = getCookie(COOKIE_NAME, { req, res });
+        sessionId = await getCookie(COOKIE_NAME, { req, res });
         const clientObj: ClientType = jwtDecode(sessionId as string);
         if (clientObj.email !== blog.authorEmail)
             return {

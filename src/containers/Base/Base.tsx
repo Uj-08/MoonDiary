@@ -36,7 +36,7 @@ const Base = ({ children }: BaseTypes) => {
   const router = useRouter();
 
   useEffect(() => {
-    setSignedIn(hasCookie(COOKIE_NAME))
+    setSignedIn(hasCookie(COOKIE_NAME) as boolean)
   }, [])
 
   useEffect(() => {

@@ -26,7 +26,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const { req, res, query } = context;
   try {
     const isSessionAvailable = hasCookie(COOKIE_NAME, { req, res });
-    const token = isSessionAvailable ? getCookie(COOKIE_NAME, context) as string : "";
+    const token = isSessionAvailable ? await getCookie(COOKIE_NAME, context) as string : "";
 
     const { sort = "updatedAt", order = "-1" } = query;
 

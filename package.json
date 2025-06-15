@@ -11,16 +11,16 @@
   },
   "dependencies": {
     "@react-oauth/google": "^0.8.0",
-    "@reduxjs/toolkit": "^1.9.6",
+    "@reduxjs/toolkit": "^2.8.2",
     "@tanstack/react-query": "^5.80.7",
-    "@tinymce/tinymce-react": "^4.3.0",
+    "@tinymce/tinymce-react": "^6.2.1",
     "@types/node": "18.11.18",
     "@types/react": "18.0.27",
     "@types/react-dom": "18.0.10",
-    "cookies-next": "^2.1.1",
+    "cookies-next": "^6.0.0",
     "eslint": "8.32.0",
     "eslint-config-next": "13.1.4",
-    "html-react-parser": "^3.0.12",
+    "html-react-parser": "^5.2.5",
     "jwt-decode": "^3.1.2",
     "mongodb": "^5.1.0",
     "mongoose": "^7.0.3",
@@ -38,6 +38,6 @@
   },
   "devDependencies": {
     "@netlify/plugin-nextjs": "^5.11.2",
-    "@types/styled-components": "^5.1.26"
+    "@types/styled-components": "^5.1.34"
   }
 }
