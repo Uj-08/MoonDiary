@@ -26,7 +26,7 @@ const Blog = ({ blog }: { blog: PopulatedBlogType }) => {
         <meta name="author" content={blog.authorName} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <meta name="robots" content="index,follow" />
+        <meta name="robots" content={blog.isDraft ? "noindex, nofollow" : "index,follow"} />
 
         <link
           rel="canonical"
@@ -97,7 +97,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     await import('@/models/Tags.model');
 
     const blogDoc = await BlogsModel.findOne({ slug }).populate("tags").lean();
-
+    
     if (!blogDoc) {
       return { notFound: true };
     }
