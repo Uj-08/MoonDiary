@@ -1,5 +1,5 @@
 import { dancingScript } from "@/styles/fonts";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 export const Container = styled.header`
     overflow: hidden;
@@ -63,4 +63,22 @@ export const Title = styled.h2`
     @media (max-width: 900px) {
         font-size: 3rem;
     }
+`;
+
+// Animation
+const fadeIn = keyframes`
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+`;
+
+// Animated Title
+export const AnimatedTitle = styled(Title)`
+    opacity: 0;
+    animation: ${fadeIn} 0.8s ease-out forwards;
 `;
