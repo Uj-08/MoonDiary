@@ -34,10 +34,15 @@ export const FeatureHeader = styled.h2`
 const TagPage = ({ data }: { data: { blogs: PopulatedBlogType[], name: string } }) => {
     const router = useRouter();
     const { id } = router.query;
+    const url = `https://moondiary.netlify.app/features/${id}`
     return (
         <>
             <Head>
                 <title>{`#${data.name} | MoonDiary`}</title>
+                <link
+                    rel="canonical"
+                    href={url}
+                />
                 <meta
                     name="description"
                     content={`Explore blog posts related to #${data.name} on MoonDiary`}

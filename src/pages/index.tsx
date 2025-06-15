@@ -13,6 +13,8 @@ const Home = ({ blogsArray }: { blogsArray: PopulatedBlogType[] }) => {
     <>
       <Head>
         <meta name="robots" content="index,follow" />
+        <link rel="canonical" href="https://moondiary.netlify.app/" />
+        <meta name="robots" content="index,follow" />
       </Head>
       <HeroSection />
       <ArticleGrid blogsArray={blogsArray} apiPath="blogs/" />

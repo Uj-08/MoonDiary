@@ -32,6 +32,8 @@ const Features = ({ tags }: { tags: FeaturesTagType[] }) => {
         <>
             <Head>
                 <title>Features | MoonDiary</title>
+                <link rel="canonical" href="https://moondiary.netlify.app/features" />
+                <meta name="robots" content="index,follow" />
                 <meta
                     name="description"
                     content={`Explore blogs by #tags on MoonDiary`}
