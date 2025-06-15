@@ -99,6 +99,7 @@ const Custom500 = () => {
         <>
             <Head>
                 <title>500 | Server Error</title>
+                <meta name="robots" content="noindex, nofollow" />
             </Head>
             <Container>
                 <FlexRow>

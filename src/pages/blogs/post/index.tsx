@@ -9,6 +9,7 @@ function BlogPost({ sessionId }: { sessionId: string }) {
         <>
             <NextHead>
                 <title>New Post | MoonDiary</title>
+                <meta name="robots" content="noindex, nofollow" />
             </NextHead>
             <EditorComponent sessionId={sessionId} />
         </>

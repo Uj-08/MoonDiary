@@ -99,6 +99,7 @@ const Custom404 = () => {
         <>
             <Head>
                 <title>404 | Page Not Found</title>
+                <meta name="robots" content="noindex, nofollow" />
             </Head>
             <Container>
                 <FlexRow>

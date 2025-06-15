@@ -13,6 +13,7 @@ function BlogPost({ sessionId, blog }: { sessionId: string; blog: PopulatedBlogT
         <>
             <NextHead>
                 <title>MoonDiary | New Blog</title>
+                <meta name="robots" content="noindex, nofollow" />
             </NextHead>
             <EditorComponent blog={blog} sessionId={sessionId} />
         </>
