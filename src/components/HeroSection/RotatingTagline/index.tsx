@@ -15,7 +15,7 @@ const fadeOut = keyframes`
     to { opacity: 0; transform: translateY(-${Y_CONST}); }
 `;
 
-const Tagline = styled.h2<{ fade: "in" | "out" }>`
+const Tagline = styled.span<{ fade: "in" | "out" }>`
     font-size: 3rem;
     font-weight: 600;
     color: #ffffff;
