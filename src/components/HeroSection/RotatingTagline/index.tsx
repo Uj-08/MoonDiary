@@ -23,8 +23,7 @@ const Tagline = styled.span<{ fade: "in" | "out" }>`
     animation: ${({ fade }) => (fade === "in" ? fadeIn : fadeOut)} 0.6s ease forwards;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     padding: 0 8px;
-    margin-top: 30px;
-
+    
     z-index: 3;
     position: absolute;
     font-size: 6rem;
@@ -37,6 +36,7 @@ const Tagline = styled.span<{ fade: "in" | "out" }>`
     }
     @media (max-width: 900px) {
         font-size: 3rem;
+        margin-top: 30px;
     }
 `;
 
