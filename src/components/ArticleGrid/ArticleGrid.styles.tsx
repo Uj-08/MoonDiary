@@ -69,17 +69,19 @@ export const Select = styled.select`
   border: 1px solid #fff;
   background-color: #fff;
   font-size: 14px;
-  color: #000;
+  color: #303030;
   appearance: none;
   cursor: pointer;
   transition: border 0.2s ease;
   box-shadow: 0 2px 6px rgba(189, 16, 224, 0.08);
+  min-width: 104px;
   @media (max-width: 500px) {
     font-size: 12px;
+    min-width: 93px;
   }
 
   &:focus {
-    border-color: rgba(189, 16, 224, 0.5);
+    border-color: rgba(189, 16, 224, 0.148);
     outline: none;
   }
 `;

@@ -31,11 +31,11 @@ const ArticleGrid = ({
   const client = useContext(ClientContext);
   const token = getCookie(COOKIE_NAME) as string;
 
-  const sortQuery = (router.query.sort as string) || DEFAULT_SORT;
-  const orderQuery = (router.query.order as string) || DEFAULT_ORDER;
+  // const sortQuery = (router.query.sort as string) || DEFAULT_SORT;
+  // const orderQuery = (router.query.order as string) || DEFAULT_ORDER;
 
-  const [sortState, setSortState] = useState(sortQuery);
-  const [orderState, setOrderState] = useState(orderQuery);
+  const [sortState, setSortState] = useState();
+  const [orderState, setOrderState] = useState();
 
   const [blogsArrayState, setBlogsArrayState] = useState(blogsArray);
 
@@ -114,19 +114,25 @@ const ArticleGrid = ({
       <Grid>
         <SortContainer>
           <span>
-            <Label htmlFor="sort">Sort By:</Label>
+            {/* <Label htmlFor="sort">Sort By:</Label> */}
             <Select id="sort" value={sortState} onChange={handleSortChange}>
-              <option value="createdAt">Date Created</option>
-              <option value="updatedAt">Last Updated</option>
-              <option value="blogTitle">Title</option>
+              <option disabled value="" selected>
+                Sort By…
+              </option>
+              <option value="createdAt">First Published</option>
+              <option value="updatedAt">Last Change</option>
+              <option value="blogTitle">Title (A–Z)</option>
             </Select>
           </span>
 
           <span>
-            <Label htmlFor="order">Order:</Label>
+            {/* <Label htmlFor="order">Order:</Label> */}
             <Select id="order" value={orderState} onChange={handleOrderChange}>
-              <option value="1">Ascending</option>
-              <option value="-1">Descending</option>
+              <option disabled value="" selected>
+                Order By…
+              </option>
+              <option value="1">{sortState === "blogTitle" ? "(A-Z)" : "Oldest First"}</option>
+              <option value="-1">{sortState === "blogTitle" ? "(Z-A)" : "Newest First"}</option>
             </Select>
           </span>
         </SortContainer>
