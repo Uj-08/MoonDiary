@@ -53,6 +53,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
                     })
                 ));
 
+                // Remove tags with no associated blogs
+                await TagsModel.deleteMany({ blogIds: { $size: 0 } });
+
                 return res.status(200).json({id});
             } catch (err) {
                 return res.status(500).json(err);
@@ -72,6 +75,10 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
                 );
 
                 await BlogsModel.findByIdAndDelete(id);
+
+                // Remove tags with no associated blogs
+                await TagsModel.deleteMany({ blogIds: { $size: 0 } });
+                
                 return res.status(200).json({ id });
             } catch (err) {
                 return res.status(500).json(err);
