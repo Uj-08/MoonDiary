@@ -1,12 +1,11 @@
-import { AnimatedTitle, Container, HiddenTitle, ImageContainer } from "./HeroSection.styles";
-import { useState, useEffect } from "react";
-import { getCookie, hasCookie } from "cookies-next";
-import jwtDecode from "jwt-decode";
-import { COOKIE_NAME } from "@/helpers/constants";
+import { Container, HiddenTitle, ImageContainer } from "./HeroSection.styles";
 import cover from "public/cover.jpeg";
 import Image from "next/image";
+import RotatingTagline from "./RotatingTagline";
+import { useContext } from "react";
+import { ClientContext } from "@/containers/Base/Base";
 
-const moondiaryTaglines = [
+const moonDiaryTaglines = [
     "Welcome to Moondiary",
     "Shoot for the Moondiary",
     "Moondiary awaits",
@@ -15,23 +14,7 @@ const moondiaryTaglines = [
 ];
 
 const HeroSection = () => {
-    const [client, setClient] = useState<{ given_name: string } | null>(null);
-    const [tagline, setTagline] = useState("");
-
-    useEffect(() => {
-        if (hasCookie(COOKIE_NAME)) {
-            const cookie = getCookie(COOKIE_NAME);
-            if (typeof cookie === "string") {
-                setClient(jwtDecode(cookie));
-            }
-        }
-
-        const randomTagline = moondiaryTaglines[Math.floor(Math.random() * moondiaryTaglines.length)];
-        setTagline(randomTagline);
-    }, []);
-
-    const isReady = tagline !== "";
-
+    const client = useContext(ClientContext);
     return (
         <Container>
             <ImageContainer>
@@ -45,14 +28,8 @@ const HeroSection = () => {
                 />
             </ImageContainer>
 
-            <HiddenTitle>Welcome to Moondiary – Reflect and Grow</HiddenTitle>
-
-            {isReady && (
-                <AnimatedTitle>
-                    {tagline}
-                    {client?.given_name ? `, ${client.given_name}` : ""}!
-                </AnimatedTitle>
-            )}
+            <HiddenTitle>{"Welcome to Moondiary – Reflect and Grow"}</HiddenTitle>
+            <RotatingTagline taglines={moonDiaryTaglines} name={client?.given_name} />
         </Container>
     );
 };

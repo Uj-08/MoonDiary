@@ -20,6 +20,9 @@ interface ClientContextType {
   email?: string;
   name?: string;
   picture?: string;
+  given_name?: string;
+  family_name?: string;
+  email_verified?: boolean
 }
 export const ClientContext = createContext<ClientContextType | null>(null);
 
@@ -65,26 +68,26 @@ const Base = ({ children }: BaseTypes) => {
     }
   }, [blogInfo.error.isError, blogInfo.success.isSuccessful, dispatch])
 
-const signInHandler = useCallback(() => {
-  if (signedIn) {
-    deleteCookie(COOKIE_NAME);
-    setSignedIn(false);
-    router.reload();
-  } else {
-    setShowLoginModal(true);
-  }
-}, [signedIn, router]);
+  const signInHandler = useCallback(() => {
+    if (signedIn) {
+      deleteCookie(COOKIE_NAME);
+      setSignedIn(false);
+      router.reload();
+    } else {
+      setShowLoginModal(true);
+    }
+  }, [signedIn, router]);
 
   const hideModal = () => {
     setShowLoginModal(false);
   }
 
   const successHandler = useCallback((credentialResponse: any) => {
-  setCookie(COOKIE_NAME, credentialResponse?.credential);
-  setShowLoginModal(false);
-  setSignedIn(true);
-  router.reload();
-}, [router]);
+    setCookie(COOKIE_NAME, credentialResponse?.credential);
+    setShowLoginModal(false);
+    setSignedIn(true);
+    router.reload();
+  }, [router]);
 
   const [clientDecode, setClientDecode] = useState<any>(null);
 
@@ -117,12 +120,6 @@ const signInHandler = useCallback(() => {
           picture={picture}
           hmbgrClickHandler={() => setShowHamburger(true)}
         />
-        <HamburgerMenu
-          showHamburger={showHamburger}
-          setShowHamburger={setShowHamburger}
-          signInHandler={signInHandler}
-          signedIn={signedIn}
-        />
         {children}
         <FooterComponent />
       </Container>
@@ -140,6 +137,12 @@ const signInHandler = useCallback(() => {
           isError={false}
         />
       </ToastContainer>
+      <HamburgerMenu
+        showHamburger={showHamburger}
+        setShowHamburger={setShowHamburger}
+        signInHandler={signInHandler}
+        signedIn={signedIn}
+      />
       <Modal showModal={showLoginModal || (blogInfo.blogPostUpdateStatus.isLoading || blogInfo.blogDeleteStatus.isLoading)} hideModal={hideModal}>
         {
           showLoginModal ?

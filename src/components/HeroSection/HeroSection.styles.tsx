@@ -1,5 +1,4 @@
-import { dancingScript } from "@/styles/fonts";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 
 export const Container = styled.header`
     overflow: hidden;
@@ -47,38 +46,6 @@ export const HiddenTitle = styled.h1`
     font-size: 6rem;
     color: white;
     text-align: center;
+    font-size: 20px;
     visibility: hidden;
-`;
-export const Title = styled.h2`
-    z-index: 3;
-    position: absolute;
-    font-size: 6rem;
-    color: white;
-    
-    font-family: ${dancingScript.style.fontFamily}, cursive;
-    text-align: center;
-    @media (max-width: 1200px) {
-        font-size: 4rem;
-    }
-    @media (max-width: 900px) {
-        font-size: 3rem;
-    }
-`;
-
-// Animation
-const fadeIn = keyframes`
-    from {
-        opacity: 0;
-        transform: translateY(5px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-`;
-
-// Animated Title
-export const AnimatedTitle = styled(Title)`
-    opacity: 0;
-    animation: ${fadeIn} 0.8s ease-out forwards;
 `;
