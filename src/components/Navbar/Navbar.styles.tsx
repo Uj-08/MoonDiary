@@ -50,7 +50,7 @@ export const LogoContainer = styled.div`
 `;
 
 export const NavLinks = styled.ul<{ isHamburger?: boolean }>`
-    margin-right: -90px;
+    margin-right: -81px;
     color: #272727;
     display: flex;
     flex-direction: ${props => props.isHamburger ? "column" : "row"};
@@ -91,7 +91,7 @@ export const SocialLinks = styled.ul<{ isHamburger?: boolean }>`
     justify-content: ${props => (props.isHamburger ? "space-evenly" : "normal")};
     border-top: ${props => (props.isHamburger ? "1px solid #75757549" : "none")};
     padding-top: ${props => (props.isHamburger ? "20px" : "0")};
-    margin: ${props => (props.isHamburger ? "0 -16px" : "0")};
+    margin: ${props => (props.isHamburger ? "0 -16px" : "0 -9px 0 0")};
 
     li {
         cursor: pointer;
