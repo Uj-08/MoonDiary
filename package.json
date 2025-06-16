@@ -15,7 +15,7 @@
     "@tanstack/react-query": "^5.80.7",
     "@tinymce/tinymce-react": "^6.2.1",
     "@types/node": "18.11.18",
-    "@types/react": "18.2.14",
+    "@types/react": "^19.1.8",
     "@types/react-dom": "18.2.7",
     "cookies-next": "^6.0.0",
     "eslint": "8.32.0",
@@ -34,7 +34,7 @@
     "sharp": "^0.34.2",
     "slugify": "^1.6.6",
     "string-strip-html": "^13.4.12",
-    "styled-components": "^5.3.11",
+    "styled-components": "^6.1.19",
     "typescript": "4.9.4"
   },
   "devDependencies": {

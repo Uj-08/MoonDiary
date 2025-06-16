@@ -143,7 +143,10 @@ const Base = ({ children }: BaseTypes) => {
         signInHandler={signInHandler}
         signedIn={signedIn}
       />
-      <Modal showModal={showLoginModal || (blogInfo.blogPostUpdateStatus.isLoading || blogInfo.blogDeleteStatus.isLoading)} hideModal={hideModal}>
+      <Modal 
+        showModal={showLoginModal || (blogInfo.blogPostUpdateStatus.isLoading || blogInfo.blogDeleteStatus.isLoading)} 
+        hideModal={hideModal}
+      >
         {
           showLoginModal ?
             <div onClick={(e) => e.stopPropagation()}>

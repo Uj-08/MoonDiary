@@ -1,42 +1,17 @@
-import { ReactNode, useEffect } from "react";
-import ReactDOM from "react-dom";
-import styled from "styled-components";
+import React, { useEffect } from "react";
+import { createPortal } from "react-dom";
 import { useMountAnimation } from "@/hooks/useMountAnimation";
+import { ModalProps } from "./Modal.types";
+import { Container } from "./Modal.styles";
 
-const Container = styled.div<{ visible: boolean }>`
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.7);
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 9999999;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    opacity: ${(props) => (props.visible ? 1 : 0)};
-    transition: opacity 300ms ease-in-out;
-    pointer-events: ${(props) => (props.visible ? "all" : "none")};
-`;
-
-interface ModalProps {
-    children: ReactNode;
-    hideModal: (e: any) => void;
-    showModal: boolean;
-}
-
-export default function Modal({ children, hideModal, showModal }: ModalProps) {
+const Modal = ({ hideModal, showModal, children }: ModalProps) => {
     const { shouldRender, visible, onTransitionEnd } = useMountAnimation({
         isActive: showModal,
         minVisibleTime: 500
     });
 
     useEffect(() => {
-        if (shouldRender) {
-            document.body.style.overflow = "hidden";
-        }
+        document.body.style.overflow = shouldRender ? "hidden" : "auto";
         return () => {
             document.body.style.overflow = "auto";
         };
@@ -44,7 +19,13 @@ export default function Modal({ children, hideModal, showModal }: ModalProps) {
 
     if (!shouldRender) return null;
 
-    return ReactDOM.createPortal(
+    const portalRoot = document.getElementById("modal-portal");
+    if (!portalRoot) {
+        console.error("Modal portal root not found!");
+        return null;
+    }
+
+    return createPortal(
         <Container
             onClick={hideModal}
             visible={visible}
@@ -52,6 +33,8 @@ export default function Modal({ children, hideModal, showModal }: ModalProps) {
         >
             {children}
         </Container>,
-        document.getElementById("modal-portal") as HTMLElement
+        portalRoot
     );
-}
+};
+
+export default Modal;
