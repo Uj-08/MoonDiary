@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "next build && next-sitemap",
     "postbuild": "next-sitemap",
     "start": "next start",
@@ -26,7 +26,7 @@
     "mongoose": "^7.0.3",
     "next": "^15.3.3",
     "next-sitemap": "^4.2.3",
-    "nextjs-progressbar": "^0.0.16",
+    "nextjs-toploader": "^3.8.16",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-redux": "^8.1.3",

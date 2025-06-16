@@ -104,7 +104,7 @@ export const ArticleCard = ({ blog, clientEmail, index }: ArticleCardTypes) => {
   const readingTime = `${getReadingTime(blogBody)} min read`;
 
   return (
-    <Link href={`/blogs/${blog.slug}`} legacyBehavior>
+    <Link href={`/blogs/${blog.slug}`}>
       <Container isDraft={isDraft}>
         <ImageContainer>
           <OverlayContainer>
@@ -126,10 +126,19 @@ export const ArticleCard = ({ blog, clientEmail, index }: ArticleCardTypes) => {
                 {Array.isArray(tags) && tags.length > 0 &&
                   tags.map((tag, idx) => {
                     if (idx <= 1) return (
-                      <Link key={tag._id.toString()} href={`/features/${tag._id}`} legacyBehavior>
-                        <Tag title={`#${tag.name}`} maxWidth={"90px"} fontSize="12px" letterSpacing="0.5px" bgColor={getRandomColor()} ><span>#{tag.name}</span></Tag>
-                      </Link>
-
+                      <Tag
+                        key={tag._id.toString()}
+                        title={`#${tag.name}`}
+                        maxWidth={"90px"}
+                        fontSize="12px"
+                        letterSpacing="0.5px"
+                        bgColor={getRandomColor()}
+                        onClick={() => router.push(`/features/${tag._id}`)}
+                      >
+                        <span>
+                          #{tag.name}
+                        </span>
+                      </Tag>
                     )
                   })
                 }

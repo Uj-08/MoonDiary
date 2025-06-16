@@ -111,7 +111,7 @@ function ImageComponent({
                 layout="fill"
                 priority={isPriority}
                 quality={quality}
-                onLoadingComplete={handleLoading}
+                onLoad={handleLoading}
                 onError={errorHandler}
             />
             {isShimmerMounted && (

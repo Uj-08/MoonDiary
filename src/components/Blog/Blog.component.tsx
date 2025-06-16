@@ -164,7 +164,7 @@ const BlogComponent = ({ blog }: { blog: PopulatedBlogType }) => {
       <AdditionalSection>
         <TagsContainer>
           {blog.tags.map((tag) => (
-            <Link key={tag._id.toString()} href={`/features/${tag._id}`} legacyBehavior>
+            <Link key={tag._id.toString()} href={`/features/${tag._id}`}>
               <BlogTag>{`#${tag.name}`}</BlogTag>
             </Link>
           ))}

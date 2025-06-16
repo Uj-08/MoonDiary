@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { ReadTimeBadge } from "../Blog/Blog.styles";
 
-export const Container = styled.div<{ isDraft: boolean }>`
+export const Container = styled.article<{ isDraft: boolean }>`
   width: 100%;
   max-width: 350px;
   min-width: 300px;

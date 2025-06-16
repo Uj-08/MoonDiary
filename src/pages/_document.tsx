@@ -5,8 +5,6 @@ export default function MyDocument() {
   return (
     <Html lang="en">
       <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-
         <meta charSet="UTF-8" />
         <link rel="shortcut icon" href="/favicon.png" type="image/x-icon" />
 

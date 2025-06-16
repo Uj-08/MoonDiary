@@ -48,7 +48,7 @@ const FeatureCard = ({
     tag: FeaturesTagType
 }) => {
     return (
-        <Link href={`/features/${tag._id}`} legacyBehavior>
+        <Link href={`/features/${tag._id}`}>
             <Container>
                 <Text>#{tag.name}</Text>
                 <span>({tag.nonDraftCount})</span>

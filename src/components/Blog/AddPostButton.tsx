@@ -41,7 +41,7 @@ export const Container = styled.div`
 
 export default function AddPostButton() {
   return (
-    <Link href={"/blogs/post"} legacyBehavior>
+    <Link href={"/blogs/post"}>
       <Container>
         <div>
           <svg

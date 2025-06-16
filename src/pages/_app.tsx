@@ -5,7 +5,7 @@ import NextHead from 'next/head';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { Provider } from 'react-redux';
 import { store } from '../redux/store';
-import NextNProgress from 'nextjs-progressbar';
+import NextTopLoader from 'nextjs-toploader';
 import Base from '@/containers/Base/Base';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { NextPage } from 'next';
@@ -30,8 +30,9 @@ const GlobalStyle = createGlobalStyle`
     min-width: 360px;
   }
 
-  .next-progress-spinner {
-    display: none;
+  a {
+    text-decoration: none;
+    color: inherit;
   }
 `;
 
@@ -44,12 +45,23 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
     <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_CLIENT_ID || ""}>
       <NextHead>
         <title>MoonDiary</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </NextHead>
       <Provider store={store}>
         <GlobalStyle />
-        <NextNProgress color="#b101b1" height={2} options={{
-          showSpinner: false,
-        }} />
+        <NextTopLoader
+          color="#b101b1"
+          height={2}
+          showSpinner={false}
+          crawl={true}
+          crawlSpeed={200}
+          initialPosition={0.2}
+          easing="ease-in-out"
+          speed={500}
+          shadow="0 0 10px #b101b1"
+          zIndex={1600}
+          showAtBottom={false}
+        />
         <QueryClientProvider client={queryClient}>
           {getLayout(<Component {...pageProps} />)}
         </QueryClientProvider>
