@@ -34,8 +34,8 @@ const ArticleGrid = ({
   // const sortQuery = (router.query.sort as string) || DEFAULT_SORT;
   // const orderQuery = (router.query.order as string) || DEFAULT_ORDER;
 
-  const [sortState, setSortState] = useState();
-  const [orderState, setOrderState] = useState();
+  const [sortState, setSortState] = useState<string | undefined>();
+  const [orderState, setOrderState] = useState<string | undefined>();
 
   const [blogsArrayState, setBlogsArrayState] = useState(blogsArray);
 
@@ -58,7 +58,7 @@ const ArticleGrid = ({
     setSortState(newSort);
     updateQuery("sort", newSort);
     const blogsData = await fetchBlogs({
-      order: orderState,
+      order: orderState ?? "",
       sort: newSort
     })
     setBlogsArrayState(
@@ -72,7 +72,7 @@ const ArticleGrid = ({
     updateQuery("order", newOrder);
     const blogsData = await fetchBlogs({
       order: newOrder,
-      sort: sortState
+      sort: sortState ?? ""
     })
     setBlogsArrayState(blogsData)
   };

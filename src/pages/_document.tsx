@@ -7,11 +7,8 @@ export default function MyDocument() {
       <Head>
         <meta charSet="UTF-8" />
         <link rel="shortcut icon" href="/favicon.png" type="image/x-icon" />
-
-        <meta
-          name="description"
-          content="MoonDiary – your daily guide for astrology, reiki, and cosmic wisdom."
-        />
+        
+        <meta name="description" content="Explore daily astrology tips, horoscopes, and intuitive guidance on MoonDiary — your go-to source for aligning life with cosmic wisdom." />
 
         <meta property="og:site_name" content="MoonDiary" />
         <meta property="og:type" content="website" />
