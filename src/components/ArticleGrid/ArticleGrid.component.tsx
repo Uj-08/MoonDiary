@@ -115,8 +115,8 @@ const ArticleGrid = ({
         <SortContainer>
           <span>
             {/* <Label htmlFor="sort">Sort By:</Label> */}
-            <Select id="sort" value={sortState} onChange={handleSortChange}>
-              <option disabled value="" selected>
+            <Select id="sort" value={sortState} onChange={handleSortChange} defaultValue="">
+              <option disabled value="">
                 Sort By…
               </option>
               <option value="createdAt">First Published</option>
@@ -127,8 +127,8 @@ const ArticleGrid = ({
 
           <span>
             {/* <Label htmlFor="order">Order:</Label> */}
-            <Select id="order" value={orderState} onChange={handleOrderChange}>
-              <option disabled value="" selected>
+            <Select id="order" value={orderState} onChange={handleOrderChange} defaultValue="">
+              <option disabled value="">
                 Order By…
               </option>
               <option value="1">{sortState === "blogTitle" ? "(A-Z)" : "Oldest First"}</option>

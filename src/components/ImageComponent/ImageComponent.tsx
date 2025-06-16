@@ -108,7 +108,7 @@ function ImageComponent({
                 alt={alt}
                 // loading={loading}
                 decoding="async"
-                layout="fill"
+                fill
                 priority={isPriority}
                 quality={quality}
                 onLoad={handleLoading}

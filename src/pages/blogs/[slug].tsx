@@ -20,7 +20,7 @@ const Blog = ({ blog }: { blog: PopulatedBlogType }) => {
   return (
     <>
       <Head>
-        <title>{blog.blogTitle} | MoonDiary</title>
+        <title>{`${blog?.blogTitle ?? "Untitled"} | MoonDiary`}</title>
         <meta name="description" content={description} />
         <meta name="keywords" content={keywords} />
         <meta name="author" content={blog.authorName} />
