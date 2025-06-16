@@ -85,7 +85,7 @@ const Blog = ({ blog }: { blog: PopulatedBlogType }) => {
   );
 }
 
-export default React.memo(Blog)
+export default Blog;
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const { slug } = context.params as { slug: string };

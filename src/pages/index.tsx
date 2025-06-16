@@ -14,7 +14,6 @@ const Home = ({ blogsArray }: { blogsArray: PopulatedBlogType[] }) => {
       <Head>
         <meta name="robots" content="index,follow" />
         <link rel="canonical" href="https://moondiary.netlify.app/" />
-        <meta name="robots" content="index,follow" />
       </Head>
       <HeroSection />
       <ArticleGrid blogsArray={blogsArray} apiPath="blogs/" />
@@ -22,23 +21,38 @@ const Home = ({ blogsArray }: { blogsArray: PopulatedBlogType[] }) => {
   );
 }
 
-export default React.memo(Home);
+export default Home;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { req, res, query } = context;
+
   try {
-    const isSessionAvailable = hasCookie(COOKIE_NAME, { req, res });
-    const token = isSessionAvailable ? await getCookie(COOKIE_NAME, context) as string : "";
+    // Get session token safely
+    let token = "";
+    if (hasCookie(COOKIE_NAME, { req, res })) {
+      const cookie = await getCookie(COOKIE_NAME, { req, res });
+      if (typeof cookie === "string") token = cookie;
+    }
 
     const { sort = "updatedAt", order = "-1" } = query;
 
-    const apiRes = await fetch(`${process.env.BASE_URL}/api/blogs?sort=${sort}&order=${order}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "x-session-token": token,
-      },
-    });
+    // Add fetch timeout using AbortController
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 7000); // 7s timeout
+
+    const apiRes = await fetch(
+      `${process.env.BASE_URL}/api/blogs?sort=${sort}&order=${order}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token && { "x-session-token": token }),
+        },
+        signal: controller.signal,
+      }
+    );
+
+    clearTimeout(timeout);
 
     if (!apiRes.ok) {
       return {
@@ -60,7 +74,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return {
       props: {
         blogsArray: [],
-        error: error?.message || "Unknown error occurred",
+        error:
+          error?.name === "AbortError"
+            ? "Request timed out. Please try again later."
+            : error?.message || "Unknown error occurred",
       },
     };
   }

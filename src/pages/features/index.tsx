@@ -54,7 +54,7 @@ const Features = ({ tags }: { tags: FeaturesTagType[] }) => {
     );
 }
 
-export default React.memo(Features);
+export default Features;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const { req, res } = context;

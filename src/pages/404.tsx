@@ -133,7 +133,7 @@ const Custom404 = () => {
                 </FlexRow>
 
                 <TextBlock>
-                    <Subtitle>Looks like you're lost in the stars.</Subtitle>
+                    <Subtitle>{"Looks like you're lost in the stars."}</Subtitle>
                 </TextBlock>
 
                 <StyledLink href="/">Go Home</StyledLink>

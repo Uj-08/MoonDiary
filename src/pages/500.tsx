@@ -133,7 +133,7 @@ const Custom500 = () => {
                 </FlexRow>
 
                 <TextBlock>
-                    <Subtitle>Something went wrong on our end.</Subtitle>
+                    <Subtitle>{"Something went wrong on our end."}</Subtitle>
                 </TextBlock>
 
                 <StyledLink href="/">Try Again</StyledLink>

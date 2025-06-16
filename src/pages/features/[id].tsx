@@ -60,7 +60,7 @@ const TagPage = ({ data }: { data: { blogs: PopulatedBlogType[], name: string } 
     );
 };
 
-export default React.memo(TagPage);
+export default TagPage;
 
 // 🔁 STATIC PATHS
 export const getStaticPaths: GetStaticPaths = async () => {
