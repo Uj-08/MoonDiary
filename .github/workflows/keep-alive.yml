@@ -1,0 +1,13 @@
+name: Keep MoonDiary Alive
+
+on:
+  schedule:
+    - cron: "*/24 * * * *"  # Every 24 minutes
+  workflow_dispatch:        # Optional: allows manual triggering
+
+jobs:
+  ping-moondiary:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Keep-Alive Endpoint
+        run: curl -s https://moondiary.netlify.app/api/keep-alive
