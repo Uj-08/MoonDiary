@@ -34,13 +34,13 @@ export const FeatureHeader = styled.h2`
 
 const TagPage = ({ data }: { data: { blogs: PopulatedBlogType[], name: string } }) => {
     const router = useRouter();
-    
+
     const { id } = router.query;
     const url = `https://moondiary.netlify.app/features/${id}`
-    
+
     const filterURL = React.useMemo(() => {
-        const url = new URL(`/api/tags/${id}`, window.location.origin);
-        return url;
+        if (typeof window === "undefined" || !id) return null;
+        return new URL(`/api/tags/${id}`, window.location.origin);
     }, [id]);
 
     return (

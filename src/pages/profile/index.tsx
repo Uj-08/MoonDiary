@@ -50,6 +50,7 @@ const Profile = ({ blogsArray, sessionId }: { blogsArray: PopulatedBlogType[], s
     const [showDrafts, setShowDrafts] = useState(true);
 
     const filterURL = React.useMemo(() => {
+        if (typeof window === "undefined") return null;
         const url = new URL("/api/blogs", window.location.origin);
         url.searchParams.set("showDrafts", String(showDrafts));
         return url;
@@ -57,11 +58,11 @@ const Profile = ({ blogsArray, sessionId }: { blogsArray: PopulatedBlogType[], s
 
     const showDraftsHandler = async (showDrafts: boolean) => {
         let fetchedBlogsArray: PopulatedBlogType[] | [];
-        dispatch(updateBlogDataIsLoading(true))
-        filterURL.searchParams.set("showDrafts", String(showDrafts))
+        dispatch(updateBlogDataIsLoading(true));
+        (filterURL as URL).searchParams.set("showDrafts", String(showDrafts))
         try {
             const apiRes = await fetch(
-                filterURL.href,
+                (filterURL as URL).href,
                 {
                     method: "GET",
                     headers: {

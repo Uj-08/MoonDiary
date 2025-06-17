@@ -20,7 +20,7 @@ const ArticleGrid = ({
   filterURL,
 }: {
   blogsArray: PopulatedBlogType[];
-  filterURL: URL;
+  filterURL: URL | null;
 }) => {
   // const router = useRouter();
   const dispatch = useDispatch();
@@ -72,9 +72,9 @@ const ArticleGrid = ({
   }) => {
     try {
       dispatch(updateBlogDataIsLoading(true));
-      filterURL.searchParams.set("sort", sort)
-      filterURL.searchParams.set("order", order)
-      const res = await fetch(filterURL.href, {
+      (filterURL as URL).searchParams.set("sort", sort);
+      (filterURL as URL).searchParams.set("order", order);
+      const res = await fetch((filterURL as URL).href, {
         headers: {
           "Content-Type": "application/json",
           "x-session-token": token,

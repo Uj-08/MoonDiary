@@ -10,6 +10,7 @@ import BlogsModel from "@/models/Blogs.model";
 const Home = ({ blogsArray }: { blogsArray: PopulatedBlogType[] }) => {
 
   const filterURL = React.useMemo(() => {
+    if (typeof window === "undefined") return null;
     const url = new URL(`/api/blogs`, window.location.origin);
     return url;
   }, []);
