@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 // import { useRouter } from "next/router";
 import {
   Container,
@@ -15,16 +15,12 @@ import { COOKIE_NAME } from "@/helpers/constants";
 import { useDispatch } from "react-redux";
 import { updateBlogDataIsLoading } from "@/redux/slices/blogInfo";
 
-// Constants
-const DEFAULT_SORT = "updatedAt";
-const DEFAULT_ORDER = "-1";
-
 const ArticleGrid = ({
   blogsArray,
-  apiPath,
+  filterURL,
 }: {
   blogsArray: PopulatedBlogType[];
-  apiPath: string;
+  filterURL: URL;
 }) => {
   // const router = useRouter();
   const dispatch = useDispatch();
@@ -39,24 +35,14 @@ const ArticleGrid = ({
 
   const [blogsArrayState, setBlogsArrayState] = useState(blogsArray);
 
-
-  // Update URL params without full reload
-  // const updateQuery = (param: "sort" | "order", value: string) => {
-  //   router.replace(
-  //     {
-  //       pathname: router.pathname,
-  //       query: { ...router.query, [param]: value },
-  //     },
-  //     undefined,
-  //     { shallow: true }
-  //   );
-  // };
+  useEffect(() => {
+    setBlogsArrayState(blogsArray)
+  }, [blogsArray])
 
   // Sort/order handlers
   const handleSortChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newSort = e.target.value;
     setSortState(newSort);
-    // updateQuery("sort", newSort);
     const blogsData = await fetchBlogs({
       order: orderState ?? "",
       sort: newSort
@@ -69,7 +55,6 @@ const ArticleGrid = ({
   const handleOrderChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newOrder = e.target.value;
     setOrderState(newOrder);
-    // updateQuery("order", newOrder);
     const blogsData = await fetchBlogs({
       order: newOrder,
       sort: sortState ?? ""
@@ -87,8 +72,9 @@ const ArticleGrid = ({
   }) => {
     try {
       dispatch(updateBlogDataIsLoading(true));
-
-      const res = await fetch(`/api/${apiPath}?sort=${sort}&order=${order}`, {
+      filterURL.searchParams.set("sort", sort)
+      filterURL.searchParams.set("order", order)
+      const res = await fetch(filterURL.href, {
         headers: {
           "Content-Type": "application/json",
           "x-session-token": token,
@@ -150,4 +136,4 @@ const ArticleGrid = ({
   );
 };
 
-export default React.memo(ArticleGrid);
+export default (ArticleGrid);

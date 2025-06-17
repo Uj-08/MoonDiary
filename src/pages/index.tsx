@@ -8,6 +8,12 @@ import dbConnect from "@/lib/dbConnect";
 import BlogsModel from "@/models/Blogs.model";
 
 const Home = ({ blogsArray }: { blogsArray: PopulatedBlogType[] }) => {
+
+  const filterURL = React.useMemo(() => {
+    const url = new URL(`/api/blogs`, window.location.origin);
+    return url;
+  }, []);
+
   return (
     <>
       <Head>
@@ -15,7 +21,7 @@ const Home = ({ blogsArray }: { blogsArray: PopulatedBlogType[] }) => {
         <link rel="canonical" href="https://moondiary.netlify.app/" />
       </Head>
       <HeroSection />
-      <ArticleGrid blogsArray={blogsArray} apiPath="blogs/" />
+      <ArticleGrid blogsArray={blogsArray} filterURL={filterURL} />
     </>
   );
 };

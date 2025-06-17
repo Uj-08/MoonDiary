@@ -9,32 +9,40 @@ import BlogsModel from "@/models/Blogs.model";
 import { PopulatedBlogType } from "@/types/blog";
 import { useRouter } from "next/router";
 import { anton } from "@/styles/fonts";
+import { TagType } from "@/types/tag";
 
 export const Container = styled.div`
-  min-height: calc(100dvh);
-  padding-top: 120px;
+    min-height: calc(100dvh);
+    padding-top: 120px;
 `;
 
 export const FeatureHeader = styled.h2`
-  font-family: ${anton.style.fontFamily}, sans-serif;
-  letter-spacing: 0.8px;
-  padding: 1rem 8rem;
-  @media (max-width: 1200px) {
-    padding: 0 4rem;
-  }
-  @media (max-width: 812px) {
-    padding: 0 2rem;
-  }
-  @media (max-width: 450px) {
-    padding: 0 1rem;
-  }
-  padding-bottom: 0;
+    font-family: ${anton.style.fontFamily}, sans-serif;
+    letter-spacing: 0.8px;
+    padding: 1rem 8rem;
+    @media (max-width: 1200px) {
+        padding: 0 4rem;
+    }
+    @media (max-width: 812px) {
+        padding: 0 2rem;
+    }
+    @media (max-width: 450px) {
+        padding: 0 1rem;
+    }
+    padding-bottom: 0;
 `;
 
 const TagPage = ({ data }: { data: { blogs: PopulatedBlogType[], name: string } }) => {
     const router = useRouter();
+    
     const { id } = router.query;
     const url = `https://moondiary.netlify.app/features/${id}`
+    
+    const filterURL = React.useMemo(() => {
+        const url = new URL(`/api/tags/${id}`, window.location.origin);
+        return url;
+    }, [id]);
+
     return (
         <>
             <Head>
@@ -54,7 +62,7 @@ const TagPage = ({ data }: { data: { blogs: PopulatedBlogType[], name: string } 
             </Head>
             <Container>
                 <FeatureHeader>#{data.name}</FeatureHeader>
-                <ArticleGrid blogsArray={data.blogs} apiPath={`tags/${id}`} />
+                <ArticleGrid blogsArray={data.blogs} filterURL={filterURL} />
             </Container>
         </>
     );
@@ -84,7 +92,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const { id } = params as { id: string };
 
     try {
-        const tag = await TagsModel.findById(id).lean();
+        const tag: TagType | null = await TagsModel.findById(id).lean();
         if (!tag) {
             return { notFound: true };
         }

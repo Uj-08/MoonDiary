@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ArticleGrid from "@/components/ArticleGrid/ArticleGrid.component";
 import { GetServerSideProps } from "next";
 import { getCookie, hasCookie } from "cookies-next";
@@ -6,20 +6,19 @@ import { ADMIN_EMAILS, COOKIE_NAME } from "@/helpers/constants";
 import Head from "next/head";
 import { PopulatedBlogType } from "@/types/blog";
 import ProfileHero from "@/components/HeroSection/ProfileHero";
-import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { updateBlogDataIsLoading } from "@/redux/slices/blogInfo";
 import styled from "styled-components";
 import { ClientContext } from "@/containers/Base/Base";
 
-export const ToggleWrapper = styled.div`
+const ToggleWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
     margin-top: 2rem;
 `;
 
-export const SwitchContainer = styled.div`
+const SwitchContainer = styled.div`
     background-color: #e0e0e0;
     border-radius: 50px;
     display: flex;
@@ -27,7 +26,7 @@ export const SwitchContainer = styled.div`
     position: relative;
 `;
 
-export const SwitchOption = styled.button<{ active: boolean }>`
+const SwitchOption = styled.button<{ active: boolean }>`
     background-color: ${({ active }) => (active ? "#b101b1" : "transparent")};
     color: ${({ active }) => (active ? "#fff" : "#333")};
     border: none;
@@ -48,41 +47,41 @@ const Profile = ({ blogsArray, sessionId }: { blogsArray: PopulatedBlogType[], s
     const client = useContext(ClientContext)
     const [blogsArrayState, setBlogsArrayState] = useState(blogsArray)
     const dispatch = useDispatch();
-    const router = useRouter();
     const [showDrafts, setShowDrafts] = useState(true);
-    const showDraftsHandler = (showDrafts: boolean) => {
-        return async () => {
-            let fetchedBlogsArray: PopulatedBlogType[] | [] = [];
-            dispatch(updateBlogDataIsLoading(true))
-            try {
-                const apiRes = await fetch(
-                    `/api/blogs?showDrafts=${showDrafts}`,
-                    {
-                        method: "GET",
-                        headers: {
-                            "Content-Type": "application/json",
-                            ...(sessionId && { "x-session-token": sessionId }),
-                        }
-                    }
-                );
 
-                if (apiRes.ok) {
-                    fetchedBlogsArray = await apiRes.json();
-                    setBlogsArrayState(fetchedBlogsArray);
-                    setShowDrafts(showDrafts);
-                    router.push({
-                        query: {
-                            showDrafts
-                        }
-                    }, undefined, { shallow: true })
+    const filterURL = React.useMemo(() => {
+        const url = new URL("/api/blogs", window.location.origin);
+        url.searchParams.set("showDrafts", String(showDrafts));
+        return url;
+    }, [showDrafts]);
+
+    const showDraftsHandler = async (showDrafts: boolean) => {
+        let fetchedBlogsArray: PopulatedBlogType[] | [];
+        dispatch(updateBlogDataIsLoading(true))
+        filterURL.searchParams.set("showDrafts", String(showDrafts))
+        try {
+            const apiRes = await fetch(
+                filterURL.href,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        ...(sessionId && { "x-session-token": sessionId }),
+                    }
                 }
-            } catch (e) {
-                console.log(e)
-            } finally {
-                dispatch(updateBlogDataIsLoading(false));
+            );
+
+            if (apiRes.ok) {
+                fetchedBlogsArray = await apiRes.json();
+                setBlogsArrayState(fetchedBlogsArray)
+                setShowDrafts(showDrafts);
             }
+        } catch (e) {
+            console.log(e)
+        } finally {
+            dispatch(updateBlogDataIsLoading(false));
         }
-    }
+    };
 
     return (
         <>
@@ -96,15 +95,15 @@ const Profile = ({ blogsArray, sessionId }: { blogsArray: PopulatedBlogType[], s
                     <>
                         <ToggleWrapper>
                             <SwitchContainer>
-                                <SwitchOption active={!showDrafts} onClick={showDraftsHandler(false)}>
+                                <SwitchOption active={!showDrafts} onClick={() => showDraftsHandler(false)}>
                                     Show Published
                                 </SwitchOption>
-                                <SwitchOption active={showDrafts} onClick={showDraftsHandler(true)}>
+                                <SwitchOption active={showDrafts} onClick={() => showDraftsHandler(true)}>
                                     Show Drafts
                                 </SwitchOption>
                             </SwitchContainer>
                         </ToggleWrapper>
-                        <ArticleGrid blogsArray={blogsArrayState} apiPath="blogs/" />
+                        <ArticleGrid blogsArray={blogsArrayState} filterURL={filterURL} />
                     </>
                 )
             }
@@ -139,7 +138,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
                     "Content-Type": "application/json",
                     ...(token && { "x-session-token": token }),
                 },
-                signal: controller.signal,
+                signal: controller.signal
             }
         );
 
