@@ -70,16 +70,27 @@ const LinkContainer = styled.div`
   padding: 20px 16px;
 `;
 
+const ProfileContainer = styled.div`
+  border-radius: 100%;
+  overflow: hidden;
+  position: relative;
+  height: 27px;
+  aspect-ratio: 1;
+  transform: translateY(-3px);
+`;
+
 const HamburgerMenu = ({
   showHamburger,
   setShowHamburger,
   signInHandler,
   signedIn,
+  picture,
 }: {
   showHamburger: boolean;
   setShowHamburger: (bool: boolean) => void;
   signInHandler: () => void;
   signedIn: boolean;
+  picture: string;
 }) => {
   function containerClickHandler(e: React.MouseEvent<HTMLDivElement>) {
     e.stopPropagation();
@@ -124,14 +135,18 @@ const HamburgerMenu = ({
                 <Image src={gmail} alt="social-links" height={25} width={25} />
               </Link>
             </li>
-            <li>
-              <Link href={"/"}>
-                <Image src={logo} alt="social-links" height={25} width={25} />
-              </Link>
-            </li>
+            
             <li>
               <Link href="https://www.instagram.com/shaireee_67/" target="_blank" rel="noreferrer">
                 <Image src={insta} alt="social-links" height={25} width={25} />
+              </Link>
+            </li>
+
+            <li>
+              <Link href={"/profile"}>
+                <ProfileContainer>
+                  <Image src={picture} alt="social-links" fill />
+                </ProfileContainer>
               </Link>
             </li>
           </SocialLinks>

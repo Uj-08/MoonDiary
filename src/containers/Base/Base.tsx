@@ -142,6 +142,7 @@ const Base = ({ children }: BaseTypes) => {
         setShowHamburger={setShowHamburger}
         signInHandler={signInHandler}
         signedIn={signedIn}
+        picture={picture}
       />
       <Modal 
         showModal={showLoginModal || (blogInfo.blogPostUpdateStatus.isLoading || blogInfo.blogDeleteStatus.isLoading)} 

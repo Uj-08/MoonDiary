@@ -27,6 +27,9 @@ export const getStaticProps: GetStaticProps = async () => {
   try {
     await dbConnect();
 
+    // Ensure Tags model is registered
+    await import('@/models/Tags.model');
+
     // Only show published blogs (isDraft !== true)
     const blogs = await BlogsModel.find({ isDraft: { $ne: true } })
       .populate("tags", "name")

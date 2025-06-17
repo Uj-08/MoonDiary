@@ -107,6 +107,9 @@ export const SocialLinks = styled.ul<{ isHamburger?: boolean }>`
     li:last-child {
         &:hover {
             background-color: #AE4FE9;
+            @media (max-width: 950px) {
+                background-color: unset;
+            }
         }
     }
 
