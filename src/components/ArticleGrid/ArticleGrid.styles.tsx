@@ -50,9 +50,9 @@ export const SortContainer = styled.div`
     gap: 10px;
     align-items: center;
   }
-  @media (max-width: 728px) {
-    justify-content: center;
-  }
+  /* @media (max-width: 730px) {
+    padding: 0 3rem;
+  } */
   @media (max-width: 500px) {
     font-size: 12px;
   }
