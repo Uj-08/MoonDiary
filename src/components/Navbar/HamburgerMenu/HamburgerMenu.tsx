@@ -4,7 +4,6 @@ import { NavLinks, SocialLinks } from "../Navbar.styles";
 import Image from "next/image";
 import Link from "next/link";
 import { dancingScript } from "@/styles/fonts";
-import logo from "public/logo.png"
 import gmail from "public/gmail.png"
 import insta from "public/instagram.png"
 

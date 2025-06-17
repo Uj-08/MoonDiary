@@ -10,6 +10,10 @@ export const HeroContent = styled.div`
     gap: 1rem;
     transform: translateY(-40px);
     z-index: 1;
+    @media (max-width: 950px) {
+        transform: translateY(0px);
+        gap: 0;
+    }
 `;
 
 export const ProfileContainer = styled.div`
