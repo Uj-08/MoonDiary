@@ -104,93 +104,95 @@ export const ArticleCard = ({ blog, clientEmail, index }: ArticleCardTypes) => {
   const readingTime = `${getReadingTime(blogBody)} min read`;
 
   return (
-    <Link href={`/blogs/${blog.slug}`}>
-      <Container isDraft={isDraft}>
-        <ImageContainer>
-          <OverlayContainer>
-            <CardReadTimeBadge>
-              {readingTime}
-            </CardReadTimeBadge>
-          </OverlayContainer>
-          <ImageComponent
-            src={blogImg}
-            aspectRatio={4 / 3}
-            alt={"Card Image"}
-            isPriority={index <= 3}
-          />
-        </ImageContainer>
-        <CardDetails>
-          <MainContent>
-            <BlogHeader>
-              <TagsContainer>
-                {Array.isArray(tags) && tags.length > 0 &&
-                  tags.map((tag, idx) => {
-                    if (idx <= 1) return (
-                      <Tag
-                        key={tag._id.toString()}
-                        title={`#${tag.name}`}
-                        maxWidth={"90px"}
-                        fontSize="12px"
-                        letterSpacing="0.5px"
-                        bgColor={getRandomColor()}
-                        onClick={() => router.push(`/features/${tag._id}`)}
-                      >
-                        <span>
-                          #{tag.name}
-                        </span>
-                      </Tag>
-                    )
-                  })
-                }
-                {Array.isArray(tags) && tags.length > 0 && tags.length > 2 &&
-                  <MoreTag title={tags.slice(2).map((tag) => `#${tag.name}`).join(" ")} color={getRandomColor()}>+{tags.length - 2} more</MoreTag>
-                }
-              </TagsContainer>
-            </BlogHeader>
-            <BlogTitle>{blogTitle}</BlogTitle>
-            <BlogData>{blogBody}</BlogData>
-          </MainContent>
-          <BlogAuthorContainer>
-            <BlogAuthor>
-              <AuthorProfile>
-                <ImageComponent
-                  src={authorPicture}
-                  aspectRatio={1}
-                  alt={"profile picture"}
-                  isPriority={index <= 3}
-                />
-              </AuthorProfile>
-              <AuthorDetail>
-                <div>{authorName}</div>
-                <div>{relTime ?? "unknown"}</div>
-              </AuthorDetail>
-              {clientEmail === authorEmail && (
-                <ButtonsContainer>
-                  <EditButton onClick={editBlogHandler}>Edit</EditButton>
-                  <DeleteButton onClick={showDeleteModalHandler}>
-                    Delete
-                  </DeleteButton>
-                </ButtonsContainer>
-              )}
-              <Modal
-                showModal={showDeleteModal}
-                hideModal={() => {
-                  setShowDeleteModal(false);
-                }}
-              >
-                <DeleteCard
-                  blogTitle={blogTitle}
-                  onDeleteHandler={deleteBlogHandler}
-                  onCancelHandler={() => {
+    <div>
+      <Link href={`/blogs/${blog.slug}`}>
+        <Container isDraft={isDraft}>
+          <ImageContainer>
+            <OverlayContainer>
+              <CardReadTimeBadge>
+                {readingTime}
+              </CardReadTimeBadge>
+            </OverlayContainer>
+            <ImageComponent
+              src={blogImg}
+              aspectRatio={4 / 3}
+              alt={"Card Image"}
+              isPriority={index <= 3}
+            />
+          </ImageContainer>
+          <CardDetails>
+            <MainContent>
+              <BlogHeader>
+                <TagsContainer>
+                  {Array.isArray(tags) && tags.length > 0 &&
+                    tags.map((tag, idx) => {
+                      if (idx <= 1) return (
+                        <Tag
+                          key={tag._id.toString()}
+                          title={`#${tag.name}`}
+                          maxWidth={"90px"}
+                          fontSize="12px"
+                          letterSpacing="0.5px"
+                          bgColor={getRandomColor()}
+                          onClick={() => router.push(`/features/${tag._id}`)}
+                        >
+                          <span>
+                            #{tag.name}
+                          </span>
+                        </Tag>
+                      )
+                    })
+                  }
+                  {Array.isArray(tags) && tags.length > 0 && tags.length > 2 &&
+                    <MoreTag title={tags.slice(2).map((tag) => `#${tag.name}`).join(" ")} color={getRandomColor()}>+{tags.length - 2} more</MoreTag>
+                  }
+                </TagsContainer>
+              </BlogHeader>
+              <BlogTitle>{blogTitle}</BlogTitle>
+              <BlogData>{blogBody}</BlogData>
+            </MainContent>
+            <BlogAuthorContainer>
+              <BlogAuthor>
+                <AuthorProfile>
+                  <ImageComponent
+                    src={authorPicture}
+                    aspectRatio={1}
+                    alt={"profile picture"}
+                    isPriority={index <= 3}
+                  />
+                </AuthorProfile>
+                <AuthorDetail>
+                  <div>{authorName}</div>
+                  <div>{relTime ?? "unknown"}</div>
+                </AuthorDetail>
+                {clientEmail === authorEmail && (
+                  <ButtonsContainer>
+                    <EditButton onClick={editBlogHandler}>Edit</EditButton>
+                    <DeleteButton onClick={showDeleteModalHandler}>
+                      Delete
+                    </DeleteButton>
+                  </ButtonsContainer>
+                )}
+                <Modal
+                  showModal={showDeleteModal}
+                  hideModal={() => {
                     setShowDeleteModal(false);
                   }}
-                />
-              </Modal>
-            </BlogAuthor>
-          </BlogAuthorContainer>
-        </CardDetails>
-      </Container>
-    </Link>
+                >
+                  <DeleteCard
+                    blogTitle={blogTitle}
+                    onDeleteHandler={deleteBlogHandler}
+                    onCancelHandler={() => {
+                      setShowDeleteModal(false);
+                    }}
+                  />
+                </Modal>
+              </BlogAuthor>
+            </BlogAuthorContainer>
+          </CardDetails>
+        </Container>
+      </Link>
+    </div>
   );
 }
 

@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import {
   Container,
   Grid,
   SortContainer,
-  Label,
+  // Label,
   Select,
 } from "./ArticleGrid.styles";
 import DynamicCard from "../ArticleCard/ArticleCard.component";
@@ -26,7 +26,7 @@ const ArticleGrid = ({
   blogsArray: PopulatedBlogType[];
   apiPath: string;
 }) => {
-  const router = useRouter();
+  // const router = useRouter();
   const dispatch = useDispatch();
   const client = useContext(ClientContext);
   const token = getCookie(COOKIE_NAME) as string;
@@ -41,22 +41,22 @@ const ArticleGrid = ({
 
 
   // Update URL params without full reload
-  const updateQuery = (param: "sort" | "order", value: string) => {
-    router.replace(
-      {
-        pathname: router.pathname,
-        query: { ...router.query, [param]: value },
-      },
-      undefined,
-      { shallow: true }
-    );
-  };
+  // const updateQuery = (param: "sort" | "order", value: string) => {
+  //   router.replace(
+  //     {
+  //       pathname: router.pathname,
+  //       query: { ...router.query, [param]: value },
+  //     },
+  //     undefined,
+  //     { shallow: true }
+  //   );
+  // };
 
   // Sort/order handlers
   const handleSortChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newSort = e.target.value;
     setSortState(newSort);
-    updateQuery("sort", newSort);
+    // updateQuery("sort", newSort);
     const blogsData = await fetchBlogs({
       order: orderState ?? "",
       sort: newSort
@@ -69,7 +69,7 @@ const ArticleGrid = ({
   const handleOrderChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newOrder = e.target.value;
     setOrderState(newOrder);
-    updateQuery("order", newOrder);
+    // updateQuery("order", newOrder);
     const blogsData = await fetchBlogs({
       order: newOrder,
       sort: sortState ?? ""

@@ -14,6 +14,7 @@ export const ImageContainer = styled.div`
     overflow: hidden;
     height: 100%;
     aspect-ratio: 4/3;
+    max-height: 75dvh;
     z-index: 10;
     filter: blur(3px);
     width: 100%;
@@ -22,11 +23,8 @@ export const ImageContainer = styled.div`
         aspect-ratio: 1;
     }
     img {
-        object-fit: contain;
+        object-fit: cover;
         object-position: center;
-        @media (max-width: 1200px) {
-            object-fit: cover;
-        }
     }
 
     &:before {

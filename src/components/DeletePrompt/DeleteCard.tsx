@@ -33,7 +33,7 @@ const ModalDeleteButton = styled(DeleteButton)`
 const CancelButton = styled(ModalDeleteButton)`
     border: 1px solid #5CD5A7;
     color: #5CD5A7;
-    :hover {
+    &:hover {
         color: #ffff;
         background-color: #5CD5A7;
     }

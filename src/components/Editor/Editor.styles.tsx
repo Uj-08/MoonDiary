@@ -163,7 +163,7 @@ export const InputFileLabel = styled.label`
     padding: 5px 15px;
     border-radius: 8px;
     cursor: pointer;
-    :hover {
+    &:hover {
         box-shadow: 0 2px 2px -2px rgba(34,47,62,.1), 0 8px 8px -4px rgba(34,47,62,.07);
     }
 `;
@@ -178,7 +178,7 @@ export const RemoveImage = styled.div`
     padding: 5px 15px;
     border-radius: 8px;
     cursor: pointer;
-    :hover {
+    &:hover {
         box-shadow: 0 2px 2px -2px rgba(34,47,62,.1), 0 8px 8px -4px rgba(34,47,62,.07);
         background-color: white;
     }

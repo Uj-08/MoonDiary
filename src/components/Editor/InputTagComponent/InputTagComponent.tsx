@@ -42,14 +42,14 @@ export const Suggestion = styled.li`
     opacity: 0.7;
     transition: opacity 300ms linear;
     transition: box-shadow 300ms linear;
-    :hover {
+    &:hover {
         opacity: 1;
         box-shadow: 
         rgb(0 0 0 / 20%) 0px 12px 28px 0px,
         rgb(0 0 0 / 10%) 0px 2px 4px 0px,
         rgb(255 255 255 / 5%) 0px 0px 0px 1px inset;
     }
-    :active {
+    &:active {
         opacity: 1;
         box-shadow: 
             rgb(0 0 0 / 20%) 0px 12px 28px 0px,

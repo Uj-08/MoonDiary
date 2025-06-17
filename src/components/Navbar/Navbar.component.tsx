@@ -10,7 +10,8 @@ import gmail from "public/gmail.png"
 import insta from "public/instagram.png"
 
 
-export const Profile = styled.div`
+export const Profile = styled.span`
+display: flex;
 position: relative;
 height: 26px;
 width: 26px;
@@ -53,18 +54,20 @@ const Navbar = ({ signInHandler, signedIn, picture, hmbgrClickHandler }: NavbarT
             <SocialLinks>
                 <li>
                     <Link href="mailto:psykidbiz@gmail.com">
-                        <Image src={gmail} alt={"gmail"} height="25" width="25"/>
+                        <Image src={gmail} alt={"gmail"} height="25" width="25" />
                     </Link>
                 </li>
                 <li>
                     <Link href="https://www.instagram.com/shaireee_67/" target="_blank" rel="noreferrer">
-                        <Image src={insta} alt={"Instagram"} height="25" width="25"/>
+                        <Image src={insta} alt={"Instagram"} height="25" width="25" />
                     </Link>
                 </li>
                 <li>
-                    <Profile>
-                        <ImageComponent aspectRatio={1} src={picture} alt="" />
-                    </Profile>
+                    <Link href={"/profile"}>
+                        <Profile>
+                            <ImageComponent aspectRatio={1} src={picture} alt="" />
+                        </Profile>
+                    </Link>
                 </li>
             </SocialLinks>
             <HamburgerButton onClick={hmbgrClickHandler}>

@@ -87,7 +87,7 @@ export const PostButton = styled.button`
     text-transform: uppercase;
     cursor: pointer;
     font-weight: bold;
-    :hover {
+    &:hover {
         color: #ffffff;
         background: rgba(255, 255, 255, 0.3);
     }
@@ -104,7 +104,7 @@ export const ReadTimeBadge = styled.span`
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(3px);
     border-radius: 4px;
-    :hover {
+    &:hover {
         color: #ffffff;
         background: rgba(255, 255, 255, 0.3);
     }
@@ -132,7 +132,7 @@ export const TagsContainer = styled.div`
         padding: 0 8px;
         flex-wrap: nowrap;
         overflow-x: scroll;
-        ::-webkit-scrollbar {
+        &::-webkit-scrollbar {
             display: none;
         }
     }
@@ -148,7 +148,7 @@ export const BlogTag = styled.h3`
     cursor: pointer;
     opacity: 0.6;
     transition: opacity 200ms linear;
-    :hover {
+    &:hover {
         opacity: 0.8;
     }
 `;
@@ -160,7 +160,7 @@ export const AdditionalData = styled.div`
     padding: 10px 30px 40px 40px;
     margin: -10px -30px -40px -40px;
     overflow-y: scroll;
-    ::-webkit-scrollbar {
+    &::-webkit-scrollbar {
         display: none;
     }
     div {

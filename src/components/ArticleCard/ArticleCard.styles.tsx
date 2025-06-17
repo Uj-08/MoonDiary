@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { ReadTimeBadge } from "../Blog/Blog.styles";
 
-export const Container = styled.article<{ isDraft: boolean }>`
+export const Container = styled.div<{ isDraft: boolean }>`
   width: 100%;
   max-width: 350px;
   min-width: 300px;
@@ -14,7 +14,7 @@ export const Container = styled.article<{ isDraft: boolean }>`
   cursor: pointer;
   justify-self: center;
   transition: box-shadow linear 200ms;
-  :hover {
+  &:hover {
     box-shadow: rgba(177, 1, 177, 0.2) 0px 12px 28px 0px,
       rgba(177, 1, 177, 0.1) 0px 2px 4px 0px,
       rgba(177, 1, 177, 0.05) 0px 0px 0px 1px inset;
@@ -32,7 +32,7 @@ export const ImageContainer = styled.div`
     object-fit: cover;
     object-position: center;
     transition: transform 200ms linear;
-    :hover {
+    &:hover {
       transform: scale(1.02);
     }
   }
@@ -67,7 +67,7 @@ export const EditButton = styled.button`
   /* :hover {
     opacity: 1;
   } */
-  :hover {
+  &:hover {
     background-color: #009FBD;
     color: #ffff;
   }
@@ -77,7 +77,7 @@ export const DeleteButton = styled(EditButton)`
   background-color: #ffff;
   border: 1px solid #F31559;
   color: #F31559;
-  :hover {
+  &:hover {
     background-color: #F31559;
     color: #ffff;
   }
@@ -134,7 +134,7 @@ export const Tag = styled.h3<{
   ${({ fontSize, letterSpacing }) => `font-size: ${fontSize}; letter-spacing: ${letterSpacing};`}
   opacity: 0.8;
   transition: opacity 200ms linear;
-  :hover {
+  &:hover {
     opacity: 1;
   }
   span {

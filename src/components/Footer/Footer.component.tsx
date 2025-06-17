@@ -7,7 +7,7 @@ import gmail from "public/gmail.png"
 import insta from "public/instagram.png"
 
 export const LogoContainer = styled.li`
-    :hover {
+    &:hover {
         img {
             transform: rotate(360deg);
         }

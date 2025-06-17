@@ -4,6 +4,7 @@ import BlogsModel from '@/models/Blogs.model';
 import TagsModel from '@/models/Tags.model';
 import jwtDecode from 'jwt-decode';
 import { HttpMethod } from '@/helpers/apiHelpers';
+import { ClientType } from '@/types/client';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
     switch (req.method) {
@@ -12,20 +13,22 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
                 const sessionToken = req.headers['x-session-token'];
                 let clientEmail = null;
 
+                let { sort = "updatedAt", order = "-1", limit, filterIds, showDrafts } = req.query;
+
                 if (sessionToken) {
                     try {
-                        const decoded: any = jwtDecode(sessionToken as string);
+                        const decoded: ClientType  = jwtDecode(sessionToken as string);
                         clientEmail = decoded?.email;
                     } catch (e) {
                         console.log(e)
                     }
                 }
-
-                const query = clientEmail
+            
+                const query: Record<string, any> = (clientEmail && (showDrafts === "true"))
                     ? {
-                        $or: [
-                            { isDraft: { $ne: true } },
-                            { authorEmail: clientEmail }
+                        $and: [
+                            { isDraft: { $eq: true } },
+                            { authorEmail: { $eq: clientEmail } }
                         ]
                     }
                     : { isDraft: { $ne: true } };
@@ -34,7 +37,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
                 const ALLOWED_SORT_FIELDS = ["updatedAt", "createdAt", "filterIds", "blogTitle"];
                 const ALLOWED_ORDER_VALUES = ["1", "-1"];
 
-                let { sort = "updatedAt", order = "-1", limit, filterIds } = req.query;
                 const filterIdsArray = filterIds && (filterIds as string).split(",")
                 // Validate
                 if (!ALLOWED_SORT_FIELDS.includes(sort)) sort = "updatedAt";

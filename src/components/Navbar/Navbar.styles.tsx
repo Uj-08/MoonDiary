@@ -36,7 +36,7 @@ export const LogoContainer = styled.div`
         width: 35px;
     }
     -webkit-tap-highlight-color: transparent;
-    :hover {
+    &:hover {
         img {
             transform: rotate(360deg);
         }
@@ -74,10 +74,6 @@ export const NavLinks = styled.ul<{ isHamburger?: boolean }>`
         font-size: 1.3rem;
         letter-spacing: ${props => !props.isHamburger && "2px"};
         transition: color linear 200ms;
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
     }
     li:hover {
         color: #b101b1;
@@ -109,7 +105,9 @@ export const SocialLinks = styled.ul<{ isHamburger?: boolean }>`
     }
 
     li:last-child {
-        cursor: auto;
+        &:hover {
+            background-color: #AE4FE9;
+        }
     }
 
     /* Disable hover effects on small screens */
