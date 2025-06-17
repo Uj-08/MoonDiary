@@ -18,7 +18,7 @@ const Container = styled.div<{ showHamburger: boolean }>`
     showHamburger
       ? "backdrop-filter: blur(10px);"
       : "backdrop-filter: blur(0px);"}
-  pointer-events: none;
+  ${({ showHamburger }) => !showHamburger && "pointer-events: none;"}
   transition: backdrop-filter 200ms linear;
   @media (max-width: 950px) {
         display: "none";
@@ -94,9 +94,8 @@ const HamburgerMenu = ({
   function containerClickHandler(e: React.MouseEvent<HTMLDivElement>) {
     e.stopPropagation();
   }
-
   return (
-    <Container showHamburger={showHamburger}>
+    <Container showHamburger={showHamburger} onClick={() => setShowHamburger(false)}>
       <HamburgerContainer
         onClick={containerClickHandler}
         showHamburger={showHamburger}
@@ -122,27 +121,30 @@ const HamburgerMenu = ({
                 About Me
               </Link>
             </li>
-            <li onClick={signInHandler}>
-              <div onClick={() => setShowHamburger(false)}>
+            <li>
+              <div  onClick={() => {
+                signInHandler()
+                setShowHamburger(false) 
+              }}>
                 {signedIn ? "Sign Out" : "Sign In"}
               </div>
             </li>
           </NavLinks>
           <SocialLinks isHamburger={true}>
             <li>
-              <Link href="mailto:psykidbiz@gmail.com">
+              <Link href="mailto:psykidbiz@gmail.com" onClick={() => setShowHamburger(false)}>
                 <Image src={gmail} alt="social-links" height={25} width={25} />
               </Link>
             </li>
             
             <li>
-              <Link href="https://www.instagram.com/shaireee_67/" target="_blank" rel="noreferrer">
+              <Link href="https://www.instagram.com/shaireee_67/" target="_blank" rel="noreferrer" onClick={() => setShowHamburger(false)}>
                 <Image src={insta} alt="social-links" height={25} width={25} />
               </Link>
             </li>
 
             <li>
-              <Link href={"/profile"}>
+              <Link href={"/profile"} onClick={() => setShowHamburger(false)}>
                 <ProfileContainer>
                   <Image src={picture} alt="social-links" fill />
                 </ProfileContainer>
