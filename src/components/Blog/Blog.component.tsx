@@ -53,7 +53,7 @@ const fetchRelatedBlogs = async (blog: PopulatedBlogType) => {
       body: JSON.stringify(body)
     });
 
-    let similarBlogs = await blogs.json()
+    let similarBlogs: PopulatedBlogType[] = await blogs.json()
 
     // Fill extra if needed
     if (similarBlogs.length < ADDITIONAL_CARDS_LENGTH) {
