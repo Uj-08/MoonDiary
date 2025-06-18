@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import connectDB from "@/middleware/mongoose";
 import TagsModel from "@/models/Tags.model";
 import { HttpMethod } from "@/helpers/apiHelpers";
+import BlogModel from "@/models/Blogs.model";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
     switch (req.method) {
@@ -62,6 +63,40 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
             } catch (err) {
                 console.error("Tag search error:", err);
                 return res.status(500).json(err);
+            }
+        }
+
+        case HttpMethod.POST: {
+            try {
+                const { limit } = req.query;
+                const { tagIds, filterBlogId } = req.body;
+
+                if (!Array.isArray(tagIds) || tagIds.length === 0) {
+                    return res.status(400).json({ error: "tagIds must be a non-empty array." });
+                }
+
+                const query: any = {
+                    tags: { $in: tagIds }
+                };
+
+                if (filterBlogId) {
+                    query._id = { $ne: filterBlogId };
+                }
+
+                const blogsQuery = BlogModel.find(query)
+                    .populate("tags", "name")
+                    .lean();
+
+                if (limit) {
+                    blogsQuery.limit(Number(limit));
+                }
+
+                const blogs = await blogsQuery;
+
+                return res.status(200).json(blogs);
+            } catch (err) {
+                console.error("POST error:", err);
+                return res.status(500).json({ error: "Internal server error." });
             }
         }
 

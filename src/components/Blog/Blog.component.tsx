@@ -40,33 +40,33 @@ const fetchRelatedBlogs = async (blog: PopulatedBlogType) => {
 
   try {
     // Fetch related by tags
-    const tagResponses = await Promise.all(
-      blog.tags.map((tag) =>
-        fetch(`/api/tags/${tag._id}?filterId=${blog._id}`).then((res) =>
-          res.json()
-        ).then(data => data.blogsArray)
-      )
-    );
-    let flatData = tagResponses.flat();
+    const tagIds = blog.tags.map(tag => tag._id);
+    const body = {
+      tagIds,
+      filterBlogId: blog._id
+    }
+    const blogs = await fetch(`/api/tags?limit=${ADDITIONAL_CARDS_LENGTH}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body)
+    });
 
-    // Remove duplicates
-    let uniqueData = flatData.filter(
-      (item, index, self) =>
-        index === self.findIndex((t) => t._id === item._id)
-    );
+    let similarBlogs = await blogs.json()
 
     // Fill extra if needed
-    if (uniqueData.length < ADDITIONAL_CARDS_LENGTH) {
-      const filterIds = uniqueData.map((item) => item._id);
+    if (similarBlogs.length < ADDITIONAL_CARDS_LENGTH) {
+      const filterIds = similarBlogs.map((item) => item._id);
       const fillRes = await fetch(
-        `/api/blogs?filterIds=${[blog._id, ...filterIds]}&limit=${ADDITIONAL_CARDS_LENGTH - uniqueData.length
+        `/api/blogs?filterIds=${[blog._id, ...filterIds]}&limit=${ADDITIONAL_CARDS_LENGTH - similarBlogs.length
         }`
       ).then((res) => res.json());
 
-      uniqueData = [...uniqueData, ...fillRes];
+      similarBlogs = [...similarBlogs, ...fillRes];
     }
 
-    return uniqueData;
+    return similarBlogs;
   } catch (err) {
     console.error("Failed to fetch related blogs", err);
     return [];
