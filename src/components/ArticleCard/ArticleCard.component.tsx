@@ -83,16 +83,19 @@ export const ArticleCard = ({ blog, clientEmail, index }: ArticleCardTypes) => {
   }
 
   function showDeleteModalHandler(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
     e.stopPropagation();
     setShowDeleteModal(true);
   }
 
   async function editBlogHandler(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
     e.stopPropagation();
     router.push(`/blogs/post/${_id}`);
   }
 
   async function deleteBlogHandler(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
     e.stopPropagation();
     dispatch(deleteBlog(_id));
     setShowDeleteModal(false);

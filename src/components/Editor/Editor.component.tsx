@@ -25,7 +25,7 @@ import {
     TitleText,
 } from "./Editor.styles";
 import { blogContentStyle, BlogPreviewContent } from "./BlogContentStyle";
-import { PopulatedBlogType } from "@/types/blog";
+import { BlogType, PopulatedBlogType } from "@/types/blog";
 
 interface EditorComponentProps {
     readonly sessionId: string;
@@ -80,7 +80,10 @@ function EditorComponent({ sessionId, blog }: EditorComponentProps) {
                 tags: tagsArr,
             };
 
-            dispatch(blog ? updateBlog(reqBody) : postBlog(reqBody));
+            dispatch(blog ? 
+                updateBlog(reqBody as BlogType) 
+                : 
+                postBlog(reqBody));
         }
     };
 

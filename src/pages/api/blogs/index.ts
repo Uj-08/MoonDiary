@@ -36,6 +36,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
                     isDraft: isDraftView
                 };
 
+                //Bring all the blogs written by author
                 if (isLoggedIn && (isDraftView || isPublishedView)) {
                     mongoQuery.authorEmail = clientEmail;
                 }

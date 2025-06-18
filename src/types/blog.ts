@@ -19,3 +19,5 @@ export interface BlogType extends BaseMongoDocument {
 export interface PopulatedBlogType extends Omit<BlogType, "tags"> {
     tags: TagType[];
 }
+
+export type CreateBlogType = Omit<BlogType, keyof BaseMongoDocument>;

@@ -1,4 +1,4 @@
-import { BlogType } from "@/types/blog";
+import { BlogType, CreateBlogType } from "@/types/blog";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { ObjectId } from "mongoose";
 
@@ -86,7 +86,7 @@ export const updateBlog = createAsyncThunk(
 
 export const postBlog = createAsyncThunk(
     "postBlog",
-    async (reqObj: BlogType, { rejectWithValue }) => {
+    async (reqObj: CreateBlogType, { rejectWithValue }) => {
         try {
             const resDataJson = await fetch("/api/blogs", {
                 method: "POST",

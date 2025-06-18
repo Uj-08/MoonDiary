@@ -58,7 +58,7 @@ export const Suggestion = styled.li`
     }
 `;
 
-const InputTagComponent = ({ tags, setTagsArr }: { tags: TagType[], setTagsArr: Dispatch<SetStateAction<string[]>> }) => {
+const InputTagComponent = ({ tags, setTagsArr }: { tags?: TagType[], setTagsArr: Dispatch<SetStateAction<string[]>> }) => {
     console.log(tags)
     const [tagsField, setTagsField] = useState(
         tags?.map((tag) => `#${tag.name}`).join(" ") || ""
