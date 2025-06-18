@@ -33,12 +33,13 @@ const Profile = ({ blogsArray, sessionId }: { blogsArray: PopulatedBlogType[], s
         return url;
     }, [showDrafts]);
 
-    const showDraftsHandler = useCallback(async (showDrafts: boolean) => {
-        setShowDrafts(showDrafts);
+    const showDraftsHandler = useCallback(async (showDraftsVal: boolean) => {
+        if(showDrafts === showDraftsVal) return;
+        setShowDrafts(showDraftsVal);
         let fetchedBlogsArray: PopulatedBlogType[] | [];
         dispatch(updateBlogDataIsLoading(true));
-        (filterURL as URL).searchParams.set("showPublished", String(!showDrafts));
-        (filterURL as URL).searchParams.set("showDrafts", String(showDrafts));
+        (filterURL as URL).searchParams.set("showPublished", String(!showDraftsVal));
+        (filterURL as URL).searchParams.set("showDrafts", String(showDraftsVal));
         try {
             const apiRes = await fetch(
                 (filterURL as URL).href,
