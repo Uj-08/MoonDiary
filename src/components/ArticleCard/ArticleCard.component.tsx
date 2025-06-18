@@ -106,7 +106,7 @@ export const ArticleCard = ({ blog, clientEmail, index }: ArticleCardTypes) => {
   return (
     <div>
       <Link href={`/blogs/${blog.slug}`}>
-        <Container isDraft={isDraft}>
+        <Container $isDraft={isDraft}>
           <ImageContainer>
             <OverlayContainer>
               <CardReadTimeBadge>
@@ -130,11 +130,12 @@ export const ArticleCard = ({ blog, clientEmail, index }: ArticleCardTypes) => {
                         <Tag
                           key={tag._id.toString()}
                           title={`#${tag.name}`}
-                          maxWidth={"90px"}
-                          fontSize="12px"
-                          letterSpacing="0.5px"
-                          bgColor={getRandomColor()}
                           onClick={() => router.push(`/features/${tag._id}`)}
+
+                          $maxWidth={"90px"}
+                          $fontSize="12px"
+                          $letterSpacing="0.5px"
+                          $bgColor={getRandomColor()}
                         >
                           <span>
                             #{tag.name}

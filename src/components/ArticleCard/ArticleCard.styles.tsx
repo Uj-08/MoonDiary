@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { ReadTimeBadge } from "../Blog/Blog.styles";
 
-export const Container = styled.div<{ isDraft: boolean }>`
+export const Container = styled.div<{ $isDraft: boolean }>`
   width: 100%;
   max-width: 350px;
   min-width: 300px;
@@ -19,7 +19,7 @@ export const Container = styled.div<{ isDraft: boolean }>`
       rgba(177, 1, 177, 0.1) 0px 2px 4px 0px,
       rgba(177, 1, 177, 0.05) 0px 0px 0px 1px inset;
   }
-  ${({ isDraft }) => isDraft && "filter: grayscale(1)"};
+  ${({ $isDraft }) => $isDraft && "filter: grayscale(1)"};
   display: flex;
   flex-direction: column;
 `;
@@ -113,10 +113,10 @@ export const TagsContainer = styled.div`
 `;
 
 export const Tag = styled.h3<{ 
-  bgColor: string, 
-  maxWidth: string, 
-  fontSize: string, 
-  letterSpacing: string 
+  $bgColor: string, 
+  $maxWidth: string, 
+  $fontSize: string, 
+  $letterSpacing: string 
 }>`
   all: unset;
   cursor: pointer;
@@ -124,21 +124,21 @@ export const Tag = styled.h3<{
   padding: 2px 8px;
   /* background-color: rgb(177, 1, 177); */
   /* background-color: rgb(177, 1, 177); */
-  background-color: ${({ bgColor }) => bgColor};
+  background-color: ${({ $bgColor }) => $bgColor};
   display: flex;
   align-items: center;
   border-radius: 8px;
   /* font-size: 12px; */
   /* letter-spacing: 0.5px; */
   color: white;
-  ${({ fontSize, letterSpacing }) => `font-size: ${fontSize}; letter-spacing: ${letterSpacing};`}
+  ${({ $fontSize, $letterSpacing }) => `font-size: ${$fontSize}; letter-spacing: ${$letterSpacing};`}
   opacity: 0.8;
   transition: opacity 200ms linear;
   &:hover {
     opacity: 1;
   }
   span {
-    ${({ maxWidth }) => `max-width: ${maxWidth};`}
+    ${({ $maxWidth }) => `max-width: ${$maxWidth};`}
     overflow: hidden;
     text-overflow: ellipsis;
   }

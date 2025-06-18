@@ -7,25 +7,25 @@ import { dancingScript } from "@/styles/fonts";
 import gmail from "public/gmail.png"
 import insta from "public/instagram.png"
 
-const Container = styled.div<{ showHamburger: boolean }>`
+const Container = styled.div<{ $showHamburger: boolean }>`
   height: 100%;
   width: 100%;
   position: fixed;
   right: 0;
   top: 0;
   z-index: 20;
-  ${({ showHamburger }) =>
-    showHamburger
+  ${({ $showHamburger }) =>
+    $showHamburger
       ? "backdrop-filter: blur(10px);"
       : "backdrop-filter: blur(0px);"}
-  ${({ showHamburger }) => !showHamburger && "pointer-events: none;"}
+  ${({ $showHamburger }) => !$showHamburger && "pointer-events: none;"}
   transition: backdrop-filter 200ms linear;
   @media (max-width: 950px) {
         display: "none";
     }
 `;
 
-const HamburgerContainer = styled.nav<{ showHamburger: boolean }>`
+const HamburgerContainer = styled.nav<{ $showHamburger: boolean }>`
   pointer-events: all;
   height: 100%;
   position: absolute;
@@ -37,8 +37,8 @@ const HamburgerContainer = styled.nav<{ showHamburger: boolean }>`
   box-shadow: rgb(0 0 0 / 40%) 0px 16px 32px 0px,
     rgb(0 0 0 / 20%) 0px 4px 8px 0px,
     rgb(255 255 255 / 10%) 0px 0px 0px 1px inset;
-  ${({ showHamburger }) =>
-    showHamburger
+  ${({ $showHamburger }) =>
+    $showHamburger
       ? "transform: translateX(0%);"
       : "transform: translateX(100%);"}
   transition: transform 200ms ease-in-out;
@@ -95,17 +95,17 @@ const HamburgerMenu = ({
     e.stopPropagation();
   }
   return (
-    <Container showHamburger={showHamburger} onClick={() => setShowHamburger(false)}>
+    <Container $showHamburger={showHamburger} onClick={() => setShowHamburger(false)}>
       <HamburgerContainer
         onClick={containerClickHandler}
-        showHamburger={showHamburger}
+        $showHamburger={showHamburger}
       >
         <TopContainer>
           <h2>Navigation</h2>
           <div onClick={() => setShowHamburger(false)}>&#9587;</div>
         </TopContainer>
         <LinkContainer>
-          <NavLinks isHamburger={true}>
+          <NavLinks $isHamburger={true}>
             <li>
               <Link href={"/"} onClick={() => setShowHamburger(false)} >
                 Home
@@ -130,7 +130,7 @@ const HamburgerMenu = ({
               </div>
             </li>
           </NavLinks>
-          <SocialLinks isHamburger={true}>
+          <SocialLinks $isHamburger={true}>
             <li>
               <Link href="mailto:psykidbiz@gmail.com" onClick={() => setShowHamburger(false)}>
                 <Image src={gmail} alt="social-links" height={25} width={25} />

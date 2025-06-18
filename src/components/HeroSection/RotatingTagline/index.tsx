@@ -15,12 +15,12 @@ const fadeOut = keyframes`
     to { opacity: 0; transform: translateY(-${Y_CONST}); }
 `;
 
-const Tagline = styled.span<{ fade: "in" | "out" }>`
+const Tagline = styled.span<{ $fade: "in" | "out" }>`
     font-size: 3rem;
     font-weight: 600;
     color: #ffffff;
     opacity: 0;
-    animation: ${({ fade }) => (fade === "in" ? fadeIn : fadeOut)} 0.6s ease forwards;
+    animation: ${({ $fade }) => ($fade === "in" ? fadeIn : fadeOut)} 0.6s ease forwards;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     padding: 0 8px;
     
@@ -63,7 +63,7 @@ const RotatingTagline: React.FC<Props> = ({ taglines, name }) => {
 
     const text = taglines[index] + (name ? `,${name}` : "") + "!";
 
-    return <Tagline fade={fade}>{text}</Tagline>;
+    return <Tagline $fade={fade}>{text}</Tagline>;
 };
 
 export default RotatingTagline;

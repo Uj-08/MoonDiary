@@ -140,7 +140,7 @@ function EditorComponent({ sessionId, blog }: EditorComponentProps) {
                     />
 
                     <EditorContainer>
-                        {!isEditorInit && <Shimmer className="shimmer" isLoading />}
+                        {!isEditorInit && <Shimmer className="shimmer" $isLoading />}
 
                         <Editor
                             initialValue={blog?.blogData}

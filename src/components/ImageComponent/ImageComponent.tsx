@@ -4,11 +4,11 @@ import Image from "next/image";
 
 const Container = styled.div<{
     width?: number;
-    aspectRatio?: number;
+    $aspectRatio?: number;
 }>`
 	position: relative;
 	${({ width }) => `width: ${width ? `${width}px` : "100%"};`}
-    aspect-ratio: ${({ aspectRatio }) => aspectRatio};
+    aspect-ratio: ${({ $aspectRatio }) => $aspectRatio};
 	img {
 		width: 100%;
 		height: 100%;
@@ -24,13 +24,13 @@ const placeholderShimmer = keyframes`
 	}
 `;
 
-export const Shimmer = styled.div<{ isLoading: boolean }>`
+export const Shimmer = styled.div<{ $isLoading: boolean }>`
 	position: absolute;
 	width: 100%;
 	height: 100%;
 	background: #e9e9e9;
 	overflow: hidden;
-	opacity: ${({ isLoading }) => (isLoading ? 1 : 0)};
+	opacity: ${({ $isLoading }) => ($isLoading ? 1 : 0)};
 	transition: opacity 0.2s cubic-bezier(0.3, 0.2, 0.2, 0.8);
 
 	&::before {
@@ -97,7 +97,7 @@ function ImageComponent({
     }, []);
     return (
         <Container
-            aspectRatio={aspectRatio}
+            $aspectRatio={aspectRatio}
             width={width}
             className="aspect-ratio"
         >
@@ -115,7 +115,7 @@ function ImageComponent({
                 onError={errorHandler}
             />
             {isShimmerMounted && (
-                <Shimmer onTransitionEnd={unMountShimmer} title={alt} isLoading={isLoading} />
+                <Shimmer onTransitionEnd={unMountShimmer} title={alt} $isLoading={isLoading} />
             )}
         </Container>
     );

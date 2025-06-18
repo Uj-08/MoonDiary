@@ -1,5 +1,5 @@
 import React from 'react'
-import { AuthorDetail, AuthorProfile, BlogAuthor, BlogAuthorContainer, BlogData, BlogHeader, BlogTitle, CardDetails, Container, MainContent, TagsContainer } from './ArticleCard.styles'
+import { AuthorDetail, AuthorProfile, BlogAuthor, BlogAuthorContainer, BlogHeader, BlogTitle, CardDetails, Container, MainContent, TagsContainer } from './ArticleCard.styles'
 import { Shimmer } from '../ImageComponent/ImageComponent'
 import styled from 'styled-components'
 
@@ -18,64 +18,64 @@ const Line = styled.div<{ width: string, height: string }>`
 
 const SkeletalCard = () => {
     return (
-        <Container isDraft={false}>
+        <Container $isDraft={false}>
             <ImageContainer>
-                <Shimmer isLoading={true} />
+                <Shimmer $isLoading={true} />
             </ImageContainer>
             <CardDetails>
                 <MainContent>
                     <BlogHeader>
                         <TagsContainer>
                             <Line width='50px' height='20px'>
-                                <Shimmer isLoading={true} />
+                                <Shimmer $isLoading={true} />
                             </Line>
                             <Line width='50px' height='20px'>
-                                <Shimmer isLoading={true} />
+                                <Shimmer $isLoading={true} />
                             </Line>
                             <Line width='50px' height='20px'>
-                                <Shimmer isLoading={true} />
+                                <Shimmer $isLoading={true} />
                             </Line>
                         </TagsContainer>
                     </BlogHeader>
                     <BlogTitle>
                         <Line width='60%' height='20px'>
-                            <Shimmer isLoading={true} />
+                            <Shimmer $isLoading={true} />
                         </Line>
                     </BlogTitle>
                         <Line width='100%' height='12px'>
                             {/* <Shimmer isLoading={true} /> */}
                         </Line>
                         <Line width='100%' height='12px'>
-                            <Shimmer isLoading={true} />
+                            <Shimmer $isLoading={true} />
                         </Line>
                         <Line width='100%' height='12px'>
-                            <Shimmer isLoading={true} />
+                            <Shimmer $isLoading={true} />
                         </Line>
                         <Line width='100%' height='12px'>
-                            <Shimmer isLoading={true} />
+                            <Shimmer $isLoading={true} />
                         </Line>
                         <Line width='100%' height='12px'>
-                            <Shimmer isLoading={true} />
+                            <Shimmer $isLoading={true} />
                         </Line>
                         <Line width='80%' height='12px'>
-                            <Shimmer isLoading={true} />
+                            <Shimmer $isLoading={true} />
                         </Line>
                 </MainContent>
                 <BlogAuthorContainer>
                     <BlogAuthor>
                         <AuthorProfile>
-                            <Shimmer isLoading={true} />
+                            <Shimmer $isLoading={true} />
                         </AuthorProfile>
                         <AuthorDetail>
                             <div>
                                 <Line width='40%' height='12px'>
-                                    <Shimmer isLoading={true} />
+                                    <Shimmer $isLoading={true} />
                                 </Line>
                             </div>
                             <Line width='40%' height='2px' />
                             <div>
                                 <Line width='30%' height='12px'>
-                                    <Shimmer isLoading={true} />
+                                    <Shimmer $isLoading={true} />
                                 </Line>
                             </div>
                         </AuthorDetail>

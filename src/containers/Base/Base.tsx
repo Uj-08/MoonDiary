@@ -113,7 +113,7 @@ const Base = ({ children }: BaseTypes) => {
 
   return (
     <ClientContext.Provider value={clientDecode}>
-      <Container showModal={showLoginModal}>
+      <Container $showModal={showLoginModal}>
         <Navbar
           signInHandler={signInHandler}
           signedIn={signedIn}

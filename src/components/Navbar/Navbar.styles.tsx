@@ -49,30 +49,30 @@ export const LogoContainer = styled.div`
     }
 `;
 
-export const NavLinks = styled.ul<{ isHamburger?: boolean }>`
+export const NavLinks = styled.ul<{ $isHamburger?: boolean }>`
     margin-right: -81px;
     color: #272727;
     display: flex;
-    flex-direction: ${props => props.isHamburger ? "column" : "row"};
-    align-items: ${props => props.isHamburger ? "center" : ""};
+    flex-direction: ${props => props.$isHamburger ? "column" : "row"};
+    align-items: ${props => props.$isHamburger ? "center" : ""};
     list-style: none;
     gap: 4rem;
     @media (max-width: 1200px) {
         gap: 2rem;
     }
     @media (max-width: 950px) {
-        display: ${props => !props.isHamburger && "none"};
+        display: ${props => !props.$isHamburger && "none"};
         margin-right: 0;
     }
     li {
         cursor: pointer;
-        text-transform: ${props => !props.isHamburger && "uppercase"};
+        text-transform: ${props => !props.$isHamburger && "uppercase"};
         font-family: ${(props) =>
-        props.isHamburger
+        props.$isHamburger
             ? `"Segoe UI", Tahoma, Geneva, Verdana, sans-serif`
             : `${anton.style.fontFamily}, sans-serif`};
         font-size: 1.3rem;
-        letter-spacing: ${props => !props.isHamburger && "2px"};
+        letter-spacing: ${props => !props.$isHamburger && "2px"};
         transition: color linear 200ms;
     }
     li:hover {
@@ -80,14 +80,14 @@ export const NavLinks = styled.ul<{ isHamburger?: boolean }>`
     }
 `;
 
-export const SocialLinks = styled.ul<{ isHamburger?: boolean }>`
+export const SocialLinks = styled.ul<{ $isHamburger?: boolean }>`
     display: flex;
     list-style: none;
-    height: ${props => (!props.isHamburger ? "100%" : "auto")};
-    justify-content: ${props => (props.isHamburger ? "space-evenly" : "normal")};
-    border-top: ${props => (props.isHamburger ? "1px solid #75757549" : "none")};
-    padding-top: ${props => (props.isHamburger ? "20px" : "0")};
-    margin: ${props => (props.isHamburger ? "0 -16px" : "0 -9px 0 0")};
+    height: ${props => (!props.$isHamburger ? "100%" : "auto")};
+    justify-content: ${props => (props.$isHamburger ? "space-evenly" : "normal")};
+    border-top: ${props => (props.$isHamburger ? "1px solid #75757549" : "none")};
+    padding-top: ${props => (props.$isHamburger ? "20px" : "0")};
+    margin: ${props => (props.$isHamburger ? "0 -16px" : "0 -9px 0 0")};
 
     li {
         cursor: pointer;
@@ -115,7 +115,7 @@ export const SocialLinks = styled.ul<{ isHamburger?: boolean }>`
 
     /* Disable hover effects on small screens */
     @media (max-width: 950px) {
-        display: ${props => !props.isHamburger && "none"};
+        display: ${props => !props.$isHamburger && "none"};
         li:hover:not(:last-child) {
         background-color: unset;
         filter: none;

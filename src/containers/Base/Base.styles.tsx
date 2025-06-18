@@ -1,8 +1,8 @@
 import styled, { keyframes } from "styled-components";
 
-export const Container = styled.div<{ showModal?: boolean }>`
+export const Container = styled.div<{ $showModal?: boolean }>`
   min-height: 100dvh;
-  filter: ${(props) => (props.showModal ? "blur(5px)" : "")};
+  filter: ${(props) => (props.$showModal ? "blur(5px)" : "")};
   height: 100%;
 `;
 
