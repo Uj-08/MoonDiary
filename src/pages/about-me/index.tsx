@@ -102,6 +102,6 @@ export default React.memo(AboutMe);
 export const getStaticProps: GetStaticProps = async () => {
   return {
     props: {}, // No props needed here
-    revalidate: 3600, // Optional: regenerate every hour (ISR)
+    // revalidate: 3600, // Optional: regenerate every hour (ISR)
   };
 };
