@@ -13,7 +13,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
                 const sessionToken = req.headers['x-session-token'];
                 let clientEmail = null;
 
-                let { sort = "updatedAt", order = "-1", limit, filterIds, showDrafts } = req.query;
+                let { sort = "updatedAt", order = "-1", limit, filterIds, showDrafts, showAll } = req.query;
 
                 if (sessionToken) {
                     try {
@@ -48,7 +48,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
                 }
 
                 // Fetch blogs
-                const blogs = await BlogsModel.find(query)
+                const blogs = await BlogsModel.find(showAll ? query : {})
                     .populate("tags", "name")
                     .sort({ [sort]: Number(order) })
                     .limit(limit ? Number(limit) : 0)
