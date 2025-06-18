@@ -46,6 +46,11 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
       <NextHead>
         <title>MoonDiary – Align Your Life Through Energy Medicine & Cosmic Guidance</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          name="description"
+          content="Explore daily insight on esoterica and intuitive guidance on 
+          MoonDiary — your one stop shop for aligning life with cosmic wisdom."
+        />
       </NextHead>
       <Provider store={store}>
         <GlobalStyle />
