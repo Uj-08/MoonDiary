@@ -24,7 +24,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
                 const blog = await BlogsModel.findById(id).populate("tags");
                 if (!blog) return res.status(404).json({ error: "Blog not found." });
 
-                const currentTagIds = (blog.tags as { _id: any }[]).map(tag => tag._id.toString());
+                // @ts-ignore
+                const currentTagIds = (blog.tags).map(tag => tag._id.toString());
                 const cleanTags = [...new Set((body.tags as string[]).map(t => t.trim()))];
 
                 const newTagDocs = await Promise.all(cleanTags.map(async name => {
@@ -67,7 +68,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
                 if (!blog) return res.status(404).json({ error: "Blog not found." });
 
                 await Promise.all(
-                    (blog.tags as { _id: any }[]).map(tag =>
+                    (blog.tags).map(tag =>
+                        // @ts-ignore
                         TagsModel.findByIdAndUpdate(tag._id, {
                             $pull: { blogIds: blog._id }
                         })

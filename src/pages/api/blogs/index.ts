@@ -5,6 +5,7 @@ import TagsModel from '@/models/Tags.model';
 import jwtDecode from 'jwt-decode';
 import { HttpMethod } from '@/helpers/apiHelpers';
 import { ClientType } from '@/types/client';
+import { SortOrder } from 'mongoose';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
     switch (req.method) {
@@ -54,18 +55,22 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
                 const filterIdsArray = filterIds && (filterIds as string).split(",")
                 // Validate
-                if (!ALLOWED_SORT_FIELDS.includes(sort)) sort = "updatedAt";
-                if (!ALLOWED_ORDER_VALUES.includes(order)) order = "-1";
+                if (!ALLOWED_SORT_FIELDS.includes(sort as string)) sort = "updatedAt";
+                if (!ALLOWED_ORDER_VALUES.includes(order as string)) order = "-1";
 
                 // Handle filterId (exclude this blog ID if provided)
                 if (Array.isArray(filterIdsArray) && filterIdsArray?.length > 0) {
                     mongoQuery._id = { $nin: filterIdsArray };
                 }
 
+                const sortOptions: { [key: string]: SortOrder } = {
+                    [sort as string]: Number(order) as SortOrder,
+                };
+
                 // Fetch blogs
                 const blogs = await BlogsModel.find(mongoQuery)
                     .populate("tags", "name")
-                    .sort({ [sort]: Number(order) })
+                    .sort(sortOptions)
                     .limit(limit ? Number(limit) : 0)
                     .lean();
 
