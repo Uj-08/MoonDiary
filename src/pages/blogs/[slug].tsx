@@ -4,6 +4,8 @@ import { stripHtml } from "string-strip-html";
 import BlogTitleComponent from "@/components/Blog/BlogTitle/BlogTitle.component";
 import BlogComponent from "@/components/Blog/Blog.component";
 import { GetStaticProps, GetStaticPaths } from "next";
+import BlogsModel from "@/models/Blogs.model";
+import dbConnect from "@/lib/dbConnect";
 import { PopulatedBlogType } from "@/types/blog";
 
 const Blog = ({ blog }: { blog: PopulatedBlogType }) => {
@@ -86,9 +88,8 @@ const Blog = ({ blog }: { blog: PopulatedBlogType }) => {
 export default Blog;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const resData = await fetch(`${process.env.BASE_URL}/api/blogs?showAll={true}`);
-
-  const blogs: PopulatedBlogType[] = await resData.json();
+  await dbConnect();
+  const blogs = await BlogsModel.find({}, "slug");
 
   const paths = blogs.map((blog) => ({
     params: { slug: blog.slug },
@@ -104,22 +105,20 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const { slug } = context.params as { slug: string };
 
   try {
-    const resData = await fetch(`${process.env.BASE_URL}/api/blogs/slug/${slug}`);
+    await dbConnect();
 
-    if (!resData.ok) {
-      return {
-        redirect: {
-          destination: `/500?origin=/blogs/${slug}`,
-          permanent: false
-        }
-      };
+    // Ensure Tags model is registered
+    await import('@/models/Tags.model');
+
+    const blogDoc = await BlogsModel.findOne({ slug }).populate("tags").lean();
+
+    if (!blogDoc) {
+      return { notFound: true };
     }
-
-    const blog = await resData.json()
 
     return {
       props: {
-        blog
+        blog: JSON.parse(JSON.stringify(blogDoc)),
       },
       revalidate: 3600,
     };

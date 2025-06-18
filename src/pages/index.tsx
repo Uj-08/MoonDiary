@@ -4,6 +4,8 @@ import ArticleGrid from "@/components/ArticleGrid/ArticleGrid.component";
 import Head from "next/head";
 import { PopulatedBlogType } from "@/types/blog";
 import { GetStaticProps } from "next";
+import dbConnect from "@/lib/dbConnect";
+import BlogsModel from "@/models/Blogs.model";
 
 const Home = ({ blogsArray }: { blogsArray: PopulatedBlogType[] }) => {
 
@@ -30,32 +32,31 @@ export default Home;
 // ⏱ ISR with direct DB call
 export const getStaticProps: GetStaticProps = async () => {
   try {
-    const resData = await fetch(`${process.env.BASE_URL}/api/blogs`);
+    await dbConnect();
 
-    if (!resData.ok) {
-      return {
-        redirect: {
-          permanent: false,
-          destination: "/500"
-        }
-      }
-    }
+    // Ensure Tags model is registered
+    await import('@/models/Tags.model');
 
-    const blogsArray = await resData.json()
+    // Only show published blogs (isDraft !== true)
+    const blogs = await BlogsModel.find({ isDraft: { $ne: true } })
+      .populate("tags", "name")
+      .sort({ updatedAt: -1 }) // Default sort
+      .lean();
 
     return {
       props: {
-        blogsArray
+        blogsArray: JSON.parse(JSON.stringify(blogs)),
       },
       revalidate: 5 * 60, // Regenerate every 5 mins
     };
   } catch (error: any) {
     console.error("ISR blog fetch error:", error);
     return {
-      redirect: {
-        permanent: false,
-        destination: "/500"
-      }
-    }
+      props: {
+        blogsArray: [],
+        error: error?.message || "Blog fetch failed",
+      },
+      revalidate: 60,
+    };
   }
 };

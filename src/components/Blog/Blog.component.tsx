@@ -59,7 +59,7 @@ const fetchRelatedBlogs = async (blog: PopulatedBlogType) => {
     if (uniqueData.length < ADDITIONAL_CARDS_LENGTH) {
       const filterIds = uniqueData.map((item) => item._id);
       const fillRes = await fetch(
-        `/api/blogs/?filterIds=${[blog._id, ...filterIds]}&limit=${ADDITIONAL_CARDS_LENGTH - uniqueData.length
+        `/api/blogs?filterIds=${[blog._id, ...filterIds]}&limit=${ADDITIONAL_CARDS_LENGTH - uniqueData.length
         }`
       ).then((res) => res.json());
 

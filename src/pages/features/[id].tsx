@@ -3,9 +3,13 @@ import styled from "styled-components";
 import Head from "next/head";
 import React from "react";
 import { GetStaticProps, GetStaticPaths } from "next";
+import dbConnect from "@/lib/dbConnect";
+import TagsModel from "@/models/Tags.model";
+import BlogsModel from "@/models/Blogs.model";
 import { PopulatedBlogType } from "@/types/blog";
 import { useRouter } from "next/router";
 import { anton } from "@/styles/fonts";
+import { TagType } from "@/types/tag";
 
 export const Container = styled.div`
     min-height: calc(100dvh);
@@ -28,7 +32,7 @@ export const FeatureHeader = styled.h2`
     padding-bottom: 0;
 `;
 
-const TagPage = ({ tagName, blogsArray }: { blogsArray: PopulatedBlogType[], tagName: string }) => {
+const TagPage = ({ tagName, blogsArray }: { tagName: string; blogsArray: PopulatedBlogType[] }) => {
     const router = useRouter();
 
     const { id } = router.query;
@@ -66,11 +70,10 @@ const TagPage = ({ tagName, blogsArray }: { blogsArray: PopulatedBlogType[], tag
 
 export default TagPage;
 
-// STATIC PATHS
+// 🔁 STATIC PATHS
 export const getStaticPaths: GetStaticPaths = async () => {
-    const resData = await fetch(`${process.env.BASE_URL}/api/tags`)
-
-    const tags = await resData.json();
+    await dbConnect(); // custom helper to connect
+    const tags = await TagsModel.find({}).select("_id");
 
     const paths = tags.map((tag: any) => ({
         params: { id: tag._id.toString() },
@@ -82,26 +85,38 @@ export const getStaticPaths: GetStaticPaths = async () => {
     };
 };
 
-// STATIC PROPS
+// 🧊 STATIC PROPS
 export const getStaticProps: GetStaticProps = async ({ params }) => {
+    await dbConnect();
+
     const { id } = params as { id: string };
 
     try {
-        const resData = await fetch(`${process.env.BASE_URL}/api/tags/${id}`);
-
-        if (!resData.ok) {
-            return {
-                redirect: {
-                    permanent: false,
-                    destination: `/500?origin=/features/${id}`
-                }
-            }
+        const tag: TagType | null = await TagsModel.findById(id).lean();
+        if (!tag) {
+            return { notFound: true };
         }
 
-        const blogs = await resData.json();
+        const blogIds = tag.blogIds.filter((bid: any) => bid.toString() !== "");
+
+        const sort = "updatedAt";
+        const order = -1;
+
+        const blogs = await BlogsModel.find({
+            _id: { $in: blogIds },
+            isDraft: { $ne: true },
+        })
+            .sort({ [sort]: order })
+            .populate("tags", "name")
+            .lean();
+
+        const serializedBlogs = JSON.parse(JSON.stringify(blogs));
 
         return {
-            props: blogs,
+            props: {
+                tagName: tag.name,
+                blogsArray: serializedBlogs,
+            },
             revalidate: 300,
         };
     } catch (err) {
