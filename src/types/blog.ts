@@ -1,8 +1,6 @@
-import { BaseMongoDocument } from "./mongo";
 import { TagType } from "./tag";
 
-/** Shape used when sending to/receiving from MongoDB */
-export interface BlogType extends BaseMongoDocument {
+export interface BlogBase {
     blogTitle: string;
     slug: string;
     blogImg: string;
@@ -15,9 +13,14 @@ export interface BlogType extends BaseMongoDocument {
     authorEmail: string;
 }
 
-/** Used when tags are populated into full objects */
+export interface BlogType extends BlogBase {
+    _id: string; // for client usage
+    createdAt: Date;
+    updatedAt: Date;
+}
+
 export interface PopulatedBlogType extends Omit<BlogType, "tags"> {
     tags: TagType[];
 }
 
-export type CreateBlogType = Omit<BlogType, keyof BaseMongoDocument>;
+export type CreateBlogType = BlogBase;

@@ -41,13 +41,13 @@ const Base = ({ children }: BaseTypes) => {
 
   useEffect(() => {
     if (blogInfo.blogDeleteStatus.deletedBlogId) {
-      router.reload();
+      router.push("/profile");
       dispatch(resetDeletedBlogId());
     }
 
     if (blogInfo.blogPostUpdateStatus.createdBlogId) {
       dispatch(resetCreatedBlogId());
-      router.push("/");
+      router.push("/profile");
     }
   }, [
     blogInfo.blogDeleteStatus.deletedBlogId,
@@ -99,7 +99,7 @@ const Base = ({ children }: BaseTypes) => {
       console.error("Invalid token:", err);
       return null;
     }
-  }, [signedIn]);
+  }, []);
 
   useEffect(() => {
     if (signedIn) {

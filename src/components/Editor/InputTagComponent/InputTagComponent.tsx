@@ -59,7 +59,6 @@ export const Suggestion = styled.li`
 `;
 
 const InputTagComponent = ({ tags, setTagsArr }: { tags?: TagType[], setTagsArr: Dispatch<SetStateAction<string[]>> }) => {
-    console.log(tags)
     const [tagsField, setTagsField] = useState(
         tags?.map((tag) => `#${tag.name}`).join(" ") || ""
     );
@@ -140,4 +139,4 @@ const InputTagComponent = ({ tags, setTagsArr }: { tags?: TagType[], setTagsArr:
     );
 };
 
-export default InputTagComponent;
+export default React.memo(InputTagComponent);

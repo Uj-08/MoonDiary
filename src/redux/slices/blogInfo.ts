@@ -1,6 +1,5 @@
 import { BlogType, CreateBlogType } from "@/types/blog";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import type { ObjectId } from "mongoose";
 
 interface BlogInfoType {
     blogDeleteStatus: {
@@ -40,9 +39,13 @@ const initialState: BlogInfoType = {
     }
 };
 
-export const deleteBlog = createAsyncThunk(
+export const deleteBlog = createAsyncThunk<
+    { id: string },
+    string,
+    { rejectValue: { message: string } }
+>(
     "deleteBlog",
-    async (_id: ObjectId, { rejectWithValue }) => {
+    async (_id: string, { rejectWithValue }) => {
         try {
             const resDataJson = await fetch(`/api/blogs/${_id}`, {
                 method: "DELETE"
@@ -53,14 +56,18 @@ export const deleteBlog = createAsyncThunk(
                 return rejectWithValue(errorData);
             }
             const resData = await resDataJson.json();
-            return { resData };
-        } catch (err) {
-            return rejectWithValue(err);
+            return resData;
+        } catch (err: any) {
+            return rejectWithValue({ message: err ?? "Something went wrong" });
         }
     }
 )
 
-export const updateBlog = createAsyncThunk(
+export const updateBlog = createAsyncThunk<
+    { id: string },
+    BlogType,
+    { rejectValue: { message: string } }
+>(
     "updateBlog",
     async (reqObj: BlogType, { rejectWithValue }) => {
         try {
@@ -77,14 +84,18 @@ export const updateBlog = createAsyncThunk(
                 return rejectWithValue(errorData);
             }
             const resData = await resDataJson.json();
-            return { resData };
-        } catch (err) {
-            return rejectWithValue(err);
+            return resData;
+        } catch (err: any) {
+            return rejectWithValue({ message: err.message ?? "Something went wrong" });
         }
     }
 )
 
-export const postBlog = createAsyncThunk(
+export const postBlog = createAsyncThunk<
+    { id: string },
+    CreateBlogType,
+    { rejectValue: { message: string } }
+>(
     "postBlog",
     async (reqObj: CreateBlogType, { rejectWithValue }) => {
         try {
@@ -101,9 +112,9 @@ export const postBlog = createAsyncThunk(
                 return rejectWithValue(errorData);
             }
             const resData = await resDataJson.json();
-            return { resData };
-        } catch (err) {
-            return rejectWithValue(err);
+            return resData;
+        } catch (err: any) {
+            return rejectWithValue({ message: err.message || "Something went wrong" });
         }
     }
 )
@@ -138,13 +149,13 @@ export const blogInfoSlice = createSlice({
         })
         builder.addCase(deleteBlog.fulfilled, (state, action) => {
             state.blogDeleteStatus.isLoading = false;
-            state.blogDeleteStatus.deletedBlogId = action.payload.resData.id;
+            state.blogDeleteStatus.deletedBlogId = action.payload.id;
             state.success.isSuccessful = true;
             state.success.message = "Blog deleted successfully!";
         })
         builder.addCase(deleteBlog.rejected, (state, action) => {
             state.error.isError = true;
-            state.error.message = action.payload?.message || "Something went wrong.";
+            state.error.message = action.payload?.message ?? "Something went wrong.";
             state.blogDeleteStatus.isLoading = false;
         })
 
@@ -153,14 +164,14 @@ export const blogInfoSlice = createSlice({
         })
         builder.addCase(updateBlog.fulfilled, (state, action) => {
             state.blogPostUpdateStatus.isLoading = false;
-            state.blogPostUpdateStatus.createdBlogId = action.payload.resData.id;
+            state.blogPostUpdateStatus.createdBlogId = action.payload.id;
             state.success.isSuccessful = true;
             state.success.message = "Blog updated successfully!";
         })
         builder.addCase(updateBlog.rejected, (state, action) => {
             state.error.isError = true;
             state.blogPostUpdateStatus.isLoading = false;
-            state.error.message = action.payload?.message || "Something went wrong.";
+            state.error.message = action.payload?.message ?? "Something went wrong.";
         })
 
         builder.addCase(postBlog.pending, (state) => {
@@ -168,13 +179,13 @@ export const blogInfoSlice = createSlice({
         })
         builder.addCase(postBlog.fulfilled, (state, action) => {
             state.blogPostUpdateStatus.isLoading = false;
-            state.blogPostUpdateStatus.createdBlogId = action.payload.resData.id;
+            state.blogPostUpdateStatus.createdBlogId = action.payload.id;
             state.success.isSuccessful = true;
             state.success.message = "Blog created successfully!";
         })
         builder.addCase(postBlog.rejected, (state, action) => {
             state.error.isError = true;
-            state.error.message = action.payload?.message || "Something went wrong.";
+            state.error.message = action.payload?.message ?? "Something went wrong.";
             state.blogPostUpdateStatus.isLoading = false;
         })
     },

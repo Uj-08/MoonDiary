@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import ArticleGrid from "@/components/ArticleGrid/ArticleGrid.component";
 import { GetServerSideProps } from "next";
 import { getCookie, hasCookie } from "cookies-next";
@@ -10,44 +10,21 @@ import { useDispatch } from "react-redux";
 import { updateBlogDataIsLoading } from "@/redux/slices/blogInfo";
 import styled from "styled-components";
 import { ClientContext } from "@/containers/Base/Base";
+import Switch from "@/components/Switch";
 
 const ToggleWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
     margin-top: 2rem;
-`;
-
-const SwitchContainer = styled.div`
-    background-color: #e0e0e0;
-    border-radius: 50px;
-    display: flex;
-    padding: 4px;
-    position: relative;
-`;
-
-const SwitchOption = styled.button<{ active: boolean }>`
-    background-color: ${({ active }) => (active ? "#b101b1" : "transparent")};
-    color: ${({ active }) => (active ? "#fff" : "#333")};
-    border: none;
-    padding: 0.5rem 1.5rem;
-    border-radius: 50px;
-    font-size: 0.9rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: "Arimo",sans-serif;
-
-    &:hover {
-        background-color: ${({ active }) => (active ? "#b101b1" : "#ddd")};
-    }
+    width: 100%;
 `;
 
 const Profile = ({ blogsArray, sessionId }: { blogsArray: PopulatedBlogType[], sessionId: string }) => {
     const client = useContext(ClientContext)
     const [blogsArrayState, setBlogsArrayState] = useState(blogsArray)
     const dispatch = useDispatch();
-    const [showDrafts, setShowDrafts] = useState(true);
+    const [showDrafts, setShowDrafts] = useState(false);
 
     const filterURL = React.useMemo(() => {
         if (typeof window === "undefined") return null;
@@ -56,7 +33,8 @@ const Profile = ({ blogsArray, sessionId }: { blogsArray: PopulatedBlogType[], s
         return url;
     }, [showDrafts]);
 
-    const showDraftsHandler = async (showDrafts: boolean) => {
+    const showDraftsHandler = useCallback(async (showDrafts: boolean) => {
+        setShowDrafts(showDrafts);
         let fetchedBlogsArray: PopulatedBlogType[] | [];
         dispatch(updateBlogDataIsLoading(true));
         (filterURL as URL).searchParams.set("showPublished", String(!showDrafts));
@@ -76,14 +54,13 @@ const Profile = ({ blogsArray, sessionId }: { blogsArray: PopulatedBlogType[], s
             if (apiRes.ok) {
                 fetchedBlogsArray = await apiRes.json();
                 setBlogsArrayState(fetchedBlogsArray)
-                setShowDrafts(showDrafts);
             }
         } catch (e) {
             console.log(e)
         } finally {
             dispatch(updateBlogDataIsLoading(false));
         }
-    };
+    }, [dispatch, filterURL, sessionId]);
 
     return (
         <>
@@ -96,14 +73,7 @@ const Profile = ({ blogsArray, sessionId }: { blogsArray: PopulatedBlogType[], s
                 (
                     <>
                         <ToggleWrapper>
-                            <SwitchContainer>
-                                <SwitchOption active={!showDrafts} onClick={() => showDraftsHandler(false)}>
-                                    Show Published
-                                </SwitchOption>
-                                <SwitchOption active={showDrafts} onClick={() => showDraftsHandler(true)}>
-                                    Show Drafts
-                                </SwitchOption>
-                            </SwitchContainer>
+                            <Switch showDrafts={showDrafts} showDraftsHandler={showDraftsHandler} />
                         </ToggleWrapper>
                         <ArticleGrid blogsArray={blogsArrayState} filterURL={filterURL} />
                     </>
@@ -126,7 +96,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             if (typeof cookie === "string") token = cookie;
         }
 
-        const { sort = "updatedAt", order = "-1", showDrafts = "true", showPublished = "false" } = query;
+        const { sort = "updatedAt", order = "-1", showDrafts = "false", showPublished = "true" } = query;
 
         // Add fetch timeout using AbortController
         const controller = new AbortController();
