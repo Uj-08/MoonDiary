@@ -149,7 +149,7 @@ const BlogComponent = ({ blog }: { blog: PopulatedBlogType }) => {
             <ImageComponent
               aspectRatio={4 / 3}
               src={blog.blogImg}
-              alt="hero image"
+              alt="MoonDiary Hero"
               isPriority
             />
           </PreviewImageContainer>

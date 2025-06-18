@@ -119,7 +119,7 @@ export const ArticleCard = ({ blog, clientEmail, index }: ArticleCardTypes) => {
             <ImageComponent
               src={blogImg}
               aspectRatio={4 / 3}
-              alt={"Card Image"}
+              alt={blogTitle}
               isPriority={index <= 3}
             />
           </ImageContainer>
@@ -152,7 +152,7 @@ export const ArticleCard = ({ blog, clientEmail, index }: ArticleCardTypes) => {
                   }
                 </TagsContainer>
               </BlogHeader>
-              <BlogTitle>{blogTitle}</BlogTitle>
+              <BlogTitle title={blogTitle}>{blogTitle}</BlogTitle>
               <BlogData>{blogBody}</BlogData>
             </MainContent>
             <BlogAuthorContainer>
@@ -161,7 +161,7 @@ export const ArticleCard = ({ blog, clientEmail, index }: ArticleCardTypes) => {
                   <ImageComponent
                     src={authorPicture}
                     aspectRatio={1}
-                    alt={"profile picture"}
+                    alt={"profile"}
                     isPriority={index <= 3}
                   />
                 </AuthorProfile>

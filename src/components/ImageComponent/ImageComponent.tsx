@@ -68,7 +68,7 @@ interface ImageAspectRatioTypes {
     width?: number;
 }
 
-function ImageComponent({
+const ImageComponent = ({
     src,
     alt,
     isPriority = false,
@@ -76,7 +76,7 @@ function ImageComponent({
     // loading,
     quality,
     width,
-}: ImageAspectRatioTypes) {
+}: ImageAspectRatioTypes) => {
     useEffect(() => {
         setImageSource(src)
     }, [src])
@@ -121,4 +121,4 @@ function ImageComponent({
     );
 }
 
-export default ImageComponent;
+export default React.memo(ImageComponent);

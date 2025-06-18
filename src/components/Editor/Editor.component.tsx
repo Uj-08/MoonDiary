@@ -99,7 +99,7 @@ function EditorComponent({ sessionId, blog }: EditorComponentProps) {
                         <PreviewImageContainer>
                             <ImageComponent
                                 src={imageLink || "/4-3.png"}
-                                alt={"4/3-ratio-image"}
+                                alt={"4:3 ratio"}
                                 aspectRatio={4 / 3}
                                 isPriority
                             />

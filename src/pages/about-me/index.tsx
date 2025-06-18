@@ -80,7 +80,7 @@ const AboutMe = () => {
               <ImageComponent
                 src={"https://old-moondiary.netlify.app/img/pro.jpg"}
                 aspectRatio={1}
-                alt={"profile picture"}
+                alt={"profile"}
               />
             </AuthorProfile>
             <AuthorName>{"Shairee Sinha"}</AuthorName>

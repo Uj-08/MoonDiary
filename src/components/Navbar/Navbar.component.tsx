@@ -65,7 +65,7 @@ const Navbar = ({ signInHandler, signedIn, picture, hmbgrClickHandler }: NavbarT
                 <li>
                     <Link href={"/profile"}>
                         <Profile>
-                            <ImageComponent aspectRatio={1} src={picture} alt="" />
+                            <ImageComponent aspectRatio={1} src={picture} alt="profile" />
                         </Profile>
                     </Link>
                 </li>
