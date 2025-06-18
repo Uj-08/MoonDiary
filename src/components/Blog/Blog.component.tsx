@@ -44,7 +44,7 @@ const fetchRelatedBlogs = async (blog: PopulatedBlogType) => {
       blog.tags.map((tag) =>
         fetch(`/api/tags/${tag._id}?filterId=${blog._id}`).then((res) =>
           res.json()
-        )
+        ).then(data => data.blogsArray)
       )
     );
     let flatData = tagResponses.flat();

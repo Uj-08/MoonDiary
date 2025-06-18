@@ -35,7 +35,10 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
                     .populate("tags", "name")
                     .lean()
 
-                return res.status(200).json(blogs);
+                return res.status(200).json({
+                    tagName: tag.name,
+                    blogsArray: blogs
+                });
             } catch (err) {
                 return res.status(500).json(err);
             }

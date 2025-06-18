@@ -85,6 +85,21 @@ const Blog = ({ blog }: { blog: PopulatedBlogType }) => {
 
 export default Blog;
 
+export const getStaticPaths: GetStaticPaths = async () => {
+  const resData = await fetch(`${process.env.BASE_URL}/api/blogs?showAll={true}`);
+
+  const blogs: PopulatedBlogType[] = await resData.json();
+
+  const paths = blogs.map((blog) => ({
+    params: { slug: blog.slug },
+  }));
+
+  return {
+    paths,
+    fallback: "blocking",
+  };
+};
+
 export const getStaticProps: GetStaticProps = async (context) => {
   const { slug } = context.params as { slug: string };
 
@@ -112,19 +127,4 @@ export const getStaticProps: GetStaticProps = async (context) => {
     console.error("Error fetching blog:", err);
     return { notFound: true };
   }
-};
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  const resData = await fetch(`${process.env.BASE_URL}/api/blogs?showAll={true}`);
-
-  const blogs: PopulatedBlogType[] = await resData.json();
-
-  const paths = blogs.map((blog) => ({
-    params: { slug: blog.slug },
-  }));
-
-  return {
-    paths,
-    fallback: "blocking",
-  };
 };
