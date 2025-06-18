@@ -8,7 +8,7 @@ const connectDB =
         return handler(req, res);
       }
       try {
-        await mongoose.connect(process.env.DB as string);
+        await mongoose.connect(process.env.MONGO_URI as string);
         return handler(req, res);
       } catch (err) {
         console.log("connection error", err);
