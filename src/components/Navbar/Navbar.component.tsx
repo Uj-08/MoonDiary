@@ -8,6 +8,7 @@ import Link from "next/link";
 import logo from "public/logo.png"
 import gmail from "public/gmail.png"
 import insta from "public/instagram.png"
+import { useRouter } from "next/router";
 
 
 export const Profile = styled.span`
@@ -25,7 +26,12 @@ img {
 }
 `;
 
-const Navbar = ({ signInHandler, signedIn, picture, hmbgrClickHandler }: NavbarTypes) => {
+const Navbar = ({ signInHandler, signedIn, picture, hmbgrClickHandler, setShowLoginModal }: NavbarTypes) => {
+    const router = useRouter();
+    const profileClickHandler = () => {
+        if (!signedIn) setShowLoginModal(true);
+        else router.push("/profile")
+    }
     return (
         <Wrapper>
             <LogoContainer>
@@ -63,11 +69,9 @@ const Navbar = ({ signInHandler, signedIn, picture, hmbgrClickHandler }: NavbarT
                     </Link>
                 </li>
                 <li>
-                    <Link href={"/profile"}>
-                        <Profile>
-                            <ImageComponent aspectRatio={1} src={picture} alt="profile" />
-                        </Profile>
-                    </Link>
+                    <Profile onClick={profileClickHandler}>
+                        <ImageComponent aspectRatio={1} src={picture} alt="profile" />
+                    </Profile>
                 </li>
             </SocialLinks>
             <HamburgerButton onClick={hmbgrClickHandler}>

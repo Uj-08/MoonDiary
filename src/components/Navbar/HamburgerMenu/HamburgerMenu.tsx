@@ -6,6 +6,7 @@ import Link from "next/link";
 import { dancingScript } from "@/styles/fonts";
 import gmail from "public/gmail.png"
 import insta from "public/instagram.png"
+import { useRouter } from "next/router";
 
 const Container = styled.div<{ $showHamburger: boolean }>`
   height: 100%;
@@ -84,15 +85,23 @@ const HamburgerMenu = ({
   signInHandler,
   signedIn,
   picture,
+  setShowLoginModal
 }: {
   showHamburger: boolean;
   setShowHamburger: (bool: boolean) => void;
   signInHandler: () => void;
   signedIn: boolean;
   picture: string;
+  setShowLoginModal: (bool: boolean) => void;
 }) => {
   function containerClickHandler(e: React.MouseEvent<HTMLDivElement>) {
     e.stopPropagation();
+  }
+  const router = useRouter();
+  const profileClickHandler = () => {
+    setShowHamburger(false);
+    if (!signedIn) setShowLoginModal(true);
+    else router.push("/profile")
   }
   return (
     <Container $showHamburger={showHamburger} onClick={() => setShowHamburger(false)}>
@@ -122,9 +131,9 @@ const HamburgerMenu = ({
               </Link>
             </li>
             <li>
-              <div  onClick={() => {
+              <div onClick={() => {
                 signInHandler()
-                setShowHamburger(false) 
+                setShowHamburger(false)
               }}>
                 {signedIn ? "Sign Out" : "Sign In"}
               </div>
@@ -136,7 +145,7 @@ const HamburgerMenu = ({
                 <Image src={gmail} alt="social-links" height={25} width={25} />
               </Link>
             </li>
-            
+
             <li>
               <Link href="https://www.instagram.com/shaireee_67/" target="_blank" rel="noreferrer" onClick={() => setShowHamburger(false)}>
                 <Image src={insta} alt="social-links" height={25} width={25} />
@@ -144,11 +153,9 @@ const HamburgerMenu = ({
             </li>
 
             <li>
-              <Link href={"/profile"} onClick={() => setShowHamburger(false)}>
-                <ProfileContainer>
-                  <Image src={picture} alt="social-links" fill />
-                </ProfileContainer>
-              </Link>
+              <ProfileContainer onClick={profileClickHandler}>
+                <Image src={picture} alt="social-links" fill />
+              </ProfileContainer>
             </li>
           </SocialLinks>
         </LinkContainer>
