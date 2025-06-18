@@ -59,7 +59,8 @@ const Profile = ({ blogsArray, sessionId }: { blogsArray: PopulatedBlogType[], s
     const showDraftsHandler = async (showDrafts: boolean) => {
         let fetchedBlogsArray: PopulatedBlogType[] | [];
         dispatch(updateBlogDataIsLoading(true));
-        (filterURL as URL).searchParams.set("showDrafts", String(showDrafts))
+        (filterURL as URL).searchParams.set("showPublished", String(!showDrafts));
+        (filterURL as URL).searchParams.set("showDrafts", String(showDrafts));
         try {
             const apiRes = await fetch(
                 (filterURL as URL).href,
@@ -125,14 +126,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             if (typeof cookie === "string") token = cookie;
         }
 
-        const { sort = "updatedAt", order = "-1", showDrafts = "true" } = query;
+        const { sort = "updatedAt", order = "-1", showDrafts = "true", showPublished = "false" } = query;
 
         // Add fetch timeout using AbortController
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 7000); // 7s timeout
 
         const apiRes = await fetch(
-            `${process.env.BASE_URL}/api/blogs?sort=${sort}&order=${order}&showDrafts=${showDrafts}`,
+            `${process.env.BASE_URL}/api/blogs?sort=${sort}&order=${order}&showPublished=${showPublished}&showDrafts=${showDrafts}`,
             {
                 method: "GET",
                 headers: {
