@@ -8,7 +8,11 @@ export default function MyDocument() {
         <meta charSet="UTF-8" />
         <link rel="shortcut icon" href="/favicon.png" type="image/x-icon" />
         
-        <meta name="description" content="Explore daily astrology tips, horoscopes, and intuitive guidance on MoonDiary — your go-to source for aligning life with cosmic wisdom." />
+        <meta 
+          name="description" 
+          content="Explore daily insight on esoterica and intuitive guidance on 
+          MoonDiary — your one stop shop for aligning life with cosmic wisdom." 
+        />
 
         <meta property="og:site_name" content="MoonDiary" />
         <meta property="og:type" content="website" />

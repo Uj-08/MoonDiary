@@ -44,7 +44,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   return (
     <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_CLIENT_ID || ""}>
       <NextHead>
-        <title>MoonDiary – Align Your Life Through Astrology & Cosmic Guidance</title>
+        <title>MoonDiary – Align Your Life Through Energy Medicine & Cosmic Guidance</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </NextHead>
       <Provider store={store}>
