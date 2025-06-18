@@ -17,21 +17,36 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
                 if (sessionToken) {
                     try {
-                        const decoded: ClientType  = jwtDecode(sessionToken as string);
+                        const decoded: ClientType = jwtDecode(sessionToken as string);
                         clientEmail = decoded?.email;
                     } catch (e) {
                         console.log(e)
                     }
                 }
-            
-                const query: Record<string, any> = (clientEmail && (showDrafts === "true"))
-                    ? {
-                        $and: [
-                            { isDraft: { $eq: true } },
-                            { authorEmail: { $eq: clientEmail } }
-                        ]
+
+                let mongoQuery: Record<string, any> = {}
+
+                if (clientEmail !== null) {
+                    if (showDrafts === "true") {
+                        mongoQuery = {
+                            $and: [
+                                { isDraft: { $eq: true } },
+                                { authorEmail: { $eq: clientEmail } }
+                            ]
+                        }
+                    } else {
+                        mongoQuery = {
+                            $and: [
+                                { isDraft: { $ne: true } },
+                                { authorEmail: { $eq: clientEmail } }
+                            ]
+                        }
                     }
-                    : { isDraft: { $ne: true } };
+                } else {
+                    mongoQuery = {
+                        isDraft: { $ne: true }
+                    }
+                }
 
                 // Allowed sort fields and orders
                 const ALLOWED_SORT_FIELDS = ["updatedAt", "createdAt", "filterIds", "blogTitle"];
@@ -44,12 +59,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
                 // Handle filterId (exclude this blog ID if provided)
                 if (Array.isArray(filterIdsArray) && filterIdsArray?.length > 0) {
-                    query._id = { $nin: filterIdsArray };
+                    mongoQuery._id = { $nin: filterIdsArray };
                 }
 
-
                 // Fetch blogs
-                const blogs = await BlogsModel.find(query)
+                const blogs = await BlogsModel.find(mongoQuery)
                     .populate("tags", "name")
                     .sort({ [sort]: Number(order) })
                     .limit(limit ? Number(limit) : 0)
