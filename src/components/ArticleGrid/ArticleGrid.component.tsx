@@ -89,28 +89,30 @@ const ArticleGrid = ({
   return (
     <Container>
       <Grid>
-        <SortContainer>
-          <span>
-            <Select id="sort" value={sortState} onChange={handleSortChange} defaultValue="">
-              <option disabled value="">
-                Sort By…
-              </option>
-              <option value="createdAt">First Published</option>
-              <option value="updatedAt">Last Change</option>
-              <option value="blogTitle">Title (A–Z)</option>
-            </Select>
-          </span>
+        {blogsArray.length !== 0 &&
+          <SortContainer>
+            <span>
+              <Select id="sort" value={sortState} onChange={handleSortChange} defaultValue="">
+                <option disabled value="">
+                  Sort By…
+                </option>
+                <option value="createdAt">First Published</option>
+                <option value="updatedAt">Last Change</option>
+                <option value="blogTitle">Title (A–Z)</option>
+              </Select>
+            </span>
 
-          <span>
-            <Select id="order" value={orderState} onChange={handleOrderChange} defaultValue="">
-              <option disabled value="">
-                Order By…
-              </option>
-              <option value="1">{sortState === "blogTitle" ? "(A-Z)" : "Oldest First"}</option>
-              <option value="-1">{sortState === "blogTitle" ? "(Z-A)" : "Newest First"}</option>
-            </Select>
-          </span>
-        </SortContainer>
+            <span>
+              <Select id="order" value={orderState} onChange={handleOrderChange} defaultValue="">
+                <option disabled value="">
+                  Order By…
+                </option>
+                <option value="1">{sortState === "blogTitle" ? "(A-Z)" : "Oldest First"}</option>
+                <option value="-1">{sortState === "blogTitle" ? "(Z-A)" : "Newest First"}</option>
+              </Select>
+            </span>
+          </SortContainer>
+        }
 
         {blogsArrayState?.map((blog, idx) => (
           <DynamicCard
