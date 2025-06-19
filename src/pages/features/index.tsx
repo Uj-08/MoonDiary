@@ -35,18 +35,21 @@ export default Features;
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const { req, res } = context;
 
+    const API_INSTANCE = new URL("/api/tags", process.env.BASE_URL)
+
     const isSessionAvailable = hasCookie(COOKIE_NAME, { req, res });
     if (isSessionAvailable) {
     }
 
-    const resData = await fetch(`${process.env.BASE_URL}/api/tags`, {
+    const apiRes = await fetch(API_INSTANCE, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
             //   'x-session-token': getCookie(COOKIE_NAME, context) as string, 
         },
     });
-    const tags = await resData.json();
+    
+    const tags = await apiRes.json();
 
     return {
         props: {

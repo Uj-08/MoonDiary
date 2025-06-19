@@ -28,7 +28,7 @@ const HeroSection = () => {
                 />
             </ImageContainer>
 
-            <HiddenTitle>{"Welcome to Moondiary – Reflect and Grow"}</HiddenTitle>
+            <HiddenTitle>{"MoonDiary – Align Your Life Through Energy Medicine & Cosmic Guidance"}</HiddenTitle>
             <RotatingTagline taglines={moonDiaryTaglines} name={context?.client?.given_name} />
         </Container>
     );
