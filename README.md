@@ -1,6 +1,6 @@
 # 🌙 MoonDiary
 
-**MoonDiary** is a full-stack blogging platform built with the latest web technologies — empowering writers to share intuitive insights, cosmic guidance, and energy-aligned content.  
+**MoonDiary** is a full-stack blogging platform built with the latest web technologies — empowering writers to share intuitive insights and energy-aligned content.  
 Built using **Next.js (App Router)**, **TypeScript**, **Redux Toolkit**, **Styled-Components**, and **MongoDB**, with a focus on performance, scalability, and elegant UI.
 
 ---
