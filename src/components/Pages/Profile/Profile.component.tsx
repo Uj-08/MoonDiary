@@ -13,7 +13,6 @@ import ArticleGrid from '@/components/ArticleGrid/ArticleGrid.component'
 const Profile = ({ sessionId, blogsArray }: ProfilePageTypes) => {
     const dispatch = useDispatch();
     const client = useContext(ClientContext)
-    console.log(blogsArray, client)
     const [showDrafts, setShowDrafts] = useState(false);
     const [blogsArrayState, setBlogsArrayState] = useState(blogsArray)
 
