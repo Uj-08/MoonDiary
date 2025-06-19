@@ -79,7 +79,7 @@ const ArticleGrid = ({
       const data = await res.json();
       return data;
     } catch (err: any) {
-      console.log(err.message || "An unknown error occurred.");
+      console.log(err.message ?? "An unknown error occurred.");
       return [];
     } finally {
       dispatch(updateBlogDataIsLoading(false));

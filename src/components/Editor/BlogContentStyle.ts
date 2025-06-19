@@ -33,7 +33,7 @@ import styled, { css } from "styled-components";
 export const blogRenderStyle = css`
   font-family: ${montserrat.style.fontFamily};
   font-size: 1em;
-  line-height: 1.4;         /* TinyMCE’s default line-height  [oai_citation:0‡stackoverflow.com](https://stackoverflow.com/questions/68354437/adding-css-class-based-options-to-tinymce-fontsizeselect?utm_source=chatgpt.com) */
+  line-height: 1.4;
   color: #222;
 
   * { box-sizing: border-box; }
@@ -71,7 +71,7 @@ export const blogRenderStyle = css`
 
   /* Paragraphs */
   p {
-    margin: 1em 0;          /* consistent with browser default + TinyMCE spacing  */
+    margin: 1em 0;          
     word-wrap: break-word;
   }
 
@@ -123,7 +123,6 @@ export const blogRenderStyle = css`
     font-size: 0.9em;
   }
 
-  /* Horizontal Rule */
   hr {
     margin: 0.5em 0;
     border: none;

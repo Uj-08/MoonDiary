@@ -2,7 +2,7 @@ import { ADDITIONAL_CARDS_LENGTH } from "@/helpers/constants";
 import { PopulatedBlogType } from "@/types/blog";
 
 export const fetchRelatedBlogs = async (blog: PopulatedBlogType) => {
-    if (!blog || !blog.tags?.length) return [];
+    if (!blog?.tags?.length) return [];
 
     try {
         // Fetch related by tags

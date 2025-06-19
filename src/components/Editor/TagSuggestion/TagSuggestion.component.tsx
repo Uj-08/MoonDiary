@@ -6,7 +6,7 @@ import { Container, Suggestion, SuggestionWindow } from "./TagSuggestion.styles"
 
 const TagSuggestion = ({ tags, setTagsArr }: TagSuggestionTypes) => {
     const [tagsField, setTagsField] = useState(
-        tags?.map((tag) => `#${tag.name}`).join(" ") || ""
+        tags?.map((tag) => `#${tag.name}`).join(" ") ?? ""
     );
     const [suggestions, setSuggestions] = useState<TagType[]>([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
@@ -39,7 +39,7 @@ const TagSuggestion = ({ tags, setTagsArr }: TagSuggestionTypes) => {
         const regex = /#(\w+)$/;
         const result = regex.exec(value);
 
-        if (result && result[1]) {
+        if (result?.[1]) {
             const partialTag = result[1];
 
             if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
