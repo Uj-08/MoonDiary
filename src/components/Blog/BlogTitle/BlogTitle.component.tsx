@@ -1,7 +1,8 @@
+import React from "react";
 import { ReactNode } from "react";
 import { BlogTitle, BlogTitleContainer } from "./BlogTitle.styles";
 
-export default function BlogTitleComponent({ children }: { children: ReactNode }) {
+const BlogTitleComponent = ({ children }: { children: ReactNode }) => {
     return (
         <BlogTitleContainer>
             <BlogTitle>
@@ -10,3 +11,5 @@ export default function BlogTitleComponent({ children }: { children: ReactNode }
         </BlogTitleContainer>
     )
 };
+
+export default React.memo(BlogTitleComponent);

@@ -16,7 +16,7 @@ import { Container, Loader, ToastContainer } from "./Base.styles";
 import { useRouter } from "next/router";
 import Toast from "../Toast";
 import jwtDecode from "jwt-decode";
-import AddPostButton from "@/components/Blog/AddPostButton";
+import AddPostButton from "@/components/AddPostButton/AddPostButton";
 
 interface ClientContextType {
   email?: string;

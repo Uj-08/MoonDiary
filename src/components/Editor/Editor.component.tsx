@@ -1,4 +1,4 @@
-import { useState, useRef, ReactNode } from "react";
+import React, { useState, useRef, ReactNode } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { useDispatch } from "react-redux";
 import parse from "html-react-parser";
@@ -8,8 +8,8 @@ import slugify from "slugify";
 import { AppDispatch } from "@/redux/store";
 import { postBlog, updateBlog } from "@/redux/slices/blogInfo";
 import ImageComponent, { Shimmer } from "../ImageComponent/ImageComponent";
-import InputTagComponent from "./InputTagComponent/InputTagComponent";
-import IsDraftToggle from "./ToogleDraft";
+import InputTagComponent from "./TagSuggestion/TagSuggestion.component";
+import IsDraftToggle from "./ToogleDraft/ToogleDraft.component";
 
 import {
     BlogTitle,
@@ -25,14 +25,11 @@ import {
     TitleText,
 } from "./Editor.styles";
 import { blogContentStyle, BlogPreviewContent } from "./BlogContentStyle";
-import { BlogType, PopulatedBlogType } from "@/types/blog";
+import { BlogType } from "@/types/blog";
+import { EditorComponentProps } from "./Editor.types";
+import EditorIntitButtonComponent from "./EditorIntitButton/EditorIntitButton.component";
 
-interface EditorComponentProps {
-    readonly sessionId: string;
-    readonly blog?: PopulatedBlogType;
-}
-
-function EditorComponent({ sessionId, blog }: EditorComponentProps) {
+const EditorComponent = ({ sessionId, blog }: EditorComponentProps) => {
     const editorRef = useRef<any>(null);
     const dispatch = useDispatch<AppDispatch>();
 
@@ -46,6 +43,7 @@ function EditorComponent({ sessionId, blog }: EditorComponentProps) {
     const [tagsArr, setTagsArr] = useState<string[]>([]);
     const [isDraft, setIsDraft] = useState(blog?.isDraft ?? true);
     const [isEditorInit, setIsEditorInit] = useState(false);
+    const [shouldInitEditor, setShouldInitEditor] = useState(false);
 
     let debounce: NodeJS.Timeout | undefined;
 
@@ -85,6 +83,10 @@ function EditorComponent({ sessionId, blog }: EditorComponentProps) {
                 : 
                 postBlog(reqBody));
         }
+    };
+
+    const initializeEditor = () => {
+        setShouldInitEditor(true);
     };
 
     return (
@@ -143,26 +145,28 @@ function EditorComponent({ sessionId, blog }: EditorComponentProps) {
                     />
 
                     <EditorContainer>
+                        <EditorIntitButtonComponent shouldInitEditor={shouldInitEditor} initializeEditor={initializeEditor} />
                         {!isEditorInit && <Shimmer className="shimmer" $isLoading />}
-
-                        <Editor
-                            initialValue={blog?.blogData}
-                            apiKey={process.env.NEXT_PUBLIC_MCE_API}
-                            onInit={(_, editor) => {
-                                editorRef.current = editor;
-                                setIsEditorInit(true);
-                            }}
-                            onKeyUp={keyUpHandler}
-                            init={{
-                                height: 700,
-                                placeholder: "Start writing your blog here...",
-                                plugins: 'autolink link image lists code table hr preview fullscreen',
-                                toolbar:
-                                    'undo redo | formatselect | bold italic underline blockquote | alignleft aligncenter alignright alignjustify | bullist numlist | link image table | code fullscreen preview',
-                                branding: false,
-                                content_style: blogContentStyle
-                            }}
-                        />
+                        {shouldInitEditor &&
+                            <Editor
+                                initialValue={blog?.blogData}
+                                apiKey={process.env.NEXT_PUBLIC_MCE_API}
+                                onInit={(_, editor) => {
+                                    editorRef.current = editor;
+                                    setIsEditorInit(true);
+                                }}
+                                onKeyUp={keyUpHandler}
+                                init={{
+                                    height: 700,
+                                    placeholder: "Start writing your blog here...",
+                                    plugins: 'autolink link image lists code table hr preview fullscreen',
+                                    toolbar:
+                                        'undo redo | formatselect | bold italic underline blockquote | alignleft aligncenter alignright alignjustify | bullist numlist | link image table | code fullscreen preview',
+                                    branding: false,
+                                    content_style: blogContentStyle
+                                }}
+                            />
+                        }
                     </EditorContainer>
 
                     <Button onClick={submitHandler}>{blog?.blogTitle ? "Update" : "Submit"}</Button>
@@ -172,4 +176,4 @@ function EditorComponent({ sessionId, blog }: EditorComponentProps) {
     );
 }
 
-export default EditorComponent;
+export default React.memo(EditorComponent);

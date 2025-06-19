@@ -1,34 +1,25 @@
 import React, { useContext, useEffect, useState } from "react";
-// import { useRouter } from "next/router";
 import {
   Container,
   Grid,
   SortContainer,
-  // Label,
   Select,
 } from "./ArticleGrid.styles";
 import DynamicCard from "../ArticleCard/ArticleCard.component";
-import { PopulatedBlogType } from "@/types/blog";
 import { ClientContext } from "@/containers/Base/Base";
 import { getCookie } from "cookies-next";
 import { COOKIE_NAME } from "@/helpers/constants";
 import { useDispatch } from "react-redux";
 import { updateBlogDataIsLoading } from "@/redux/slices/blogInfo";
+import { ArticleGridTypes } from "./ArticleGrid.types";
 
 const ArticleGrid = ({
   blogsArray,
   filterURL,
-}: {
-  blogsArray: PopulatedBlogType[];
-  filterURL: URL | null;
-}) => {
-  // const router = useRouter();
+}: ArticleGridTypes) => {
   const dispatch = useDispatch();
   const client = useContext(ClientContext);
   const token = getCookie(COOKIE_NAME) as string;
-
-  // const sortQuery = (router.query.sort as string) || DEFAULT_SORT;
-  // const orderQuery = (router.query.order as string) || DEFAULT_ORDER;
 
   const [sortState, setSortState] = useState<string | undefined>();
   const [orderState, setOrderState] = useState<string | undefined>();
@@ -100,7 +91,6 @@ const ArticleGrid = ({
       <Grid>
         <SortContainer>
           <span>
-            {/* <Label htmlFor="sort">Sort By:</Label> */}
             <Select id="sort" value={sortState} onChange={handleSortChange} defaultValue="">
               <option disabled value="">
                 Sort By…
@@ -112,7 +102,6 @@ const ArticleGrid = ({
           </span>
 
           <span>
-            {/* <Label htmlFor="order">Order:</Label> */}
             <Select id="order" value={orderState} onChange={handleOrderChange} defaultValue="">
               <option disabled value="">
                 Order By…

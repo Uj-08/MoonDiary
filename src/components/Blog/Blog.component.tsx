@@ -28,50 +28,11 @@ import { stripHtml } from "string-strip-html";
 import { deleteBlog } from "@/redux/slices/blogInfo";
 import { useDispatch } from "react-redux";
 import Modal from "@/containers/Modal/Modal";
-import DeleteCard from "../DeletePrompt/DeleteCard";
+import DeleteCard from "../DeletePrompt/DeleteCard.component";
 import { useRouter } from "next/router";
 import { AppDispatch } from "@/redux/store";
-
-const ADDITIONAL_CARDS_LENGTH = 4;
-
-// Fetch related blogs
-const fetchRelatedBlogs = async (blog: PopulatedBlogType) => {
-  if (!blog || !blog.tags?.length) return [];
-
-  try {
-    // Fetch related by tags
-    const tagIds = blog.tags.map(tag => tag._id);
-    const body = {
-      tagIds,
-      filterBlogId: blog._id
-    }
-    const blogs = await fetch(`/api/tags?limit=${ADDITIONAL_CARDS_LENGTH}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body)
-    });
-
-    let similarBlogs: PopulatedBlogType[] = await blogs.json()
-
-    // Fill extra if needed
-    if (similarBlogs.length < ADDITIONAL_CARDS_LENGTH) {
-      const filterIds = similarBlogs.map((item) => item._id);
-      const fillRes = await fetch(
-        `/api/blogs?filterIds=${[blog._id, ...filterIds]}&limit=${ADDITIONAL_CARDS_LENGTH - similarBlogs.length
-        }`
-      ).then((res) => res.json());
-
-      similarBlogs = [...similarBlogs, ...fillRes];
-    }
-
-    return similarBlogs;
-  } catch (err) {
-    console.error("Failed to fetch related blogs", err);
-    return [];
-  }
-};
+import { fetchRelatedBlogs } from "./fetchRelatedBlogs";
+import { ADDITIONAL_CARDS_LENGTH } from "@/helpers/constants";
 
 const BlogComponent = ({ blog }: { blog: PopulatedBlogType }) => {
   const dispatch = useDispatch<AppDispatch>();
