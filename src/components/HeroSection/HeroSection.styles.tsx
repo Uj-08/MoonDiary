@@ -16,15 +16,15 @@ export const ImageContainer = styled.div`
     aspect-ratio: 4/3;
     max-height: 75dvh;
     z-index: 10;
-    filter: blur(3px);
+    filter: blur(4px);
     width: 100%;
     z-index: 1;
     @media (max-width: 500px) {
         aspect-ratio: 1;
     }
     img {
-        object-fit: contain;
-        object-position: center;
+        object-fit: cover;
+        object-position: 50% 50%;
     }
 
     &:before {

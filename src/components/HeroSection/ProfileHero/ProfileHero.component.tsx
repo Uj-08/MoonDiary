@@ -1,5 +1,5 @@
 import { Container, ImageContainer } from "../HeroSection.styles";
-import cover from "public/cover.jpeg";
+import cover from "public/cover-profile.jpg";
 import Image from "next/image";
 import { useContext } from "react";
 import { ClientContext } from "@/containers/Base/Base";
