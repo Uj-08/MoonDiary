@@ -9,21 +9,29 @@ import Providers from './providers';
 const arimo = Arimo({ subsets: ['latin'], weight: ['400', '700'] });
 
 export const metadata = {
-    title: 'MoonDiary – Align Your Life Through Energy Medicine & Cosmic Guidance',
-    description:
-        'Explore daily insight on esoterica and intuitive guidance on MoonDiary — your one stop shop for aligning life with cosmic wisdom.',
+    metadataBase: new URL("https://moondiary.netlify.app"),
+    title: "MoonDiary",
+    description: "Align Your Life Through Energy Medicine & Cosmic Guidance",
     openGraph: {
-        title: 'MoonDiary',
-        images: '/cover.jpeg',
-        siteName: 'MoonDiary',
-        type: 'website',
+        title: "MoonDiary",
+        description: "Align Your Life Through Energy Medicine & Cosmic Guidance",
+        url: "https://moondiary.netlify.app",
+        siteName: "MoonDiary",
+        images: [
+            {
+                url: "/cover.jpeg", // This will resolve to: https://moondiary.netlify.app/cover.jpeg
+                width: 1200,
+                height: 630,
+                alt: "MoonDiary Cover",
+            },
+        ],
+        type: "website",
     },
     twitter: {
-        card: 'summary_large_image',
-        creator: '@MoonDiary',
-    },
-    icons: {
-        icon: '/favicon.png',
+        card: "summary_large_image",
+        title: "MoonDiary",
+        description: "Align Your Life Through Energy Medicine & Cosmic Guidance",
+        images: ["/cover.jpeg"],
     },
 };
 

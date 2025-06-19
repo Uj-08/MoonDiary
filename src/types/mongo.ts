@@ -1,7 +1,5 @@
-import { Types } from "mongoose";
-
 export interface BaseMongoDocument {
-    _id: string | Types.ObjectId;
+    _id: string;
     createdAt?: Date;
     updatedAt?: Date;
 }

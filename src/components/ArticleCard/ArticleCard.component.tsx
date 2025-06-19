@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   AuthorDetail,
   AuthorProfile,
@@ -28,7 +28,7 @@ import DeleteCard from "../DeletePrompt/DeleteCard.component";
 import ShimmerImage from "../ImageComponent/ShimmerImage.component";
 import Link from "next/link";
 import { useShuffledColors } from "@/hooks/useShuffledColors";
-import { stripHtml } from 'string-strip-html';
+import { stripHtml } from "string-strip-html";
 import { ArticleCardTypes } from "./ArticleCard.types";
 import { OverlayContainer } from "../Blog/Blog.styles";
 import { getReadingTime } from "@/helpers/getReadingTime";
@@ -36,7 +36,7 @@ import { getReadingTime } from "@/helpers/getReadingTime";
 export const ArticleCard = ({ blog, clientEmail, index }: ArticleCardTypes) => {
   const {
     _id,
-    // slug,
+    slug,
     authorEmail,
     authorName,
     authorPicture,
@@ -45,76 +45,76 @@ export const ArticleCard = ({ blog, clientEmail, index }: ArticleCardTypes) => {
     blogImg,
     updatedAt,
     tags,
-    isDraft
+    isDraft,
   } = blog;
 
   const dispatch = useDispatch<AppDispatch>();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const router = useRouter();
 
+  // Format time ago
   const formatter = new Intl.RelativeTimeFormat("en", { numeric: "auto" });
-
-  let relTime: string | undefined;
-
-  if (updatedAt) {
+  const relTime = useMemo(() => {
+    if (!updatedAt) return "unknown";
     const now = Date.now();
     const updated = new Date(updatedAt).getTime();
-    const diffInMs = now - updated;
-
-    const seconds = Math.floor(diffInMs / 1000);
+    const diff = now - updated;
+    const seconds = Math.floor(diff / 1000);
     const minutes = Math.floor(seconds / 60);
     const hours = Math.floor(minutes / 60);
     const days = Math.floor(hours / 24);
 
-    if (days >= 1) {
-      relTime = formatter.format(-days, "day");
-    } else if (hours >= 1) {
-      relTime = formatter.format(-hours, "hour");
-    } else if (minutes >= 1) {
-      relTime = formatter.format(-minutes, "minute");
-    } else {
-      relTime = formatter.format(-seconds, "second");
-    }
+    let result;
+    if (days >= 1) result = formatter.format(-days, "day");
+    else if (hours >= 1) result = formatter.format(-hours, "hour");
+    else if (minutes >= 1) result = formatter.format(-minutes, "minute");
+    else result = formatter.format(-seconds, "second");
 
-    // Capitalize if it's purely alphabetic (e.g., "yesterday", "an hour ago")
-    if (/^[a-zA-Z\s]+$/.test(relTime)) {
-      relTime = relTime.charAt(0).toUpperCase() + relTime.slice(1);
-    }
-  }
+    return /^[a-zA-Z\s]+$/.test(result)
+      ? result.charAt(0).toUpperCase() + result.slice(1)
+      : result;
+  }, [updatedAt]);
 
-  function showDeleteModalHandler(e: React.MouseEvent<HTMLButtonElement>) {
+  const preventLinkClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     e.preventDefault();
     e.stopPropagation();
+
+  }
+
+  const showDeleteModalHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    preventLinkClick(e);
     setShowDeleteModal(true);
-  }
+  };
 
-  async function editBlogHandler(e: React.MouseEvent<HTMLButtonElement>) {
-    e.preventDefault();
-    e.stopPropagation();
+  const editBlogHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    preventLinkClick(e);
     router.push(`/blogs/post/${_id}`);
-  }
+  };
 
-  async function deleteBlogHandler(e: React.MouseEvent<HTMLButtonElement>) {
-    e.preventDefault();
-    e.stopPropagation();
+  const deleteBlogHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    preventLinkClick(e)
     dispatch(deleteBlog(_id));
     setShowDeleteModal(false);
-  }
+  };
+
+  const tagClickHandler = (e: React.MouseEvent<HTMLElement, MouseEvent>, tagId: string) => {
+    preventLinkClick(e);
+    router.push(`/features/${tagId}`);
+  };
 
   const getRandomColor = useShuffledColors();
+  const tagColors = useMemo(() => tags.map(() => getRandomColor()), [tags]);
 
-  const blogBody = (stripHtml(blogData || '')).result;
+  const blogBody = stripHtml(blogData || "").result;
   const readingTime = `${getReadingTime(blogBody)} min read`;
 
   return (
     <div>
-      <Link href={`/blogs/${blog.slug}`}>
+      <Link href={`/blogs/${slug}`}>
         <Container $isDraft={isDraft}>
           <ImageContainer>
             <OverlayContainer>
-              <CardReadTimeBadge>
-                {readingTime}
-              </CardReadTimeBadge>
+              <CardReadTimeBadge>{readingTime}</CardReadTimeBadge>
             </OverlayContainer>
             <ShimmerImage
               src={blogImg}
@@ -127,29 +127,30 @@ export const ArticleCard = ({ blog, clientEmail, index }: ArticleCardTypes) => {
             <MainContent>
               <BlogHeader>
                 <TagsContainer>
-                  {Array.isArray(tags) && tags.length > 0 &&
-                    tags.map((tag, idx) => {
-                      if (idx <= 1) return (
-                        <Tag
-                          key={tag._id.toString()}
-                          title={`#${tag.name}`}
-                          onClick={() => router.push(`/features/${tag._id}`)}
-
-                          $maxWidth={"90px"}
-                          $fontSize="12px"
-                          $letterSpacing="0.5px"
-                          $bgColor={getRandomColor()}
-                        >
-                          <span>
-                            #{tag.name}
-                          </span>
-                        </Tag>
-                      )
-                    })
-                  }
-                  {Array.isArray(tags) && tags.length > 0 && tags.length > 2 &&
-                    <MoreTag title={tags.slice(2).map((tag) => `#${tag.name}`).join(" ")} color={getRandomColor()}>+{tags.length - 2} more</MoreTag>
-                  }
+                  {tags?.slice(0, 2).map((tag, idx) => (
+                    <Tag
+                      key={tag._id}
+                      title={`#${tag.name}`}
+                      onClick={(e) => tagClickHandler(e, tag._id)}
+                      $maxWidth="90px"
+                      $fontSize="12px"
+                      $letterSpacing="0.5px"
+                      $bgColor={tagColors[idx]}
+                    >
+                      <span>#{tag.name}</span>
+                    </Tag>
+                  ))}
+                  {tags?.length > 2 && (
+                    <MoreTag
+                      title={tags
+                        .slice(2)
+                        .map((tag) => `#${tag.name}`)
+                        .join(" ")}
+                      color={getRandomColor()}
+                    >
+                      +{tags.length - 2} more
+                    </MoreTag>
+                  )}
                 </TagsContainer>
               </BlogHeader>
               <BlogTitle title={blogTitle}>{blogTitle}</BlogTitle>
@@ -161,13 +162,13 @@ export const ArticleCard = ({ blog, clientEmail, index }: ArticleCardTypes) => {
                   <ShimmerImage
                     src={authorPicture}
                     aspectRatio={1}
-                    alt={"profile"}
+                    alt="profile"
                     isPriority={index <= 3}
                   />
                 </AuthorProfile>
                 <AuthorDetail>
                   <div>{authorName}</div>
-                  <div>{relTime ?? "unknown"}</div>
+                  <div>{relTime}</div>
                 </AuthorDetail>
                 {clientEmail === authorEmail && (
                   <ButtonsContainer>
@@ -179,16 +180,12 @@ export const ArticleCard = ({ blog, clientEmail, index }: ArticleCardTypes) => {
                 )}
                 <Modal
                   showModal={showDeleteModal}
-                  hideModal={() => {
-                    setShowDeleteModal(false);
-                  }}
+                  hideModal={() => setShowDeleteModal(false)}
                 >
                   <DeleteCard
                     blogTitle={blogTitle}
                     onDeleteHandler={deleteBlogHandler}
-                    onCancelHandler={() => {
-                      setShowDeleteModal(false);
-                    }}
+                    onCancelHandler={() => setShowDeleteModal(false)}
                   />
                 </Modal>
               </BlogAuthor>
@@ -198,6 +195,6 @@ export const ArticleCard = ({ blog, clientEmail, index }: ArticleCardTypes) => {
       </Link>
     </div>
   );
-}
+};
 
-export default (ArticleCard);
+export default ArticleCard;

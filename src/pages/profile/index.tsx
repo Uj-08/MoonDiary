@@ -61,7 +61,7 @@ const Profile = ({ blogsArray, sessionId }: { blogsArray: PopulatedBlogType[], s
         } finally {
             dispatch(updateBlogDataIsLoading(false));
         }
-    }, [dispatch, filterURL, sessionId]);
+    }, [dispatch, filterURL, sessionId, showDrafts]);
 
     return (
         <>
