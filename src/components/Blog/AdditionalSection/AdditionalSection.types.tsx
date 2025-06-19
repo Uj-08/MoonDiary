@@ -1,7 +1,8 @@
 import { PopulatedBlogType } from "@/types/blog";
-import { ClientContextType } from "@/types/client";
+import { ClientType } from "@/types/client";
+
 
 export interface AdditionalSectionComponentTypes {
     blog: PopulatedBlogType
-    client: ClientContextType | null;
+    client: ClientType | null |undefined;
 }

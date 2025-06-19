@@ -122,7 +122,6 @@ const Base = ({ children }: BaseTypes) => {
                     signedIn={signedIn}
                     picture={picture}
                     hmbgrClickHandler={() => setShowHamburger(true)}
-                    setShowLoginModal={setShowLoginModal}
                 />
                 {children}
                 <FooterComponent />
@@ -147,7 +146,6 @@ const Base = ({ children }: BaseTypes) => {
                 signInHandler={signInHandler}
                 signedIn={signedIn}
                 picture={picture}
-                setShowLoginModal={setShowLoginModal}
             />
             <Modal
                 showModal={showLoginModal || (blogInfo.blogPostUpdateStatus.isLoading || blogInfo.blogDeleteStatus.isLoading)}
