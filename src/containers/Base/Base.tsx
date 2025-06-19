@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useState, useEffect, createContext, useMemo, useCallback } from "react";
 import Navbar from "@/components/Navbar/Navbar.component";
 import FooterComponent from "@/components/Footer/Footer.component";

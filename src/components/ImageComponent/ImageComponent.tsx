@@ -1,3 +1,4 @@
+"use client"
 import React, { useCallback, useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
 import Image from "next/image";

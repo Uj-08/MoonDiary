@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import { LogoContainer, Wrapper, NavLinks, SocialLinks, HamburgerButton } from "./Navbar.styles"
 import NavbarTypes from "./Navbar.types";
@@ -8,7 +9,7 @@ import Link from "next/link";
 import logo from "public/logo.png"
 import gmail from "public/gmail.png"
 import insta from "public/instagram.png"
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 
 export const Profile = styled.span`

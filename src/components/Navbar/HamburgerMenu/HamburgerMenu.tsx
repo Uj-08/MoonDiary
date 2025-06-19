@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import styled from "styled-components";
 import { NavLinks, SocialLinks } from "../Navbar.styles";
@@ -6,7 +7,7 @@ import Link from "next/link";
 import { dancingScript } from "@/styles/fonts";
 import gmail from "public/gmail.png"
 import insta from "public/instagram.png"
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const Container = styled.div<{ $showHamburger: boolean }>`
   height: 100%;
