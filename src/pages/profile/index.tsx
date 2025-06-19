@@ -1,85 +1,19 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
-import ArticleGrid from "@/components/ArticleGrid/ArticleGrid.component";
+import React from "react";
 import { GetServerSideProps } from "next";
 import { getCookie, hasCookie } from "cookies-next";
-import { ADMIN_EMAILS, COOKIE_NAME } from "@/helpers/constants";
+import { COOKIE_NAME } from "@/helpers/constants";
 import Head from "next/head";
 import { PopulatedBlogType } from "@/types/blog";
-import ProfileHero from "@/components/HeroSection/ProfileHero/ProfileHero.component";
-import { useDispatch } from "react-redux";
-import { updateBlogDataIsLoading } from "@/redux/slices/blogInfo";
-import styled from "styled-components";
-import { ClientContext } from "@/containers/Base/Base";
-import Switch from "@/components/Switch/Switch.component";
-
-const ToggleWrapper = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 2rem;
-    width: 100%;
-`;
+import ProfileComponent from "@/components/Pages/Profile/Profile.component";
 
 const Profile = ({ blogsArray, sessionId }: { blogsArray: PopulatedBlogType[], sessionId: string }) => {
-    const client = useContext(ClientContext)
-    const [blogsArrayState, setBlogsArrayState] = useState(blogsArray)
-    const dispatch = useDispatch();
-    const [showDrafts, setShowDrafts] = useState(false);
-
-    const filterURL = React.useMemo(() => {
-        if (typeof window === "undefined") return null;
-        const url = new URL("/api/blogs", window.location.origin);
-        url.searchParams.set("showDrafts", String(showDrafts));
-        return url;
-    }, [showDrafts]);
-
-    const showDraftsHandler = useCallback(async (showDraftsVal: boolean) => {
-        if(showDrafts === showDraftsVal) return;
-        setShowDrafts(showDraftsVal);
-        let fetchedBlogsArray: PopulatedBlogType[] | [];
-        dispatch(updateBlogDataIsLoading(true));
-        (filterURL as URL).searchParams.set("showPublished", String(!showDraftsVal));
-        (filterURL as URL).searchParams.set("showDrafts", String(showDraftsVal));
-        try {
-            const apiRes = await fetch(
-                (filterURL as URL).href,
-                {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        ...(sessionId && { "x-session-token": sessionId }),
-                    }
-                }
-            );
-
-            if (apiRes.ok) {
-                fetchedBlogsArray = await apiRes.json();
-                setBlogsArrayState(fetchedBlogsArray)
-            }
-        } catch (e) {
-            console.log(e)
-        } finally {
-            dispatch(updateBlogDataIsLoading(false));
-        }
-    }, [dispatch, filterURL, sessionId, showDrafts]);
-
     return (
         <>
             <Head>
                 <meta name="robots" content="index,follow" />
                 <link rel="canonical" href="https://moondiary.netlify.app/profile" />
             </Head>
-            <ProfileHero />
-            {ADMIN_EMAILS.includes(client?.email || "") &&
-                (
-                    <>
-                        <ToggleWrapper>
-                            <Switch showDrafts={showDrafts} showDraftsHandler={showDraftsHandler} />
-                        </ToggleWrapper>
-                        <ArticleGrid blogsArray={blogsArrayState} filterURL={filterURL} />
-                    </>
-                )
-            }
+            <ProfileComponent blogsArray={blogsArray} sessionId={sessionId} />
         </>
     );
 }
