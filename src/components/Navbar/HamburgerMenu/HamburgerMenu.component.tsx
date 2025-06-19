@@ -3,9 +3,9 @@ import React from "react";
 import { NavLinks, SocialLinks } from "../Navbar.styles";
 import Image from "next/image";
 import Link from "next/link";
-import gmail from "public/gmail.png";
-import insta from "public/instagram.png";
-import { Container, HamburgerContainer, LinkContainer, TopContainer } from "./HamburgerMenu.styles";
+import gmail from "public/gmail.png"
+import insta from "public/instagram.png"
+import { Container, HamburgerContainer, LinkContainer, ProfileContainer, TopContainer } from "./HamburgerMenu.styles";
 import { HamburgerTypes } from "./HamburgerMenu.types";
 
 const HamburgerMenu = ({
@@ -70,8 +70,10 @@ const HamburgerMenu = ({
             </li>
 
             <li>
-              <Link href={"/profile"}>
-                <Image src={picture} alt="social-links" fill />
+              <Link href="/profile" onClick={() => setShowHamburger(false)}>
+                <ProfileContainer>
+                  <Image src={picture} alt="social-links" fill />
+                </ProfileContainer>
               </Link>
             </li>
           </SocialLinks>
