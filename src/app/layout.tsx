@@ -9,17 +9,17 @@ import Providers from './providers';
 const arimo = Arimo({ subsets: ['latin'], weight: ['400', '700'] });
 
 export const metadata = {
-    metadataBase: new URL("https://moondiary.netlify.app"),
+    metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL as string),
     title: "MoonDiary",
     description: "Align Your Life Through Energy Medicine & Cosmic Guidance",
     openGraph: {
         title: "MoonDiary",
         description: "Align Your Life Through Energy Medicine & Cosmic Guidance",
-        url: "https://moondiary.netlify.app",
+        url: process.env.NEXT_PUBLIC_BASE_URL,
         siteName: "MoonDiary",
         images: [
             {
-                url: "/cover.jpeg", // This will resolve to: https://moondiary.netlify.app/cover.jpeg
+                url: "/cover.jpeg",
                 width: 1200,
                 height: 630,
                 alt: "MoonDiary Cover",

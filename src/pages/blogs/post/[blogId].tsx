@@ -45,7 +45,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         const clientObj: ClientType = jwtDecode(sessionToken);
 
         // Fetch blog
-        const API_INSTANCE = new URL(`/api/blogs/${blogId}`, process.env.BASE_URL);
+        const API_INSTANCE = new URL(`/api/blogs/${blogId}`, process.env.NEXT_PUBLIC_BASE_URL);
         const apiRes = await fetch(API_INSTANCE);
 
         if (!apiRes.ok) throw new Error(`API error: ${apiRes.status}`);

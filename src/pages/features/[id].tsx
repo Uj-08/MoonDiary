@@ -13,7 +13,7 @@ const TagPage = ({ tagName, blogsArray }: { tagName: string; blogsArray: Populat
     const router = useRouter();
 
     const { id } = router.query;
-    const url = `https://moondiary.netlify.app/features/${id}`
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL}/features/${id}`
 
     return (
         <>

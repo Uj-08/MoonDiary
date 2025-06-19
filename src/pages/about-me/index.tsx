@@ -8,7 +8,7 @@ const AboutMe = () => {
     <>
       <Head>
         <title>About Me | MoonDiary</title>
-        <link rel="canonical" href="https://moondiary.netlify.app/about-me" />
+        <link rel="canonical" href={`${process.env.NEXT_PUBLIC_BASE_URL}/about-me`} />
         <meta name="robots" content="index,follow" />
       </Head>
       <AboutComponent />

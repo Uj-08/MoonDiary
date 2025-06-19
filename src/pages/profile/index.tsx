@@ -11,7 +11,7 @@ const Profile = ({ blogsArray, sessionId }: { blogsArray: PopulatedBlogType[], s
         <>
             <Head>
                 <meta name="robots" content="index,follow" />
-                <link rel="canonical" href="https://moondiary.netlify.app/profile" />
+                <link rel="canonical" href={`${process.env.NEXT_PUBLIC_BASE_URL}/profile`} />
             </Head>
             <ProfileComponent blogsArray={blogsArray} sessionId={sessionId} />
         </>
@@ -25,7 +25,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     const { sort = "updatedAt", order = "-1", showDrafts = "false", showPublished = "true" } = query;
 
-    const API_INSTANCE = new URL("/api/blogs", process.env.BASE_URL);
+    const API_INSTANCE = new URL("/api/blogs", process.env.NEXT_PUBLIC_BASE_URL);
     API_INSTANCE.searchParams.set("sort", String(sort));
     API_INSTANCE.searchParams.set("order", String(order));
     API_INSTANCE.searchParams.set("showDrafts", String(showDrafts));
