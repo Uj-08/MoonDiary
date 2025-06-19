@@ -6,10 +6,10 @@ import BlogComponent from '@/components/Blog/Blog.component'
 const BlogPage = ({ blog }: BlogPageTypes) => {
   return (
     <>
-    <BlogTitleComponent>
-            {blog.blogTitle}
-        </BlogTitleComponent>
-        <BlogComponent blog={blog} />
+      <BlogTitleComponent>
+        {blog.blogTitle}
+      </BlogTitleComponent>
+      <BlogComponent blog={blog} />
     </>
   )
 }

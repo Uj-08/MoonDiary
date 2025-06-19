@@ -17,15 +17,8 @@ import { useRouter } from "next/router";
 import jwtDecode from "jwt-decode";
 import AddPostButton from "@/components/AddPostButton/AddPostButton";
 import Toast from "../Toast/Toast.component";
+import { ClientContextType } from "@/types/client";
 
-interface ClientContextType {
-  email?: string;
-  name?: string;
-  picture?: string;
-  given_name?: string;
-  family_name?: string;
-  email_verified?: boolean
-}
 export const ClientContext = createContext<ClientContextType | null>(null);
 
 const Base = ({ children }: BaseTypes) => {
