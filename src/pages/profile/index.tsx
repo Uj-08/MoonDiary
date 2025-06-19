@@ -23,42 +23,34 @@ export default Profile;
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const { req, res, query } = context;
 
+    const { sort = "updatedAt", order = "-1", showDrafts = "false", showPublished = "true" } = query;
+
+    const API_INSTANCE = new URL("/api/blogs", process.env.BASE_URL);
+    API_INSTANCE.searchParams.set("sort", String(sort));
+    API_INSTANCE.searchParams.set("order", String(order));
+    API_INSTANCE.searchParams.set("showDrafts", String(showDrafts));
+    API_INSTANCE.searchParams.set("showPublished", String(showPublished));
+
     let token = "";
+
     try {
-        // Get session token safely
         if (hasCookie(COOKIE_NAME, { req, res })) {
             const cookie = await getCookie(COOKIE_NAME, { req, res });
             if (typeof cookie === "string") token = cookie;
         }
 
-        const { sort = "updatedAt", order = "-1", showDrafts = "false", showPublished = "true" } = query;
-
-        // Add fetch timeout using AbortController
-        const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 7000); // 7s timeout
-
         const apiRes = await fetch(
-            `${process.env.BASE_URL}/api/blogs?sort=${sort}&order=${order}&showPublished=${showPublished}&showDrafts=${showDrafts}`,
+            API_INSTANCE,
             {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
                     ...(token && { "x-session-token": token }),
-                },
-                signal: controller.signal
+                }
             }
         );
 
-        clearTimeout(timeout);
-
-        if (!apiRes.ok) {
-            return {
-                props: {
-                    blogsArray: [],
-                    error: `Failed to fetch blogs. Status: ${apiRes.status}`,
-                },
-            };
-        }
+        if (!apiRes.ok) throw new Error(`API responded with status ${apiRes.status}`);
 
         const blogsArray: PopulatedBlogType[] = await apiRes.json();
 
@@ -69,14 +61,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             },
         };
     } catch (error: any) {
+        console.log(error);
         return {
-            props: {
-                blogsArray: [],
-                error:
-                    error?.name === "AbortError"
-                        ? "Request timed out. Please try again later."
-                        : error?.message || "Unknown error occurred",
-            },
+            redirect: {
+                destination: "/500",
+                permanent: false,
+            }
         };
     }
 };

@@ -18,10 +18,8 @@ const AboutMe = () => {
 
 export default React.memo(AboutMe);
 
-// ✅ Changed from getServerSideProps to getStaticProps
 export const getStaticProps: GetStaticProps = async () => {
   return {
-    props: {}, // No props needed here
-    // revalidate: 3600, // Optional: regenerate every hour (ISR)
+    props: {}
   };
 };
