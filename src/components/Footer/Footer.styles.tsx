@@ -38,3 +38,14 @@ export const Footer = styled.footer`
         color: #8a8a8a;
     }
 `;  
+
+export const LogoContainer = styled.li`
+    &:hover {
+        img {
+            transform: rotate(360deg);
+        }
+    }
+    img {
+        transition: transform 0.3s linear;
+    }
+`

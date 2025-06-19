@@ -1,8 +1,5 @@
+import { styled } from "styled-components";
 import { anton } from "@/styles/fonts";
-import { FeaturesTagType } from "@/types/tag";
-import Link from "next/link";
-import React from "react";
-import styled from "styled-components";
 
 export const Container = styled.div`
   padding: 8px 18px;
@@ -41,20 +38,3 @@ export const Text = styled.span`
   white-space: nowrap;
   text-overflow: ellipsis;
 `;
-
-const FeatureCard = ({
-    tag,
-}: {
-    tag: FeaturesTagType
-}) => {
-    return (
-        <Link href={`/features/${tag._id}`}>
-            <Container>
-                <Text>#{tag.name}</Text>
-                <span>({tag.nonDraftCount})</span>
-            </Container>
-        </Link>
-    );
-};
-
-export default FeatureCard;

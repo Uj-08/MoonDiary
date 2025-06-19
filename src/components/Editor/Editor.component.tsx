@@ -7,7 +7,7 @@ import slugify from "slugify";
 
 import { AppDispatch } from "@/redux/store";
 import { postBlog, updateBlog } from "@/redux/slices/blogInfo";
-import ImageComponent, { Shimmer } from "../ImageComponent/ImageComponent";
+import ShimmerImage from "../ImageComponent/ShimmerImage.component";
 import InputTagComponent from "./TagSuggestion/TagSuggestion.component";
 import IsDraftToggle from "./ToogleDraft/ToogleDraft.component";
 
@@ -28,6 +28,7 @@ import { blogContentStyle, BlogPreviewContent } from "./BlogContentStyle";
 import { BlogType } from "@/types/blog";
 import { EditorComponentProps } from "./Editor.types";
 import EditorIntitButtonComponent from "./EditorIntitButton/EditorIntitButton.component";
+import { Shimmer } from "../ImageComponent/ShimmerImage.styles";
 
 const EditorComponent = ({ sessionId, blog }: EditorComponentProps) => {
     const editorRef = useRef<any>(null);
@@ -99,7 +100,7 @@ const EditorComponent = ({ sessionId, blog }: EditorComponentProps) => {
                 <PreviewContainer>
                     <Preview>
                         <PreviewImageContainer>
-                            <ImageComponent
+                            <ShimmerImage
                                 src={imageLink || "/4-3.png"}
                                 alt={"4:3 ratio"}
                                 aspectRatio={4 / 3}

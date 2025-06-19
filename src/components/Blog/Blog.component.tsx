@@ -14,7 +14,7 @@ import {
   TagsContainer,
 } from "./Blog.styles";
 import { PreviewData } from "../Editor/Editor.styles";
-import ImageComponent from "../ImageComponent/ImageComponent";
+import ImageComponent from "../ImageComponent/ShimmerImage.component";
 import DynamicCard from "../ArticleCard/ArticleCard.component";
 import SkeletalCard from "../ArticleCard/SkeletalCard";
 import { ClientContext } from "@/containers/Base/Base";

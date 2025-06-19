@@ -1,7 +1,7 @@
 import { Container, HiddenTitle, ImageContainer } from "./HeroSection.styles";
 import cover from "public/cover.jpeg";
 import Image from "next/image";
-import RotatingTagline from "./RotatingTagline";
+import RotatingTagline from "./RotatingTagline/RotatingTagline.component";
 import { useContext } from "react";
 import { ClientContext } from "@/containers/Base/Base";
 

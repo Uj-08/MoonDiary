@@ -1,21 +1,9 @@
 import Link from "next/link"
-import { Footer } from "./Footer.styles"
 import Image from "next/image"
-import styled from "styled-components"
+import { Footer, LogoContainer } from "./Footer.styles"
 import logo from "public/logo.png"
 import gmail from "public/gmail.png"
 import insta from "public/instagram.png"
-
-export const LogoContainer = styled.li`
-    &:hover {
-        img {
-            transform: rotate(360deg);
-        }
-    }
-    img {
-        transition: transform 0.3s linear;
-    }
-`
 
 export default function FooterComponent() {
     return (

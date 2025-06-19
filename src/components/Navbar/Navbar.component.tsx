@@ -4,7 +4,7 @@ import { LogoContainer, Wrapper, NavLinks, SocialLinks, HamburgerButton } from "
 import NavbarTypes from "./Navbar.types";
 import Image from "next/image";
 import styled from "styled-components";
-import ImageComponent from "../ImageComponent/ImageComponent";
+import ImageComponent from "../ImageComponent/ShimmerImage.component";
 import Link from "next/link";
 import logo from "public/logo.png"
 import gmail from "public/gmail.png"

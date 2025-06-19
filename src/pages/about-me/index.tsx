@@ -2,7 +2,7 @@ import React from "react";
 import Head from "next/head";
 import { GetStaticProps } from "next";
 import styled from "styled-components";
-import ImageComponent from "@/components/ImageComponent/ImageComponent";
+import ImageComponent from "@/components/ImageComponent/ShimmerImage.component";
 import { montserrat } from "@/styles/fonts";
 
 export const AboutCard = styled.div`
