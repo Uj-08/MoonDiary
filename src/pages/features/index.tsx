@@ -14,7 +14,7 @@ const Features = ({ tags }: { tags: FeaturesTagType[] }) => {
         <>
             <Head>
                 <title>Features | MoonDiary</title>
-                <link rel="canonical" href="https://moondiary.netlify.app/features" />
+                <link rel="canonical" href={`${process.env.NEXT_PUBLIC_BASE_URL}/features`} />
                 <meta name="robots" content="index,follow" />
                 <meta
                     name="description"
@@ -35,7 +35,7 @@ export default Features;
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const { req, res } = context;
 
-    const API_INSTANCE = new URL("/api/tags", process.env.BASE_URL)
+    const API_INSTANCE = new URL("/api/tags", process.env.NEXT_PUBLIC_BASE_URL)
 
     const isSessionAvailable = hasCookie(COOKIE_NAME, { req, res });
     if (isSessionAvailable) {

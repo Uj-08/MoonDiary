@@ -12,7 +12,7 @@ const Home = ({ blogsArray }: { blogsArray: PopulatedBlogType[] }) => {
     <>
       <Head>
         <meta name="robots" content="index,follow" />
-        <link rel="canonical" href="https://moondiary.netlify.app/" />
+        <link rel="canonical" href={process.env.NEXT_PUBLIC_BASE_URL} />
       </Head>
       <HomeComponent blogsArray={blogsArray} />
     </>

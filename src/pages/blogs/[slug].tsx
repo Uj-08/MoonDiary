@@ -14,7 +14,7 @@ const Blog = ({ blog }: { blog: PopulatedBlogType }) => {
 
   const datePublished = new Date(blog.createdAt).toISOString();
   const dateModified = new Date(blog.updatedAt || blog.createdAt).toISOString();
-  const url = `https://moondiary.netlify.app/blogs/${blog.slug}`
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/blogs/${blog.slug}`
 
   return (
     <>
@@ -47,7 +47,7 @@ const Blog = ({ blog }: { blog: PopulatedBlogType }) => {
               "name": "MoonDiary",
               "logo": {
                 "@type": "ImageObject",
-                "url": "https://moondiary.netlify.app/logo.png"
+                "url": `${process.env.NEXT_PUBLIC_BASE_URL}/logo.png`
               }
             },
             "datePublished": datePublished,

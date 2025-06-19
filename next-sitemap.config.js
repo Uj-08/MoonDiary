@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-    siteUrl: 'https://moondiary.netlify.app',
+    siteUrl: process.env.NEXT_PUBLIC_BASE_URL,
     generateRobotsTxt: true,
     exclude: ['/blogs/post', '/blogs/post/**'],
     robotsTxtOptions: {
