@@ -14,6 +14,7 @@ const EditorIntitButton = ({
                 </Button>
             </Container>
         )
+    return <></>
 }
 
 export default React.memo(EditorIntitButton);
