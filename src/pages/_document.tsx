@@ -15,7 +15,7 @@ export default function MyDocument() {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:creator" content="@MoonDiary" />
 
-        <meta name="google-site-verification" content="DxXahG35Puco67FBn_AczaFs5kPLyzHjljN0x8tiq7U" />
+        <meta name="google-site-verification" content={process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION} />
       </Head>
       <body>
         <Main />
