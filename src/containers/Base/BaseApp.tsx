@@ -8,7 +8,7 @@ import Modal from "../Modal/Modal.component";
 import BaseTypes from "./Base.types";
 import { hasCookie, setCookie, deleteCookie, getCookie } from "cookies-next";
 import { ADMIN_EMAILS, COOKIE_NAME } from "@/helpers/constants";
-import HamburgerMenu from "@/components/Navbar/HamburgerMenu/HamburgerMenu";
+import HamburgerMenu from "@/components/Navbar/HamburgerMenu/HamburgerMenu.component";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { resetCreatedBlogId, resetDeletedBlogId, resetErrorState, resetSuccessState } from "@/redux/slices/blogInfo";

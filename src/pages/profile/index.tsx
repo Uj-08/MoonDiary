@@ -5,12 +5,12 @@ import { getCookie, hasCookie } from "cookies-next";
 import { ADMIN_EMAILS, COOKIE_NAME } from "@/helpers/constants";
 import Head from "next/head";
 import { PopulatedBlogType } from "@/types/blog";
-import ProfileHero from "@/components/HeroSection/ProfileHero";
+import ProfileHero from "@/components/HeroSection/ProfileHero/ProfileHero.component";
 import { useDispatch } from "react-redux";
 import { updateBlogDataIsLoading } from "@/redux/slices/blogInfo";
 import styled from "styled-components";
 import { ClientContext } from "@/containers/Base/Base";
-import Switch from "@/components/Switch";
+import Switch from "@/components/Switch/Switch.component";
 
 const ToggleWrapper = styled.div`
     display: flex;

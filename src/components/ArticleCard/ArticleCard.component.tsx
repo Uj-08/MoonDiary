@@ -25,7 +25,7 @@ import { AppDispatch } from "@/redux/store";
 import { deleteBlog } from "@/redux/slices/blogInfo";
 import Modal from "@/containers/Modal/Modal.component";
 import DeleteCard from "../DeletePrompt/DeleteCard.component";
-import ImageComponent from "../ImageComponent/ShimmerImage.component";
+import ShimmerImage from "../ImageComponent/ShimmerImage.component";
 import Link from "next/link";
 import { useShuffledColors } from "@/hooks/useShuffledColors";
 import { stripHtml } from 'string-strip-html';
@@ -116,7 +116,7 @@ export const ArticleCard = ({ blog, clientEmail, index }: ArticleCardTypes) => {
                 {readingTime}
               </CardReadTimeBadge>
             </OverlayContainer>
-            <ImageComponent
+            <ShimmerImage
               src={blogImg}
               aspectRatio={4 / 3}
               alt={blogTitle}
@@ -158,7 +158,7 @@ export const ArticleCard = ({ blog, clientEmail, index }: ArticleCardTypes) => {
             <BlogAuthorContainer>
               <BlogAuthor>
                 <AuthorProfile>
-                  <ImageComponent
+                  <ShimmerImage
                     src={authorPicture}
                     aspectRatio={1}
                     alt={"profile"}

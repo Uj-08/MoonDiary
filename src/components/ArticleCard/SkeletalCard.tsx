@@ -1,6 +1,6 @@
 import React from 'react'
 import { AuthorDetail, AuthorProfile, BlogAuthor, BlogAuthorContainer, BlogHeader, BlogTitle, CardDetails, Container, MainContent, TagsContainer } from './ArticleCard.styles'
-import { Shimmer } from '../ImageComponent/ShimmerImage.component'
+import { Shimmer } from '../ImageComponent/ShimmerImage.styles';
 import styled from 'styled-components'
 
 const ImageContainer = styled.div`

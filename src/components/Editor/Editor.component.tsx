@@ -9,7 +9,7 @@ import { AppDispatch } from "@/redux/store";
 import { postBlog, updateBlog } from "@/redux/slices/blogInfo";
 import ShimmerImage from "../ImageComponent/ShimmerImage.component";
 import InputTagComponent from "./TagSuggestion/TagSuggestion.component";
-import IsDraftToggle from "./ToogleDraft/ToogleDraft.component";
+import DraftToggle from "./ToogleDraft/ToogleDraft.component";
 
 import {
     BlogTitle,
@@ -118,7 +118,7 @@ const EditorComponent = ({ sessionId, blog }: EditorComponentProps) => {
 
                 <EditorContainer>
                     <DraftField>
-                        Draft: <IsDraftToggle isDraft={isDraft} setIsDraft={setIsDraft} />
+                        Draft: <DraftToggle isDraft={isDraft} setIsDraft={setIsDraft} />
                     </DraftField>
 
                     <TitleText

@@ -1,16 +1,11 @@
 import React from 'react'
 import { ActiveIndicator, SwitchContainer, SwitchOption } from './Switch.styles';
+import { SwitchTypes } from './Switch.types';
 
 const Switch = ({
     showDrafts,
     showDraftsHandler
-}: {
-    showDrafts: boolean;
-    showDraftsHandler: (bool: boolean) => void
-}) => {
-
-
-
+}: SwitchTypes) => {
     return (
         <SwitchContainer>
             <ActiveIndicator $position={showDrafts ? "right" : "left"} />

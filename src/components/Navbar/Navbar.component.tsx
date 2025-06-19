@@ -1,31 +1,14 @@
 "use client"
 import React from "react";
-import { LogoContainer, Wrapper, NavLinks, SocialLinks, HamburgerButton } from "./Navbar.styles"
+import { LogoContainer, Wrapper, NavLinks, SocialLinks, HamburgerButton, Profile } from "./Navbar.styles"
 import NavbarTypes from "./Navbar.types";
 import Image from "next/image";
-import styled from "styled-components";
 import ImageComponent from "../ImageComponent/ShimmerImage.component";
 import Link from "next/link";
 import logo from "public/logo.png"
 import gmail from "public/gmail.png"
 import insta from "public/instagram.png"
 import { useRouter } from "next/navigation";
-
-
-export const Profile = styled.span`
-display: flex;
-position: relative;
-height: 26px;
-width: 26px;
-border-radius: 100%;
-overflow: hidden;
-text-align: left;
-transform: translateY(-2px);
-img {
-    width: 100%;
-    object-fit: cover;
-}
-`;
 
 const Navbar = ({ signInHandler, signedIn, picture, hmbgrClickHandler, setShowLoginModal }: NavbarTypes) => {
     const router = useRouter();

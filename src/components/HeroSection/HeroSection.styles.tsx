@@ -23,7 +23,7 @@ export const ImageContainer = styled.div`
         aspect-ratio: 1;
     }
     img {
-        object-fit: cover;
+        object-fit: contain;
         object-position: center;
     }
 

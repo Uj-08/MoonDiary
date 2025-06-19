@@ -149,3 +149,18 @@ export const HamburgerButton = styled.button<{ enabled?: boolean }>`
         display: flex;
     }
 `;
+
+export const Profile = styled.span`
+    display: flex;
+    position: relative;
+    height: 26px;
+    width: 26px;
+    border-radius: 100%;
+    overflow: hidden;
+    text-align: left;
+    transform: translateY(-2px);
+    img {
+        width: 100%;
+        object-fit: cover;
+}
+`;

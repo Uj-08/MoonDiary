@@ -14,7 +14,7 @@ import {
   TagsContainer,
 } from "./Blog.styles";
 import { PreviewData } from "../Editor/Editor.styles";
-import ImageComponent from "../ImageComponent/ShimmerImage.component";
+import ShimmerImage from "../ImageComponent/ShimmerImage.component";
 import DynamicCard from "../ArticleCard/ArticleCard.component";
 import SkeletalCard from "../ArticleCard/SkeletalCard";
 import { ClientContext } from "@/containers/Base/Base";
@@ -107,7 +107,7 @@ const BlogComponent = ({ blog }: { blog: PopulatedBlogType }) => {
                 }}
               />
             </Modal>
-            <ImageComponent
+            <ShimmerImage
               aspectRatio={4 / 3}
               src={blog.blogImg}
               alt="MoonDiary Hero"
