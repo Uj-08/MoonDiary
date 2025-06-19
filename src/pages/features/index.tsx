@@ -40,20 +40,31 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const isSessionAvailable = hasCookie(COOKIE_NAME, { req, res });
     if (isSessionAvailable) {
     }
-
-    const apiRes = await fetch(API_INSTANCE, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            //   'x-session-token': getCookie(COOKIE_NAME, context) as string, 
-        },
-    });
+    try {
+        const apiRes = await fetch(API_INSTANCE, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                //   'x-session-token': getCookie(COOKIE_NAME, context) as string, 
+            },
+        });
     
-    const tags = await apiRes.json();
-
-    return {
-        props: {
-            tags
-        },
-    };
+        if(!apiRes.ok) throw new Error(`API error: ${apiRes.status}`);
+        
+        const tags = await apiRes.json();
+    
+        return {
+            props: {
+                tags
+            },
+        };
+    } catch(err) {
+        console.log(err);
+        return {
+            redirect: {
+                destination: "/500?origin=/features",
+                permanent: false
+            }
+        }
+    }
 };

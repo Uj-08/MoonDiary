@@ -25,20 +25,23 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     let sessionId;
 
-    if (isSessionAvailable) {
-        sessionId = await getCookie(COOKIE_NAME, { req, res });
-    } else {
+    try {
+        if (isSessionAvailable) sessionId = await getCookie(COOKIE_NAME, { req, res });
+        else throw new Error(`not logged in`); 
+    
         return {
-            redirect: {
-                permanent: false,
-                destination: "/",
+            props: {
+                sessionId,
             },
         };
+    } catch(error) {
+        console.log(error);
+        return {
+            redirect: {
+                destination: "/",
+                permanent: false
+            }
+        }
     }
 
-    return {
-        props: {
-            sessionId,
-        },
-    };
 };
