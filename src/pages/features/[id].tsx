@@ -1,5 +1,3 @@
-import ArticleGrid from "@/components/ArticleGrid/ArticleGrid.component";
-import styled from "styled-components";
 import Head from "next/head";
 import React from "react";
 import { GetStaticProps, GetStaticPaths } from "next";
@@ -8,40 +6,14 @@ import TagsModel from "@/models/Tags.model";
 import BlogsModel from "@/models/Blogs.model";
 import { PopulatedBlogType } from "@/types/blog";
 import { useRouter } from "next/router";
-import { anton } from "@/styles/fonts";
 import { TagType } from "@/types/tag";
-
-export const Container = styled.div`
-    min-height: calc(100dvh);
-    padding-top: 120px;
-`;
-
-export const FeatureHeader = styled.h2`
-    font-family: ${anton.style.fontFamily}, sans-serif;
-    letter-spacing: 0.8px;
-    padding: 1rem 8rem;
-    @media (max-width: 1200px) {
-        padding: 0 4rem;
-    }
-    @media (max-width: 812px) {
-        padding: 0 2rem;
-    }
-    @media (max-width: 450px) {
-        padding: 0 1rem;
-    }
-    padding-bottom: 0;
-`;
+import TagPageComponent from "@/components/Pages/TagPage/TagPage.component";
 
 const TagPage = ({ tagName, blogsArray }: { tagName: string; blogsArray: PopulatedBlogType[] }) => {
     const router = useRouter();
 
     const { id } = router.query;
     const url = `https://moondiary.netlify.app/features/${id}`
-
-    const filterURL = React.useMemo(() => {
-        if (typeof window === "undefined" || !id) return null;
-        return new URL(`/api/tags/${id}`, window.location.origin);
-    }, [id]);
 
     return (
         <>
@@ -60,10 +32,7 @@ const TagPage = ({ tagName, blogsArray }: { tagName: string; blogsArray: Populat
                     content={`#${tagName}`}
                 />
             </Head>
-            <Container>
-                <FeatureHeader>#{tagName}</FeatureHeader>
-                <ArticleGrid blogsArray={blogsArray} filterURL={filterURL} />
-            </Container>
+            <TagPageComponent tagId={id as string} tagName={tagName} blogsArray={blogsArray} />
         </>
     );
 };
