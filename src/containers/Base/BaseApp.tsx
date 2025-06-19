@@ -4,7 +4,7 @@ import React, { useState, useEffect, createContext, useMemo, useCallback } from 
 import Navbar from "@/components/Navbar/Navbar.component";
 import FooterComponent from "@/components/Footer/Footer.component";
 import { GoogleLogin } from "@react-oauth/google";
-import Modal from "../Modal/Modal";
+import Modal from "../Modal/Modal.component";
 import BaseTypes from "./Base.types";
 import { hasCookie, setCookie, deleteCookie, getCookie } from "cookies-next";
 import { ADMIN_EMAILS, COOKIE_NAME } from "@/helpers/constants";
@@ -14,7 +14,7 @@ import { RootState } from "@/redux/store";
 import { resetCreatedBlogId, resetDeletedBlogId, resetErrorState, resetSuccessState } from "@/redux/slices/blogInfo";
 import { Container, Loader, ToastContainer } from "./Base.styles";
 import { usePathname, useRouter } from "next/navigation";
-import Toast from "../Toast";
+import Toast from "../Toast/Toast.component";
 import jwtDecode from "jwt-decode";
 import AddPostButton from "@/components/AddPostButton/AddPostButton";
 

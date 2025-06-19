@@ -1,13 +1,10 @@
+import React from "react";
 import { useMountAnimation } from "@/hooks/useMountAnimation";
 import { ToastContainer } from "./Toast.styles";
+import { ToastTypes } from "./Toast.types";
 
-interface ToastProps {
-    show: boolean;
-    message: string;
-    isError: boolean;
-}
 
-export default function Toast({ show, message, isError }: ToastProps) {
+const Toast = ({ show, message, isError }: ToastTypes) => {
     const { shouldRender, visible, onTransitionEnd } = useMountAnimation({
         isActive: show,
         minVisibleTime: 500,
@@ -21,3 +18,5 @@ export default function Toast({ show, message, isError }: ToastProps) {
         </ToastContainer>
     );
 }
+
+export default React.memo(Toast);

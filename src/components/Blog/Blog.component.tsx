@@ -27,7 +27,7 @@ import { getReadingTime } from "@/helpers/getReadingTime";
 import { stripHtml } from "string-strip-html";
 import { deleteBlog } from "@/redux/slices/blogInfo";
 import { useDispatch } from "react-redux";
-import Modal from "@/containers/Modal/Modal";
+import Modal from "@/containers/Modal/Modal.component";
 import DeleteCard from "../DeletePrompt/DeleteCard.component";
 import { useRouter } from "next/router";
 import { AppDispatch } from "@/redux/store";
