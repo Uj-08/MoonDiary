@@ -3,10 +3,9 @@ import React from "react";
 import { NavLinks, SocialLinks } from "../Navbar.styles";
 import Image from "next/image";
 import Link from "next/link";
-import gmail from "public/gmail.png"
-import insta from "public/instagram.png"
-import { useRouter } from "next/navigation";
-import { Container, HamburgerContainer, LinkContainer, ProfileContainer, TopContainer } from "./HamburgerMenu.styles";
+import gmail from "public/gmail.png";
+import insta from "public/instagram.png";
+import { Container, HamburgerContainer, LinkContainer, TopContainer } from "./HamburgerMenu.styles";
 import { HamburgerTypes } from "./HamburgerMenu.types";
 
 const HamburgerMenu = ({
@@ -15,17 +14,12 @@ const HamburgerMenu = ({
   signInHandler,
   signedIn,
   picture,
-  setShowLoginModal
 }: HamburgerTypes) => {
-  function containerClickHandler(e: React.MouseEvent<HTMLDivElement>) {
+
+  const containerClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
   }
-  const router = useRouter();
-  const profileClickHandler = () => {
-    setShowHamburger(false);
-    if (!signedIn) setShowLoginModal(true);
-    else router.push("/profile")
-  }
+  
   return (
     <Container $showHamburger={showHamburger} onClick={() => setShowHamburger(false)}>
       <HamburgerContainer
@@ -76,9 +70,9 @@ const HamburgerMenu = ({
             </li>
 
             <li>
-              <ProfileContainer onClick={profileClickHandler}>
+              <Link href={"/profile"}>
                 <Image src={picture} alt="social-links" fill />
-              </ProfileContainer>
+              </Link>
             </li>
           </SocialLinks>
         </LinkContainer>

@@ -1,10 +1,4 @@
 export interface ClientType {
-    email: string;
-    name: string;
-    picture: string;
-}
-
-export interface ClientContextType {
   email?: string;
   name?: string;
   picture?: string;

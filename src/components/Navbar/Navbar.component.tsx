@@ -5,17 +5,11 @@ import NavbarTypes from "./Navbar.types";
 import Image from "next/image";
 import ImageComponent from "../ImageComponent/ShimmerImage.component";
 import Link from "next/link";
-import logo from "public/logo.png"
-import gmail from "public/gmail.png"
-import insta from "public/instagram.png"
-import { useRouter } from "next/navigation";
+import logo from "public/logo.png";
+import gmail from "public/gmail.png";
+import insta from "public/instagram.png";
 
-const Navbar = ({ signInHandler, signedIn, picture, hmbgrClickHandler, setShowLoginModal }: NavbarTypes) => {
-    const router = useRouter();
-    const profileClickHandler = () => {
-        if (!signedIn) setShowLoginModal(true);
-        else router.push("/profile")
-    }
+const Navbar = ({ signInHandler, signedIn, picture, hmbgrClickHandler }: NavbarTypes) => {
     return (
         <Wrapper>
             <LogoContainer>
@@ -53,9 +47,11 @@ const Navbar = ({ signInHandler, signedIn, picture, hmbgrClickHandler, setShowLo
                     </Link>
                 </li>
                 <li>
-                    <Profile onClick={profileClickHandler}>
-                        <ImageComponent aspectRatio={1} src={picture} alt="profile" />
-                    </Profile>
+                    <Link href={"/profile"} prefetch={false}>
+                        <Profile>
+                            <ImageComponent aspectRatio={1} src={picture} alt="profile" />
+                        </Profile>
+                    </Link>
                 </li>
             </SocialLinks>
             <HamburgerButton onClick={hmbgrClickHandler}>

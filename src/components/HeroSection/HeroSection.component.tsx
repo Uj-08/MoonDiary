@@ -3,7 +3,7 @@ import cover from "public/cover.jpeg";
 import Image from "next/image";
 import RotatingTagline from "./RotatingTagline/RotatingTagline.component";
 import { useContext } from "react";
-import { ClientContext } from "@/containers/Base/Base";
+import { BaseContext, BaseContextType } from "@/containers/Base/Base";
 
 const moonDiaryTaglines = [
     "Welcome to Moondiary",
@@ -14,7 +14,7 @@ const moonDiaryTaglines = [
 ];
 
 const HeroSection = () => {
-    const client = useContext(ClientContext);
+    const context = useContext<BaseContextType | null>(BaseContext);
     return (
         <Container>
             <ImageContainer>
@@ -29,7 +29,7 @@ const HeroSection = () => {
             </ImageContainer>
 
             <HiddenTitle>{"Welcome to Moondiary – Reflect and Grow"}</HiddenTitle>
-            <RotatingTagline taglines={moonDiaryTaglines} name={client?.given_name} />
+            <RotatingTagline taglines={moonDiaryTaglines} name={context?.client?.given_name} />
         </Container>
     );
 };

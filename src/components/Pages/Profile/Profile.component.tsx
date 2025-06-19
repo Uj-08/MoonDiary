@@ -3,7 +3,7 @@ import { ADMIN_EMAILS } from '@/helpers/constants'
 import { ToggleWrapper } from './Profile.styles'
 import ProfileHero from '@/components/HeroSection/ProfileHero/ProfileHero.component'
 import SwitchComponent from '@/components/Switch/Switch.component'
-import { ClientContext } from '@/containers/Base/Base'
+import { BaseContext, BaseContextType } from '@/containers/Base/Base'
 import { PopulatedBlogType } from '@/types/blog'
 import { updateBlogDataIsLoading } from '@/redux/slices/blogInfo'
 import { useDispatch } from 'react-redux'
@@ -12,7 +12,7 @@ import ArticleGrid from '@/components/ArticleGrid/ArticleGrid.component'
 
 const Profile = ({ sessionId, blogsArray }: ProfilePageTypes) => {
     const dispatch = useDispatch();
-    const client = useContext(ClientContext)
+    const context = useContext<BaseContextType | null>(BaseContext)
     const [showDrafts, setShowDrafts] = useState(false);
     const [blogsArrayState, setBlogsArrayState] = useState(blogsArray)
 
@@ -57,7 +57,7 @@ const Profile = ({ sessionId, blogsArray }: ProfilePageTypes) => {
         <>
             <ProfileHero />
             {
-                ADMIN_EMAILS.includes(client?.email ?? "") &&
+                ADMIN_EMAILS.includes(context?.client?.email ?? "") &&
                 (
                     <>
                         <ToggleWrapper>

@@ -4,5 +4,4 @@ export interface HamburgerTypes {
     signInHandler: () => void;
     signedIn: boolean;
     picture: string;
-    setShowLoginModal: (bool: boolean) => void;
 }

@@ -11,7 +11,7 @@ import {
 } from "./Blog.styles";
 import { PreviewData } from "../Editor/Editor.styles";
 import ShimmerImage from "../ImageComponent/ShimmerImage.component";
-import { ClientContext } from "@/containers/Base/Base";
+import { BaseContext, BaseContextType } from "@/containers/Base/Base";
 import { BlogPreviewContent } from "../Editor/BlogContentStyle";
 import { PopulatedBlogType } from "@/types/blog";
 import parse from "html-react-parser";
@@ -28,7 +28,7 @@ import AdditionalSectionComponent from "./AdditionalSection/AdditionalSection.co
 const BlogComponent = ({ blog }: { blog: PopulatedBlogType }) => {
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
-  const client = useContext(ClientContext);
+  const context = useContext<BaseContextType | null>(BaseContext);
   const text = stripHtml(blog.blogData).result;
   const readingTime = `${getReadingTime(text)} min read`;
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -63,7 +63,7 @@ const BlogComponent = ({ blog }: { blog: PopulatedBlogType }) => {
                 {readingTime}
               </ReadTimeBadge>
             </OverlayContainer>
-            {client?.email === blog.authorEmail && (
+            {context?.client?.email === blog.authorEmail && (
               <ButtonContainer>
                 <PostButton onClick={editBlogHandler} >
                   Edit
@@ -101,7 +101,7 @@ const BlogComponent = ({ blog }: { blog: PopulatedBlogType }) => {
           </PreviewData>
         </Preview>
       </PreviewContainer>
-      <AdditionalSectionComponent blog={blog} client={client} />
+      <AdditionalSectionComponent blog={blog} client={context?.client} />
     </Container>
   );
 };

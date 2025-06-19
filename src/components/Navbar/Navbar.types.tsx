@@ -3,7 +3,6 @@ export default interface NavbarTypes{
     signedIn?: boolean;
     picture: string;
     hmbgrClickHandler: () => void;
-    setShowLoginModal: (bool: boolean) => void
 };
 
 

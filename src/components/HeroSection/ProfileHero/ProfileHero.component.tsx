@@ -2,11 +2,11 @@ import { Container, ImageContainer } from "../HeroSection.styles";
 import cover from "public/cover-profile.jpg";
 import Image from "next/image";
 import { useContext } from "react";
-import { ClientContext } from "@/containers/Base/Base";
+import { BaseContext, BaseContextType } from "@/containers/Base/Base";
 import { HeroContent, ProfileContainer, Title } from "./ProfileHero.styles";
 
 const ProfileHero = () => {
-    const client = useContext(ClientContext);
+    const context = useContext<BaseContextType | null>(BaseContext);
     return (
         <Container>
             <ImageContainer>
@@ -22,7 +22,7 @@ const ProfileHero = () => {
             <HeroContent>
                 <ProfileContainer>
                     <Image
-                        src={client?.picture?.replace(/=s\d+-c/, '=s400-c') ?? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5BSEPxHF0-PRxJlVMHla55wvcxWdSi8RU2g&s"}
+                        src={context?.client?.picture?.replace(/=s\d+-c/, '=s400-c') ?? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5BSEPxHF0-PRxJlVMHla55wvcxWdSi8RU2g&s"}
                         alt="hero-image"
                         fill
                         quality={50}
@@ -30,7 +30,7 @@ const ProfileHero = () => {
                         priority
                     />
                 </ProfileContainer>
-                <Title>{client?.name ?? "User"}</Title>
+                <Title>{context?.client?.name ?? "User"}</Title>
             </HeroContent>
         </Container>
     );

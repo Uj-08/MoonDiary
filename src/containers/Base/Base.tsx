@@ -17,9 +17,12 @@ import { useRouter } from "next/router";
 import jwtDecode from "jwt-decode";
 import AddPostButton from "@/components/AddPostButton/AddPostButton";
 import Toast from "../Toast/Toast.component";
-import { ClientContextType } from "@/types/client";
+import { ClientType } from "@/types/client";
+export interface BaseContextType {
+  client: ClientType | null;
+}
 
-export const ClientContext = createContext<ClientContextType | null>(null);
+export const BaseContext = createContext<BaseContextType | null>(null);
 
 const Base = ({ children }: BaseTypes) => {
 
@@ -84,9 +87,9 @@ const Base = ({ children }: BaseTypes) => {
     router.reload();
   }, [router]);
 
-  const [clientDecode, setClientDecode] = useState<any>(null);
+  const [clientDecode, setClientDecode] = useState<ClientType | null>(null);
 
-  const getDecodedClient = useMemo(() => {
+  const getDecodedClient: ClientType | null = useMemo(() => {
     try {
       const token = getCookie(COOKIE_NAME);
       return token ? jwtDecode(token as string) : null;
@@ -106,21 +109,24 @@ const Base = ({ children }: BaseTypes) => {
     clientDecode?.picture ??
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5BSEPxHF0-PRxJlVMHla55wvcxWdSi8RU2g&s";
 
+  const contextValue = useMemo(() => ({
+    client: clientDecode,
+  }), [clientDecode]);
+
   return (
-    <ClientContext.Provider value={clientDecode}>
+    <BaseContext.Provider value={contextValue}>
       <Container $showModal={showLoginModal}>
         <Navbar
           signInHandler={signInHandler}
           signedIn={signedIn}
           picture={picture}
           hmbgrClickHandler={() => setShowHamburger(true)}
-          setShowLoginModal={setShowLoginModal}
         />
         {children}
         <FooterComponent />
       </Container>
       <ToastContainer>
-        {!router.asPath.startsWith("/blogs/post") && clientDecode &&
+        {!router.asPath.startsWith("/blogs/post") && clientDecode?.email &&
           ADMIN_EMAILS.includes(clientDecode?.email) && <AddPostButton />}
         <Toast
           show={blogInfo.error.isError}
@@ -139,7 +145,6 @@ const Base = ({ children }: BaseTypes) => {
         signInHandler={signInHandler}
         signedIn={signedIn}
         picture={picture}
-        setShowLoginModal={setShowLoginModal}
       />
       <Modal
         showModal={showLoginModal || (blogInfo.blogPostUpdateStatus.isLoading || blogInfo.blogDeleteStatus.isLoading)}
@@ -153,7 +158,7 @@ const Base = ({ children }: BaseTypes) => {
             <Loader />
         }
       </Modal>
-    </ClientContext.Provider>
+    </BaseContext.Provider>
   );
 };
 

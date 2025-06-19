@@ -6,7 +6,7 @@ import {
   Select,
 } from "./ArticleGrid.styles";
 import DynamicCard from "../ArticleCard/ArticleCard.component";
-import { ClientContext } from "@/containers/Base/Base";
+import { BaseContext, BaseContextType } from "@/containers/Base/Base";
 import { getCookie } from "cookies-next";
 import { COOKIE_NAME } from "@/helpers/constants";
 import { useDispatch } from "react-redux";
@@ -18,7 +18,7 @@ const ArticleGrid = ({
   filterURL,
 }: ArticleGridTypes) => {
   const dispatch = useDispatch();
-  const client = useContext(ClientContext);
+  const context = useContext<BaseContextType | null>(BaseContext);
   const token = getCookie(COOKIE_NAME) as string;
 
   const [sortState, setSortState] = useState<string | undefined>();
@@ -119,7 +119,7 @@ const ArticleGrid = ({
             key={blog._id.toString()}
             index={idx}
             blog={blog}
-            clientEmail={client?.email}
+            clientEmail={context?.client?.email}
           />
         ))}
       </Grid>
