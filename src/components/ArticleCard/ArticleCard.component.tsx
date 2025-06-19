@@ -53,13 +53,16 @@ export const ArticleCard = ({ blog, clientEmail, index }: ArticleCardTypes) => {
   const router = useRouter();
 
   // Format time ago
-  const formatter = new Intl.RelativeTimeFormat("en", { numeric: "auto" });
   const relTime = useMemo(() => {
-    if (!updatedAt) return "unknown";
+    if (!updatedAt) return undefined;
+
+    const formatter = new Intl.RelativeTimeFormat("en", { numeric: "auto" });
+
     const now = Date.now();
     const updated = new Date(updatedAt).getTime();
-    const diff = now - updated;
-    const seconds = Math.floor(diff / 1000);
+    const diffInMs = now - updated;
+
+    const seconds = Math.floor(diffInMs / 1000);
     const minutes = Math.floor(seconds / 60);
     const hours = Math.floor(minutes / 60);
     const days = Math.floor(hours / 24);
@@ -103,7 +106,7 @@ export const ArticleCard = ({ blog, clientEmail, index }: ArticleCardTypes) => {
   };
 
   const getRandomColor = useShuffledColors();
-  const tagColors = useMemo(() => tags.map(() => getRandomColor()), [tags]);
+  const tagColors = useMemo(() => tags.map(() => getRandomColor()), [getRandomColor, tags]);
 
   const blogBody = stripHtml(blogData || "").result;
   const readingTime = `${getReadingTime(blogBody)} min read`;
