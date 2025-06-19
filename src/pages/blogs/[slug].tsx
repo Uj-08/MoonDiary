@@ -1,12 +1,11 @@
 import React from "react";
 import Head from "next/head";
 import { stripHtml } from "string-strip-html";
-import BlogTitleComponent from "@/components/Blog/BlogTitle/BlogTitle.component";
-import BlogComponent from "@/components/Blog/Blog.component";
 import { GetStaticProps, GetStaticPaths } from "next";
 import BlogsModel from "@/models/Blogs.model";
 import dbConnect from "@/lib/dbConnect";
 import { PopulatedBlogType } from "@/types/blog";
+import BlogPageComponent from "@/components/Pages/BlogPage/BlogPage.component";
 
 const Blog = ({ blog }: { blog: PopulatedBlogType }) => {
   //SEO
@@ -77,10 +76,7 @@ const Blog = ({ blog }: { blog: PopulatedBlogType }) => {
         <meta name="twitter:description" content={description} />
         <meta name="twitter:image" content={blog.blogImg} />
       </Head>
-      <BlogTitleComponent>
-        {blog.blogTitle}
-      </BlogTitleComponent>
-      <BlogComponent blog={blog} />
+      <BlogPageComponent blog={blog} />
     </>
   );
 }
