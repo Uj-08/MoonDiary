@@ -3,26 +3,8 @@ import Head from "next/head";
 import { GetServerSideProps } from "next";
 import { hasCookie } from "cookies-next";
 import { COOKIE_NAME } from "@/helpers/constants";
-import FeatureCard from "@/components/FeatureCard/FeatureCard.component";
-import styled from "styled-components";
 import { FeaturesTagType } from "@/types/tag";
-
-export const Container = styled.div`
-    display: flex;
-    min-height: calc(100dvh - 120px);
-    justify-content: center;
-    align-items: center;
-    padding-top: 80px;
-    margin-bottom: -100px;
-    padding-bottom: 30px;
-`;
-
-export const Grid = styled.div`
-    width: 90%;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 12px;
-`;
+import FeaturesComponent from "@/components/Pages/Features/Features.component";
 
 const Features = ({ tags }: { tags: FeaturesTagType[] }) => {
 
@@ -43,13 +25,7 @@ const Features = ({ tags }: { tags: FeaturesTagType[] }) => {
                     content={keywords}
                 />
             </Head>
-            <Container>
-                <Grid>
-                    {
-                        tags.map((tag, index) => <FeatureCard key={index} tag={tag} />)
-                    }
-                </Grid>
-            </Container>
+            <FeaturesComponent tags={tags} />
         </>
     );
 }
