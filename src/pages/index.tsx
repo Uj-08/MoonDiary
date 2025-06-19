@@ -1,19 +1,12 @@
 import React from "react";
-import HeroSection from "@/components/HeroSection/HeroSection.component";
-import ArticleGrid from "@/components/ArticleGrid/ArticleGrid.component";
 import Head from "next/head";
 import { PopulatedBlogType } from "@/types/blog";
 import { GetStaticProps } from "next";
 import dbConnect from "@/lib/dbConnect";
 import BlogsModel from "@/models/Blogs.model";
+import HomeComponent from "@/components/Pages/Home/Home.component";
 
 const Home = ({ blogsArray }: { blogsArray: PopulatedBlogType[] }) => {
-
-  const filterURL = React.useMemo(() => {
-    if (typeof window === "undefined") return null;
-    const url = new URL(`/api/blogs`, window.location.origin);
-    return url;
-  }, []);
 
   return (
     <>
@@ -21,8 +14,7 @@ const Home = ({ blogsArray }: { blogsArray: PopulatedBlogType[] }) => {
         <meta name="robots" content="index,follow" />
         <link rel="canonical" href="https://moondiary.netlify.app/" />
       </Head>
-      <HeroSection />
-      <ArticleGrid blogsArray={blogsArray} filterURL={filterURL} />
+      <HomeComponent blogsArray={blogsArray} />
     </>
   );
 };
@@ -54,7 +46,7 @@ export const getStaticProps: GetStaticProps = async () => {
     return {
       props: {
         blogsArray: [],
-        error: error?.message || "Blog fetch failed",
+        error: error?.message ?? "Blog fetch failed",
       },
       revalidate: 60,
     };
