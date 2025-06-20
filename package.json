@@ -12,7 +12,7 @@
   "dependencies": {
     "@react-oauth/google": "^0.8.0",
     "@reduxjs/toolkit": "^2.8.2",
-    "@tanstack/react-query": "^5.80.7",
+    "@tanstack/react-query": "^5.80.10",
     "@tinymce/tinymce-react": "^6.2.1",
     "@types/node": "18.11.18",
     "@types/react": "^19.1.8",
@@ -24,7 +24,7 @@
     "jwt-decode": "^3.1.2",
     "mongodb": "^5.1.0",
     "mongoose": "^7.0.3",
-    "next": "^15.3.3",
+    "next": "^15.3.4",
     "next-sitemap": "^4.2.3",
     "nextjs-toploader": "^3.8.16",
     "react": "18.2.0",
@@ -38,7 +38,7 @@
     "typescript": "4.9.4"
   },
   "devDependencies": {
-    "@netlify/plugin-nextjs": "^5.11.2",
+    "@netlify/plugin-nextjs": "^5.11.3",
     "@types/styled-components": "^5.1.34"
   }
 }
