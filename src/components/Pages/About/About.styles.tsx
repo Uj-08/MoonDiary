@@ -45,6 +45,7 @@ export const AuthorName = styled.h3`
 export const AuthorBio = styled.p`
     font-style: italic;
     line-height: 17px;
+    text-align: center;
 `;
 
 export const AuthorProfile = styled.div`
