@@ -23,5 +23,6 @@ export const FlexWrapper = styled.div`
     padding: 0 1rem;    
     @media (max-width: 640px) {
         justify-content: center;
+        padding: 0;
     }
 `;
