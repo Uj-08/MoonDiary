@@ -2,17 +2,26 @@ import styled from "styled-components";
 
 export const Container = styled.div`
     display: flex;
-    min-height: calc(100dvh - 120px);
-    justify-content: center;
+    flex-direction: column;
+    min-height: calc(100dvh - 160px);
     align-items: center;
-    padding-top: 80px;
-    margin-bottom: -100px;
-    padding-bottom: 30px;
+    padding: 140px 8rem 40px 8rem;
+    @media (max-width: 1200px) {
+    padding: 100px 4rem 40px 4rem;
+    }
+    @media (max-width: 640px) {
+        padding: 100px 0rem 40px 0rem;
+    }
 `;
 
-export const Grid = styled.div`
-    width: 90%;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 12px;
+export const FlexWrapper = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0 1rem;    
+    @media (max-width: 640px) {
+        justify-content: center;
+    }
 `;
