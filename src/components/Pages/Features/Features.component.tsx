@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, FlexWrapper, GridContainer } from './Features.styles'
+import { Container, FlexWrapper } from './Features.styles'
 import { FeaturesTypes } from './Features.types'
 import FeatureCard from '@/components/FeatureCard/FeatureCard.component'
 
