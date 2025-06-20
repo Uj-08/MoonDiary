@@ -64,21 +64,23 @@ export const NavLinks = styled.ul<{ $isHamburger?: boolean }>`
         display: ${props => !props.$isHamburger && "none"};
         margin-right: 0;
     }
-    li {
-        cursor: pointer;
-        text-transform: ${props => !props.$isHamburger && "uppercase"};
-        font-family: ${(props) =>
-        props.$isHamburger
-            ? `"Segoe UI", Tahoma, Geneva, Verdana, sans-serif`
-            : `${anton.style.fontFamily}, sans-serif`};
-        font-size: 1.3rem;
-        letter-spacing: ${props => !props.$isHamburger && "2px"};
-        transition: color linear 200ms;
-    }
-    li:hover {
+`;
+
+export const NavLink = styled.li<{ $isHamburger?: boolean }>`
+    cursor: pointer;
+    text-transform: ${props => !props.$isHamburger && "uppercase"};
+    font-family: ${(props) =>
+    props.$isHamburger
+        ? `"Segoe UI", Tahoma, Geneva, Verdana, sans-serif`
+        : `${anton.style.fontFamily}, sans-serif`};
+    font-size: 1.3rem;
+    letter-spacing: ${props => !props.$isHamburger && "2px"};
+    transition: color linear 200ms;
+
+    &:hover {
         color: #b101b1;
     }
-`;
+`
 
 export const SocialLinks = styled.ul<{ $isHamburger?: boolean }>`
     display: flex;
@@ -89,36 +91,35 @@ export const SocialLinks = styled.ul<{ $isHamburger?: boolean }>`
     padding-top: ${props => (props.$isHamburger ? "20px" : "0")};
     margin: ${props => (props.$isHamburger ? "0 -16px" : "0 -9px 0 0")};
 
-    li {
-        cursor: pointer;
-        padding: 0 18px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-        transition: background-color linear 200ms;
+    @media (max-width: 950px) {
+        display: ${props => !props.$isHamburger && "none"};
     }
+`;
 
-    li:hover:not(:last-child) {
+export const SocialLink = styled.li`
+    cursor: pointer;
+    padding: 0 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    transition: background-color linear 200ms;
+
+    &:hover:not(:last-child) {
         background-color: #51b016;
         filter: invert(1);
+        /* Disable hover effects on small screens */
+        @media (max-width: 950px) {
+            background-color: unset;
+            filter: none;
+        }
     }
-
-    li:last-child {
+    &:last-child {
         &:hover {
             background-color: #AE4FE9;
             @media (max-width: 950px) {
                 background-color: unset;
             }
-        }
-    }
-
-    /* Disable hover effects on small screens */
-    @media (max-width: 950px) {
-        display: ${props => !props.$isHamburger && "none"};
-        li:hover:not(:last-child) {
-        background-color: unset;
-        filter: none;
         }
     }
 `;

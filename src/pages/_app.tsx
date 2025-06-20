@@ -64,7 +64,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
           easing="ease-in-out"
           speed={500}
           shadow="0 0 10px #b101b1"
-          zIndex={1600}
+          zIndex={100}
           showAtBottom={false}
         />
         <QueryClientProvider client={queryClient}>

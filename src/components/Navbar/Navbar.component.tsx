@@ -1,6 +1,6 @@
 "use client"
 import React from "react";
-import { LogoContainer, Wrapper, NavLinks, SocialLinks, HamburgerButton, Profile } from "./Navbar.styles"
+import { LogoContainer, Wrapper, NavLinks, SocialLinks, HamburgerButton, Profile, NavLink, SocialLink } from "./Navbar.styles"
 import NavbarTypes from "./Navbar.types";
 import Image from "next/image";
 import ImageComponent from "../ImageComponent/ShimmerImage.component";
@@ -18,41 +18,41 @@ const Navbar = ({ signInHandler, signedIn, picture, hmbgrClickHandler }: NavbarT
                 </Link>
             </LogoContainer>
             <NavLinks>
-                <li>
+                <NavLink>
                     <Link href={"/"}>
                         Home
                     </Link>
-                </li>
-                <li>
+                </NavLink>
+                <NavLink>
                     <Link href={"/features"}>
                         Features
                     </Link>
-                </li>
-                <li>
+                </NavLink>
+                <NavLink>
                     <Link href={"/about-me"}>
                         About Me
                     </Link>
-                </li>
-                <li onClick={signInHandler}>{signedIn ? "Sign Out" : "Sign In"}</li>
+                </NavLink>
+                <NavLink onClick={signInHandler}>{signedIn ? "Sign Out" : "Sign In"}</NavLink>
             </NavLinks>
             <SocialLinks>
-                <li>
+                <SocialLink>
                     <Link href="mailto:psykidbiz@gmail.com">
                         <Image src={gmail} alt={"gmail"} height="25" width="25" />
                     </Link>
-                </li>
-                <li>
+                </SocialLink>
+                <SocialLink>
                     <Link href="https://www.instagram.com/shaireee_67/" target="_blank" rel="noreferrer">
                         <Image src={insta} alt={"Instagram"} height="25" width="25" />
                     </Link>
-                </li>
-                <li>
+                </SocialLink>
+                <SocialLink>
                     <Link href={"/profile"} prefetch={false}>
                         <Profile>
                             <ImageComponent aspectRatio={1} src={picture} alt="profile" />
                         </Profile>
                     </Link>
-                </li>
+                </SocialLink>
             </SocialLinks>
             <HamburgerButton onClick={hmbgrClickHandler}>
                 <span />

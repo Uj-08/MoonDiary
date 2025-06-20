@@ -7,7 +7,6 @@ import BlogsModel from "@/models/Blogs.model";
 import HomeComponent from "@/components/Pages/Home/Home.component";
 
 const Home = ({ blogsArray }: { blogsArray: PopulatedBlogType[] }) => {
-
   return (
     <>
       <Head>
@@ -27,7 +26,7 @@ export const getStaticProps: GetStaticProps = async () => {
     await dbConnect();
 
     // Ensure Tags model is registered
-    await import('@/models/Tags.model');
+    await import("@/models/Tags.model");
 
     // Only show published blogs (isDraft !== true)
     const blogs = await BlogsModel.find({ isDraft: { $ne: true } })
