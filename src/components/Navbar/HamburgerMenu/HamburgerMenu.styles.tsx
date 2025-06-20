@@ -10,8 +10,8 @@ export const Container = styled.div<{ $showHamburger: boolean }>`
     z-index: 20;
     ${({ $showHamburger }) =>
         $showHamburger
-        ? "backdrop-filter: blur(10px);"
-        : "backdrop-filter: blur(0px);"}
+            ? "backdrop-filter: blur(10px);"
+            : "backdrop-filter: blur(0px);"}
     ${({ $showHamburger }) => !$showHamburger && "pointer-events: none;"}
     transition: backdrop-filter 200ms linear;
     @media (max-width: 950px) {
@@ -33,8 +33,8 @@ export const HamburgerContainer = styled.nav<{ $showHamburger: boolean }>`
         rgb(255 255 255 / 10%) 0px 0px 0px 1px inset;
     ${({ $showHamburger }) =>
         $showHamburger
-        ? "transform: translateX(0%);"
-        : "transform: translateX(100%);"}
+            ? "transform: translateX(0%);"
+            : "transform: translateX(100%);"}
     transition: transform 200ms ease-in-out;
 `;
 
@@ -45,14 +45,16 @@ export const TopContainer = styled.div`
     justify-content: space-between;
     padding: 0 16px;
     align-items: center;
-    h2 {
-        font-family: ${dancingScript.style.fontFamily}, cursive;
-        font-size: 2rem;
-    }
-    div {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        font-size: 1.4rem;
-    }
+`;
+
+export const Title = styled.h2`
+    font-family: ${dancingScript.style.fontFamily}, cursive;
+    font-size: 2rem;
+`;
+
+export const Cross = styled.div`
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.4rem;
 `;
 
 export const LinkContainer = styled.div`

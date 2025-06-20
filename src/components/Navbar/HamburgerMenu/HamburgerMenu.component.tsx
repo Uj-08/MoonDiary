@@ -1,11 +1,11 @@
 "use client"
 import React from "react";
-import { NavLinks, SocialLinks } from "../Navbar.styles";
+import { NavLink, NavLinks, SocialLink, SocialLinks } from "../Navbar.styles";
 import Image from "next/image";
 import Link from "next/link";
 import gmail from "public/gmail.png"
 import insta from "public/instagram.png"
-import { Container, HamburgerContainer, LinkContainer, ProfileContainer, TopContainer } from "./HamburgerMenu.styles";
+import { Container, Cross, HamburgerContainer, LinkContainer, ProfileContainer, Title, TopContainer } from "./HamburgerMenu.styles";
 import { HamburgerTypes } from "./HamburgerMenu.types";
 
 const HamburgerMenu = ({
@@ -27,55 +27,53 @@ const HamburgerMenu = ({
         $showHamburger={showHamburger}
       >
         <TopContainer>
-          <h2>Navigation</h2>
-          <div onClick={() => setShowHamburger(false)}>&#9587;</div>
+          <Title>Navigation</Title>
+          <Cross onClick={() => setShowHamburger(false)}>&#9587;</Cross>
         </TopContainer>
         <LinkContainer>
           <NavLinks $isHamburger={true}>
-            <li>
+            <NavLink $isHamburger={true}>
               <Link href={"/"} onClick={() => setShowHamburger(false)} >
                 Home
               </Link>
-            </li>
-            <li>
+            </NavLink>
+            <NavLink $isHamburger={true}>
               <Link href={"/features"} onClick={() => setShowHamburger(false)} >
                 Features
               </Link>
-            </li>
-            <li>
+            </NavLink>
+            <NavLink $isHamburger={true}>
               <Link href={"/about-me"} onClick={() => setShowHamburger(false)} >
                 About Me
               </Link>
-            </li>
-            <li>
-              <div onClick={() => {
+            </NavLink>
+            <NavLink $isHamburger={true} onClick={() => {
                 signInHandler()
                 setShowHamburger(false)
               }}>
                 {signedIn ? "Sign Out" : "Sign In"}
-              </div>
-            </li>
+            </NavLink>
           </NavLinks>
           <SocialLinks $isHamburger={true}>
-            <li>
+            <SocialLink>
               <Link href="mailto:psykidbiz@gmail.com" onClick={() => setShowHamburger(false)}>
                 <Image src={gmail} alt="social-links" height={25} width={25} />
               </Link>
-            </li>
+            </SocialLink>
 
-            <li>
+            <SocialLink>
               <Link href="https://www.instagram.com/shaireee_67/" target="_blank" rel="noreferrer" onClick={() => setShowHamburger(false)}>
                 <Image src={insta} alt="social-links" height={25} width={25} />
               </Link>
-            </li>
+            </SocialLink>
 
-            <li>
+            <SocialLink>
               <Link href="/profile" onClick={() => setShowHamburger(false)}>
                 <ProfileContainer>
                   <Image src={picture} alt="social-links" fill />
                 </ProfileContainer>
               </Link>
-            </li>
+            </SocialLink>
           </SocialLinks>
         </LinkContainer>
       </HamburgerContainer>
