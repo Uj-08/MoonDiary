@@ -3,7 +3,7 @@
 import React, { useState, useEffect, createContext, useMemo, useCallback } from "react";
 import Navbar from "@/components/Navbar/Navbar.component";
 import FooterComponent from "@/components/Footer/Footer.component";
-import { GoogleLogin } from "@react-oauth/google";
+import { CredentialResponse } from "@react-oauth/google";
 import Modal from "../Modal/Modal.component";
 import BaseTypes from "./Base.types";
 import { hasCookie, setCookie, deleteCookie, getCookie } from "cookies-next";
@@ -18,6 +18,7 @@ import jwtDecode from "jwt-decode";
 import AddPostButton from "@/components/AddPostButton/AddPostButton";
 import Toast from "../Toast/Toast.component";
 import { ClientType } from "@/types/client";
+import LoginCard from "@/components/LoginCard/LoginCard.component";
 export interface BaseContextType {
   client: ClientType | null;
 }
@@ -80,7 +81,7 @@ const Base = ({ children }: BaseTypes) => {
     setShowLoginModal(false);
   }
 
-  const successHandler = useCallback((credentialResponse: any) => {
+  const successHandler = useCallback((credentialResponse: CredentialResponse) => {
     setCookie(COOKIE_NAME, credentialResponse?.credential);
     setShowLoginModal(false);
     setSignedIn(true);
@@ -152,9 +153,7 @@ const Base = ({ children }: BaseTypes) => {
       >
         {
           showLoginModal ?
-            <div onClick={(e) => e.stopPropagation()}>
-              <GoogleLogin onSuccess={successHandler} />
-            </div> :
+            <LoginCard successHandler={successHandler} /> :
             <Loader />
         }
       </Modal>
