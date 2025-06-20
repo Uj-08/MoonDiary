@@ -6,7 +6,7 @@ import FeatureCard from '@/components/FeatureCard/FeatureCard.component'
 const Features = ({ tags }: FeaturesTypes) => {
     return (
         <Container>
-           <FlexWrapper>
+          <FlexWrapper>
       {tags.map((tag) => (
         <FeatureCard key={tag._id} tag={tag} />
       ))}

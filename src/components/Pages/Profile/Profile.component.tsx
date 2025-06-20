@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useMemo, useState } from 'react'
 import { ADMIN_EMAILS } from '@/helpers/constants'
-import { ToggleWrapper } from './Profile.styles'
+import { Container, ToggleWrapper } from './Profile.styles'
 import ProfileHero from '@/components/HeroSection/ProfileHero/ProfileHero.component'
 import SwitchComponent from '@/components/Switch/Switch.component'
 import { BaseContext, BaseContextType } from '@/containers/Base/Base'
@@ -54,7 +54,7 @@ const Profile = ({ sessionId, blogsArray }: ProfilePageTypes) => {
         }
     }, [dispatch, filterURL, sessionId, showDrafts]);
     return (
-        <>
+        <Container>
             <ProfileHero />
             {
                 ADMIN_EMAILS.includes(context?.client?.email ?? "") &&
@@ -67,8 +67,8 @@ const Profile = ({ sessionId, blogsArray }: ProfilePageTypes) => {
                     </>
                 )
             }
-        </>
+        </Container>
     )
 }
 
-export default Profile
+export default React.memo(Profile);

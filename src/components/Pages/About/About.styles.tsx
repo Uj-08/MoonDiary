@@ -1,5 +1,13 @@
-import { montserrat } from "@/styles/fonts";
 import styled from "styled-components";
+import { montserrat } from "@/styles/fonts";
+
+export const Container = styled.div`
+    min-height: calc(100dvh - 220px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 60px;
+`;
 
 export const AboutCard = styled.div`
     display: flex;
@@ -51,12 +59,3 @@ export const AuthorProfile = styled.div`
         object-fit: cover;
     }
 `;
-
-export const Container = styled.div`
-    height: calc(100dvh - 100px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-top: 60px;
-    margin-bottom: -100px;
-`

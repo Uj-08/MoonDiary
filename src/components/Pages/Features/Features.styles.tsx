@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Container = styled.div`
     display: flex;
     flex-direction: column;
-    min-height: calc(100dvh - 160px);
+    min-height: calc(100dvh - 220px);
     align-items: center;
     padding: 140px 8rem 40px 8rem;
     @media (max-width: 1200px) {
