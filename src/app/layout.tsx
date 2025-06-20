@@ -1,16 +1,17 @@
 // app/layout.tsx
-import './globals.css';
-import { ReactNode } from 'react';
-import { Arimo } from 'next/font/google';
-import NextTopLoader from 'nextjs-toploader';
-import Base from '@/containers/Base/BaseApp';
-import Providers from './providers';
+import "./globals.css";
+import { ReactNode } from "react";
+import { Arimo } from "next/font/google";
+import NextTopLoader from "nextjs-toploader";
+import Base from "@/containers/Base/BaseApp";
+import Providers from "./providers";
 
-const arimo = Arimo({ subsets: ['latin'], weight: ['400', '700'] });
+const arimo = Arimo({ subsets: ["latin"], weight: ["400", "700"] });
 
 export const metadata = {
     metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL as string),
-    title: "MoonDiary",
+    title:
+        "MoonDiary - Align Your Life Through Energy Medicine & Cosmic Guidance",
     description: "Align Your Life Through Energy Medicine & Cosmic Guidance",
     openGraph: {
         title: "MoonDiary",
@@ -33,10 +34,14 @@ export const metadata = {
         description: "Align Your Life Through Energy Medicine & Cosmic Guidance",
         images: ["/cover.jpeg"],
     },
+    icons: {
+        icon: "/favicon.png",
+        shortcut: "/favicon.png",
+        apple: "/favicon.png",
+    },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
-
     return (
         <html lang="en">
             <body className={arimo.className}>
@@ -54,9 +59,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                     showAtBottom={false}
                 />
                 <Providers>
-                    <Base>
-                        {children}
-                    </Base>
+                    <Base>{children}</Base>
                 </Providers>
                 <div id="modal-portal" />
             </body>
