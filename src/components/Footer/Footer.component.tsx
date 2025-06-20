@@ -1,11 +1,12 @@
+import React from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Footer, LogoContainer } from "./Footer.styles"
 import logo from "public/logo.png"
 import gmail from "public/gmail.png"
 import insta from "public/instagram.png"
+import { Footer, LogoContainer } from "./Footer.styles"
 
-export default function FooterComponent() {
+const FooterComponent = () => {
     return (
         <Footer>
             <ul>
@@ -29,3 +30,5 @@ export default function FooterComponent() {
         </Footer>
     )
 }
+
+export default React.memo(FooterComponent);

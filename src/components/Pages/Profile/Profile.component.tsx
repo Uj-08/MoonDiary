@@ -1,14 +1,14 @@
 import React, { useCallback, useContext, useMemo, useState } from 'react'
-import { ADMIN_EMAILS } from '@/helpers/constants'
+import { useDispatch } from 'react-redux'
+import { updateBlogDataIsLoading } from '@/redux/slices/blogInfo'
 import { Container, ToggleWrapper } from './Profile.styles'
+import { PopulatedBlogType } from '@/types/blog'
+import { ProfilePageTypes } from './Profile.types'
+import { BaseContext, BaseContextType } from '@/containers/Base/Base'
 import ProfileHero from '@/components/HeroSection/ProfileHero/ProfileHero.component'
 import SwitchComponent from '@/components/Switch/Switch.component'
-import { BaseContext, BaseContextType } from '@/containers/Base/Base'
-import { PopulatedBlogType } from '@/types/blog'
-import { updateBlogDataIsLoading } from '@/redux/slices/blogInfo'
-import { useDispatch } from 'react-redux'
-import { ProfilePageTypes } from './Profile.types'
 import ArticleGrid from '@/components/ArticleGrid/ArticleGrid.component'
+import { ADMIN_EMAILS } from '@/helpers/constants'
 
 const Profile = ({ sessionId, blogsArray }: ProfilePageTypes) => {
     const dispatch = useDispatch();
@@ -17,7 +17,7 @@ const Profile = ({ sessionId, blogsArray }: ProfilePageTypes) => {
     const [blogsArrayState, setBlogsArrayState] = useState(blogsArray)
 
 
-    const filterURL = useMemo(() => {
+    const API_INSTANCE = useMemo(() => {
         if (typeof window === "undefined") return null;
         const url = new URL("/api/blogs", window.location.origin);
         url.searchParams.set("showDrafts", String(showDrafts));
@@ -29,11 +29,11 @@ const Profile = ({ sessionId, blogsArray }: ProfilePageTypes) => {
         setShowDrafts(showDraftsVal);
         let fetchedBlogsArray: PopulatedBlogType[] | [];
         dispatch(updateBlogDataIsLoading(true));
-        (filterURL as URL).searchParams.set("showPublished", String(!showDraftsVal));
-        (filterURL as URL).searchParams.set("showDrafts", String(showDraftsVal));
+        (API_INSTANCE as URL).searchParams.set("showPublished", String(!showDraftsVal));
+        (API_INSTANCE as URL).searchParams.set("showDrafts", String(showDraftsVal));
         try {
             const apiRes = await fetch(
-                (filterURL as URL).href,
+                (API_INSTANCE as URL).href,
                 {
                     method: "GET",
                     headers: {
@@ -52,7 +52,7 @@ const Profile = ({ sessionId, blogsArray }: ProfilePageTypes) => {
         } finally {
             dispatch(updateBlogDataIsLoading(false));
         }
-    }, [dispatch, filterURL, sessionId, showDrafts]);
+    }, [dispatch, API_INSTANCE, sessionId, showDrafts]);
     return (
         <Container>
             <ProfileHero />
@@ -63,7 +63,7 @@ const Profile = ({ sessionId, blogsArray }: ProfilePageTypes) => {
                         <ToggleWrapper>
                             <SwitchComponent showDrafts={showDrafts} showDraftsHandler={showDraftsHandler} />
                         </ToggleWrapper>
-                        <ArticleGrid blogsArray={blogsArrayState} filterURL={filterURL} />
+                        <ArticleGrid blogsArray={blogsArrayState} API_INSTANCE={API_INSTANCE} />
                     </>
                 )
             }

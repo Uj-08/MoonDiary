@@ -27,7 +27,7 @@ import {
 import { blogContentStyle, BlogPreviewContent } from "./BlogContentStyle";
 import { BlogType } from "@/types/blog";
 import { EditorComponentProps } from "./Editor.types";
-import EditorIntitButtonComponent from "./EditorIntitButton/EditorIntitButton.component";
+import EditorInitButton from "./EditorIntitButton/EditorIntitButton.component";
 import { Shimmer } from "../ImageComponent/ShimmerImage.styles";
 
 const EditorComponent = ({ sessionId, blog }: EditorComponentProps) => {
@@ -146,7 +146,7 @@ const EditorComponent = ({ sessionId, blog }: EditorComponentProps) => {
                     />
 
                     <EditorContainer>
-                        <EditorIntitButtonComponent shouldInitEditor={shouldInitEditor} initializeEditor={initializeEditor} />
+                        <EditorInitButton shouldInitEditor={shouldInitEditor} initializeEditor={initializeEditor} />
                         {!isEditorInit && <Shimmer className="shimmer" $isLoading />}
                         {shouldInitEditor &&
                             <Editor

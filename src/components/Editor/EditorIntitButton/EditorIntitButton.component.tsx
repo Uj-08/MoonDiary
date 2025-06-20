@@ -2,7 +2,7 @@ import React from 'react'
 import { EditorInitButtonTypes } from './EditorIntitButton.types';
 import { Button, Container } from './EditorIntitButton.styles';
 
-const EditorIntitButton = ({
+const EditorInitButton = ({
     shouldInitEditor,
     initializeEditor
 }: EditorInitButtonTypes) => {
@@ -17,4 +17,4 @@ const EditorIntitButton = ({
     return <></>
 }
 
-export default React.memo(EditorIntitButton);
+export default React.memo(EditorInitButton);

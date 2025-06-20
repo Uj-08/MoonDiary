@@ -4,7 +4,7 @@ import { Container, FeatureHeader } from './TagPage.styles';
 import ArticleGrid from '@/components/ArticleGrid/ArticleGrid.component';
 
 const TagPage = ({ tagId, tagName, blogsArray }: TagPageTypes) => {
-    const filterURL = React.useMemo(() => {
+    const API_INSTANCE = React.useMemo(() => {
         if (typeof window === "undefined" || !tagId) return null;
         return new URL(`/api/tags/${tagId}`, window.location.origin);
     }, [tagId]);
@@ -12,9 +12,9 @@ const TagPage = ({ tagId, tagName, blogsArray }: TagPageTypes) => {
     return (
         <Container>
             <FeatureHeader>#{tagName}</FeatureHeader>
-            <ArticleGrid blogsArray={blogsArray} filterURL={filterURL} />
+            <ArticleGrid blogsArray={blogsArray} API_INSTANCE={API_INSTANCE} />
         </Container>
     )
 }
 
-export default TagPage;
+export default React.memo(TagPage);

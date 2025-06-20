@@ -1,8 +1,8 @@
+import React, { useContext } from "react";
 import { Container, HiddenTitle, ImageContainer } from "./HeroSection.styles";
 import cover from "public/cover.jpeg";
 import Image from "next/image";
 import RotatingTagline from "./RotatingTagline/RotatingTagline.component";
-import { useContext } from "react";
 import { BaseContext, BaseContextType } from "@/containers/Base/Base";
 
 const moonDiaryTaglines = [
@@ -34,4 +34,4 @@ const HeroSection = () => {
     );
 };
 
-export default HeroSection;
+export default React.memo(HeroSection);

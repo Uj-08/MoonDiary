@@ -15,4 +15,4 @@ const Features = ({ tags }: FeaturesTypes) => {
     )
 }
 
-export default Features
+export default React.memo(Features);

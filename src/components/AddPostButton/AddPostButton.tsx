@@ -1,7 +1,8 @@
+import React from "react";
 import Link from "next/link";
 import { Container } from "./AddPostButton.styles";
 
-export default function AddPostButton() {
+const AddPostButton = () => {
   return (
     <Link href={"/blogs/post"}>
       <Container>
@@ -23,3 +24,5 @@ export default function AddPostButton() {
     </Link>
   );
 }
+
+export default React.memo(AddPostButton);

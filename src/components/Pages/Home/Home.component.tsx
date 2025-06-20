@@ -4,7 +4,7 @@ import HeroSection from '@/components/HeroSection/HeroSection.component';
 import { HomeTypes } from './Home.types';
 
 const Home = ({ blogsArray }: HomeTypes) => {
-    const filterURL = useMemo(() => {
+    const API_INSTANCE = useMemo(() => {
         if (typeof window === "undefined") return null;
         const url = new URL(`/api/blogs`, window.location.origin);
         return url;
@@ -12,9 +12,9 @@ const Home = ({ blogsArray }: HomeTypes) => {
     return (
         <>
             <HeroSection />
-            <ArticleGrid blogsArray={blogsArray} filterURL={filterURL} />
+            <ArticleGrid blogsArray={blogsArray} API_INSTANCE={API_INSTANCE} />
         </>
     )
 }
 
-export default Home
+export default React.memo(Home);

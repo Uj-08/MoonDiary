@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Tagline } from "./RotatingTagline.styles";
 import { RotatingTaglineTypes } from "./RotatingTagline.types";
 
@@ -38,4 +38,4 @@ const RotatingTagline: React.FC<RotatingTaglineTypes> = ({
     return <Tagline $fade={fade}>{text}</Tagline>;
 };
 
-export default RotatingTagline;
+export default React.memo(RotatingTagline);

@@ -1,6 +1,6 @@
 import React from "react";
-import { FeaturesTagType } from "@/types/tag";
 import Link from "next/link";
+import { FeaturesTagType } from "@/types/tag";
 import { TagChip, TagLabel, TagCount } from "./FeatureCard.styles";
 
 const FeatureCard = ({ tag }: { tag: FeaturesTagType }) => {
@@ -14,4 +14,4 @@ const FeatureCard = ({ tag }: { tag: FeaturesTagType }) => {
   );
 };
 
-export default FeatureCard;
+export default React.memo(FeatureCard);
