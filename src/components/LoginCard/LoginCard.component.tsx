@@ -14,16 +14,16 @@ const LoginCard = ({ successHandler }: LoginCardTypes) => {
     return (
         <Container onClick={(e) => e.stopPropagation()}>
             <Card>
-                <Title>Welcome Back</Title>
+                <Title>Welcome Back !</Title>
                 <Subtitle>Login to continue to MoonDiary</Subtitle>
                 <GoogleLogin
-  onSuccess={successHandler}
-  theme="outline"         // or "filled_black"
-  size="large"            // or "medium", "small"
-  text="signin_with"      // or "continue_with", "signup_with"
-  shape="pill"            // or "rectangular", "circle"
-  width="100%"            // ensures full width inside your card
-/>
+                    onSuccess={successHandler}
+                    theme="filled_black"         
+                    size="large"            
+                    text="signin_with"      
+                    shape="pill"            
+                    width="100%"       
+                />
                 <Divider />
                 <Small>
                     Begin your cosmic journey with a single sign-in ✨
