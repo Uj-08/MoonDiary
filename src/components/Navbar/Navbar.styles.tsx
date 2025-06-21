@@ -47,7 +47,7 @@ export const LogoContainer = styled.div`
 
 export const NavLinks = styled.ul<{ $isHamburger?: boolean }>`
     margin-right: -81px;
-    color: #272727;
+    color: #3c3c3c;
     display: flex;
     flex-direction: ${props => props.$isHamburger ? "column" : "row"};
     align-items: ${props => props.$isHamburger ? "center" : ""};

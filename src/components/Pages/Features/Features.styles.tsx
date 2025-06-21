@@ -16,6 +16,7 @@ export const Container = styled.div`
 `;
 
 export const Title = styled.h1`
+    color: #292929;
     padding: 0 1rem;
     align-self: flex-start;
     font-family: "Arimo", sans-serif;
