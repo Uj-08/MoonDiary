@@ -34,8 +34,6 @@ export const Wrapper = styled.nav`
 `;
 
 export const LogoContainer = styled.div`
-    aspect-ratio: 1;
-    width: 35px;
     &:hover {
         img {
             transform: rotate(360deg);
