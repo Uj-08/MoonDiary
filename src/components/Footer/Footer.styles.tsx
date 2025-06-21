@@ -17,17 +17,21 @@ export const Footer = styled.footer`
 
 export const FooterIconContainer = styled.ul`
     list-style: none;
-        display: flex;
-        gap: 70px;
+    display: flex;
+    gap: 70px;
 `;
 
 export const FooterIcon = styled.li`
     height: 20px;
     aspect-ratio: 1;
+    img {
+        opacity: 0.7;
+    }
     .social_link {
         width: 20px;
         height: 20px;
         position: relative;
+        color: #5f5f5f;
     }
 `;
 

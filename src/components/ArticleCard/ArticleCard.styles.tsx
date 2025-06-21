@@ -5,23 +5,29 @@ export const Container = styled.div<{ $isDraft: boolean }>`
   width: 100%;
   max-width: 350px;
   min-width: 300px;
-  aspect-ratio: 2/3;
+  aspect-ratio: 2 / 3;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: rgb(0 0 0 / 20%) 0px 12px 28px 0px,
-    rgb(0 0 0 / 10%) 0px 2px 4px 0px,
-    rgb(255 255 255 / 5%) 0px 0px 0px 1px inset;
   cursor: pointer;
   justify-self: center;
-  transition: box-shadow linear 200ms;
-  &:hover {
-    box-shadow: rgba(177, 1, 177, 0.2) 0px 12px 28px 0px,
-      rgba(177, 1, 177, 0.1) 0px 2px 4px 0px,
-      rgba(177, 1, 177, 0.05) 0px 0px 0px 1px inset;
-  }
-  ${({ $isDraft }) => $isDraft && "filter: grayscale(1)"};
+
   display: flex;
   flex-direction: column;
+
+  background: white;
+  filter: ${({ $isDraft }) =>
+    `grayscale(${$isDraft ? 1 : 0}) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15))`};
+
+  transition: transform 200ms ease, filter 200ms ease;
+  will-change: transform, filter;
+
+  &:hover {
+    filter: grayscale(0) drop-shadow(0 12px 28px rgba(177, 1, 177, 0.25));
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
 `;
 
 export const ImageContainer = styled.div`
@@ -54,33 +60,33 @@ export const ButtonsContainer = styled.div`
 
 export const EditButton = styled.button`
   all: unset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 8px;
   border: 1px solid #009FBD;
   padding: 5px 8px;
-  background-color: #ffff;
+  background-color: #fff;
   color: #009FBD;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  /* opacity: 0.7; */
-  transition: background-color linear 0.2s;
-  /* transition: color linear 0.3s; */
-  /* :hover {
-    opacity: 1;
-  } */
+  cursor: pointer;
+
+  transition: transform 200ms ease, filter 200ms ease;
+  will-change: transform, filter;
+
   &:hover {
-    background-color: #009FBD;
-    color: #ffff;
+    transform: scale(1.02);
+  }
+
+  &:active {
+    transform: scale(0.97);
   }
 `;
 
 export const DeleteButton = styled(EditButton)`
-  background-color: #ffff;
-  border: 1px solid #F31559;
+  border-color: #F31559;
   color: #F31559;
-  &:hover {
-    background-color: #F31559;
-    color: #ffff;
-  }
 `;
 
 export const CardDetails = styled.div`
@@ -89,9 +95,6 @@ export const CardDetails = styled.div`
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  * {
-    /* border: 2px solid red; */
-  }
 `;
 
 export const MainContent = styled.div`
@@ -122,14 +125,10 @@ export const Tag = styled.h3<{
   cursor: pointer;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   padding: 2px 8px;
-  /* background-color: rgb(177, 1, 177); */
-  /* background-color: rgb(177, 1, 177); */
   background-color: ${({ $bgColor }) => $bgColor};
   display: flex;
   align-items: center;
   border-radius: 8px;
-  /* font-size: 12px; */
-  /* letter-spacing: 0.5px; */
   color: white;
   ${({ $fontSize, $letterSpacing }) => `font-size: ${$fontSize}; letter-spacing: ${$letterSpacing};`}
   opacity: 0.8;

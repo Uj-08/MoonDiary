@@ -38,16 +38,19 @@ const HamburgerMenu = ({
                 Home
               </Link>
             </NavLink>
+
             <NavLink $isHamburger={true}>
               <Link href={"/features"} onClick={() => setShowHamburger(false)} >
                 Features
               </Link>
             </NavLink>
+
             <NavLink $isHamburger={true}>
               <Link href={"/about-me"} onClick={() => setShowHamburger(false)} >
                 About Me
               </Link>
             </NavLink>
+            
             <NavLink $isHamburger={true} onClick={() => {
               signInHandler()
               setShowHamburger(false)

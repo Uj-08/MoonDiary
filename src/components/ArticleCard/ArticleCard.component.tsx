@@ -81,7 +81,6 @@ export const ArticleCard = ({ blog, clientEmail, index }: ArticleCardTypes) => {
   const preventLinkClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     e.preventDefault();
     e.stopPropagation();
-
   }
 
   const showDeleteModalHandler = (e: React.MouseEvent<HTMLButtonElement>) => {

@@ -6,13 +6,15 @@ import Image from "next/image";
 import ImageComponent from "../ImageComponent/ShimmerImage.component";
 import Link from "next/link";
 import logo from "public/logo.png";
+import { useScrollDirection } from "@/hooks/useScrollDirection";
 
 const Navbar = ({ signInHandler, signedIn, picture, hmbgrClickHandler }: NavbarTypes) => {
+    const scrolledDown = useScrollDirection(100);
     return (
-        <Wrapper>
+        <Wrapper $scrolledDown={scrolledDown}>
             <LogoContainer>
                 <Link href={"/"}>
-                    <Image src={logo} alt={"MoonDiary"} height={35} width={35} />
+                    <Image src={logo} alt={"MoonDiary"} height={38} width={38} />
                 </Link>
             </LogoContainer>
             <NavLinks>

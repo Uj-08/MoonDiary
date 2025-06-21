@@ -40,13 +40,15 @@ const Base = ({ children }: BaseTypes) => {
 
   useEffect(() => {
     if (blogInfo.blogDeleteStatus.deletedBlogId) {
-      router.push("/profile");
+      if(router.asPath === "/profile") router.reload()
+      else router.push("/profile");
       dispatch(resetDeletedBlogId());
     }
 
     if (blogInfo.blogPostUpdateStatus.createdBlogId) {
+      if(router.asPath === "/profile") router.reload()
+      else router.push("/profile");
       dispatch(resetCreatedBlogId());
-      router.push("/profile");
     }
   }, [
     blogInfo.blogDeleteStatus.deletedBlogId,

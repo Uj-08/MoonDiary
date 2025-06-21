@@ -14,6 +14,7 @@ export const Container = styled.div<{ $showHamburger: boolean }>`
             ? "backdrop-filter: blur(10px);"
             : "backdrop-filter: blur(0px);"}
     ${({ $showHamburger }) => !$showHamburger && "pointer-events: none;"}
+    will-change: backdrop-filter;
     transition: backdrop-filter 200ms linear;
     @media (max-width: 950px) {
         display: "none";

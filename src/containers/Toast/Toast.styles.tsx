@@ -7,7 +7,7 @@ export const ToastContainer = styled.div<{
 }>`
   opacity: ${(props) => (props.visible ? 1 : 0)};
   transform: translateX(${(props) => (props.visible ? "0" : "100%")});
-  transition: all 300ms ease-in-out;
+  transition: transform 300ms ease-in-out, opacity 300ms ease-in-out;
   color: #fff;
   padding: 1rem;
   border-radius: 8px;

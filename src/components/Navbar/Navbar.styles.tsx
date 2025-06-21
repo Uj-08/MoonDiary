@@ -6,7 +6,7 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { LuAtSign } from "react-icons/lu";
 
 
-export const Wrapper = styled.nav`
+export const Wrapper = styled.nav<{ $scrolledDown: boolean }>`
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -22,6 +22,8 @@ export const Wrapper = styled.nav`
     width: 100%;
     background-color: white;
     box-shadow: rgb(0 0 0 / 10%) 0px 0px 5px 0px, rgb(0 0 0 / 10%) 0px 0px 1px 0px;
+    transform: ${({ $scrolledDown }) =>  $scrolledDown ? 'translateY(-100%);' : 'translateY(0%);'};
+    transition: transform 200ms linear;
     @media (max-width: 1200px) {
         padding: 0 4rem;
     }
@@ -34,22 +36,23 @@ export const Wrapper = styled.nav`
 `;
 
 export const LogoContainer = styled.div`
-    aspect-ratio: 1;
-    width: 35px;
+    opacity: 0.9;
+    transition: 200ms linear opacity;
     &:hover {
+        opacity: 1;
         img {
             transform: rotate(360deg);
         }
     }
     img {
-        transition: transform 0.3s linear;
+        transition: transform 400ms linear;
         cursor: pointer;
     }
 `;
 
 export const NavLinks = styled.ul<{ $isHamburger?: boolean }>`
     margin-right: -81px;
-    color: #272727;
+    color: #3c3c3c;
     display: flex;
     flex-direction: ${props => props.$isHamburger ? "column" : "row"};
     align-items: ${props => props.$isHamburger ? "center" : ""};
@@ -68,9 +71,9 @@ export const NavLink = styled.li<{ $isHamburger?: boolean }>`
     cursor: pointer;
     text-transform: ${props => !props.$isHamburger && "uppercase"};
     font-family: ${(props) =>
-    props.$isHamburger
-        ? `"Segoe UI", Tahoma, Geneva, Verdana, sans-serif`
-        : `${anton.style.fontFamily}, sans-serif`};
+        props.$isHamburger
+            ? `"Segoe UI", Tahoma, Geneva, Verdana, sans-serif`
+            : `${anton.style.fontFamily}, sans-serif`};
     font-size: 1.3rem;
     letter-spacing: ${props => !props.$isHamburger && "2px"};
     transition: color linear 200ms;
@@ -78,7 +81,7 @@ export const NavLink = styled.li<{ $isHamburger?: boolean }>`
     &:hover {
         color: #b101b1;
     }
-`
+`;
 
 export const EmailIcon = styled(LuAtSign)`
     stroke-width: 2.5px;
@@ -122,15 +125,18 @@ export const SocialLink = styled.li`
     .social_icon {
         width: 25px;
         height: 25px;
+        color: #3c3c3c;
     }
-
     &:hover {
         background-color: #AE4FE9;
-        color: #fff;
-        /* Disable hover effects on small screens */
+        .social_icon {
+            color: #fff;
+            @media (max-width: 950px) {
+                color: unset;
+            }
+        }
         @media (max-width: 950px) {
             background-color: unset;
-            color: unset;
         }
     }
 `;
@@ -141,6 +147,7 @@ export const HamburgerButton = styled.div<{ enabled?: boolean }>`
         width: 35px;
         height: 35px;
         stroke-width: 1px;
+        color: #3c3c3c;
     }
     @media (max-width: 950px) {
         display: block;

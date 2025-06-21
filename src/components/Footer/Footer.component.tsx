@@ -9,7 +9,6 @@ const FooterComponent = () => {
     return (
         <Footer>
             <FooterIconContainer>
-
                 <FooterIcon>
                     <Link href="mailto:psykidbiz@gmail.com">
                         <EmailIcon className="social_link" />
@@ -27,7 +26,6 @@ const FooterComponent = () => {
                         <InstagramIcon className="social_link" />
                     </Link>
                 </FooterIcon>
-
             </FooterIconContainer>
             <CopyrightText>© MoonDiary 2025</CopyrightText>
         </Footer>

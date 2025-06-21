@@ -77,23 +77,23 @@ export const Subtitle = styled.h2`
 `;
 
 export const StyledButton = styled.button`
+  cursor: pointer;
   padding: 1rem 2rem;
   border-radius: 10px;
   background-color: #232323;
   color: white;
   font-weight: 500;
-  font-size: 1.2rem;
-  border: none;
-  cursor: pointer;
+  text-decoration: none;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  transition: background 0.2s ease;
+  font-size: 1.2rem;
+
+  will-change: transform, box-shadow;
+  transition: transform 300ms ease;
 
   &:hover {
-    background-color: #000;
+    transform: scale(1.02);
   }
-
-  &:focus {
-    outline: 3px solid #888;
-    outline-offset: 2px;
+  &:active {
+    transform: scale(0.97);
   }
 `;
