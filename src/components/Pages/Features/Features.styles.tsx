@@ -3,14 +3,25 @@ import styled from "styled-components";
 export const Container = styled.div`
     display: flex;
     flex-direction: column;
-    min-height: calc(100dvh - 220px);
     align-items: center;
+    gap: 24px;
     padding: 140px 8rem 40px 8rem;
+    min-height: calc(100dvh - 220px);
     @media (max-width: 1200px) {
         padding: 100px 4rem 40px 4rem;
     }
     @media (max-width: 640px) {
         padding: 100px 0rem 40px 0rem;
+    }
+`;
+
+export const Title = styled.h1`
+    padding: 0 1rem;
+    align-self: flex-start;
+    font-family: "Arimo", sans-serif;
+    @media (max-width: 640px) {
+        align-self: center;
+        padding: 0;
     }
 `;
 

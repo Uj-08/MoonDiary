@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Link from "next/link";
-import { MdAddCircleOutline } from "react-icons/md";
+import { RiAddCircleLine } from "react-icons/ri";
 
 export const StyledLink = styled(Link)`
   text-decoration: none;
@@ -48,10 +48,11 @@ export const IconWrapper = styled.div`
   justify-content: center;
 `;
 
-export const StyledIcon = styled(MdAddCircleOutline)`
+export const StyledIcon = styled(RiAddCircleLine)`
   width: 24px;
   height: 24px;
   color: white;
+  stroke-width: 0.7px;
 
   @media (max-width: 600px) {
     width: 20px;

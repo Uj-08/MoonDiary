@@ -23,7 +23,7 @@ export const TagChip = styled.div`
 
 export const TagLabel = styled.span`
   font-size: 0.95rem;
-  font-weight: 500;
+  font-weight: bold;
   color: #333;
 `;
 
