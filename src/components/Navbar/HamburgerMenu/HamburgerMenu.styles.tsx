@@ -1,5 +1,6 @@
 import { dancingScript } from "@/styles/fonts";
 import { styled } from "styled-components";
+import { IoCloseSharp } from "react-icons/io5";
 
 export const Container = styled.div<{ $showHamburger: boolean }>`
     height: 100%;
@@ -60,6 +61,10 @@ export const Cross = styled.div`
         height: 24px;
         width: 24px;
     }
+`;
+
+export const CrossIcon = styled(IoCloseSharp)`
+    stroke-width: 10px;
 `;
 
 export const LinkContainer = styled.div`

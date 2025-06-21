@@ -2,9 +2,8 @@ import React from "react"
 import Link from "next/link"
 import Image from "next/image"
 import logo from "public/logo.png"
-import { FaInstagram } from "react-icons/fa6";
-import { MdAlternateEmail } from "react-icons/md";
 import { CopyrightText, Footer, FooterIcon, FooterIconContainer } from "./Footer.styles"
+import { EmailIcon, InstagramIcon } from "../Navbar/Navbar.styles";
 
 const FooterComponent = () => {
     return (
@@ -13,7 +12,7 @@ const FooterComponent = () => {
 
                 <FooterIcon>
                     <Link href="mailto:psykidbiz@gmail.com">
-                        <MdAlternateEmail className="social_link" />
+                        <EmailIcon className="social_link" />
                     </Link>
                 </FooterIcon>
 
@@ -25,7 +24,7 @@ const FooterComponent = () => {
 
                 <FooterIcon>
                     <Link href="https://www.instagram.com/shaireee_67/" target="_blank" rel="noreferrer">
-                        <FaInstagram className="social_link" />
+                        <InstagramIcon className="social_link" />
                     </Link>
                 </FooterIcon>
 

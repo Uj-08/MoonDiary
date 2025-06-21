@@ -1,5 +1,10 @@
 import { anton } from "@/styles/fonts";
 import styled from "styled-components";
+import { FaInstagram } from "react-icons/fa6";
+import { CgProfile } from "react-icons/cg";
+import { RxHamburgerMenu } from "react-icons/rx";
+import { LuAtSign } from "react-icons/lu";
+
 
 export const Wrapper = styled.nav`
     display: flex;
@@ -75,6 +80,22 @@ export const NavLink = styled.li<{ $isHamburger?: boolean }>`
     }
 `
 
+export const EmailIcon = styled(LuAtSign)`
+    stroke-width: 2.5px;
+`;
+
+export const InstagramIcon = styled(FaInstagram)`
+    stroke-width: 8px;
+`;
+
+export const ProfileIcon = styled(CgProfile)`
+    stroke-width: 0.3px;
+`;
+
+export const HamburgerIcon = styled(RxHamburgerMenu)`
+    stroke-width: 10px;
+`
+
 export const SocialLinks = styled.ul<{ $isHamburger?: boolean }>`
     display: flex;
     list-style: none;
@@ -119,6 +140,7 @@ export const HamburgerButton = styled.div<{ enabled?: boolean }>`
     .hamburger_icon {
         width: 35px;
         height: 35px;
+        stroke-width: 1px;
     }
     @media (max-width: 950px) {
         display: block;
