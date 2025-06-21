@@ -1,20 +1,18 @@
 "use client"
 import React from "react";
-import { LogoContainer, Wrapper, NavLinks, SocialLinks, HamburgerButton, Profile, NavLink, SocialLink } from "./Navbar.styles"
+import { LogoContainer, Wrapper, NavLinks, SocialLinks, HamburgerButton, Profile, NavLink, SocialLink, InstagramIcon, ProfileIcon, HamburgerIcon, EmailIcon } from "./Navbar.styles"
 import NavbarTypes from "./Navbar.types";
 import Image from "next/image";
 import ImageComponent from "../ImageComponent/ShimmerImage.component";
 import Link from "next/link";
 import logo from "public/logo.png";
-import gmail from "public/gmail.png";
-import insta from "public/instagram.png";
 
 const Navbar = ({ signInHandler, signedIn, picture, hmbgrClickHandler }: NavbarTypes) => {
     return (
         <Wrapper>
             <LogoContainer>
                 <Link href={"/"}>
-                    <Image src={logo} alt={"MoonDiary"} fill={true} />
+                    <Image src={logo} alt={"MoonDiary"} height={35} width={35} />
                 </Link>
             </LogoContainer>
             <NavLinks>
@@ -38,26 +36,28 @@ const Navbar = ({ signInHandler, signedIn, picture, hmbgrClickHandler }: NavbarT
             <SocialLinks>
                 <SocialLink>
                     <Link href="mailto:psykidbiz@gmail.com">
-                        <Image src={gmail} alt={"gmail"} height="25" width="25" />
+                        <EmailIcon className="social_icon" />
                     </Link>
                 </SocialLink>
                 <SocialLink>
                     <Link href="https://www.instagram.com/shaireee_67/" target="_blank" rel="noreferrer">
-                        <Image src={insta} alt={"Instagram"} height="25" width="25" />
+                        <InstagramIcon className="social_icon" />
                     </Link>
                 </SocialLink>
                 <SocialLink>
                     <Link href={"/profile"} prefetch={false}>
-                        <Profile>
-                            <ImageComponent aspectRatio={1} src={picture} alt="profile" />
-                        </Profile>
+                        {
+                            signedIn ?
+                                <Profile>
+                                    <ImageComponent aspectRatio={1} src={picture} alt="profile" />
+                                </Profile>
+                                : <ProfileIcon className="social_icon" />
+                        }
                     </Link>
                 </SocialLink>
             </SocialLinks>
             <HamburgerButton onClick={hmbgrClickHandler}>
-                <span />
-                <span />
-                <span />
+                <HamburgerIcon className="hamburger_icon" />
             </HamburgerButton>
         </Wrapper>
     );

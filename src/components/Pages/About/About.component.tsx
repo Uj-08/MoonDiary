@@ -27,4 +27,4 @@ const About = ({}: AboutTypes) => {
     )
 }
 
-export default About;
+export default React.memo(About);

@@ -11,7 +11,7 @@ import { fetchRelatedBlogs } from '../helpers/fetchRelatedBlogs'
 import { ADDITIONAL_CARDS_LENGTH } from '@/helpers/constants';
 
 const AdditionalSectionComponent = ({ blog, client }: AdditionalSectionComponentTypes) => {
-
+  
   const {
     data: cardData = [],
     isLoading,
@@ -51,4 +51,4 @@ const AdditionalSectionComponent = ({ blog, client }: AdditionalSectionComponent
   )
 }
 
-export default AdditionalSectionComponent
+export default React.memo(AdditionalSectionComponent);

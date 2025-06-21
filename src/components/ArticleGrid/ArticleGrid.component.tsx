@@ -15,7 +15,7 @@ import { ArticleGridTypes } from "./ArticleGrid.types";
 
 const ArticleGrid = ({
   blogsArray,
-  filterURL,
+  API_INSTANCE,
 }: ArticleGridTypes) => {
   const dispatch = useDispatch();
   const context = useContext<BaseContextType | null>(BaseContext);
@@ -63,9 +63,9 @@ const ArticleGrid = ({
   }) => {
     try {
       dispatch(updateBlogDataIsLoading(true));
-      (filterURL as URL).searchParams.set("sort", sort);
-      (filterURL as URL).searchParams.set("order", order);
-      const res = await fetch((filterURL as URL).href, {
+      (API_INSTANCE as URL).searchParams.set("sort", sort);
+      (API_INSTANCE as URL).searchParams.set("order", order);
+      const res = await fetch((API_INSTANCE as URL).href, {
         headers: {
           "Content-Type": "application/json",
           "x-session-token": token,
@@ -127,4 +127,4 @@ const ArticleGrid = ({
   );
 };
 
-export default (ArticleGrid);
+export default React.memo(ArticleGrid);

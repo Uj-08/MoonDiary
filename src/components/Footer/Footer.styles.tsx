@@ -13,39 +13,26 @@ export const Footer = styled.footer`
     width: 100%;
     gap: 20px;
     margin-top: 100px;
+`;
 
-    ul {
-        list-style: none;
+export const FooterIconContainer = styled.ul`
+    list-style: none;
         display: flex;
         gap: 70px;
-        li {
-            /* border: 1px solid black; */
-            width: 20px;
-            height: 20px;
-            display: block;
-            position: relative;
-            img {
-                width: 100%;
-                height: 100%;
-                object-fit: contain;
-            }  
-        }
-    }
+`;
 
-    span {
-        font-family: Verdana, Geneva, Tahoma, sans-serif;;
-        font-size: 12px;
-        color: #8a8a8a;
+export const FooterIcon = styled.li`
+    height: 20px;
+    aspect-ratio: 1;
+    .social_link {
+        width: 20px;
+        height: 20px;
+        position: relative;
     }
-`;  
+`;
 
-export const LogoContainer = styled.li`
-    &:hover {
-        img {
-            transform: rotate(360deg);
-        }
-    }
-    img {
-        transition: transform 0.3s linear;
-    }
-`
+export const CopyrightText = styled.span`
+    font-family: Verdana, Geneva, Tahoma, sans-serif;;
+    font-size: 12px;
+    color: #8a8a8a;
+`;

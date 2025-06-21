@@ -1,40 +1,37 @@
-import { styled } from "styled-components";
-import { anton } from "@/styles/fonts";
+import styled from "styled-components";
+import { montserrat } from "@/styles/fonts";
 
-export const Container = styled.div`
-  padding: 8px 18px;
-  display: flex;
-  flex-direction: column;
+export const TagChip = styled.div`
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
-  border-radius: 10px;
-  color: #474646;
+  gap: 0.6rem;
+  padding: 0.6rem 1rem;
+  border-radius: 2rem;
+  background: rgba(245, 245, 245, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  font-family: ${montserrat.style.fontFamily}, sans-serif;
   cursor: pointer;
-  min-height: 120px;
-  overflow: hidden;
-  font-family: ${anton.style.fontFamily}, sans-serif;
-  letter-spacing: 0.7px;
-
-  background: rgba(163, 163, 163, 0.25);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  transition: all 0.2s ease;
 
   &:hover {
-    color: #000000;
-    transform: translateY(-4px) scale(1.02);
-    background: rgba(255, 255, 255, 0.5);
-    border-color: rgba(255, 255, 255, 0.3);
+    background: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   }
 `;
 
-export const Text = styled.span`
-  text-align: center;
-  width: 100%;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+export const TagLabel = styled.span`
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #333;
+`;
+
+export const TagCount = styled.span`
+  background-color: #e8e8e8;
+  color: #555;
+  font-size: 0.75rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 1rem;
+  font-weight: 500;
 `;

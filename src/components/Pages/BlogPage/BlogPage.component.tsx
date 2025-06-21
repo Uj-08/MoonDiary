@@ -14,4 +14,4 @@ const BlogPage = ({ blog }: BlogPageTypes) => {
   )
 }
 
-export default BlogPage
+export default React.memo(BlogPage);

@@ -21,4 +21,4 @@ const DeleteCard = ({ blogTitle, onDeleteHandler, onCancelHandler }: DeleteCardT
     )
 }
 
-export default DeleteCard
+export default React.memo(DeleteCard);

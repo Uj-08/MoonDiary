@@ -1,4 +1,5 @@
 import React, { useState, useRef, ReactNode } from "react";
+import Image from "next/image";
 import { Editor } from "@tinymce/tinymce-react";
 import { useDispatch } from "react-redux";
 import parse from "html-react-parser";
@@ -10,6 +11,7 @@ import { postBlog, updateBlog } from "@/redux/slices/blogInfo";
 import ShimmerImage from "../ImageComponent/ShimmerImage.component";
 import InputTagComponent from "./TagSuggestion/TagSuggestion.component";
 import DraftToggle from "./ToogleDraft/ToogleDraft.component";
+import placeholderImage from "public/4-3.png";
 
 import {
     BlogTitle,
@@ -27,7 +29,7 @@ import {
 import { blogContentStyle, BlogPreviewContent } from "./BlogContentStyle";
 import { BlogType } from "@/types/blog";
 import { EditorComponentProps } from "./Editor.types";
-import EditorIntitButtonComponent from "./EditorIntitButton/EditorIntitButton.component";
+import EditorInitButton from "./EditorIntitButton/EditorIntitButton.component";
 import { Shimmer } from "../ImageComponent/ShimmerImage.styles";
 
 const EditorComponent = ({ sessionId, blog }: EditorComponentProps) => {
@@ -79,9 +81,9 @@ const EditorComponent = ({ sessionId, blog }: EditorComponentProps) => {
                 tags: tagsArr,
             };
 
-            dispatch(blog ? 
-                updateBlog(reqBody as BlogType) 
-                : 
+            dispatch(blog ?
+                updateBlog(reqBody as BlogType)
+                :
                 postBlog(reqBody));
         }
     };
@@ -100,12 +102,20 @@ const EditorComponent = ({ sessionId, blog }: EditorComponentProps) => {
                 <PreviewContainer>
                     <Preview>
                         <PreviewImageContainer>
-                            <ShimmerImage
-                                src={imageLink || "/4-3.png"}
-                                alt={"4:3 ratio"}
-                                aspectRatio={4 / 3}
-                                isPriority
-                            />
+                            {imageLink === "" ?
+                                <Image
+                                    src={placeholderImage}
+                                    alt="placeholder"
+                                    placeholder="blur"
+                                    fill
+                                /> :
+                                <ShimmerImage
+                                    src={imageLink}
+                                    alt={"hero"}
+                                    aspectRatio={4 / 3}
+                                    isPriority
+                                />
+                            }
                         </PreviewImageContainer>
 
                         <PreviewData>
@@ -146,7 +156,7 @@ const EditorComponent = ({ sessionId, blog }: EditorComponentProps) => {
                     />
 
                     <EditorContainer>
-                        <EditorIntitButtonComponent shouldInitEditor={shouldInitEditor} initializeEditor={initializeEditor} />
+                        <EditorInitButton shouldInitEditor={shouldInitEditor} initializeEditor={initializeEditor} />
                         {!isEditorInit && <Shimmer className="shimmer" $isLoading />}
                         {shouldInitEditor &&
                             <Editor

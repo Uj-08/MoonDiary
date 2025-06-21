@@ -1,7 +1,7 @@
+import React, { useContext } from "react";
 import { Container, ImageContainer } from "../HeroSection.styles";
 import cover from "public/cover-profile.jpg";
 import Image from "next/image";
-import { useContext } from "react";
 import { BaseContext, BaseContextType } from "@/containers/Base/Base";
 import { HeroContent, ProfileContainer, Title } from "./ProfileHero.styles";
 
@@ -26,7 +26,6 @@ const ProfileHero = () => {
                         alt="hero-image"
                         fill
                         quality={50}
-                        // placeholder="blur"
                         priority
                     />
                 </ProfileContainer>
@@ -36,4 +35,4 @@ const ProfileHero = () => {
     );
 };
 
-export default ProfileHero;
+export default React.memo(ProfileHero);
