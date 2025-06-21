@@ -16,15 +16,26 @@ export const ToggleInput = styled.input`
 
 export const Slider = styled.span<{ checked: boolean }>`
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: ${({ checked }) => (checked ? "#b101b1" : "#ccc")};
+  inset: 0;
   border-radius: 34px;
-  transition: 0.3s;
+  overflow: hidden;
+  background-color: #ccc; /* fallback base color */
+  will-change: opacity;
 
+  /* Layer for ON color (purple) */
   &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: #b101b1;
+    opacity: ${({ checked }) => (checked ? 1 : 0)};
+    transition: opacity 300ms ease;
+    will-change: opacity;
+    z-index: 0;
+  }
+
+  /* Toggle knob */
+  &::after {
     content: "";
     position: absolute;
     height: 20px;
@@ -33,8 +44,11 @@ export const Slider = styled.span<{ checked: boolean }>`
     bottom: 4px;
     background-color: white;
     border-radius: 50%;
-    transition: 0.3s;
+    z-index: 1;
+
     transform: ${({ checked }) =>
-        checked ? "translateX(0px)" : "translateX(22px)"};
+      checked ? "translateX(22px)" : "translateX(0px)"};
+    transition: transform 300ms ease;
+    will-change: transform;
   }
 `;

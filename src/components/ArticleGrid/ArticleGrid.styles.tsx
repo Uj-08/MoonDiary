@@ -72,16 +72,23 @@ export const Select = styled.select`
   color: #303030;
   appearance: none;
   cursor: pointer;
-  transition: border 0.2s ease;
-  box-shadow: 0 2px 6px rgba(189, 16, 224, 0.08);
+
+  transition: filter 200ms ease;
+  will-change: filter;
+
   min-width: 104px;
+
   @media (max-width: 500px) {
     font-size: 12px;
     min-width: 93px;
   }
 
+  &:hover {
+    filter: drop-shadow(0 4px 10px rgba(189, 16, 224, 0.14));
+  }
+
   &:focus {
-    border-color: rgba(189, 16, 224, 0.148);
+    filter: drop-shadow(0 4px 12px rgba(189, 16, 224, 0.22));
     outline: none;
   }
 `;

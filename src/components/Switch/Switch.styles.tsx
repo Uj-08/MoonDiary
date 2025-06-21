@@ -7,35 +7,43 @@ export const SwitchContainer = styled.div`
     padding: 4px;
     position: relative;
     width: fit-content;
+    overflow: hidden;
 `;
 
 export const SwitchOption = styled.button<{ active: boolean }>`
     position: relative;
-    z-index: 1; /* above indicator */
+    z-index: 1;
     background-color: transparent;
     color: ${({ active }) => (active ? "#fff" : "#333")};
+    opacity: ${({ active }) => (active ? 1 : 0.7)};
     border: none;
     padding: 0.5rem 1.5rem;
     border-radius: 50px;
     font-size: 0.9rem;
     font-weight: bold;
     cursor: pointer;
-    transition: color 0.3s ease;
-    font-family: "Arimo", sans-serif;
-
+    font-family: "Arimo", sans-serif;   
+    transition: transform 300ms ease, opacity 300ms ease;
+    will-change: transform; 
     &:hover {
-        background-color: transparent;
+        opacity: 1;
+    }   
+    &:active {
+        transform: scale(0.97);
     }
 `;
 
 export const ActiveIndicator = styled.div<{ $position: "left" | "right" }>`
     position: absolute;
     top: 4px;
-    left: ${({ $position }) => ($position === "left" ? "4px" : "calc(100% - 50% - 4px)")};
+    left: 4px;
     width: 50%;
     height: calc(100% - 8px);
     background-color: #b101b1;
     border-radius: 50px;
-    transition: all 0.3s ease;
-    z-index: 0;
+    z-index: 0; 
+    transform: ${({ $position }) =>
+        $position === "left" ? "translateX(0)" : "translateX(100%)"};
+    transition: transform 300ms ease;
+    will-change: transform;
 `;

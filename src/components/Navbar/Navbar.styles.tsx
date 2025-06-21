@@ -6,7 +6,7 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { LuAtSign } from "react-icons/lu";
 
 
-export const Wrapper = styled.nav`
+export const Wrapper = styled.nav<{ $scrolledDown: boolean }>`
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -22,6 +22,8 @@ export const Wrapper = styled.nav`
     width: 100%;
     background-color: white;
     box-shadow: rgb(0 0 0 / 10%) 0px 0px 5px 0px, rgb(0 0 0 / 10%) 0px 0px 1px 0px;
+    transform: ${({ $scrolledDown }) =>  $scrolledDown ? 'translateY(-100%);' : 'translateY(0%);'};
+    transition: transform 200ms linear;
     @media (max-width: 1200px) {
         padding: 0 4rem;
     }
@@ -43,7 +45,7 @@ export const LogoContainer = styled.div`
         }
     }
     img {
-        transition: transform 0.3s linear;
+        transition: transform 400ms linear;
         cursor: pointer;
     }
 `;
@@ -79,7 +81,7 @@ export const NavLink = styled.li<{ $isHamburger?: boolean }>`
     &:hover {
         color: #b101b1;
     }
-`
+`;
 
 export const EmailIcon = styled(LuAtSign)`
     stroke-width: 2.5px;

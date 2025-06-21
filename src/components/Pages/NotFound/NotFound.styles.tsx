@@ -84,11 +84,16 @@ export const StyledLink = styled(Link)`
   color: white;
   font-weight: 500;
   text-decoration: none;
-  transition: background 0.2s ease;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-size: 1.2rem;
 
+  will-change: transform, box-shadow;
+  transition: transform 300ms ease;
+
   &:hover {
-    background-color: #000;
+    transform: scale(1.02);
+  }
+  &:active {
+    transform: scale(0.97);
   }
 `;

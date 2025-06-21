@@ -38,15 +38,18 @@ const Base = ({ children }: BaseTypes) => {
     setSignedIn(hasCookie(COOKIE_NAME) as boolean)
   }, [])
 
+  console.log(router.asPath)
   useEffect(() => {
     if (blogInfo.blogDeleteStatus.deletedBlogId) {
-      router.push("/profile");
+      if(router.asPath === "/profile") router.reload()
+      else router.push("/profile");
       dispatch(resetDeletedBlogId());
     }
 
     if (blogInfo.blogPostUpdateStatus.createdBlogId) {
+      if(router.asPath === "/profile") router.reload()
+      else router.push("/profile");
       dispatch(resetCreatedBlogId());
-      router.push("/profile");
     }
   }, [
     blogInfo.blogDeleteStatus.deletedBlogId,

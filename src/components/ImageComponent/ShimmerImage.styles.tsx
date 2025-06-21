@@ -29,7 +29,7 @@ export const Shimmer = styled.div<{ $isLoading: boolean }>`
     background: #e9e9e9;
     overflow: hidden;
     opacity: ${({ $isLoading }) => ($isLoading ? 1 : 0)};
-    transition: opacity 0.2s cubic-bezier(0.3, 0.2, 0.2, 0.8);
+    transition: opacity 200ms cubic-bezier(0.3, 0.2, 0.2, 0.8);
 
     &::before {
         content: "";
