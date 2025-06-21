@@ -3,10 +3,13 @@ import React from "react";
 import { NavLink, NavLinks, SocialLink, SocialLinks } from "../Navbar.styles";
 import Image from "next/image";
 import Link from "next/link";
-import gmail from "public/gmail.png"
-import insta from "public/instagram.png"
 import { Container, Cross, HamburgerContainer, LinkContainer, ProfileContainer, Title, TopContainer } from "./HamburgerMenu.styles";
 import { HamburgerTypes } from "./HamburgerMenu.types";
+import { FaInstagram } from "react-icons/fa6";
+import { CgProfile } from "react-icons/cg";
+import { MdAlternateEmail } from "react-icons/md";
+import { IoCloseSharp } from "react-icons/io5";
+
 
 const HamburgerMenu = ({
   showHamburger,
@@ -19,7 +22,7 @@ const HamburgerMenu = ({
   const containerClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
   }
-  
+
   return (
     <Container $showHamburger={showHamburger} onClick={() => setShowHamburger(false)}>
       <HamburgerContainer
@@ -28,7 +31,9 @@ const HamburgerMenu = ({
       >
         <TopContainer>
           <Title>Navigation</Title>
-          <Cross onClick={() => setShowHamburger(false)}>&#9587;</Cross>
+          <Cross onClick={() => setShowHamburger(false)}>
+            <IoCloseSharp className="cross_icon" />
+          </Cross>
         </TopContainer>
         <LinkContainer>
           <NavLinks $isHamburger={true}>
@@ -48,30 +53,35 @@ const HamburgerMenu = ({
               </Link>
             </NavLink>
             <NavLink $isHamburger={true} onClick={() => {
-                signInHandler()
-                setShowHamburger(false)
-              }}>
-                {signedIn ? "Sign Out" : "Sign In"}
+              signInHandler()
+              setShowHamburger(false)
+            }}>
+              {signedIn ? "Sign Out" : "Sign In"}
             </NavLink>
           </NavLinks>
           <SocialLinks $isHamburger={true}>
             <SocialLink>
               <Link href="mailto:psykidbiz@gmail.com" onClick={() => setShowHamburger(false)}>
-                <Image src={gmail} alt="social-links" height={25} width={25} />
+                {/* <Image src={gmail} alt="social-links" height={25} width={25} /> */}
+                <MdAlternateEmail className="social_icon" />
               </Link>
             </SocialLink>
 
             <SocialLink>
               <Link href="https://www.instagram.com/shaireee_67/" target="_blank" rel="noreferrer" onClick={() => setShowHamburger(false)}>
-                <Image src={insta} alt="social-links" height={25} width={25} />
+                {/* <Image src={insta} alt="social-links" height={25} width={25} /> */}
+                <FaInstagram className="social_icon" />
               </Link>
             </SocialLink>
 
             <SocialLink>
               <Link href="/profile" onClick={() => setShowHamburger(false)}>
-                <ProfileContainer>
-                  <Image src={picture} alt="social-links" fill />
-                </ProfileContainer>
+                {signedIn ?
+                  <ProfileContainer>
+                    <Image src={picture} alt="social-links" fill />
+                  </ProfileContainer> :
+                  <CgProfile className="social_icon" />
+                }
               </Link>
             </SocialLink>
           </SocialLinks>

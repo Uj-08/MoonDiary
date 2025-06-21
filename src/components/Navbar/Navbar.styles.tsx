@@ -29,13 +29,8 @@ export const Wrapper = styled.nav`
 `;
 
 export const LogoContainer = styled.div`
-    position: relative;
     aspect-ratio: 1;
-    width: 45px;
-    @media (max-width: 450px) {
-        width: 35px;
-    }
-    -webkit-tap-highlight-color: transparent;
+    width: 35px;
     &:hover {
         img {
             transform: rotate(360deg);
@@ -43,8 +38,6 @@ export const LogoContainer = styled.div`
     }
     img {
         transition: transform 0.3s linear;
-        height: 100%;
-        width: 100%;
         cursor: pointer;
     }
 `;
@@ -105,49 +98,30 @@ export const SocialLink = styled.li`
     height: 100%;
     transition: background-color linear 200ms;
 
-    &:hover:not(:last-child) {
-        background-color: #51b016;
-        filter: invert(1);
+    .social_icon {
+        width: 25px;
+        height: 25px;
+    }
+
+    &:hover {
+        background-color: #AE4FE9;
+        color: #fff;
         /* Disable hover effects on small screens */
         @media (max-width: 950px) {
             background-color: unset;
-            filter: none;
-        }
-    }
-    &:last-child {
-        &:hover {
-            background-color: #AE4FE9;
-            @media (max-width: 950px) {
-                background-color: unset;
-            }
+            color: unset;
         }
     }
 `;
 
-export const HamburgerButton = styled.button<{ enabled?: boolean }>`
-    border: none;
-    background-color: transparent;
-    flex-direction: column;
-    height: 45px;
-    width: 45px;
-    padding: 11px 5px;
-    gap: 5px;
-    :active {
-        span {
-            background-color: #8c8c8c;
-        }
-    }
-    span {
-        transition: 0.2s background-color linear;
-        display: block;
-        background-color: black;
-        width: 100%;
-        height: 4px;
-        border-radius: 8px;
-    }
+export const HamburgerButton = styled.div<{ enabled?: boolean }>`
     display: none;
+    .hamburger_icon {
+        width: 35px;
+        height: 35px;
+    }
     @media (max-width: 950px) {
-        display: flex;
+        display: block;
     }
 `;
 

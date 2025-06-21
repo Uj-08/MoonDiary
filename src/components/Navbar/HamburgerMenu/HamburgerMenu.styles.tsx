@@ -53,8 +53,13 @@ export const Title = styled.h2`
 `;
 
 export const Cross = styled.div`
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .cross_icon {
+        height: 24px;
+        width: 24px;
+    }
 `;
 
 export const LinkContainer = styled.div`
@@ -69,7 +74,7 @@ export const ProfileContainer = styled.div`
     border-radius: 100%;
     overflow: hidden;
     position: relative;
-    height: 27px;
+    height: 22px;
     aspect-ratio: 1;
     transform: translateY(-3px);
 `;
