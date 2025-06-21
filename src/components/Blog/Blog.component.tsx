@@ -33,21 +33,19 @@ const BlogComponent = ({ blog }: { blog: PopulatedBlogType }) => {
   const readingTime = `${getReadingTime(text)} min read`;
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  function showDeleteModalHandler(e: React.MouseEvent<HTMLButtonElement>) {
+  const showDeleteModalHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     setShowDeleteModal(true);
   }
 
-  async function editBlogHandler(e: React.MouseEvent<HTMLButtonElement>) {
+  const editBlogHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     router.push(`/blogs/post/${blog._id}`);
   }
 
-  function deleteBlogHandler(e: React.MouseEvent<HTMLButtonElement>) {
+  const deleteBlogHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     setShowDeleteModal(false);
-
-    // Push first, dispatch right after — ensures user escapes immediately
     router.push("/").then(() => {
       dispatch(deleteBlog(blog._id));
     });
