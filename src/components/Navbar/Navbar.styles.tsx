@@ -34,7 +34,10 @@ export const Wrapper = styled.nav`
 `;
 
 export const LogoContainer = styled.div`
+    opacity: 0.9;
+    transition: 200ms linear opacity;
     &:hover {
+        opacity: 1;
         img {
             transform: rotate(360deg);
         }
@@ -66,9 +69,9 @@ export const NavLink = styled.li<{ $isHamburger?: boolean }>`
     cursor: pointer;
     text-transform: ${props => !props.$isHamburger && "uppercase"};
     font-family: ${(props) =>
-    props.$isHamburger
-        ? `"Segoe UI", Tahoma, Geneva, Verdana, sans-serif`
-        : `${anton.style.fontFamily}, sans-serif`};
+        props.$isHamburger
+            ? `"Segoe UI", Tahoma, Geneva, Verdana, sans-serif`
+            : `${anton.style.fontFamily}, sans-serif`};
     font-size: 1.3rem;
     letter-spacing: ${props => !props.$isHamburger && "2px"};
     transition: color linear 200ms;
@@ -120,15 +123,18 @@ export const SocialLink = styled.li`
     .social_icon {
         width: 25px;
         height: 25px;
+        color: #3c3c3c;
     }
-
     &:hover {
         background-color: #AE4FE9;
-        color: #fff;
-        /* Disable hover effects on small screens */
+        .social_icon {
+            color: #fff;
+            @media (max-width: 950px) {
+                color: unset;
+            }
+        }
         @media (max-width: 950px) {
             background-color: unset;
-            color: unset;
         }
     }
 `;
@@ -139,6 +145,7 @@ export const HamburgerButton = styled.div<{ enabled?: boolean }>`
         width: 35px;
         height: 35px;
         stroke-width: 1px;
+        color: #3c3c3c;
     }
     @media (max-width: 950px) {
         display: block;
