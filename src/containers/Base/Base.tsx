@@ -38,7 +38,6 @@ const Base = ({ children }: BaseTypes) => {
     setSignedIn(hasCookie(COOKIE_NAME) as boolean)
   }, [])
 
-  console.log(router.asPath)
   useEffect(() => {
     if (blogInfo.blogDeleteStatus.deletedBlogId) {
       if(router.asPath === "/profile") router.reload()
