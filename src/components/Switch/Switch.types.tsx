@@ -1,4 +1,4 @@
 export interface SwitchTypes {
-    showDrafts: boolean;
-    showDraftsHandler: (bool: boolean) => void
+	showDrafts: boolean;
+	showDraftsHandler: (bool: boolean) => void;
 }

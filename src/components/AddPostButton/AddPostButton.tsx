@@ -1,23 +1,23 @@
 import React from "react";
 import {
-  ButtonWrapper,
-  StyledLink,
-  IconWrapper,
-  LabelText,
-  StyledIcon,
+	ButtonWrapper,
+	StyledLink,
+	IconWrapper,
+	LabelText,
+	StyledIcon,
 } from "./AddPostButton.styles";
 
 const AddPostButton = () => {
-  return (
-    <StyledLink href="/blogs/post">
-      <ButtonWrapper>
-        <IconWrapper>
-          <StyledIcon />
-        </IconWrapper>
-        <LabelText>ADD POST</LabelText>
-      </ButtonWrapper>
-    </StyledLink>
-  );
+	return (
+		<StyledLink href="/blogs/post">
+			<ButtonWrapper>
+				<IconWrapper>
+					<StyledIcon />
+				</IconWrapper>
+				<LabelText>ADD POST</LabelText>
+			</ButtonWrapper>
+		</StyledLink>
+	);
 };
 
 export default React.memo(AddPostButton);

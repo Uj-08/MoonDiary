@@ -1,3 +1,1 @@
-export interface AboutTypes {
-    
-}
+export interface AboutTypes {}
