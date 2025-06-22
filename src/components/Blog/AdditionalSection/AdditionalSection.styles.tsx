@@ -1,9 +1,10 @@
 import styled from "styled-components";
 
-export const AdditionalSection = styled.section`
-	flex: 0 1 300px;
+export const AdditionalSection = styled.aside`
 	padding: 0 1rem;
 	display: flex;
+	flex: 1 1 25%;
+	max-width: 25%;
 	flex-direction: column;
 	gap: 8px;
 	@media (max-width: 920px) {
@@ -48,20 +49,23 @@ export const AdditionalData = styled.div`
 	padding: 10px 30px 40px 40px;
 	margin: -10px -30px -40px -40px;
 	overflow-y: scroll;
+	max-width: 350px;
 	&::-webkit-scrollbar {
 		display: none;
-	}
-	div {
-		flex-shrink: 0;
 	}
 	@media (max-width: 920px) {
 		flex-direction: row;
 		overflow-x: scroll;
-		width: 100%;
+		/* width: 100%; */
 		padding: 0;
 		margin: 0;
 		padding: 8px;
 		padding-bottom: 40px;
 		margin-bottom: -40px;
+		& > * {
+			flex: 0 0 330px;
+			max-width: 330px;
+			/* margin-right: 12px; */
+		}
 	}
 `;

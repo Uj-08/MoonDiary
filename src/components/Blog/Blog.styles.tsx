@@ -26,7 +26,7 @@ export const Container = styled.div`
 
 export const PreviewContainer = styled.main`
 	/* max-width: 60%; */
-	flex: 1 1 100%;
+	flex: 1 1 auto;
 	font-family: ${montserrat.style.fontFamily};
 	background-color: #fff;
 	overflow: hidden;
