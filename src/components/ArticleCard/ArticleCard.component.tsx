@@ -125,38 +125,43 @@ export const ArticleCard = ({ blog, clientEmail, index }: ArticleCardTypes) => {
               isPriority={index <= 3}
             />
           </ImageContainer>
+
           <CardDetails>
+            <BlogHeader>
+              <TagsContainer>
+                {tags?.slice(0, 2).map((tag, idx) => (
+                  <Tag
+                    key={tag._id}
+                    title={`#${tag.name}`}
+                    onClick={(e) => tagClickHandler(e, tag._id)}
+                    $maxWidth="90px"
+                    $fontSize="12px"
+                    $letterSpacing="0.5px"
+                    $bgColor={tagColors[idx]}
+                  >
+                    <span>#{tag.name}</span>
+                  </Tag>
+                ))}
+                {tags?.length > 2 && (
+                  <MoreTag
+                    title={tags
+                      .slice(2)
+                      .map((tag) => `#${tag.name}`)
+                      .join(" ")}
+                    color={getRandomColor()}
+                  >
+                    +{tags.length - 2} more
+                  </MoreTag>
+                )}
+              </TagsContainer>
+            </BlogHeader>
             <MainContent>
-              <BlogHeader>
-                <TagsContainer>
-                  {tags?.slice(0, 2).map((tag, idx) => (
-                    <Tag
-                      key={tag._id}
-                      title={`#${tag.name}`}
-                      onClick={(e) => tagClickHandler(e, tag._id)}
-                      $maxWidth="90px"
-                      $fontSize="12px"
-                      $letterSpacing="0.5px"
-                      $bgColor={tagColors[idx]}
-                    >
-                      <span>#{tag.name}</span>
-                    </Tag>
-                  ))}
-                  {tags?.length > 2 && (
-                    <MoreTag
-                      title={tags
-                        .slice(2)
-                        .map((tag) => `#${tag.name}`)
-                        .join(" ")}
-                      color={getRandomColor()}
-                    >
-                      +{tags.length - 2} more
-                    </MoreTag>
-                  )}
-                </TagsContainer>
-              </BlogHeader>
-              <BlogTitle title={blogTitle}>{blogTitle}</BlogTitle>
-              <BlogData>{blogBody}</BlogData>
+              <BlogTitle title={blogTitle}>
+                {blogTitle}
+              </BlogTitle>
+              <BlogData>
+                {blogBody}
+              </BlogData>
             </MainContent>
             <BlogAuthorContainer>
               <BlogAuthor>
@@ -193,6 +198,7 @@ export const ArticleCard = ({ blog, clientEmail, index }: ArticleCardTypes) => {
               </BlogAuthor>
             </BlogAuthorContainer>
           </CardDetails>
+
         </Container>
       </Link>
     </div>

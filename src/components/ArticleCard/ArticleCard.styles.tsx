@@ -3,7 +3,7 @@ import { ReadTimeBadge } from "../Blog/Blog.styles";
 
 export const Container = styled.div<{ $isDraft: boolean }>`
   width: 100%;
-  max-width: 350px;
+  /* max-width: 350px; */
   min-width: 300px;
   aspect-ratio: 2 / 3;
   border-radius: 8px;
@@ -95,6 +95,7 @@ export const CardDetails = styled.div`
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  gap: 6px;
 `;
 
 export const MainContent = styled.div`
@@ -102,6 +103,7 @@ export const MainContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 6px;
+  overflow: hidden;
 `;
 
 export const BlogHeader = styled.div`
@@ -167,6 +169,7 @@ export const BlogTitle = styled.h2`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  flex-shrink: 0;
   @media (max-width: 1200px) {
     font-size: 1.3rem;
   }
@@ -176,16 +179,16 @@ export const BlogData = styled.p`
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   text-align: left;
   display: -webkit-box;
-  -webkit-line-clamp: 5;
+  -webkit-line-clamp: 6;
   -webkit-box-orient: vertical;
   overflow: hidden;
   max-height: 100%;
 `;
 
 export const BlogAuthorContainer = styled.div`
-  flex: 1;
   display: flex;
-  max-height: 60px;
+  flex-shrink: 0;
+  padding: 15px 0;
 `;
 
 export const BlogAuthor = styled.div`
