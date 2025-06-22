@@ -3,8 +3,7 @@ import styled from "styled-components";
 export const AdditionalSection = styled.aside`
 	padding: 0 1rem;
 	display: flex;
-	flex: 1 1 25%;
-	max-width: 25%;
+	flex: 1 1 auto;
 	flex-direction: column;
 	gap: 8px;
 	@media (max-width: 920px) {
@@ -46,14 +45,15 @@ export const AdditionalData = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 8px;
-	padding: 10px 30px 40px 40px;
-	margin: -10px -30px -40px -40px;
+	/* padding: 10px 30px 40px 40px; */
+	/* margin: -10px -30px -40px -40px; */
 	overflow-y: scroll;
-	max-width: 350px;
+	width: 330px;
 	&::-webkit-scrollbar {
 		display: none;
 	}
 	@media (max-width: 920px) {
+		width: 100%;
 		flex-direction: row;
 		overflow-x: scroll;
 		/* width: 100%; */
