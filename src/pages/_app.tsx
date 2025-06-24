@@ -19,21 +19,23 @@ type AppPropsWithLayout = AppProps & {
 };
 
 const GlobalStyle = createGlobalStyle`
-  *, *::before, *::after {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    background-color: #ededed;
-    min-width: 360px;
-  }
+  *, 
+  *::before, 
+  *::after {
+    	padding: 0;
+    	margin: 0;
+    	box-sizing: border-box;
+	}
+	
+	body {
+    	background-color: #ededed;
+    	min-width: 360px;
+	}
 
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
+	a {
+    	text-decoration: none;
+    	color: inherit;
+	}
 `;
 
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
