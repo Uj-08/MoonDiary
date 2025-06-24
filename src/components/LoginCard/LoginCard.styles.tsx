@@ -32,6 +32,14 @@ export const Subtitle = styled.p`
 	font-family: ${dancingScript.style.fontFamily}, cursive;
 `;
 
+export const ButtonContainer = styled.div`
+	display: flex;
+	justify-content: center;
+	& > div {
+		width: 100%;
+	}
+`;
+
 export const Divider = styled.div`
 	height: 1px;
 	background-color: #eee;
