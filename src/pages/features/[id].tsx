@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React from "react";
 import { GetStaticProps, GetStaticPaths } from "next";
-import dbConnect from "@/lib/dbConnect";
+import { connectToDatabase } from "@/lib/database";
 import TagsModel from "@/models/Tags.model";
 import BlogsModel from "@/models/Blogs.model";
 import { PopulatedBlogType } from "@/types/blog";
@@ -35,7 +35,7 @@ export default TagPage;
 
 // 🔁 STATIC PATHS
 export const getStaticPaths: GetStaticPaths = async () => {
-	await dbConnect(); // custom helper to connect
+	await connectToDatabase(); // custom helper to connect
 	const tags = await TagsModel.find({}).select("_id");
 
 	const paths = tags.map((tag: any) => ({
@@ -50,7 +50,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 // 🧊 STATIC PROPS
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-	await dbConnect();
+	await connectToDatabase();
 
 	const { id } = params as { id: string };
 

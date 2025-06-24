@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import connectDB from "@/middleware/mongoose";
 import BlogsModel from "@/models/Blogs.model";
 import TagsModel from "@/models/Tags.model";
 import { HttpMethod } from "@/helpers/apiHelpers";
+import { withDatabase } from "@/lib/database";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
 	const { id } = req.query;
@@ -97,4 +97,4 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 	}
 }
 
-export default connectDB(handler);
+export default withDatabase(handler);

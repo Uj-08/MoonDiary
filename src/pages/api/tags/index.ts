@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import connectDB from "@/middleware/mongoose";
 import TagsModel from "@/models/Tags.model";
 import { HttpMethod } from "@/helpers/apiHelpers";
 import BlogModel from "@/models/Blogs.model";
+import { withDatabase } from "@/lib/database";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
 	switch (req.method) {
@@ -105,4 +105,4 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 	}
 }
 
-export default connectDB(handler);
+export default withDatabase(handler);

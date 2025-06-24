@@ -2,9 +2,9 @@ import React from "react";
 import Head from "next/head";
 import { PopulatedBlogType } from "@/types/blog";
 import { GetStaticProps } from "next";
-import dbConnect from "@/lib/dbConnect";
 import BlogsModel from "@/models/Blogs.model";
 import HomeComponent from "@/components/Pages/Home/Home.component";
+import { connectToDatabase } from "@/lib/database";
 
 const Home = ({ blogsArray }: { blogsArray: PopulatedBlogType[] }) => {
 	return (
@@ -23,7 +23,7 @@ export default Home;
 // ⏱ ISR with direct DB call
 export const getStaticProps: GetStaticProps = async () => {
 	try {
-		await dbConnect();
+		await connectToDatabase();
 
 		// Ensure Tags model is registered
 		await import("@/models/Tags.model");

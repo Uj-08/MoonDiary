@@ -10,7 +10,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 	const [queryClient] = useState(() => new QueryClient());
 
 	return (
-		<GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_CLIENT_ID || ""}>
+		<GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""}>
 			<Provider store={store}>
 				<QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
 			</Provider>

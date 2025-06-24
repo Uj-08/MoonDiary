@@ -150,7 +150,7 @@ const EditorComponent = ({ sessionId, blog }: EditorComponentProps) => {
 						{shouldInitEditor && (
 							<Editor
 								initialValue={blog?.blogData}
-								apiKey={process.env.NEXT_PUBLIC_MCE_API}
+								apiKey={process.env.NEXT_PUBLIC_MCE_KEY}
 								onInit={(_, editor) => {
 									editorRef.current = editor;
 									setIsEditorInit(true);

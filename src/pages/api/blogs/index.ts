@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import connectDB from "@/middleware/mongoose";
 import BlogsModel from "@/models/Blogs.model";
 import TagsModel from "@/models/Tags.model";
 import jwtDecode from "jwt-decode";
@@ -7,6 +6,7 @@ import { HttpMethod } from "@/helpers/apiHelpers";
 import { ClientType } from "@/types/client";
 import { FilterQuery, SortOrder } from "mongoose";
 import { BlogType } from "@/types/blog";
+import { withDatabase } from "@/lib/database";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
 	switch (req.method) {
@@ -125,4 +125,4 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 	}
 }
 
-export default connectDB(handler);
+export default withDatabase(handler);

@@ -3,7 +3,7 @@ import Head from "next/head";
 import { stripHtml } from "string-strip-html";
 import { GetStaticProps, GetStaticPaths } from "next";
 import BlogsModel from "@/models/Blogs.model";
-import dbConnect from "@/lib/dbConnect";
+import { connectToDatabase } from "@/lib/database";
 import { PopulatedBlogType } from "@/types/blog";
 import BlogPageComponent from "@/components/Pages/BlogPage/BlogPage.component";
 
@@ -86,7 +86,7 @@ const Blog = ({ blog }: { blog: PopulatedBlogType }) => {
 export default Blog;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-	await dbConnect();
+	await connectToDatabase();
 	const blogs = await BlogsModel.find({}, "slug");
 
 	const paths = blogs.map((blog) => ({
@@ -103,7 +103,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 	const { slug } = context.params as { slug: string };
 
 	try {
-		await dbConnect();
+		await connectToDatabase();
 
 		// Ensure Tags model is registered
 		await import("@/models/Tags.model");
