@@ -23,6 +23,7 @@ export const withDatabase =
 			await connectToDatabase();
 			return handler(req, res);
 		} catch (error) {
+			console.log(error);
 			return res.status(500).json({ error: "Database connection failed" });
 		}
 	};
