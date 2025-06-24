@@ -1,31 +1,20 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import BlogsModel from "@/models/Blogs.model";
 import TagsModel from "@/models/Tags.model";
-import jwtDecode from "jwt-decode";
 import { HttpMethod } from "@/helpers/apiHelpers";
-import { ClientType } from "@/types/client";
 import { FilterQuery, SortOrder } from "mongoose";
 import { BlogType } from "@/types/blog";
 import { withDatabase } from "@/lib/database";
+import { authenticate } from "@/lib/authHandler";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
 	switch (req.method) {
 		case HttpMethod.GET:
 			try {
-				const sessionToken = req.headers["x-session-token"];
-				let clientEmail: string | null = null;
+				const user = await authenticate(req, res);
+				const clientEmail: string | null = user?.email ?? null;
 
 				let { sort, order, limit, filterIds, showDrafts, showPublished } = req.query;
-
-				// Decode session token
-				if (sessionToken) {
-					try {
-						const decoded: ClientType = jwtDecode(sessionToken as string);
-						clientEmail = decoded?.email || null;
-					} catch (e) {
-						console.error("JWT decode error:", e);
-					}
-				}
 
 				const isLoggedIn = !!clientEmail;
 				const isDraftView = showDrafts === "true";

@@ -32,13 +32,7 @@ const Profile = ({ sessionId, blogsArray }: ProfilePageTypes) => {
 			(API_INSTANCE as URL).searchParams.set("showPublished", String(!showDraftsVal));
 			(API_INSTANCE as URL).searchParams.set("showDrafts", String(showDraftsVal));
 			try {
-				const apiRes = await fetch((API_INSTANCE as URL).href, {
-					method: "GET",
-					headers: {
-						"Content-Type": "application/json",
-						...(sessionId && { "x-session-token": sessionId }),
-					},
-				});
+				const apiRes = await fetch(API_INSTANCE as URL);
 
 				if (apiRes.ok) {
 					fetchedBlogsArray = await apiRes.json();
@@ -50,7 +44,7 @@ const Profile = ({ sessionId, blogsArray }: ProfilePageTypes) => {
 				dispatch(updateBlogDataIsLoading(false));
 			}
 		},
-		[dispatch, API_INSTANCE, sessionId, showDrafts]
+		[dispatch, API_INSTANCE, showDrafts]
 	);
 	return (
 		<Container>
