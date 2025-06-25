@@ -149,12 +149,28 @@ export const LikeDivision = styled(MetaDivision)`
 	cursor: pointer;
 `;
 
+export const CardLikeDivision = styled(MetaDivision)`
+	font-weight: bold;
+	font-size: 11px;
+	cursor: pointer;
+`;
+
 export const ViewsIcon = styled(BiBarChart)`
 	width: 18px;
 	height: 18px;
 `;
 
+export const CardViewsIcon = styled(BiBarChart)`
+	width: 14px;
+	height: 14px;
+`;
+
 export const CommentsIcon = styled(FaRegComment)`
 	width: 18px;
 	height: 18px;
+`;
+
+export const CardCommentsIcon = styled(FaRegComment)`
+	width: 14px;
+	height: 14px;
 `;

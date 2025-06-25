@@ -30,7 +30,14 @@ import Link from "next/link";
 import { useShuffledColors } from "@/hooks/useShuffledColors";
 import { stripHtml } from "string-strip-html";
 import { ArticleCardTypes } from "./ArticleCard.types";
-import { OverlayContainer } from "../Blog/Blog.styles";
+import {
+	CardLikeDivision,
+	CardViewsIcon,
+	LikeDivision,
+	MetaDivision,
+	OverlayContainer,
+	OverlayRightContainer,
+} from "../Blog/Blog.styles";
 import { getReadingTime } from "@/helpers/getReadingTime";
 
 export const ArticleCard = ({ blog, clientEmail, index, noShadow }: ArticleCardTypes) => {
@@ -47,6 +54,8 @@ export const ArticleCard = ({ blog, clientEmail, index, noShadow }: ArticleCardT
 		tags,
 		isDraft,
 		description,
+		views,
+		likes,
 	} = blog;
 
 	const dispatch = useDispatch<AppDispatch>();
@@ -117,6 +126,15 @@ export const ArticleCard = ({ blog, clientEmail, index, noShadow }: ArticleCardT
 						<OverlayContainer>
 							<CardMetaBadge>{readingTime}</CardMetaBadge>
 						</OverlayContainer>
+						<OverlayRightContainer>
+							<CardMetaBadge>
+								{likes && likes > 0 && <CardLikeDivision>+{likes}</CardLikeDivision>}
+								<MetaDivision>
+									<CardViewsIcon />
+									{views}
+								</MetaDivision>
+							</CardMetaBadge>
+						</OverlayRightContainer>
 						<ShimmerImage
 							src={blogImg}
 							aspectRatio={4 / 3}
