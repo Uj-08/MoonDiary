@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { babylonica } from "@/styles/fonts";
 
-export const BlogTitleContainer = styled.div`
+export const BlogTitleContainer = styled.header`
 	margin-top: 60px;
 	padding: 0 8rem;
 	padding-top: 10px;

@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const AdditionalSection = styled.aside`
 	padding: 0 1rem;
 	display: flex;
-	flex: 1 1 auto;
 	flex-direction: column;
 	gap: 8px;
 	@media (max-width: 920px) {
@@ -45,10 +44,10 @@ export const AdditionalData = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 8px;
+	width: 330px;
 	/* padding: 10px 30px 40px 40px; */
 	/* margin: -10px -30px -40px -40px; */
 	overflow-y: scroll;
-	width: 330px;
 	&::-webkit-scrollbar {
 		display: none;
 	}
