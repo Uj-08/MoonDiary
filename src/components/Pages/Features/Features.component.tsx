@@ -6,7 +6,7 @@ import FeatureCard from "@/components/FeatureCard/FeatureCard.component";
 const Features = ({ tags }: FeaturesTypes) => {
 	return (
 		<Container>
-			<Title>Find blogs by tags.</Title>
+			<Title>Find by tags.</Title>
 			<FlexWrapper>
 				{tags.map((tag) => (
 					<FeatureCard key={tag._id} tag={tag} />
