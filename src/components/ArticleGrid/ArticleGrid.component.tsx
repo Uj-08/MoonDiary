@@ -82,7 +82,7 @@ const ArticleGrid = ({ blogsArray, API_INSTANCE }: ArticleGridTypes) => {
 								</option>
 								<option value="createdAt">First Published</option>
 								<option value="updatedAt">Last Change</option>
-								<option value="blogTitle">Title (A–Z)</option>
+								<option value="blogTitle">Title</option>
 							</Select>
 						</span>
 
