@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import {
 	ButtonContainer,
 	Container,
@@ -7,7 +7,9 @@ import {
 	Preview,
 	PreviewContainer,
 	PreviewImageContainer,
-	ReadTimeBadge,
+	MetaBadge,
+	ViewsIcon,
+	MetaDivision,
 } from "./Blog.styles";
 import { PreviewData } from "../Editor/Editor.styles";
 import ShimmerImage from "../ImageComponent/ShimmerImage.component";
@@ -26,10 +28,11 @@ import { AppDispatch } from "@/redux/store";
 import AdditionalSectionComponent from "./AdditionalSection/AdditionalSection.component";
 
 const BlogComponent = ({ blog }: { blog: PopulatedBlogType }) => {
+	const { _id, isDraft, views, authorEmail, blogTitle, blogData, blogImg } = blog;
 	const dispatch = useDispatch<AppDispatch>();
 	const router = useRouter();
 	const context = useContext<BaseContextType | null>(BaseContext);
-	const text = stripHtml(blog.blogData).result;
+	const text = stripHtml(blogData).result;
 	const readingTime = `${getReadingTime(text)} min read`;
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -40,16 +43,32 @@ const BlogComponent = ({ blog }: { blog: PopulatedBlogType }) => {
 
 	const editBlogHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation();
-		router.push(`/blogs/post/${blog._id}`);
+		router.push(`/blogs/post/${_id}`);
 	};
 
 	const deleteBlogHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation();
 		setShowDeleteModal(false);
 		router.push("/").then(() => {
-			dispatch(deleteBlog(blog._id));
+			dispatch(deleteBlog(_id));
 		});
 	};
+
+	const registerViewHandler = useCallback(async () => {
+		try {
+			await fetch(`/api/blogs/${_id}?action=view`);
+		} catch (err) {
+			console.log(err);
+		}
+	}, [_id]);
+
+	useEffect(() => {
+		const key = `viewed-${_id}`;
+		if (!isDraft && !sessionStorage.getItem(key)) {
+			registerViewHandler();
+			sessionStorage.setItem(key, "true");
+		}
+	}, [_id, isDraft, registerViewHandler]);
 
 	return (
 		<Container>
@@ -57,9 +76,20 @@ const BlogComponent = ({ blog }: { blog: PopulatedBlogType }) => {
 				<Preview>
 					<PreviewImageContainer>
 						<OverlayContainer>
-							<ReadTimeBadge>{readingTime}</ReadTimeBadge>
+							<MetaBadge>
+								<MetaDivision>{readingTime}</MetaDivision>
+								{/* <LikeDivision>+{55}</LikeDivision>
+								<MetaDivision>
+									<CommentsIcon />
+									{23}
+								</MetaDivision> */}
+								<MetaDivision>
+									<ViewsIcon />
+									{views}
+								</MetaDivision>
+							</MetaBadge>
 						</OverlayContainer>
-						{context?.client?.email === blog.authorEmail && (
+						{context?.client?.email === authorEmail && (
 							<ButtonContainer>
 								<PostButton onClick={editBlogHandler}>Edit</PostButton>
 								<PostButton onClick={showDeleteModalHandler}>Delete</PostButton>
@@ -72,17 +102,17 @@ const BlogComponent = ({ blog }: { blog: PopulatedBlogType }) => {
 							}}
 						>
 							<DeleteCard
-								blogTitle={blog.blogTitle}
+								blogTitle={blogTitle}
 								onDeleteHandler={deleteBlogHandler}
 								onCancelHandler={() => {
 									setShowDeleteModal(false);
 								}}
 							/>
 						</Modal>
-						<ShimmerImage aspectRatio={4 / 3} src={blog.blogImg} alt="MoonDiary Hero" isPriority />
+						<ShimmerImage aspectRatio={4 / 3} src={blogImg} alt="MoonDiary Hero" isPriority />
 					</PreviewImageContainer>
 					<PreviewData>
-						<BlogPreviewContent>{blog?.blogData ? parse(blog.blogData) : ""}</BlogPreviewContent>
+						<BlogPreviewContent>{blog?.blogData ? parse(blogData) : ""}</BlogPreviewContent>
 					</PreviewData>
 				</Preview>
 			</PreviewContainer>

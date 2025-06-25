@@ -9,15 +9,25 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
 	switch (req.method) {
 		case HttpMethod.GET:
-			try {
-				const sendAll = req.query.sendAll === "true";
-				const blog = await BlogsModel.findById(id)
-					.populate("tags", sendAll ? "" : "name")
-					.lean();
-				return res.status(200).json(blog);
-			} catch (err) {
-				console.error("GET error:", err);
-				return res.status(500).json(err);
+			if (req.query.action === "view") {
+				try {
+					await BlogsModel.findByIdAndUpdate(id, { $inc: { views: 1 } }, { timestamps: false });
+					return res.status(200);
+				} catch (err) {
+					console.error("GET error:", err);
+					return res.status(500).json(err);
+				}
+			} else {
+				try {
+					const sendAll = req.query.sendAll === "true";
+					const blog = await BlogsModel.findById(id)
+						.populate("tags", sendAll ? "" : "name")
+						.lean();
+					return res.status(200).json(blog);
+				} catch (err) {
+					console.error("GET error:", err);
+					return res.status(500).json(err);
+				}
 			}
 
 		case HttpMethod.PUT:

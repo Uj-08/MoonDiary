@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { montserrat } from "@/styles/fonts";
+import { BiBarChart } from "react-icons/bi";
+import { FaRegComment } from "react-icons/fa";
 
 export const Container = styled.div`
 	display: flex;
@@ -101,7 +103,7 @@ export const PostButton = styled.button`
 	}
 `;
 
-export const ReadTimeBadge = styled.span`
+export const MetaBadge = styled.span`
 	font-size: 0.8em;
 	padding: 6px 12px;
 	font-weight: 600;
@@ -116,4 +118,29 @@ export const ReadTimeBadge = styled.span`
 		color: #ffffff;
 		background: rgba(255, 255, 255, 0.3);
 	}
+
+	display: flex;
+	align-items: center;
+	gap: 6px;
+`;
+
+export const MetaDivision = styled.span`
+	display: flex;
+	align-items: center;
+	gap: 3px;
+`;
+
+export const LikeDivision = styled(MetaDivision)`
+	font-weight: bold;
+	font-size: 14px;
+`;
+
+export const ViewsIcon = styled(BiBarChart)`
+	width: 18px;
+	height: 18px;
+`;
+
+export const CommentsIcon = styled(FaRegComment)`
+	width: 18px;
+	height: 18px;
 `;

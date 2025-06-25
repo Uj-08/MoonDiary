@@ -9,7 +9,7 @@ import {
 	BlogTitle,
 	ButtonsContainer,
 	CardDetails,
-	CardReadTimeBadge,
+	CardMetaBadge,
 	Container,
 	DeleteButton,
 	EditButton,
@@ -115,7 +115,7 @@ export const ArticleCard = ({ blog, clientEmail, index, noShadow }: ArticleCardT
 				<Container $isDraft={isDraft} $noShadow={noShadow}>
 					<ImageContainer>
 						<OverlayContainer>
-							<CardReadTimeBadge>{readingTime}</CardReadTimeBadge>
+							<CardMetaBadge>{readingTime}</CardMetaBadge>
 						</OverlayContainer>
 						<ShimmerImage
 							src={blogImg}

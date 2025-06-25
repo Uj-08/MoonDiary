@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ReadTimeBadge } from "../Blog/Blog.styles";
+import { MetaBadge } from "../Blog/Blog.styles";
 
 export const Container = styled.div<{ $isDraft: boolean; $noShadow?: boolean }>`
 	width: 100%;
@@ -48,7 +48,7 @@ export const ImageContainer = styled.div`
 	}
 `;
 
-export const CardReadTimeBadge = styled(ReadTimeBadge)`
+export const CardMetaBadge = styled(MetaBadge)`
 	padding: 3px 6px;
 	font-size: 0.6em;
 `;

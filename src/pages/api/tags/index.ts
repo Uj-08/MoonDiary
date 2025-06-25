@@ -79,6 +79,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
 				const query: any = {
 					tags: { $in: tagIds },
+					isDraft: false,
 				};
 
 				if (filterBlogId) {
