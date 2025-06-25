@@ -72,7 +72,7 @@ const Base = ({ children }: { children: ReactNode }) => {
 		async (credentialResponse: CredentialResponse) => {
 			if (!credentialResponse.credential) return;
 
-			const res = await fetch("/api/auth/google", {
+			const res = await fetch("/api/auth/login", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({ idToken: credentialResponse.credential }),
