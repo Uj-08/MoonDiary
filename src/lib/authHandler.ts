@@ -6,8 +6,8 @@ import { connectToDatabase } from "./database";
 import UsersModel from "@/models/Users.model";
 
 export const authenticate = async (req: NextApiRequest, res: any) => {
-	const hasAccessCookie = await hasCookie(ACCESS_COOKIE, { req, res });
-	if (!hasAccessCookie) return null;
+	const hasRefreshCookie = await hasCookie(REFRESH_COOKIE, { req, res });
+	if (!hasRefreshCookie) return null;
 	await connectToDatabase();
 	const accessToken = (await getCookie(ACCESS_COOKIE, { req, res })) as string;
 	const refreshToken = (await getCookie(REFRESH_COOKIE, { req, res })) as string;
