@@ -32,8 +32,8 @@ export const Grid = styled.div`
 	gap: 1rem;
 `;
 
-export const SortContainer = styled.div`
-	display: flex;
+export const SortContainer = styled.div<{ $show?: boolean }>`
+	display: ${({ $show }) => ($show ? "flex" : "none")};
 	gap: 12px;
 	align-items: center;
 	flex-wrap: wrap;

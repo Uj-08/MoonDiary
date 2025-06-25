@@ -74,7 +74,7 @@ const ArticleGrid = ({ blogsArray, API_INSTANCE }: ArticleGridTypes) => {
 		<Container>
 			<Grid>
 				{blogsArray.length !== 0 && (
-					<SortContainer>
+					<SortContainer $show={blogsArray.length > 3}>
 						<span>
 							<Select id="sort" value={sortState} onChange={handleSortChange} defaultValue="">
 								<option disabled value="">

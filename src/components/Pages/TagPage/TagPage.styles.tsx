@@ -10,6 +10,7 @@ export const FeatureHeader = styled.h2`
 	font-family: ${anton.style.fontFamily}, sans-serif;
 	letter-spacing: 0.8px;
 	padding: 1rem 8rem;
+	color: #383838;
 	@media (max-width: 1200px) {
 		padding: 0 4rem;
 	}
