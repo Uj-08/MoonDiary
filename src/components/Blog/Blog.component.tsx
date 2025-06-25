@@ -12,6 +12,8 @@ import {
 	MetaDivision,
 	LikeDivision,
 	CommentsIcon,
+	OverlayRightContainer,
+	ShimmerContainer,
 } from "./Blog.styles";
 import { PreviewData } from "../Editor/Editor.styles";
 import ShimmerImage from "../ImageComponent/ShimmerImage.component";
@@ -28,26 +30,29 @@ import DeleteCard from "../DeletePrompt/DeleteCard.component";
 import { useRouter } from "next/router";
 import { AppDispatch } from "@/redux/store";
 import AdditionalSectionComponent from "./AdditionalSection/AdditionalSection.component";
+import { Shimmer } from "../ImageComponent/ShimmerImage.styles";
 
 const BlogComponent = ({ blog }: { blog: PopulatedBlogType }) => {
-	const { _id, isDraft, views, likes, authorEmail, blogTitle, blogData, blogImg } = blog;
+	const { _id, isDraft, /*authorEmail,*/ blogTitle, blogData, blogImg } = blog;
 	const dispatch = useDispatch<AppDispatch>();
 	const router = useRouter();
 	const context = useContext<BaseContextType | null>(BaseContext);
 	const text = stripHtml(blogData).result;
 	const readingTime = `${getReadingTime(text)} min read`;
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
-	const [likesState, setLikesState] = useState(likes ?? 0);
+	const [isMetaLoading, setIsMetaLoading] = useState(true);
+	const [likesState, setLikesState] = useState(0);
+	const [viewsState, setViewsState] = useState(0);
 
-	const showDeleteModalHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-		e.stopPropagation();
-		setShowDeleteModal(true);
-	};
+	// const showDeleteModalHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+	// 	e.stopPropagation();
+	// 	setShowDeleteModal(true);
+	// };
 
-	const editBlogHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-		e.stopPropagation();
-		router.push(`/blogs/post/${_id}`);
-	};
+	// const editBlogHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+	// 	e.stopPropagation();
+	// 	router.push(`/blogs/post/${_id}`);
+	// };
 
 	const deleteBlogHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation();
@@ -56,6 +61,24 @@ const BlogComponent = ({ blog }: { blog: PopulatedBlogType }) => {
 			dispatch(deleteBlog(_id));
 		});
 	};
+
+	const fetchMetaData = useCallback(async () => {
+		try {
+			setIsMetaLoading(true);
+			const metaRes = await fetch(`/api/blogs/${_id}`);
+			if (!metaRes.ok) throw new Error("Error");
+			const metaData = await metaRes.json();
+			setViewsState(metaData.views);
+			setLikesState(metaData.likes);
+			setIsMetaLoading(false);
+		} catch (err) {
+			console.log(err);
+		}
+	}, [_id]);
+
+	useEffect(() => {
+		fetchMetaData();
+	}, [fetchMetaData]);
 
 	const registerViewHandler = useCallback(async () => {
 		try {
@@ -94,23 +117,31 @@ const BlogComponent = ({ blog }: { blog: PopulatedBlogType }) => {
 						<OverlayContainer>
 							<MetaBadge>
 								<MetaDivision>{readingTime}</MetaDivision>
-								<LikeDivision onClick={toggleLikeHandler}>+{likesState}</LikeDivision>
-								{/* <MetaDivision>
-									<CommentsIcon />
-									{23}
-								</MetaDivision> */}
-								<MetaDivision>
-									<ViewsIcon />
-									{views}
-								</MetaDivision>
 							</MetaBadge>
 						</OverlayContainer>
-						{context?.client?.email === authorEmail && (
+						<OverlayRightContainer>
+							<MetaBadge>
+								{isMetaLoading ? (
+									<ShimmerContainer>
+										<Shimmer $isLoading={isMetaLoading} />
+									</ShimmerContainer>
+								) : (
+									<>
+										<LikeDivision onClick={toggleLikeHandler}>+{likesState}</LikeDivision>
+										<MetaDivision>
+											<ViewsIcon />
+											{viewsState}
+										</MetaDivision>
+									</>
+								)}
+							</MetaBadge>
+						</OverlayRightContainer>
+						{/* {context?.client?.email === authorEmail && (
 							<ButtonContainer>
 								<PostButton onClick={editBlogHandler}>Edit</PostButton>
 								<PostButton onClick={showDeleteModalHandler}>Delete</PostButton>
 							</ButtonContainer>
-						)}
+						)} */}
 						<Modal
 							showModal={showDeleteModal}
 							hideModal={() => {

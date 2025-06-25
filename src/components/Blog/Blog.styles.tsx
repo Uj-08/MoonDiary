@@ -70,14 +70,27 @@ export const PreviewImageContainer = styled.div`
 
 export const OverlayContainer = styled.div`
 	position: absolute;
-	right: 0rem;
-	bottom: 0rem;
+	left: 0;
+	bottom: 0;
 	color: #fff;
 	z-index: 1;
 	display: flex;
 	gap: 8px;
 	padding: 1rem;
 	font-family: ${montserrat.style.fontFamily};
+`;
+
+export const OverlayRightContainer = styled(OverlayContainer)`
+	right: 0;
+	left: unset;
+`;
+
+export const ShimmerContainer = styled.div`
+	width: 76px;
+	height: 17px;
+	position: relative;
+	border-radius: 4px;
+	overflow: hidden;
 `;
 
 export const ButtonContainer = styled(OverlayContainer)`
