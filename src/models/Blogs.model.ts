@@ -72,6 +72,10 @@ const BlogSchema: Schema<BlogDocument> = new Schema(
 			type: Number,
 			default: 0,
 		},
+		likes: {
+			type: Number,
+			default: 0,
+		},
 	},
 	{ timestamps: true }
 );

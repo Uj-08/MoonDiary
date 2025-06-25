@@ -133,6 +133,7 @@ export const MetaDivision = styled.span`
 export const LikeDivision = styled(MetaDivision)`
 	font-weight: bold;
 	font-size: 14px;
+	cursor: pointer;
 `;
 
 export const ViewsIcon = styled(BiBarChart)`

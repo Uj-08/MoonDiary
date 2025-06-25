@@ -3,24 +3,62 @@ import BlogsModel from "@/models/Blogs.model";
 import TagsModel from "@/models/Tags.model";
 import { HttpMethod } from "@/helpers/apiHelpers";
 import { withDatabase } from "@/lib/database";
+import { authenticate } from "@/lib/authHandler";
+import LikesModel from "@/models/Likes.model";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-	const { id } = req.query;
+	const { id: blogId } = req.query;
 
 	switch (req.method) {
 		case HttpMethod.GET:
-			if (req.query.action === "view") {
-				try {
-					await BlogsModel.findByIdAndUpdate(id, { $inc: { views: 1 } }, { timestamps: false });
-					return res.status(200);
-				} catch (err) {
-					console.error("GET error:", err);
-					return res.status(500).json(err);
+			if (req.query?.action) {
+				switch (req.query.action) {
+					case "view":
+						try {
+							await BlogsModel.findByIdAndUpdate(
+								blogId,
+								{ $inc: { views: 1 } },
+								{ timestamps: false }
+							);
+							return res.status(200);
+						} catch (err) {
+							console.error(err);
+							return res.status(500).json(err);
+						}
+					case "like":
+						try {
+							const user = await authenticate(req, res);
+							if (!user) return res.status(401).json({ error: "Not authenticated" });
+
+							//check if already like to unlike
+							const existing = await LikesModel.findOne({ userId: user._id, blogId });
+
+							if (existing) {
+								await existing.deleteOne();
+								await BlogsModel.findByIdAndUpdate(
+									blogId,
+									{ $inc: { likes: -1 } },
+									{ timestamps: false }
+								);
+								return res.status(200).json({ liked: false });
+							} else {
+								await LikesModel.create({ userId: user._id, blogId });
+								await BlogsModel.findByIdAndUpdate(
+									blogId,
+									{ $inc: { likes: 1 } },
+									{ timestamps: false }
+								);
+								return res.status(200).json({ liked: true });
+							}
+						} catch (err) {
+							console.error(err);
+							return res.status(500).json(err);
+						}
 				}
 			} else {
 				try {
 					const sendAll = req.query.sendAll === "true";
-					const blog = await BlogsModel.findById(id)
+					const blog = await BlogsModel.findById(blogId)
 						.populate("tags", sendAll ? "" : "name")
 						.lean();
 					return res.status(200).json(blog);
@@ -33,7 +71,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 		case HttpMethod.PUT:
 			try {
 				const body = req.body;
-				const blog = await BlogsModel.findById(id).populate("tags");
+				const blog = await BlogsModel.findById(blogId).populate("tags");
 				if (!blog) return res.status(404).json({ error: "Blog not found." });
 
 				// @ts-ignore
@@ -73,14 +111,14 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 				// Remove tags with no associated blogs
 				await TagsModel.deleteMany({ blogIds: { $size: 0 } });
 
-				return res.status(200).json({ id });
+				return res.status(200).json({ blogId });
 			} catch (err) {
 				return res.status(500).json(err);
 			}
 
 		case HttpMethod.DELETE:
 			try {
-				const blog = await BlogsModel.findById(id).populate("tags");
+				const blog = await BlogsModel.findById(blogId).populate("tags");
 				if (!blog) return res.status(404).json({ error: "Blog not found." });
 
 				await Promise.all(
@@ -92,12 +130,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 					)
 				);
 
-				await BlogsModel.findByIdAndDelete(id);
+				await BlogsModel.findByIdAndDelete(blogId);
 
 				// Remove tags with no associated blogs
 				await TagsModel.deleteMany({ blogIds: { $size: 0 } });
 
-				return res.status(200).json({ id });
+				return res.status(200).json({ blogId });
 			} catch (err) {
 				return res.status(500).json(err);
 			}

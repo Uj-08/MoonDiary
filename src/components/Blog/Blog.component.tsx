@@ -10,6 +10,8 @@ import {
 	MetaBadge,
 	ViewsIcon,
 	MetaDivision,
+	LikeDivision,
+	CommentsIcon,
 } from "./Blog.styles";
 import { PreviewData } from "../Editor/Editor.styles";
 import ShimmerImage from "../ImageComponent/ShimmerImage.component";
@@ -28,13 +30,14 @@ import { AppDispatch } from "@/redux/store";
 import AdditionalSectionComponent from "./AdditionalSection/AdditionalSection.component";
 
 const BlogComponent = ({ blog }: { blog: PopulatedBlogType }) => {
-	const { _id, isDraft, views, authorEmail, blogTitle, blogData, blogImg } = blog;
+	const { _id, isDraft, views, likes, authorEmail, blogTitle, blogData, blogImg } = blog;
 	const dispatch = useDispatch<AppDispatch>();
 	const router = useRouter();
 	const context = useContext<BaseContextType | null>(BaseContext);
 	const text = stripHtml(blogData).result;
 	const readingTime = `${getReadingTime(text)} min read`;
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
+	const [likesState, setLikesState] = useState(likes ?? 0);
 
 	const showDeleteModalHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation();
@@ -62,6 +65,19 @@ const BlogComponent = ({ blog }: { blog: PopulatedBlogType }) => {
 		}
 	}, [_id]);
 
+	const toggleLikeHandler = useCallback(async () => {
+		try {
+			const res = await fetch(`/api/blogs/${_id}?action=like`);
+			if (res.ok) {
+				const likeRes = await res.json();
+				const isLiked = Boolean(likeRes.liked);
+				setLikesState((prev) => (isLiked ? prev + 1 : prev - 1));
+			}
+		} catch (err) {
+			console.log(err);
+		}
+	}, [_id]);
+
 	useEffect(() => {
 		const key = `viewed-${_id}`;
 		if (!isDraft && !sessionStorage.getItem(key)) {
@@ -78,8 +94,8 @@ const BlogComponent = ({ blog }: { blog: PopulatedBlogType }) => {
 						<OverlayContainer>
 							<MetaBadge>
 								<MetaDivision>{readingTime}</MetaDivision>
-								{/* <LikeDivision>+{55}</LikeDivision>
-								<MetaDivision>
+								<LikeDivision onClick={toggleLikeHandler}>+{likesState}</LikeDivision>
+								{/* <MetaDivision>
 									<CommentsIcon />
 									{23}
 								</MetaDivision> */}
