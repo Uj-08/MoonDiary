@@ -1,9 +1,8 @@
-import React, { useState, useRef, ReactNode } from "react";
+import React, { useState, useRef, ReactNode, useContext } from "react";
 import Image from "next/image";
 import { Editor } from "@tinymce/tinymce-react";
 import { useDispatch } from "react-redux";
 import parse from "html-react-parser";
-import jwtDecode from "jwt-decode";
 import slugify from "slugify";
 
 import { AppDispatch } from "@/redux/store";
@@ -31,8 +30,9 @@ import { BlogType } from "@/types/blog";
 import { EditorComponentProps } from "./Editor.types";
 import EditorInitButton from "./EditorIntitButton/EditorIntitButton.component";
 import { Shimmer } from "../ImageComponent/ShimmerImage.styles";
+import { BaseContext, BaseContextType } from "@/containers/Base/Base";
 
-const EditorComponent = ({ sessionId, blog }: EditorComponentProps) => {
+const EditorComponent = ({ blog }: EditorComponentProps) => {
 	const editorRef = useRef<any>(null);
 	const dispatch = useDispatch<AppDispatch>();
 
@@ -47,6 +47,7 @@ const EditorComponent = ({ sessionId, blog }: EditorComponentProps) => {
 	const [isDraft, setIsDraft] = useState(blog?.isDraft ?? true);
 	const [isEditorInit, setIsEditorInit] = useState(false);
 	const [shouldInitEditor, setShouldInitEditor] = useState(false);
+	const context = useContext<BaseContextType | null>(BaseContext);
 
 	let debounce: NodeJS.Timeout | undefined;
 
@@ -64,8 +65,8 @@ const EditorComponent = ({ sessionId, blog }: EditorComponentProps) => {
 		const html = editorRef.current?.getContent();
 		const generatedSlug = slugify(title, { lower: true, strict: true });
 
-		if (sessionId !== "") {
-			const authorObj: { name?: string; picture?: string; email?: string } = jwtDecode(sessionId);
+		if (context?.client?.email) {
+			const authorObj: { name?: string; picture?: string; email?: string } = context.client;
 
 			const reqBody = {
 				...blog,

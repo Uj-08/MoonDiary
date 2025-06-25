@@ -1,21 +1,21 @@
 import EditorComponent from "@/components/Editor/Editor.component";
 import Head from "next/head";
 import { getCookie, hasCookie } from "cookies-next";
-import { COOKIE_NAME } from "@/helpers/constants";
+import { ACCESS_COOKIE, COOKIE_NAME } from "@/helpers/constants";
 import { GetServerSideProps } from "next";
 import jwtDecode from "jwt-decode";
 import { ClientType } from "@/types/client";
 import { PopulatedBlogType } from "@/types/blog";
 import { EditorComponentProps } from "@/components/Editor/Editor.types";
 
-const BlogPost = ({ sessionId, blog }: EditorComponentProps) => {
+const BlogPost = ({ blog }: EditorComponentProps) => {
 	return (
 		<>
 			<Head>
 				<title>{blog?.blogTitle ? `${blog.blogTitle} | MoonDiary` : "MoonDiary | Edit Blog"}</title>
 				<meta name="robots" content="noindex, nofollow" />
 			</Head>
-			<EditorComponent blog={blog} sessionId={sessionId} />
+			<EditorComponent blog={blog} />
 		</>
 	);
 };
@@ -23,8 +23,9 @@ const BlogPost = ({ sessionId, blog }: EditorComponentProps) => {
 export default BlogPost;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-	const { req, res, query } = context;
+	const { req, query } = context;
 	const { blogId } = query;
+	const cookieHeader = req.headers.cookie ?? "";
 
 	if (!blogId || typeof blogId !== "string") {
 		return {
@@ -36,20 +37,23 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 	}
 
 	try {
-		// Check session
-		if (!hasCookie(COOKIE_NAME, { req, res })) throw new Error("No session cookie");
+		const meRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/me`, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				"Cookie": cookieHeader, // ✅ Manually pass cookies for SSR call
+			},
+		});
+		if (!meRes.ok) throw new Error("Cannot authenticate");
 
-		const sessionToken = await getCookie(COOKIE_NAME, { req, res });
-		if (!sessionToken || typeof sessionToken !== "string") throw new Error("Invalid session token");
-
-		const clientObj: ClientType = jwtDecode(sessionToken);
+		const clientObj: ClientType = (await meRes.json()).user;
+		console.log({ clientObj });
 
 		// Fetch blog
 		const API_INSTANCE = new URL(`/api/blogs/${blogId}`, process.env.NEXT_PUBLIC_BASE_URL);
 		const apiRes = await fetch(API_INSTANCE);
 
 		if (!apiRes.ok) throw new Error(`API error: ${apiRes.status}`);
-
 		const blog: PopulatedBlogType = await apiRes.json();
 
 		// Author check
@@ -58,7 +62,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 		return {
 			props: {
 				blog,
-				sessionId: sessionToken,
 			},
 		};
 	} catch (error) {

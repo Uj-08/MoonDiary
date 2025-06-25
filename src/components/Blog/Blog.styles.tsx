@@ -15,7 +15,7 @@ export const Container = styled.div`
 	@media (max-width: 450px) {
 		padding: 0 1rem;
 	}
-	@media (max-width: 920px) {
+	@media (max-width: 1000px) {
 		flex-direction: column;
 		padding: 0;
 		max-width: 100%;
@@ -32,7 +32,7 @@ export const PreviewContainer = styled.main`
 	overflow: hidden;
 	border-radius: 8px;
 	box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-	@media (max-width: 920px) {
+	@media (max-width: 1000px) {
 		max-width: 100%;
 		border-radius: 0px;
 		box-shadow: none;
@@ -48,7 +48,7 @@ export const Preview = styled.div`
 	width: 100%;
 	height: 100%;
 	/* border: 2px solid #eee; */
-	@media (max-width: 920px) {
+	@media (max-width: 1000px) {
 	}
 `;
 

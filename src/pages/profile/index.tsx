@@ -25,8 +25,8 @@ const Profile = ({
 export default Profile;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-	const { query } = context;
-	const cookieHeader = context.req.headers.cookie ?? "";
+	const { req, query } = context;
+	const cookieHeader = req.headers.cookie ?? "";
 	const { sort = "updatedAt", order = "-1", showDrafts = "false", showPublished = "true" } = query;
 
 	const API_INSTANCE = new URL("/api/blogs", process.env.NEXT_PUBLIC_BASE_URL);

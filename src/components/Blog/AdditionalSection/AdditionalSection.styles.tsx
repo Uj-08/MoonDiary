@@ -5,7 +5,7 @@ export const AdditionalSection = styled.aside`
 	display: flex;
 	flex-direction: column;
 	gap: 8px;
-	@media (max-width: 920px) {
+	@media (max-width: 1000px) {
 		max-width: 100%;
 		padding: 1rem 0;
 	}
@@ -15,7 +15,7 @@ export const TagsContainer = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 	padding: 12px 0px;
-	@media (max-width: 920px) {
+	@media (max-width: 1000px) {
 		padding: 0 8px;
 		flex-wrap: nowrap;
 		overflow-x: scroll;
@@ -51,7 +51,7 @@ export const AdditionalData = styled.div`
 	&::-webkit-scrollbar {
 		display: none;
 	}
-	@media (max-width: 920px) {
+	@media (max-width: 1000px) {
 		width: 100%;
 		flex-direction: row;
 		overflow-x: scroll;
