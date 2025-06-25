@@ -6,7 +6,6 @@ import { setCookie } from "cookies-next";
 import UsersModel from "@/models/Users.model";
 import { ACCESS_COOKIE, REFRESH_COOKIE } from "@/helpers/constants";
 
-//first time login function, to generate access and refresh tokens
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	if (req.method !== "POST") return res.status(405).end();
 
@@ -15,34 +14,59 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 	if (!idToken) return res.status(400).json({ error: "Missing token" });
 
 	try {
-		//verify if the google token provided, if valid will receive decoded token from google.
 		const payload = await verifyGoogleToken(idToken);
-		const { sub, email, name, picture, given_name, family_name, email_verified } = payload!;
+		if (!payload) throw new Error("Invalid Google token");
 
-		//check if user exists in the db against the google_id.
-		let user = await UsersModel.findOne({ googleId: sub });
-		//if user doesn't exist add them.
-		user ??= await UsersModel.create({
-			googleId: sub,
+		const {
+			sub: googleId,
 			email,
 			name,
 			picture,
 			given_name,
 			family_name,
 			email_verified,
-		});
+		} = payload;
 
-		//create access and refresh tokens for the verified user.
+		// Try to find user by Google ID
+		let user = await UsersModel.findOne({ googleId });
+
+		// If user doesn't exist, create a new one
+		if (!user) {
+			user = await UsersModel.create({
+				googleId,
+				email,
+				name,
+				picture,
+				given_name,
+				family_name,
+				email_verified,
+			});
+		} else {
+			// Sync user data if any fields have changed
+			const updates: Partial<typeof user> = {};
+			if (user.email !== email) updates.email = email;
+			if (user.name !== name) updates.name = name;
+			if (user.picture !== picture) updates.picture = picture;
+			if (user.given_name !== given_name) updates.given_name = given_name;
+			if (user.family_name !== family_name) updates.family_name = family_name;
+			if (user.email_verified !== email_verified) updates.email_verified = email_verified;
+
+			// Only update if there are differences
+			if (Object.keys(updates).length > 0) {
+				await UsersModel.updateOne({ _id: user._id }, updates);
+			}
+		}
+
 		const accessToken = createAccessToken(user);
 		const refreshToken = createRefreshToken(user);
 
 		setCookie(ACCESS_COOKIE, accessToken, {
 			req,
 			res,
-			httpOnly: false, // for security (not accessible by JS)
+			httpOnly: false,
 			secure: process.env.NODE_ENV === "production",
 			sameSite: "lax",
-			maxAge: 60 * 15, // 15 minutes
+			maxAge: 60 * 15,
 			path: "/",
 		});
 
@@ -55,6 +79,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 			path: "/",
 			maxAge: 60 * 60 * 24 * 7,
 		});
+
 		return res.status(200).end();
 	} catch (err) {
 		console.error(err);
