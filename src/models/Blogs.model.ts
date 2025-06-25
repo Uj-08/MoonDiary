@@ -57,17 +57,21 @@ const BlogSchema: Schema<BlogDocument> = new Schema(
 				message: "You are not authorized to post.",
 			},
 		},
-		seoDescription: {
+		description: {
 			type: String,
 			validate: {
 				validator(this: BlogDocument, value: string) {
 					if (!this.isDraft) return value.trim().length > 0;
 					return true;
 				},
-				message: "SEO description can't be empty when publishing.",
+				message: "Description can't be empty when publishing.",
 			},
 		},
 		isDraft: { type: Boolean, required: true },
+		views: {
+			type: Number,
+			default: 0,
+		},
 	},
 	{ timestamps: true }
 );

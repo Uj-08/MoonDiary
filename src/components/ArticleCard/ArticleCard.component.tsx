@@ -46,6 +46,7 @@ export const ArticleCard = ({ blog, clientEmail, index, noShadow }: ArticleCardT
 		updatedAt,
 		tags,
 		isDraft,
+		description,
 	} = blog;
 
 	const dispatch = useDispatch<AppDispatch>();
@@ -155,7 +156,7 @@ export const ArticleCard = ({ blog, clientEmail, index, noShadow }: ArticleCardT
 						</BlogHeader>
 						<MainContent>
 							<BlogTitle title={blogTitle}>{blogTitle}</BlogTitle>
-							<BlogData>{blogBody}</BlogData>
+							<BlogData title={description}>{description}</BlogData>
 						</MainContent>
 						<BlogAuthorContainer>
 							<BlogAuthor>

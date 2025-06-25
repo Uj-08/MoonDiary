@@ -83,7 +83,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 				const newBlog = new BlogsModel({
 					blogTitle: body.blogTitle,
 					slug: body.slug,
-					seoDescription: body.seoDescription,
+					description: body.description,
 					blogImg: body.blogImg,
 					blogData: body.blogData,
 					authorName: body.authorName,

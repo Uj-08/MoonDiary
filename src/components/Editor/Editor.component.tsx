@@ -40,7 +40,7 @@ const EditorComponent = ({ blog }: EditorComponentProps) => {
 		blog?.blogData ? (parse(blog.blogData) as ReactNode) : "Write Something..."
 	);
 	const [title, setTitle] = useState(blog?.blogTitle ?? "");
-	const [seoDescription, setSeoDescription] = useState(blog?.seoDescription ?? "");
+	const [description, setDescription] = useState(blog?.description ?? "");
 	const [imageLinkText, setImageLinkText] = useState(blog?.blogImg ?? "");
 	const [imageLink, setImageLink] = useState(blog?.blogImg ?? "");
 	const [tagsArr, setTagsArr] = useState<string[]>([]);
@@ -72,7 +72,7 @@ const EditorComponent = ({ blog }: EditorComponentProps) => {
 				...blog,
 				blogTitle: title,
 				slug: generatedSlug,
-				seoDescription,
+				description,
 				blogImg: imageLink,
 				blogData: html,
 				authorName: authorObj.name as string,
@@ -127,19 +127,19 @@ const EditorComponent = ({ blog }: EditorComponentProps) => {
 
 					<TitleText
 						type="text"
-						value={seoDescription}
-						onChange={(e) => setSeoDescription(e.target.value)}
-						placeholder="SEO description..."
+						value={imageLinkText}
+						onChange={(e) => setImageLinkText(e.target.value)}
+						onBlur={() => setImageLink(imageLinkText)}
+						placeholder="Image Link"
 					/>
 
 					<InputTagComponent tags={blog?.tags} setTagsArr={setTagsArr} />
 
 					<TitleText
 						type="text"
-						value={imageLinkText}
-						onChange={(e) => setImageLinkText(e.target.value)}
-						onBlur={() => setImageLink(imageLinkText)}
-						placeholder="Image Link"
+						value={description}
+						onChange={(e) => setDescription(e.target.value)}
+						placeholder="Description..."
 					/>
 
 					<EditorContainer>

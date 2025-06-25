@@ -6,7 +6,8 @@ export interface BlogBase {
 	blogImg: string;
 	blogData: string;
 	isDraft: boolean;
-	seoDescription: string;
+	views?: number;
+	description: string;
 	tags: string[]; // tag ObjectIds as strings
 	authorName: string;
 	authorPicture: string;

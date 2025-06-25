@@ -10,7 +10,7 @@ import BlogPageComponent from "@/components/Pages/BlogPage/BlogPage.component";
 const Blog = ({ blog }: { blog: PopulatedBlogType }) => {
 	//SEO
 	const description =
-		blog?.seoDescription ||
+		blog?.description ||
 		stripHtml(blog.blogData || "")
 			.result.replace(/\s+/g, " ")
 			.trim()
