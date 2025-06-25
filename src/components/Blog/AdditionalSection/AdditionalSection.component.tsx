@@ -48,6 +48,7 @@ const AdditionalSectionComponent = ({ blog, client }: AdditionalSectionComponent
 								index={idx}
 								blog={relatedBlog}
 								clientEmail={client?.email}
+								noShadow
 							/>
 						))}
 			</AdditionalData>

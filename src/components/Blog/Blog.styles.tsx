@@ -3,7 +3,7 @@ import { montserrat } from "@/styles/fonts";
 
 export const Container = styled.div`
 	display: flex;
-	gap: 8px;
+	gap: 1rem;
 	justify-content: center;
 	padding: 0rem 8rem;
 	@media (max-width: 1200px) {

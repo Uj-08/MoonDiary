@@ -33,7 +33,7 @@ import { ArticleCardTypes } from "./ArticleCard.types";
 import { OverlayContainer } from "../Blog/Blog.styles";
 import { getReadingTime } from "@/helpers/getReadingTime";
 
-export const ArticleCard = ({ blog, clientEmail, index }: ArticleCardTypes) => {
+export const ArticleCard = ({ blog, clientEmail, index, noShadow }: ArticleCardTypes) => {
 	const {
 		_id,
 		slug,
@@ -111,7 +111,7 @@ export const ArticleCard = ({ blog, clientEmail, index }: ArticleCardTypes) => {
 	return (
 		<div>
 			<Link href={`/blogs/${slug}`}>
-				<Container $isDraft={isDraft}>
+				<Container $isDraft={isDraft} $noShadow={noShadow}>
 					<ImageContainer>
 						<OverlayContainer>
 							<CardReadTimeBadge>{readingTime}</CardReadTimeBadge>

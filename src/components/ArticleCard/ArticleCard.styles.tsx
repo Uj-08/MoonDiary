@@ -1,9 +1,8 @@
 import styled from "styled-components";
 import { ReadTimeBadge } from "../Blog/Blog.styles";
 
-export const Container = styled.div<{ $isDraft: boolean }>`
+export const Container = styled.div<{ $isDraft: boolean; $noShadow?: boolean }>`
 	width: 100%;
-	/* max-width: 350px; */
 	min-width: 300px;
 	aspect-ratio: 2 / 3;
 	border-radius: 8px;
@@ -15,8 +14,10 @@ export const Container = styled.div<{ $isDraft: boolean }>`
 	flex-direction: column;
 
 	background: white;
-	filter: ${({ $isDraft }) =>
-		`grayscale(${$isDraft ? 1 : 0}) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15))`};
+	filter: ${({ $isDraft, $noShadow }) =>
+		$noShadow
+			? "none"
+			: `grayscale(${$isDraft ? "1" : "0"}) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15))`};
 
 	transition:
 		transform 200ms ease,
@@ -24,7 +25,8 @@ export const Container = styled.div<{ $isDraft: boolean }>`
 	will-change: transform, filter;
 
 	&:hover {
-		filter: grayscale(0) drop-shadow(0 12px 28px rgba(177, 1, 177, 0.25));
+		filter: ${({ $noShadow }) =>
+			$noShadow ? "none" : "grayscale(0) drop-shadow(0 12px 28px rgba(177, 1, 177, 0.25))"};
 	}
 
 	&:active {

@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const AdditionalSection = styled.aside`
-	padding: 0 1rem;
 	display: flex;
 	flex-direction: column;
 	gap: 8px;
