@@ -31,30 +31,30 @@ const Navbar = ({ signInHandler, signedIn, picture, hmbgrClickHandler }: NavbarT
 				</Link>
 			</LogoContainer>
 			<NavLinks>
-				<NavLink>
-					<Link href={"/"}>Home</Link>
-				</NavLink>
-				<NavLink>
-					<Link href={"/features"}>Features</Link>
-				</NavLink>
-				<NavLink>
-					<Link href={"/about-me"}>About Me</Link>
-				</NavLink>
+				<Link href={"/"}>
+					<NavLink>Home</NavLink>
+				</Link>
+				<Link href={"/features"}>
+					<NavLink>Features</NavLink>
+				</Link>
+				<Link href={"/about-me"}>
+					<NavLink>About Me</NavLink>
+				</Link>
 				<NavLink onClick={signInHandler}>{signedIn ? "Sign Out" : "Sign In"}</NavLink>
 			</NavLinks>
 			<SocialLinks>
-				<SocialLink>
-					<Link href="mailto:psykidbiz@gmail.com">
+				<Link href="mailto:psykidbiz@gmail.com">
+					<SocialLink>
 						<EmailIcon className="social_icon" />
-					</Link>
-				</SocialLink>
-				<SocialLink>
-					<Link href="https://www.instagram.com/shaireee_67/" target="_blank" rel="noreferrer">
+					</SocialLink>
+				</Link>
+				<Link href="https://www.instagram.com/shaireee_67/" target="_blank" rel="noreferrer">
+					<SocialLink>
 						<InstagramIcon className="social_icon" />
-					</Link>
-				</SocialLink>
-				<SocialLink>
-					<Link href={"/profile"} prefetch={false}>
+					</SocialLink>
+				</Link>
+				<Link href={"/profile"}>
+					<SocialLink>
 						{signedIn ? (
 							<Profile>
 								<ImageComponent aspectRatio={1} src={picture} alt="profile" />
@@ -62,8 +62,8 @@ const Navbar = ({ signInHandler, signedIn, picture, hmbgrClickHandler }: NavbarT
 						) : (
 							<ProfileIcon className="social_icon" />
 						)}
-					</Link>
-				</SocialLink>
+					</SocialLink>
+				</Link>
 			</SocialLinks>
 			<HamburgerButton onClick={hmbgrClickHandler}>
 				<HamburgerIcon className="hamburger_icon" />
