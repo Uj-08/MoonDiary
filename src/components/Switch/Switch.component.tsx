@@ -1,17 +1,17 @@
 import React from "react";
 import { ActiveIndicator, SwitchContainer, SwitchOption } from "./Switch.styles";
-import { SwitchTypes } from "./Switch.types";
+import { SwitchTypes, Option } from "./Switch.types";
 
-const Switch = ({ showDrafts, showDraftsHandler }: SwitchTypes) => {
+const Switch = ({ selected, onChange }: SwitchTypes) => {
+	const options: Option[] = ["published", "drafts", "liked"];
 	return (
 		<SwitchContainer>
-			<ActiveIndicator $position={showDrafts ? "right" : "left"} />
-			<SwitchOption active={!showDrafts} onClick={() => showDraftsHandler(false)}>
-				Published
-			</SwitchOption>
-			<SwitchOption active={showDrafts} onClick={() => showDraftsHandler(true)}>
-				Drafts
-			</SwitchOption>
+			<ActiveIndicator $position={options.indexOf(selected)} />
+			{options.map((opt) => (
+				<SwitchOption key={opt} active={selected === opt} onClick={() => onChange(opt)}>
+					{opt.charAt(0).toUpperCase() + opt.slice(1)}
+				</SwitchOption>
+			))}
 		</SwitchContainer>
 	);
 };

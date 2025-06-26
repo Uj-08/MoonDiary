@@ -1,6 +1,6 @@
 import { PopulatedBlogType } from "@/types/blog";
 
 export interface ProfilePageTypes {
-	sessionId?: string;
+	isAdmin: boolean;
 	blogsArray: PopulatedBlogType[];
 }

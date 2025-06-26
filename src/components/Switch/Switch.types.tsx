@@ -1,4 +1,6 @@
+export type Option = "published" | "drafts" | "liked";
+
 export interface SwitchTypes {
-	showDrafts: boolean;
-	showDraftsHandler: (bool: boolean) => void;
+	selected: Option;
+	onChange: (option: Option) => void;
 }

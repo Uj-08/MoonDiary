@@ -6,6 +6,7 @@ import { FilterQuery, SortOrder } from "mongoose";
 import { BlogType } from "@/types/blog";
 import { withDatabase } from "@/lib/database";
 import { authenticate } from "@/lib/authHandler";
+import LikesModel from "@/models/Likes.model";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
 	switch (req.method) {
@@ -51,14 +52,29 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 					[validatedSort]: Number(validatedOrder) as SortOrder,
 				};
 
-				// Fetch blogs
-				const blogs = await BlogsModel.find(mongoQuery)
-					.populate("tags", "name")
-					.sort(sortOptions)
-					.limit(limit ? Number(limit) : 0)
-					.lean();
+				if (req.query.fetchLiked === "true") {
+					const likedBlogs = await LikesModel.find({ userId: user._id })
+						.populate({
+							path: "blogId",
+							populate: { path: "tags", select: "name" }, // optional
+						})
+						.sort(sortOptions)
+						.limit(limit ? Number(limit) : 0)
+						.lean();
 
-				return res.status(200).json(blogs);
+					const publishedLikedBlogs = likedBlogs.map((like) => like.blogId).filter(Boolean); // Remove nulls
+
+					return res.status(200).json(publishedLikedBlogs);
+				} else {
+					// Fetch blogs
+					const blogs = await BlogsModel.find(mongoQuery)
+						.populate("tags", "name")
+						.sort(sortOptions)
+						.limit(limit ? Number(limit) : 0)
+						.lean();
+
+					return res.status(200).json(blogs);
+				}
 			} catch (err) {
 				console.error("GET error:", err);
 				return res.status(500).json({ error: "Internal server error" });

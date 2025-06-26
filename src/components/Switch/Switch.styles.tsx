@@ -35,16 +35,16 @@ export const SwitchOption = styled.button<{ active: boolean }>`
 	}
 `;
 
-export const ActiveIndicator = styled.div<{ $position: "left" | "right" }>`
+export const ActiveIndicator = styled.div<{ $position: number }>`
 	position: absolute;
 	top: 4px;
 	left: 4px;
-	width: 50%;
+	width: calc((100% - 8px) / 3);
 	height: calc(100% - 8px);
 	background-color: #b101b1;
 	border-radius: 50px;
 	z-index: 0;
-	transform: ${({ $position }) => ($position === "left" ? "translateX(0)" : "translateX(100%)")};
+	transform: ${({ $position }) => `translateX(${100 * $position}%)`};
 	transition: transform 300ms ease;
 	will-change: transform;
 `;
