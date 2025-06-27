@@ -25,8 +25,7 @@ const Profile = ({
 
 export default Profile;
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-	const { req, query } = context;
+export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
 	const cookieHeader = req.headers.cookie ?? "";
 	const {
 		sort = "updatedAt",
@@ -36,42 +35,47 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 		fetchLiked = "false",
 	} = query;
 
-	const API_INSTANCE = new URL("/api/blogs", process.env.NEXT_PUBLIC_BASE_URL);
+	const apiBaseUrl = process.env.NEXT_PUBLIC_BASE_URL!;
+	const API_INSTANCE = new URL("/api/blogs", apiBaseUrl);
 	API_INSTANCE.searchParams.set("sort", String(sort));
 	API_INSTANCE.searchParams.set("order", String(order));
+
 	let isAdmin = false;
+
 	try {
-		const userRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/me`, {
-			method: "GET",
+		// Try fetching user
+		const userRes = await fetch(`${apiBaseUrl}/api/me`, {
 			headers: {
 				"Content-Type": "application/json",
-				"Cookie": cookieHeader, // ✅ Manually pass cookies for SSR call
+				"Cookie": cookieHeader,
 			},
 		});
+
 		if (userRes.ok) {
 			const { user } = await userRes.json();
 			isAdmin = ADMIN_EMAILS.includes(user.email);
 			if (isAdmin) {
+				// Admins see drafts/published
 				API_INSTANCE.searchParams.set("showDrafts", String(showDrafts));
 				API_INSTANCE.searchParams.set("showPublished", String(showPublished));
 				API_INSTANCE.searchParams.set("fetchLiked", String(fetchLiked));
+			} else {
+				API_INSTANCE.searchParams.set("showDrafts", String(false));
+				API_INSTANCE.searchParams.set("showPublished", String(false));
+				API_INSTANCE.searchParams.set("fetchLiked", String(true));
 			}
-		} else {
-			API_INSTANCE.searchParams.set("showDrafts", String(false));
-			API_INSTANCE.searchParams.set("showPublished", String(false));
-			API_INSTANCE.searchParams.set("fetchLiked", String(true));
 		}
-		const apiRes = await fetch(API_INSTANCE, {
-			method: "GET",
+
+		const blogsRes = await fetch(API_INSTANCE.toString(), {
 			headers: {
 				"Content-Type": "application/json",
-				"Cookie": cookieHeader, // ✅ Manually pass cookies for SSR call
+				"Cookie": cookieHeader,
 			},
 		});
 
-		if (!apiRes.ok) throw new Error(`API responded with status ${apiRes.status}`);
+		if (!blogsRes.ok) throw new Error(`Failed to fetch blogs. Status ${blogsRes.status}`);
 
-		const blogsArray: PopulatedBlogType[] = await apiRes.json();
+		const blogsArray: PopulatedBlogType[] = await blogsRes.json();
 
 		return {
 			props: {
@@ -79,12 +83,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 				isAdmin,
 			},
 		};
-	} catch (error: any) {
-		console.log(error);
+	} catch (err) {
+		console.error("getServerSideProps error:", err);
+		// Fallback: show empty profile instead of redirecting
 		return {
-			redirect: {
-				destination: "/500",
-				permanent: false,
+			props: {
+				blogsArray: [],
+				isAdmin: false,
 			},
 		};
 	}

@@ -68,8 +68,8 @@ const BlogComponent = ({ blog }: { blog: PopulatedBlogType }) => {
 			const metaRes = await fetch(`/api/blogs/${_id}`);
 			if (!metaRes.ok) throw new Error("Error");
 			const metaData = await metaRes.json();
-			setViewsState(metaData.views);
-			setLikesState(metaData.likes);
+			if (metaData?.views) setViewsState(metaData.views);
+			if (metaData?.likes) setLikesState(metaData.likes);
 			setIsMetaLoading(false);
 		} catch (err) {
 			console.log(err);

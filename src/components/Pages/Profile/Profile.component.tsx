@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateBlogDataIsLoading } from "@/redux/slices/blogInfo";
-import { Container, ToggleWrapper } from "./Profile.styles";
+import { Container, ProfileTitle, ToggleWrapper } from "./Profile.styles";
 import { PopulatedBlogType } from "@/types/blog";
 import { ProfilePageTypes } from "./Profile.types";
 // import { BaseContext, BaseContextType } from "@/containers/Base/Base";
@@ -20,8 +20,11 @@ const Profile = ({ blogsArray, isAdmin }: ProfilePageTypes) => {
 	const API_INSTANCE = useMemo(() => {
 		if (typeof window === "undefined") return null;
 		const url = new URL("/api/blogs", window.location.origin);
+		url.searchParams.set("fetchLiked", String(!isAdmin));
+		url.searchParams.set("showPublished", String(isAdmin));
+		url.searchParams.set("showDrafts", String(!isAdmin));
 		return url;
-	}, []);
+	}, [isAdmin]);
 
 	const showDraftsHandler = useCallback(
 		async (switchValue: Option) => {
@@ -63,10 +66,12 @@ const Profile = ({ blogsArray, isAdmin }: ProfilePageTypes) => {
 	return (
 		<Container>
 			<ProfileHero />
-			{isAdmin && (
+			{isAdmin ? (
 				<ToggleWrapper>
 					<SwitchComponent selected={selectedView} onChange={showDraftsHandler} />
 				</ToggleWrapper>
+			) : (
+				<ProfileTitle>Liked Posts:</ProfileTitle>
 			)}
 			<ArticleGrid blogsArray={blogsArrayState} API_INSTANCE={API_INSTANCE} />
 		</Container>

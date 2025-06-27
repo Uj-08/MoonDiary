@@ -128,7 +128,7 @@ export const ArticleCard = ({ blog, clientEmail, index, noShadow }: ArticleCardT
 						</OverlayContainer>
 						<OverlayRightContainer>
 							<CardMetaBadge>
-								{likes && likes > 0 && <CardLikeDivision>+{likes}</CardLikeDivision>}
+								{Boolean(likes && likes > 0) && <CardLikeDivision>+{likes}</CardLikeDivision>}
 								<MetaDivision>
 									<CardViewsIcon />
 									{views}
