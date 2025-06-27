@@ -10,10 +10,21 @@ export const ProfileTitle = styled(TagTitle)`
 	font-size: 1.8rem;
 `;
 
-export const ToggleWrapper = styled.div`
+export const StickyReference = styled.div`
+	margin-top: 2rem;
+`;
+
+export const ToggleWrapper = styled.div<{ $isSticky: boolean; $scrolledDown: boolean }>`
+	padding: 0 4px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	margin-top: 2rem;
-	width: 100%;
+	position: sticky;
+	left: 0;
+	right: 0;
+	top: 0;
+	z-index: 10;
+	transform: ${({ $scrolledDown, $isSticky }) =>
+		$scrolledDown ? "translateY(4px);" : $isSticky ? "translateY(64px);" : "translateY(0px); "};
+	transition: transform 200ms linear;
 `;

@@ -1,23 +1,32 @@
 import styled from "styled-components";
 
+export const BackgroundFilter = styled.div`
+	backdrop-filter: blur(5px);
+	width: 100%;
+	padding: 8px;
+	border-radius: 24px;
+	overflow: hidden;
+`;
+
 export const SwitchContainer = styled.div`
 	background-color: #e0e0e0;
 	border-radius: 50px;
 	display: flex;
 	padding: 4px;
 	position: relative;
-	width: fit-content;
+	width: 100%; // or a fixed width like 300px
+	max-width: 350px;
 	overflow: hidden;
 `;
 
 export const SwitchOption = styled.button<{ active: boolean }>`
-	position: relative;
-	z-index: 1;
+	flex: 1;
+	text-align: center;
 	background-color: transparent;
 	color: ${({ active }) => (active ? "#fff" : "#333")};
 	opacity: ${({ active }) => (active ? 1 : 0.7)};
 	border: none;
-	padding: 0.5rem 1.5rem;
+	padding: 0.5rem 1rem;
 	border-radius: 50px;
 	font-size: 0.9rem;
 	font-weight: bold;
@@ -27,6 +36,7 @@ export const SwitchOption = styled.button<{ active: boolean }>`
 		transform 300ms ease,
 		opacity 300ms ease;
 	will-change: transform;
+
 	&:hover {
 		opacity: 1;
 	}

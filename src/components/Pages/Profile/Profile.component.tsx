@@ -1,13 +1,15 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateBlogDataIsLoading } from "@/redux/slices/blogInfo";
-import { Container, ProfileTitle, ToggleWrapper } from "./Profile.styles";
+import { Container, ProfileTitle, StickyReference, ToggleWrapper } from "./Profile.styles";
 import { PopulatedBlogType } from "@/types/blog";
 import { ProfilePageTypes } from "./Profile.types";
 import ProfileHero from "@/components/HeroSection/ProfileHero/ProfileHero.component";
 import SwitchComponent from "@/components/Switch/Switch.component";
 import ArticleGrid from "@/components/ArticleGrid/ArticleGrid.component";
 import { Option } from "@/components/Switch/Switch.types";
+import { useScrollDirection } from "@/hooks/useScrollDirection";
+import { useStickyObserver } from "@/hooks/useStickyObserver";
 
 const Profile = ({ blogsArray, isAdmin }: ProfilePageTypes) => {
 	const dispatch = useDispatch();
@@ -60,13 +62,20 @@ const Profile = ({ blogsArray, isAdmin }: ProfilePageTypes) => {
 		},
 		[dispatch, API_INSTANCE]
 	);
+
+	const scrolledDown = useScrollDirection(100);
+	const { sentinelRef, isSticky } = useStickyObserver();
+	console.log({ isSticky });
 	return (
 		<Container>
 			<ProfileHero />
 			{isAdmin ? (
-				<ToggleWrapper>
-					<SwitchComponent selected={selectedView} onChange={showDraftsHandler} />
-				</ToggleWrapper>
+				<>
+					<StickyReference ref={sentinelRef} />
+					<ToggleWrapper $isSticky={isSticky} $scrolledDown={scrolledDown}>
+						<SwitchComponent selected={selectedView} onChange={showDraftsHandler} />
+					</ToggleWrapper>
+				</>
 			) : (
 				<ProfileTitle>Posts liked by you.</ProfileTitle>
 			)}
