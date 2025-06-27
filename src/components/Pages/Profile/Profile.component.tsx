@@ -4,16 +4,13 @@ import { updateBlogDataIsLoading } from "@/redux/slices/blogInfo";
 import { Container, ProfileTitle, ToggleWrapper } from "./Profile.styles";
 import { PopulatedBlogType } from "@/types/blog";
 import { ProfilePageTypes } from "./Profile.types";
-// import { BaseContext, BaseContextType } from "@/containers/Base/Base";
 import ProfileHero from "@/components/HeroSection/ProfileHero/ProfileHero.component";
 import SwitchComponent from "@/components/Switch/Switch.component";
 import ArticleGrid from "@/components/ArticleGrid/ArticleGrid.component";
-// import { ADMIN_EMAILS } from "@/helpers/constants";
 import { Option } from "@/components/Switch/Switch.types";
 
 const Profile = ({ blogsArray, isAdmin }: ProfilePageTypes) => {
 	const dispatch = useDispatch();
-	// const context = useContext<BaseContextType | null>(BaseContext);
 	const [blogsArrayState, setBlogsArrayState] = useState(blogsArray);
 	const [selectedView, setSelectedView] = useState<Option>(isAdmin ? "published" : "liked");
 
@@ -22,7 +19,7 @@ const Profile = ({ blogsArray, isAdmin }: ProfilePageTypes) => {
 		const url = new URL("/api/blogs", window.location.origin);
 		url.searchParams.set("fetchLiked", String(!isAdmin));
 		url.searchParams.set("showPublished", String(isAdmin));
-		url.searchParams.set("showDrafts", String(!isAdmin));
+		url.searchParams.set("showDrafts", String(isAdmin));
 		return url;
 	}, [isAdmin]);
 
@@ -71,9 +68,13 @@ const Profile = ({ blogsArray, isAdmin }: ProfilePageTypes) => {
 					<SwitchComponent selected={selectedView} onChange={showDraftsHandler} />
 				</ToggleWrapper>
 			) : (
-				<ProfileTitle>Liked Posts:</ProfileTitle>
+				<ProfileTitle>Posts liked by you.</ProfileTitle>
 			)}
-			<ArticleGrid blogsArray={blogsArrayState} API_INSTANCE={API_INSTANCE} />
+			<ArticleGrid
+				showSortingOptions={selectedView !== "liked"}
+				blogsArray={blogsArrayState}
+				API_INSTANCE={API_INSTANCE}
+			/>
 		</Container>
 	);
 };

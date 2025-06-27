@@ -58,7 +58,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 							path: "blogId",
 							populate: { path: "tags", select: "name" }, // optional
 						})
-						.sort(sortOptions)
+						.sort({ updatedAt: 1 })
 						.limit(limit ? Number(limit) : 0)
 						.lean();
 

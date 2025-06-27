@@ -64,6 +64,13 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
 				API_INSTANCE.searchParams.set("showPublished", String(false));
 				API_INSTANCE.searchParams.set("fetchLiked", String(true));
 			}
+		} else {
+			return {
+				redirect: {
+					destination: "/login?origin=/profile",
+					permanent: false,
+				},
+			};
 		}
 
 		const blogsRes = await fetch(API_INSTANCE.toString(), {

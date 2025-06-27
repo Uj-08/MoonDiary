@@ -33,6 +33,7 @@ import { Container, Loader, ToastContainer } from "./Base.styles";
 
 export interface BaseContextType {
 	client: ClientType | null;
+	setClient: React.Dispatch<React.SetStateAction<ClientType | null>>;
 }
 export const BaseContext = createContext<BaseContextType | null>(null);
 
@@ -130,7 +131,13 @@ const Base = ({ children }: { children: ReactNode }) => {
 		client?.picture ??
 		"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5BSEPxHF0-PRxJlVMHla55wvcxWdSi8RU2g&s";
 
-	const contextValue = useMemo(() => ({ client }), [client]);
+	const contextValue = useMemo(
+		() => ({
+			client,
+			setClient,
+		}),
+		[client]
+	);
 
 	return (
 		<BaseContext.Provider value={contextValue}>

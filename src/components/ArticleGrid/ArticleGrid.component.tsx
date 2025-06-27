@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { updateBlogDataIsLoading } from "@/redux/slices/blogInfo";
 import { ArticleGridTypes } from "./ArticleGrid.types";
 
-const ArticleGrid = ({ blogsArray, API_INSTANCE }: ArticleGridTypes) => {
+const ArticleGrid = ({ blogsArray, showSortingOptions = true, API_INSTANCE }: ArticleGridTypes) => {
 	const dispatch = useDispatch();
 	const context = useContext<BaseContextType | null>(BaseContext);
 	const token = getCookie(COOKIE_NAME) as string;
@@ -74,7 +74,7 @@ const ArticleGrid = ({ blogsArray, API_INSTANCE }: ArticleGridTypes) => {
 		<Container>
 			<Grid>
 				{blogsArray.length !== 0 && (
-					<SortContainer $show={blogsArray.length > 3}>
+					<SortContainer $show={showSortingOptions && blogsArray.length > 3}>
 						<span>
 							<Select id="sort" value={sortState} onChange={handleSortChange} defaultValue="">
 								<option disabled value="">

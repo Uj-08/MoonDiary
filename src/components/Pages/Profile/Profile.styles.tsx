@@ -7,6 +7,7 @@ export const Container = styled.div`
 
 export const ProfileTitle = styled(TagTitle)`
 	padding-top: 1rem;
+	font-size: 1.8rem;
 `;
 
 export const ToggleWrapper = styled.div`
