@@ -6,6 +6,8 @@ export const BackgroundFilter = styled.div`
 	padding: 8px;
 	border-radius: 24px;
 	overflow: hidden;
+	display: flex;
+	justify-content: center;
 `;
 
 export const SwitchContainer = styled.div`

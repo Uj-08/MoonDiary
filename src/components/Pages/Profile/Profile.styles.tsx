@@ -16,9 +16,6 @@ export const StickyReference = styled.div`
 
 export const ToggleWrapper = styled.div<{ $isSticky: boolean; $scrolledDown: boolean }>`
 	padding: 0 4px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
 	position: sticky;
 	left: 0;
 	right: 0;
