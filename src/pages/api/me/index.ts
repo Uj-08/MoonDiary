@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { connectToDatabase } from "@/lib/database";
-import { authenticate } from "@/lib/authHandler";
+import { authenticate } from "@/lib/auth/authHandler";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	if (req.method !== "GET") {

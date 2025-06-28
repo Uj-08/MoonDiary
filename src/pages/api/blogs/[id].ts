@@ -3,7 +3,7 @@ import BlogsModel from "@/models/Blogs.model";
 import TagsModel from "@/models/Tags.model";
 import { HttpMethod } from "@/helpers/apiHelpers";
 import { withDatabase } from "@/lib/database";
-import { authenticate } from "@/lib/authHandler";
+import { authenticate } from "@/lib/auth/authHandler";
 import LikesModel from "@/models/Likes.model";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {

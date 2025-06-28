@@ -5,7 +5,7 @@ import { HttpMethod } from "@/helpers/apiHelpers";
 import { FilterQuery, SortOrder } from "mongoose";
 import { BlogType } from "@/types/blog";
 import { withDatabase } from "@/lib/database";
-import { authenticate } from "@/lib/authHandler";
+import { authenticate } from "@/lib/auth/authHandler";
 import LikesModel from "@/models/Likes.model";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {

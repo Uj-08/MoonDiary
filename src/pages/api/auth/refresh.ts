@@ -1,5 +1,5 @@
 import { getCookie, setCookie } from "cookies-next";
-import { verifyRefreshToken, createAccessToken } from "@/lib/auth";
+import { verifyRefreshToken, createAccessToken } from "@/lib/auth/auth";
 import { connectToDatabase } from "@/lib/database";
 import UsersModel from "@/models/Users.model";
 import { NextApiRequest, NextApiResponse } from "next";

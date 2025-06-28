@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { verifyGoogleToken } from "@/backend/utils/google";
-import { setAuthCookies } from "@/backend/utils/cookie.utils";
+import { setAuthTokens } from "@/backend/utils/cookie.utils";
 import { findOrCreateUser } from "../users/users.service";
 import { generateAuthTokens } from "../tokens/token.service";
 
@@ -15,7 +15,7 @@ export const loginWithGoogle = async (
 	const user = await findOrCreateUser(payload);
 	const { accessToken, refreshToken } = generateAuthTokens(user);
 
-	setAuthCookies(req, res, accessToken, refreshToken);
+	setAuthTokens(req, res, accessToken, refreshToken);
 
 	return { user, accessToken, refreshToken };
 };

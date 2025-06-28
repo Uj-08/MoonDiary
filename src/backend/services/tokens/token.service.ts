@@ -1,4 +1,4 @@
-import { createAccessToken, createRefreshToken } from "@/lib/auth";
+import { createAccessToken, createRefreshToken } from "@/lib/auth/auth";
 
 export const generateAuthTokens = (user: any) => {
 	const accessToken = createAccessToken(user);
