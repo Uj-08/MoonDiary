@@ -14,7 +14,7 @@ const AddPostButton = () => {
 				<IconWrapper>
 					<StyledIcon />
 				</IconWrapper>
-				<LabelText>ADD POST</LabelText>
+				<LabelText>POST</LabelText>
 			</ButtonWrapper>
 		</StyledLink>
 	);
