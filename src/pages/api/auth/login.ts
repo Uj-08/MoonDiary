@@ -1,12 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { connectToDatabase } from "@/lib/database";
-import { loginController } from "@/backend/controllers/auth/auth.controller";
+import { loginController } from "@/backend/controllers/auth/login.controller";
+import { withDatabase } from "@/lib/database";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+async function handler(req: NextApiRequest, res: NextApiResponse) {
 	if (req.method !== "POST") {
 		return res.status(405).json({ error: "Method Not Allowed" });
 	}
 
-	await connectToDatabase();
 	return loginController(req, res);
 }
+
+export default withDatabase(handler);

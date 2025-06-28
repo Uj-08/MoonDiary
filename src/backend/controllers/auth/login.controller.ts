@@ -1,7 +1,11 @@
 import { loginWithGoogle } from "@/backend/services/auth/loginWithGoogle.service";
-import type { NextApiRequest, NextApiResponse } from "next";
+import { NextApiRequest, NextApiResponse } from "next";
 
 export const loginController = async (req: NextApiRequest, res: NextApiResponse) => {
+	if (req.method !== "POST") {
+		return res.status(405).json({ message: "Method Not Allowed" });
+	}
+
 	try {
 		const { idToken } = req.body;
 		if (!idToken) {

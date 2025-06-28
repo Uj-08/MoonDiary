@@ -1,4 +1,4 @@
-import { setCookie } from "cookies-next";
+import { deleteCookie, setCookie } from "cookies-next";
 import { ACCESS_COOKIE, REFRESH_COOKIE } from "@/helpers/constants";
 import { createAccessToken, createRefreshToken } from "@/lib/auth/auth";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -32,4 +32,17 @@ export const issueRefreshToken = async (user: any, req: NextApiRequest, res: Nex
 		sameSite: "lax",
 		maxAge: 60 * 15,
 	});
+};
+
+export const deleteAccessToken = (req: NextApiRequest, res: NextApiResponse) => {
+	deleteCookie(ACCESS_COOKIE, { req, res });
+};
+
+export const deleteRefreshToken = (req: NextApiRequest, res: NextApiResponse) => {
+	deleteCookie(REFRESH_COOKIE, { req, res });
+};
+
+export const deleteAuthTokens = (req: NextApiRequest, res: NextApiResponse) => {
+	deleteAccessToken(req, res);
+	deleteRefreshToken(req, res);
 };
