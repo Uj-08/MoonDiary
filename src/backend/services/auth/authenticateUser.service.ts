@@ -2,7 +2,7 @@ import { getCookie, hasCookie } from "cookies-next";
 import { ACCESS_COOKIE, REFRESH_COOKIE } from "@/helpers/constants";
 import UsersModel from "@/models/Users.model";
 import { NextApiRequest, NextApiResponse } from "next";
-import { issueNewAccessToken } from "@/backend/utils/cookie.utils";
+import { issueAccessToken } from "@/backend/utils/cookie.utils";
 import { verifyAccessToken, verifyRefreshToken } from "@/lib/auth/auth";
 
 export const authenticateUser = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -24,7 +24,7 @@ export const authenticateUser = async (req: NextApiRequest, res: NextApiResponse
 		const user = await UsersModel.findById(decoded.id);
 		if (!user) throw new Error("User not found");
 
-		await issueNewAccessToken(user, req, res);
+		await issueAccessToken(user, req, res);
 		return user;
 	}
 };
