@@ -2,8 +2,8 @@ name: Keep MoonDiary Alive
 
 on:
   schedule:
-    - cron: "*/24 * * * *"  # Every 24 minutes
-  workflow_dispatch:        # Optional: allows manual triggering
+    - cron: "*/24 * * * *" # Every 24 minutes
+  workflow_dispatch: # Optional: allows manual triggering
 
 jobs:
   ping-moondiary:

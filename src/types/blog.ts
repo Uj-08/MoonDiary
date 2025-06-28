@@ -1,26 +1,28 @@
 import { TagType } from "./tag";
 
 export interface BlogBase {
-    blogTitle: string;
-    slug: string;
-    blogImg: string;
-    blogData: string;
-    isDraft: boolean;
-    seoDescription: string;
-    tags: string[]; // tag ObjectIds as strings
-    authorName: string;
-    authorPicture: string;
-    authorEmail: string;
+	blogTitle: string;
+	slug: string;
+	blogImg: string;
+	blogData: string;
+	isDraft: boolean;
+	views?: number;
+	likes?: number;
+	description: string;
+	tags: string[]; // tag ObjectIds as strings
+	authorName: string;
+	authorPicture: string;
+	authorEmail: string;
 }
 
 export interface BlogType extends BlogBase {
-    _id: string; // for client usage
-    createdAt: Date;
-    updatedAt: Date;
+	_id: string; // for client usage
+	createdAt: Date;
+	updatedAt: Date;
 }
 
 export interface PopulatedBlogType extends Omit<BlogType, "tags"> {
-    tags: TagType[];
+	tags: TagType[];
 }
 
 export type CreateBlogType = BlogBase;

@@ -1,5 +1,5 @@
 import { FeaturesTagType } from "@/types/tag";
 
-export interface FeaturesTypes { 
-    tags: FeaturesTagType[] 
+export interface FeaturesTypes {
+	tags: FeaturesTagType[];
 }

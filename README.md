@@ -22,11 +22,11 @@ Built using **Next.js (App Router)**, **TypeScript**, **Redux Toolkit**, **Style
 
 ## 🛠️ Tech Stack
 
-| Frontend              | Backend/API              | State Management    | Styling              |
-|-----------------------|--------------------------|---------------------|----------------------|
-| Next.js (App Router)  | Next.js API Routes       | Redux Toolkit       | Styled-Components    |
-| TypeScript            | MongoDB + Mongoose       | React Query         | Next Fonts (Google)  |
-| React 18              | JWT & Cookies            |                     |                      |
+| Frontend             | Backend/API        | State Management | Styling             |
+| -------------------- | ------------------ | ---------------- | ------------------- |
+| Next.js (App Router) | Next.js API Routes | Redux Toolkit    | Styled-Components   |
+| TypeScript           | MongoDB + Mongoose | React Query      | Next Fonts (Google) |
+| React 18             | JWT & Cookies      |                  |                     |
 
 ---
 
