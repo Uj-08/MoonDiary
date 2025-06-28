@@ -163,7 +163,6 @@ export const Profile = styled.span`
 	border-radius: 100%;
 	overflow: hidden;
 	text-align: left;
-	transform: translateY(-2px);
 	img {
 		width: 100%;
 		object-fit: cover;

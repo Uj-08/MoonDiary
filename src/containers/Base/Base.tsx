@@ -17,6 +17,7 @@ import {
 	resetDeletedBlogId,
 	resetErrorState,
 	resetSuccessState,
+	updateBlogDataIsLoading,
 } from "@/redux/slices/blogInfo";
 import { RootState } from "@/redux/store";
 import { ADMIN_EMAILS } from "@/helpers/constants";
@@ -49,6 +50,7 @@ const Base = ({ children }: { children: ReactNode }) => {
 	// Fetch the authenticated user
 	const fetchClient = useCallback(async () => {
 		try {
+			dispatch(updateBlogDataIsLoading(true));
 			const res = await fetch("/api/me");
 			if (res.status === 401 || res.status === 403) {
 				setClient(null);
@@ -61,8 +63,10 @@ const Base = ({ children }: { children: ReactNode }) => {
 		} catch (err) {
 			console.error("Error fetching user:", err);
 			setClient(null);
+		} finally {
+			dispatch(updateBlogDataIsLoading(false));
 		}
-	}, []);
+	}, [dispatch]);
 
 	useEffect(() => {
 		if (!client) fetchClient();
