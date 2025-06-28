@@ -53,7 +53,7 @@ export const ActiveIndicator = styled.div<{ $position: number }>`
 	left: 4px;
 	width: calc((100% - 8px) / 3);
 	height: calc(100% - 8px);
-	background-color: #b101b1;
+	background-color: #383838;
 	border-radius: 50px;
 	z-index: 0;
 	transform: ${({ $position }) => `translateX(${100 * $position}%)`};
