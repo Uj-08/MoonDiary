@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { blogService } from "@/services/blogs/blog.services";
+import { blogService } from "@/backend/services/blogs/blog.services";
 
 export const blogController = {
 	async getBlogBySlug(req: NextApiRequest, res: NextApiResponse) {

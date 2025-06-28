@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { verifyGoogleToken } from "@/utils/google";
-import { setAuthCookies } from "@/utils/cookie.utils";
+import { verifyGoogleToken } from "@/backend/utils/google";
+import { setAuthCookies } from "@/backend/utils/cookie.utils";
 import { findOrCreateUser } from "../users/users.service";
 import { generateAuthTokens } from "../tokens/token.service";
 

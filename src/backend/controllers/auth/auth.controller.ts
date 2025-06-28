@@ -1,4 +1,4 @@
-import { loginWithGoogle } from "@/services/auth/loginWithGoogle.service";
+import { loginWithGoogle } from "@/backend/services/auth/loginWithGoogle.service";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export const loginController = async (req: NextApiRequest, res: NextApiResponse) => {
