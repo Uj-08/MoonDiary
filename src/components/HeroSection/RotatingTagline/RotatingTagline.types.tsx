@@ -1,4 +1,4 @@
 export interface RotatingTaglineTypes {
-    taglines: string[];
-    name?: string;
+	taglines: string[];
+	name?: string;
 }

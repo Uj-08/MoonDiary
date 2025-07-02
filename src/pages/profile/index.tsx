@@ -1,72 +1,103 @@
 import React from "react";
 import { GetServerSideProps } from "next";
-import { getCookie, hasCookie } from "cookies-next";
-import { COOKIE_NAME } from "@/helpers/constants";
 import Head from "next/head";
 import { PopulatedBlogType } from "@/types/blog";
 import ProfileComponent from "@/components/Pages/Profile/Profile.component";
+import { ADMIN_EMAILS } from "@/helpers/constants";
 
-const Profile = ({ blogsArray, sessionId }: { blogsArray: PopulatedBlogType[], sessionId: string }) => {
-    return (
-        <>
-            <Head>
-                <meta name="robots" content="index,follow" />
-                <link rel="canonical" href={`${process.env.NEXT_PUBLIC_BASE_URL}/profile`} />
-            </Head>
-            <ProfileComponent blogsArray={blogsArray} sessionId={sessionId} />
-        </>
-    );
-}
+const Profile = ({
+	blogsArray,
+	isAdmin,
+}: {
+	blogsArray: PopulatedBlogType[];
+	isAdmin: boolean;
+}) => {
+	return (
+		<>
+			<Head>
+				<meta name="robots" content="index,follow" />
+				<link rel="canonical" href={`${process.env.NEXT_PUBLIC_BASE_URL}/profile`} />
+			</Head>
+			<ProfileComponent blogsArray={blogsArray} isAdmin={isAdmin} />
+		</>
+	);
+};
 
 export default Profile;
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    const { req, res, query } = context;
+export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
+	const cookieHeader = req.headers.cookie ?? "";
+	const {
+		sort = "updatedAt",
+		order = "-1",
+		showDrafts = "false",
+		showPublished = "true",
+		fetchLiked = "false",
+	} = query;
 
-    const { sort = "updatedAt", order = "-1", showDrafts = "false", showPublished = "true" } = query;
+	const apiBaseUrl = process.env.NEXT_PUBLIC_BASE_URL!;
+	const API_INSTANCE = new URL("/api/blogs", apiBaseUrl);
+	API_INSTANCE.searchParams.set("sort", String(sort));
+	API_INSTANCE.searchParams.set("order", String(order));
 
-    const API_INSTANCE = new URL("/api/blogs", process.env.NEXT_PUBLIC_BASE_URL);
-    API_INSTANCE.searchParams.set("sort", String(sort));
-    API_INSTANCE.searchParams.set("order", String(order));
-    API_INSTANCE.searchParams.set("showDrafts", String(showDrafts));
-    API_INSTANCE.searchParams.set("showPublished", String(showPublished));
+	let isAdmin = false;
 
-    let token = "";
+	try {
+		// Try fetching user
+		const userRes = await fetch(`${apiBaseUrl}/api/me`, {
+			headers: {
+				"Content-Type": "application/json",
+				"Cookie": cookieHeader,
+			},
+		});
 
-    try {
-        if (hasCookie(COOKIE_NAME, { req, res })) {
-            const cookie = await getCookie(COOKIE_NAME, { req, res });
-            if (typeof cookie === "string") token = cookie;
-        }
+		if (userRes.ok) {
+			const { user } = await userRes.json();
+			isAdmin = ADMIN_EMAILS.includes(user.email);
+			if (isAdmin) {
+				// Admins see drafts/published
+				API_INSTANCE.searchParams.set("showDrafts", String(showDrafts));
+				API_INSTANCE.searchParams.set("showPublished", String(showPublished));
+				API_INSTANCE.searchParams.set("fetchLiked", String(fetchLiked));
+			} else {
+				API_INSTANCE.searchParams.set("showDrafts", String(false));
+				API_INSTANCE.searchParams.set("showPublished", String(false));
+				API_INSTANCE.searchParams.set("fetchLiked", String(true));
+			}
+		} else {
+			return {
+				redirect: {
+					destination: "/login?origin=/profile",
+					permanent: false,
+				},
+			};
+		}
 
-        const apiRes = await fetch(
-            API_INSTANCE,
-            {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    ...(token && { "x-session-token": token }),
-                }
-            }
-        );
+		const blogsRes = await fetch(API_INSTANCE.toString(), {
+			headers: {
+				"Content-Type": "application/json",
+				"Cookie": cookieHeader,
+			},
+		});
 
-        if (!apiRes.ok) throw new Error(`API responded with status ${apiRes.status}`);
+		if (!blogsRes.ok) throw new Error(`Failed to fetch blogs. Status ${blogsRes.status}`);
 
-        const blogsArray: PopulatedBlogType[] = await apiRes.json();
+		const blogsArray: PopulatedBlogType[] = await blogsRes.json();
 
-        return {
-            props: {
-                blogsArray,
-                sessionId: token,
-            },
-        };
-    } catch (error: any) {
-        console.log(error);
-        return {
-            redirect: {
-                destination: "/500",
-                permanent: false,
-            }
-        };
-    }
+		return {
+			props: {
+				blogsArray,
+				isAdmin,
+			},
+		};
+	} catch (err) {
+		console.error("getServerSideProps error:", err);
+		// Fallback: show empty profile instead of redirecting
+		return {
+			props: {
+				blogsArray: [],
+				isAdmin: false,
+			},
+		};
+	}
 };

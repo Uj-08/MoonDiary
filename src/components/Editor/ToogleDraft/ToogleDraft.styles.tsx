@@ -1,40 +1,53 @@
 import { styled } from "styled-components";
 
 export const ToggleContainer = styled.label`
-  position: relative;
-  display: inline-block;
-  width: 50px;
-  height: 28px;
-  cursor: pointer;
+	position: relative;
+	display: inline-block;
+	width: 50px;
+	height: 28px;
+	cursor: pointer;
 `;
 
 export const ToggleInput = styled.input`
-  opacity: 0;
-  width: 0;
-  height: 0;
+	opacity: 0;
+	width: 0;
+	height: 0;
 `;
 
 export const Slider = styled.span<{ checked: boolean }>`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: ${({ checked }) => (checked ? "#b101b1" : "#ccc")};
-  border-radius: 34px;
-  transition: 0.3s;
+	position: absolute;
+	inset: 0;
+	border-radius: 34px;
+	overflow: hidden;
+	background-color: #ccc; /* fallback base color */
+	will-change: opacity;
 
-  &::before {
-    content: "";
-    position: absolute;
-    height: 20px;
-    width: 20px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    border-radius: 50%;
-    transition: 0.3s;
-    transform: ${({ checked }) =>
-        checked ? "translateX(0px)" : "translateX(22px)"};
-  }
+	/* Layer for ON color (purple) */
+	&::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background-color: #b101b1;
+		opacity: ${({ checked }) => (checked ? 1 : 0)};
+		transition: opacity 300ms ease;
+		will-change: opacity;
+		z-index: 0;
+	}
+
+	/* Toggle knob */
+	&::after {
+		content: "";
+		position: absolute;
+		height: 20px;
+		width: 20px;
+		left: 4px;
+		bottom: 4px;
+		background-color: white;
+		border-radius: 50%;
+		z-index: 1;
+
+		transform: ${({ checked }) => (checked ? "translateX(22px)" : "translateX(0px)")};
+		transition: transform 300ms ease;
+		will-change: transform;
+	}
 `;
