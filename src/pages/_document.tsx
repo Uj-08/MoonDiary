@@ -6,9 +6,9 @@ export default function MyDocument() {
 		<Html lang="en">
 			<Head>
 				<meta charSet="UTF-8" />
-				<link rel="icon" href="/favicon.png" type="image/png" />
-				<link rel="shortcut icon" href="/favicon.png" type="image/x-icon" />
-				<link rel="apple-touch-icon" href="/favicon.png" sizes="180x180" />
+				<link rel="icon" href="/favicon1.png" type="image/png" />
+				<link rel="shortcut icon" href="/favicon1.png" type="image/x-icon" />
+				<link rel="apple-touch-icon" href="/favicon1.png" sizes="180x180" />
 
 				<meta property="og:site_name" content="MoonDiary" />
 				<meta property="og:type" content="website" />
